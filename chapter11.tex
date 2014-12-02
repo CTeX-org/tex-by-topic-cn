@@ -1,6 +1,14 @@
+% -*- coding: utf-8 -*-
 
+%\chapter{Macros}\label{macro}
 \chapter{Macros}\label{macro}
 
+%Macros are \TeX's abbreviation mechanism for sequences of commands
+%that are needed more than once,
+%somewhat like procedures in ordinary programming languages.
+%\TeX's parameter mechanism, however, is quite unusual.
+%This chapter explains how \TeX\ macros work. It also
+%treats the commands \cs{let} and~\cs{futurelet}.
 Macros are \TeX's abbreviation mechanism for sequences of commands
 that are needed more than once,
 somewhat like procedures in ordinary programming languages.
@@ -8,51 +16,100 @@ somewhat like procedures in ordinary programming languages.
 This chapter explains how \TeX\ macros work. It also
 treats the commands \cs{let} and~\cs{futurelet}.
 
+%\label{cschap:def}\label{cschap:gdef}\label{cschap:edef}\label{cschap:xdef}\label{cschap:csname}\label{cschap:endcsname}\label{cschap:global2}\label{cschap:outer}\label{cschap:long}\label{cschap:let}\label{cschap:futurelet}
+%\begin{inventory}
+%\item [\cs{def}] 
+%      Start a macro definition.
 \label{cschap:def}\label{cschap:gdef}\label{cschap:edef}\label{cschap:xdef}\label{cschap:csname}\label{cschap:endcsname}\label{cschap:global2}\label{cschap:outer}\label{cschap:long}\label{cschap:let}\label{cschap:futurelet}
 \begin{inventory}
 \item [\cs{def}] 
       Start a macro definition.
 
+%\item [\cs{gdef}] 
+%      Synonym for \verb-\global\def-.
 \item [\cs{gdef}] 
       Synonym for \verb-\global\def-.
 
+%\item [\cs{edef}] 
+%      Start a macro definition; 
+%      the replacement text is expanded at definition time.
+%      This command is treated also in the next chapter.
 \item [\cs{edef}] 
       Start a macro definition; 
       the replacement text is expanded at definition time.
       This command is treated also in the next chapter.
 
+%\item [\cs{xdef}] 
+%      Synonym for \verb-\global\edef-.
 \item [\cs{xdef}] 
       Synonym for \verb-\global\edef-.
 
+%\item [\cs{csname}] 
+%      Start forming the name of a control sequence.
 \item [\cs{csname}] 
       Start forming the name of a control sequence.
 
+%\item [\cs{endcsname}] 
+%      Stop forming the name of a control sequence.
 \item [\cs{endcsname}] 
       Stop forming the name of a control sequence.
 
+%\item [\cs{global}] 
+%      Make the next definition, arithmetic statement,
+%      or assignment global.
 \item [\cs{global}] 
       Make the next definition, arithmetic statement,
       or assignment global.
 
+%\item [\cs{outer}] 
+%      Prefix indicating that the macro being defined 
+%      can be used on the `outer' level only.
 \item [\cs{outer}] 
       Prefix indicating that the macro being defined 
       can be used on the `outer' level only.
 
+%\item [\cs{long}] 
+%      Prefix indicating that the arguments of the macro being defined
+%      may contain \cs{par} tokens.
 \item [\cs{long}] 
       Prefix indicating that the arguments of the macro being defined
       may contain \cs{par} tokens.
 
+%\item [\cs{let}] 
+%      Define a control sequence to be equivalent to the next token.
 \item [\cs{let}] 
       Define a control sequence to be equivalent to the next token.
 
+%\item [\cs{futurelet}] 
+%      Define a control sequence to be equivalent to
+%      the token after the next token.
 \item [\cs{futurelet}] 
       Define a control sequence to be equivalent to
       the token after the next token.
 
+%\end{inventory}
 \end{inventory}
 
+%\section{Introduction}
 \section{Introduction}
 
+%A \indexterm{macro}
+%is basically a sequence of tokens that has
+%been abbreviated into a control sequence.
+%Statements starting with (among others) \cs{def}
+%are called {\italic macro definitions}\alt, and
+%writing
+%\begin{verbatim}
+%\def\abc{\de f\g}
+%\end{verbatim}
+%defines the macro \cs{abc},
+%with the {\italic replacement text\/} \verb>\de f\g>.
+%Macros can be used in this way to abbreviate
+%pieces of text or sequences of commands
+%that have to be given more than once.
+%Any time that \TeX's expansion processor
+%encounters the control sequence \cs{abc},
+%it replaces it by the replacement text.
 A \indexterm{macro}
 is basically a sequence of tokens that has
 been abbreviated into a control sequence.
@@ -71,6 +128,16 @@ Any time that \TeX's expansion processor
 encounters the control sequence \cs{abc},
 it replaces it by the replacement text.
 
+%If a macro should be sensitive to the context
+%where it is used, it can be defined with parameters.
+%A~macro \verb+\PickTwo+ defined as
+%\begin{verbatim}
+%\def\PickTwo#1#2{(#1,#2)}
+%\end{verbatim}
+%has two \emph{parameters}. When it is used, it will scoop up two pieces of
+%text, the corresponding \emph{arguments},
+%and reproduces them in parentheses.
+%For example:
 If a macro should be sensitive to the context
 where it is used, it can be defined with parameters.
 A~macro \verb+\PickTwo+ defined as
@@ -82,6 +149,16 @@ text, the corresponding \emph{arguments},
 and reproduces them in parentheses.
 For example:
 
+%\begin{tabular}{|l|llllll|}
+%\hline
+%          &macro              &argument1& argument2& 
+%    &expansion&\\ \hline
+%definition&\verb+\def\PickTwo+&\verb+#1+& \verb+#2+& \verb+{+& 
+%    \verb+(#1,#2)+& \verb+}+\\
+%use&       \verb+\PickTwo+&1&2&&(1,2)&\\
+%use&       \verb+\PickTwo+&\verb+{ab}+&\verb+{cd}+&&(ab,cd)&\\
+%\hline
+%\end{tabular}
 \begin{tabular}{|l|llllll|}
 \hline
           &macro              &argument1& argument2& 
@@ -93,12 +170,30 @@ use&       \verb+\PickTwo+&\verb+{ab}+&\verb+{cd}+&&(ab,cd)&\\
 \hline
 \end{tabular}
 
+%The activity of substituting the replacement text
+%for a macro and its arguments is called {\italic macro expansion}.
 The activity of substituting the replacement text
 for a macro and its arguments is called {\italic macro expansion}.
 
+%%\point Layout of a macro definition
+%\section{Layout of a macro definition}
 %\point Layout of a macro definition
 \section{Layout of a macro definition}
 
+%A \indextermsub{macro}{definition} consists of, in sequence,
+%\begin{enumerate} \item any number of \cs{global},
+%\cs{long}, and \cs{outer} prefixes,
+%\item a \gr{def} control sequence, or anything
+%that has been \cs{let} to one,
+%\item a control sequence or active character to be defined, 
+%\item possibly a \gr{parameter text} specifying among other things
+%how many parameters the macro has, and
+%\item a replacement text enclosed in explicit character tokens
+%with category codes 1\index{category!1} and~2\index{category!2},
+%by default \verb-{- and~\verb-}-
+%in plain \TeX.
+%\end{enumerate}
+%These elements will all be explained in subsequent sections.
 A \indextermsub{macro}{definition} consists of, in sequence,
 \begin{enumerate} \item any number of \cs{global},
 \cs{long}, and \cs{outer} prefixes,
@@ -114,15 +209,36 @@ in plain \TeX.
 \end{enumerate}
 These elements will all be explained in subsequent sections.
 
+%After a macro definition is completed, any saved \cs{afterassignment}
+%token (see section~\ref{sec:afterassignment}) is inserted.
 After a macro definition is completed, any saved \cs{afterassignment}
 token (see section~\ref{sec:afterassignment}) is inserted.
 
+%The `expanding' definitions \cs{edef} and \cs{xdef}
+%are treated in Chapter~\ref{expand}.
 The `expanding' definitions \cs{edef} and \cs{xdef}
 are treated in Chapter~\ref{expand}.
 
+%%\point Prefixes
+%\section{Prefixes}
 %\point Prefixes
 \section{Prefixes}
 
+%There are three \emph{prefixes}\index{prefixes !macro}
+%that alter the status of the
+%macro definition:
+%\begin{description}
+%\item [\csidx{global}]
+%If the definition occurs inside a  group, this prefix
+%makes the definition global.
+%This prefix can also be used for assignments other than
+%macro definitions; in fact,
+%for macro definitions abbreviations exist obviating the
+%use of \cs{global}:
+%\begin{disp}\verb>\gdef\foo...>\quad is equivalent to\quad \verb>\global\def\foo...>
+%\end{disp} and
+%\begin{disp}\verb>\xdef\foo...>\quad is equivalent to\quad \verb>\global\edef\foo...>
+%\end{disp}
 There are three \emph{prefixes}\index{prefixes !macro}
 that alter the status of the
 macro definition:
@@ -139,6 +255,13 @@ use of \cs{global}:
 \begin{disp}\verb>\xdef\foo...>\quad is equivalent to\quad \verb>\global\edef\foo...>
 \end{disp}
 
+%If the parameter \cs{globaldefs}
+%is positive, all assignments are
+%implicitly global;
+%if\handbreak \cs{globaldefs} is negative any \cs{global} prefixes are
+%ignored,
+%and \cs{gdef} and \cs{xdef} make local definitions
+%(see Chapter~\ref{group}).
 If the parameter \cs{globaldefs}
 is positive, all assignments are
 implicitly global;
@@ -147,6 +270,27 @@ ignored,
 and \cs{gdef} and \cs{xdef} make local definitions
 (see Chapter~\ref{group}).
 
+%\item [\cs{outer}]
+%The mechanism of defining an \indextermbus{outer}{macro} is supposed to facilitate
+%\cstoidx outer\par
+%locating (among other errors) unbalanced braces: an \cs{outer}
+%macro is supposed
+%to  appear only in non-embedded contexts.
+%To be precise, it is not allowed to occur 
+%\begin{itemize}
+%\item in macro replacement texts (but it can appear in
+%    for instance \cs{edef} after 
+%    \cs{noexpand}, and after \cs{meaning}),
+%\item in parameter texts,
+%\item in skipped conditional text,
+%\item in alignment preambles, and
+%\item in the \gram{balanced text} of a \cs{message}, \cs{write},
+%et cetera. \end{itemize}
+%For certain applications, however, it is inconvenient
+%that some of the plain macros  are outer, 
+%in particular macros such as \cs{newskip}. One remedy is to
+%redefine them, without the `outer' option, which
+%is done for instance in \LaTeX, but  cleverer tricks are possible.
 \item [\cs{outer}]
 The mechanism of defining an \indextermbus{outer}{macro} is supposed to facilitate
 \cstoidx outer\par
@@ -169,6 +313,24 @@ in particular macros such as \cs{newskip}. One remedy is to
 redefine them, without the `outer' option, which
 is done for instance in \LaTeX, but  cleverer tricks are possible.
 
+%\item [\cs{long}]
+%Ordinarily, macro parameters are not supposed to contain
+%\cstoidx long\par
+%\cs{par} tokens. This restriction is useful (much more so
+%than the \cs{outer} definitions) in locating
+%forgotten closing braces. 
+%For example, \TeX\ will complain about a `runaway argument'
+%\message{Example on}
+%in the following sequence:
+%\begin{verbatim}
+%\def\a#1{ ... #1 ... }
+%\a {This sentence should be in braces.
+
+%And this is not supposed to be part of the argument
+%\end{verbatim}
+%\message{one page}
+%The empty line generates a \cs{par}, which most of the times
+%means that a closing brace has been forgotten.
 \item [\cs{long}]
 Ordinarily, macro parameters are not supposed to contain
 \cstoidx long\par
@@ -188,14 +350,33 @@ And this is not supposed to be part of the argument
 The empty line generates a \cs{par}, which most of the times
 means that a closing brace has been forgotten.
 
+%If arguments to a particular macro should be allowed
+%to contain \cs{par} tokens,  then the macro must be declared
+%to be \cs{long}. \end{description}
 If arguments to a particular macro should be allowed
 to contain \cs{par} tokens,  then the macro must be declared
 to be \cs{long}. \end{description}
 
+%The \cs{ifx} test for equality of tokens 
+%(see Chapter~\ref{if}) takes prefixes into
+%account when testing whether two tokens have the same definition.
 The \cs{ifx} test for equality of tokens 
 (see Chapter~\ref{if}) takes prefixes into
 account when testing whether two tokens have the same definition.
 
+%\begin{comment}
+%With a little ingenuity it is possible 
+%for \cs{par} tokens to sneak into macro arguments anyway.
+%Consider the example
+%\begin{verbatim}
+%\def\a#1\par!{ ... }
+%\a bc\par ef\par!
+%\end{verbatim}
+%Here the macro \cs{a} is not \cs{long}, but the argument
+%is \verb>bc\par ef>, which contains a \cs{par} token.
+%However,
+%this is of no importance in general.
+%\end{comment}
 \begin{comment}
 With a little ingenuity it is possible 
 for \cs{par} tokens to sneak into macro arguments anyway.
@@ -210,9 +391,19 @@ However,
 this is of no importance in general.
 \end{comment}
 
+%%\point The definition type
+%\section{The definition type}
 %\point The definition type
 \section{The definition type}
 
+%There are four \gr{def} control sequences in \TeX:
+%\csidx{def}, \csidx{gdef}, \csidx{edef}, and \csidx{xdef}.
+%The control sequence 
+%\alt
+%\cs{gdef} is a synonym for \verb>\global\def> and
+%\cs{xdef} is a synonym for \verb>\global\edef>.
+%The `expanding definition' \cs{edef} is treated in 
+%Chapter~\ref{expand}.
 There are four \gr{def} control sequences in \TeX:
 \csidx{def}, \csidx{gdef}, \csidx{edef}, and \csidx{xdef}.
 The control sequence 
@@ -222,15 +413,30 @@ The control sequence
 The `expanding definition' \cs{edef} is treated in 
 Chapter~\ref{expand}.
 
+%The difference between the various types of macro definitions
+%is only relevant at the time of the definition.
+%When a macro is called there is no way of telling how
+%it was defined.
 The difference between the various types of macro definitions
 is only relevant at the time of the definition.
 When a macro is called there is no way of telling how
 it was defined.
 
+%%\point[param:text] The parameter text
+%\section{The parameter text}
+%\label{param:text}
 %\point[param:text] The parameter text
 \section{The parameter text}
 \label{param:text}
 
+%Between the control sequence or active character to be defined
+%and the opening brace of the replacement text, a \gr{parameter
+%text} can occur, somewhat corresponding to \indexterm{arguments}
+%in regular programming languages. This specifies whether the macro has 
+%parameters\index{parameter},
+%how many, and how they are delimited. 
+%The \gr{parameter text} cannot contain
+%explicit braces.
 Between the control sequence or active character to be defined
 and the opening brace of the replacement text, a \gr{parameter
 text} can occur, somewhat corresponding to \indexterm{arguments}
@@ -240,6 +446,15 @@ how many, and how they are delimited.
 The \gr{parameter text} cannot contain
 explicit braces.
 
+%A macro can have at most nine parameters. 
+%A~parameter is indicated by a parameter token,
+%consisting of a macro parameter character
+%(that is, a character of category code~6\index{category!6},
+%in plain \TeX~\verb=#=) 
+%followed by a digit~\n1--\n9. 
+%For instance, \verb>#6>~denotes the sixth parameter of a macro.
+%Parameter tokens cannot appear outside the context
+%of a macro definition.
 A macro can have at most nine parameters. 
 A~parameter is indicated by a parameter token,
 consisting of a macro parameter character
@@ -250,11 +465,25 @@ For instance, \verb>#6>~denotes the sixth parameter of a macro.
 Parameter tokens cannot appear outside the context
 of a macro definition.
 
+%In the parameter text,
+%parameters must be numbered consecutively, starting at~1.
+%A~space after a parameter token is significant,
+%both in the parameter text and the replacement text.
 In the parameter text,
 parameters must be numbered consecutively, starting at~1.
 A~space after a parameter token is significant,
 both in the parameter text and the replacement text.
 
+%Parameters can be delimited or undelimited; this determines what the
+%extent of the macro arguments will be. A~parameter
+%is called undelimited if it is followed immediately
+%by another parameter in the \gr{parameter text}, so in
+%\verb+\def\foo#1#2+ the first parameter is undelimited.
+%A~parameter is also undelimited if it is immediately followed
+%by the opening brace of the replacement text, as in \verb+\def\foo#1{...}+.
+%A~parameter is called delimited if it is followed by any other token; 
+%in \verb+\def\foo#1!#2{...}+ the first parameter is delimited by the
+%exclamation sign.
 Parameters can be delimited or undelimited; this determines what the
 extent of the macro arguments will be. A~parameter
 is called undelimited if it is followed immediately
@@ -266,14 +495,34 @@ A~parameter is called delimited if it is followed by any other token;
 in \verb+\def\foo#1!#2{...}+ the first parameter is delimited by the
 exclamation sign.
 
+%The tokens (zero or more) that are substituted for
+%a parameter when a macro is expanded (or `called')
+%are called
+%the `argument' corresponding to that parameter.
 The tokens (zero or more) that are substituted for
 a parameter when a macro is expanded (or `called')
 are called
 the `argument' corresponding to that parameter.
 
+%%\spoint Undelimited parameters
+%\subsection{Undelimited parameters}
 %\spoint Undelimited parameters
 \subsection{Undelimited parameters}
 
+%When a macro with an \indextermbus{undelimited}{parameter}, for instance
+%a macro \cs{foo} with one parameter
+%\begin{verbatim}
+%\def\foo#1{ ... #1 ...}
+%\end{verbatim}
+%is expanded, \TeX\ scans ahead (without expanding)
+%until a non-blank token is found.
+%If this token is not an explicit \gr{left brace}, 
+%it is taken to be the argument
+%corresponding to the parameter. Otherwise a \gr{balanced text}
+%is absorbed by scanning until the matching explicit
+%\gr{right brace} has been found.
+%This balanced text then
+%constitutes the argument.
 When a macro with an \indextermbus{undelimited}{parameter}, for instance
 a macro \cs{foo} with one parameter
 \begin{verbatim}
@@ -289,6 +538,20 @@ is absorbed by scanning until the matching explicit
 This balanced text then
 constitutes the argument.
 
+%An example with three undelimited parameters follows: with
+%\begin{verbatim}
+%\def\foo#1#2#3{#1(#2)#3}
+%\end{verbatim}
+%the macro call \cs{foo123} gives `\hbox{1(2)3}';
+%but \hbox{\verb-\foo 1 2 3-} also gives the same result.
+%In the call
+%\begin{disp}\cs{foo}\n{\char32 1\char32 2\char 32 3}\end{disp}
+%the first space is skipped in the input processor of \TeX.
+%The argument corresponding to the first parameter is then
+%the~\n1. In order to find the second parameter \TeX\ then
+%skips all blanks, in this case exactly one. As second
+%parameter \TeX\ finds then the~\n2. Similarly the third
+%parameter is~\n3.
 An example with three undelimited parameters follows: with
 \begin{verbatim}
 \def\foo#1#2#3{#1(#2)#3}
@@ -305,6 +568,26 @@ parameter \TeX\ finds then the~\n2. Similarly the third
 parameter is~\n3.
 
 
+%In order to pass several tokens as one undelimited argument
+%one can use braces. With the above definition of \cs{foo}
+%the call \verb>\foo a{bc}d> gives `\hbox{a(bc)d}'.
+%When the argument of a macro is a balanced text instead of
+%a single token, the delimiting braces are not inserted when 
+%the argument is
+%inserted in the replacement text.
+%For example:
+%\begin{verbatim}
+%\def\foo#1{\count0=1#1\relax}
+%\foo{23}
+%\end{verbatim}
+%will expand to \verb>\count0=123\relax>,
+%which assigns the value of 123 to the counter.
+%On the other hand,  the statement
+%\begin{verbatim}
+%\count0=1{23}
+%\end{verbatim}
+%would
+%assign~1 and print~23.
 In order to pass several tokens as one undelimited argument
 one can use braces. With the above definition of \cs{foo}
 the call \verb>\foo a{bc}d> gives `\hbox{a(bc)d}'.
@@ -326,13 +609,25 @@ On the other hand,  the statement
 would
 assign~1 and print~23.
 
+%%\spoint Delimited parameters
+%\subsection{Delimited parameters}
 %\spoint Delimited parameters
 \subsection{Delimited parameters}
 
+%Apart from enclosing it in braces there is another way
+%to pass a sequence of tokens as a single argument to a macro,
+%namely by using a \indextermbus{delimited}{parameter}.
 Apart from enclosing it in braces there is another way
 to pass a sequence of tokens as a single argument to a macro,
 namely by using a \indextermbus{delimited}{parameter}.
 
+%Any non-parameter tokens in the \gr{parameter text} occurring
+%after a macro parameter (that is, after the parameter number
+%following the parameter character)
+%act as a delimiter for that parameter. This includes space tokens:
+%a space after a parameter number is significant.
+%Delimiting tokens can also occur between the control
+%sequence being defined and the first parameter token~\verb>#1>.
 Any non-parameter tokens in the \gr{parameter text} occurring
 after a macro parameter (that is, after the parameter number
 following the parameter character)
@@ -341,6 +636,18 @@ a space after a parameter number is significant.
 Delimiting tokens can also occur between the control
 sequence being defined and the first parameter token~\verb>#1>.
 
+%Character tokens acting as delimiters in the parameter text
+%have both their character code and
+%category code stored; the delimiting character tokens of the
+%actual arguments have to match both.
+%Category codes of such characters may include some that
+%can normally only appear in special contexts; for instance, after
+%the definition
+%\begin{verbatim}
+%\def\foo#1_#2^{...}
+%\end{verbatim}
+%the macro \cs{foo}
+%can be used outside math mode.
 Character tokens acting as delimiters in the parameter text
 have both their character code and
 category code stored; the delimiting character tokens of the
@@ -354,6 +661,12 @@ the definition
 the macro \cs{foo}
 can be used outside math mode.
 
+%When looking for the argument corresponding to
+%a delimited parameter, \TeX\ absorbs all tokens without expansion (but
+%balancing braces) until the 
+%(exact sequence of) delimiting tokens is encountered.
+%The delimiting tokens are not part of the argument;
+%they are removed from the input stream during the macro call.
 When looking for the argument corresponding to
 a delimited parameter, \TeX\ absorbs all tokens without expansion (but
 balancing braces) until the 
@@ -361,9 +674,28 @@ balancing braces) until the
 The delimiting tokens are not part of the argument;
 they are removed from the input stream during the macro call.
 
+%%\spoint Examples with delimited arguments
+%\subsection{Examples with delimited arguments}
 %\spoint Examples with delimited arguments
 \subsection{Examples with delimited arguments}
 
+%As a simple example,
+%\begin{verbatim}
+%\def\DoASentence#1#2.{{#1#2.}}
+%\end{verbatim}
+%defines a macro with an undelimited first parameter,
+%and a second parameter delimited by a period.
+%In the call
+%\begin{verbatim}
+%\DoASentence \bf This sentence is the argument.
+%\end{verbatim}
+%the arguments are:
+%\begin{verbatim}
+%#1<-\bf
+%#2<-This sentence is the argument
+%\end{verbatim}
+%Note that the closing period is not in the argument, but it has
+%been absorbed; it is no longer in the input stream.
 As a simple example,
 \begin{verbatim}
 \def\DoASentence#1#2.{{#1#2.}}
@@ -382,6 +714,18 @@ the arguments are:
 Note that the closing period is not in the argument, but it has
 been absorbed; it is no longer in the input stream.
 
+%A~commonly used delimiter is \cs{par}:
+%\begin{verbatim}
+%\def\section#1. #2\par{\medskip\noindent {\bf#1. #2\par}}
+%\end{verbatim}
+%This macro has a first parameter that is delimited by~`\n{.\char32}',
+%and a second parameter that is delimited by \cs{par}.
+%The call\message{example on one page}
+%\begin{verbatim}
+%\section 2.5. Some title
+
+%The text of the section...
+%\end{verbatim}
 A~commonly used delimiter is \cs{par}:
 \begin{verbatim}
 \def\section#1. #2\par{\medskip\noindent {\bf#1. #2\par}}
@@ -394,6 +738,24 @@ The call\message{example on one page}
 
 The text of the section...
 \end{verbatim}
+%will give
+%\begin{disp}\verb>#1<-2.5>\nl
+%\verb>#2<-Some title>\n{\char32}\end{disp}
+%Note that there is a space at the end of the second argument
+%generated by the line end. If this space is unwanted one might
+%define
+%\begin{verbatim}
+%\def\section#1. #2 \par{...}
+%\end{verbatim}
+%with \n{\char32}\cs{par} delimiting the second
+%argument. This approach, however,
+%precludes  the user's writing the \cs{par} explicitly:
+%\begin{verbatim}
+%\section 2.5 Some title\par
+%\end{verbatim}
+%One way out of this dilemma is to write
+%\verb>#2\unskip> on all places in the definition text
+%where the trailing space would be unwanted.
 will give
 \begin{disp}\verb>#1<-2.5>\nl
 \verb>#2<-Some title>\n{\char32}\end{disp}
@@ -413,6 +775,13 @@ One way out of this dilemma is to write
 \verb>#2\unskip> on all places in the definition text
 where the trailing space would be unwanted.
 
+%Control sequences acting as delimiters need not be defined,
+%as they are absorbed without expansion. Thus
+%\begin{verbatim}
+%\def\control#1\sequence{...}
+%\end{verbatim}
+%is a useful
+%definition, even if \cs{sequence} is undefined.
 Control sequences acting as delimiters need not be defined,
 as they are absorbed without expansion. Thus
 \begin{verbatim}
@@ -421,6 +790,26 @@ as they are absorbed without expansion. Thus
 is a useful
 definition, even if \cs{sequence} is undefined.
 
+%The importance of category codes in delimited arguments
+%is shown by the following example:
+%\begin{verbatim}
+%\def\a#1 #2.{ ... }
+%\catcode`\ =12
+%\a b c
+%d.
+%\end{verbatim}
+%which gives
+%\begin{verbatim}
+%\a #1 #2.-> ...
+%#1<- b c
+%#2<-d
+%\end{verbatim}
+%Explanation: the delimiter between parameters 1 and~2 is a space
+%of category~10\index{category!10}.
+%In between \n{a} and \n{b} there is a space
+%of category~12\index{category!12};
+%the first space of  category~10
+%is the space that is generated by the line end.
 The importance of category codes in delimited arguments
 is shown by the following example:
 \begin{verbatim}
@@ -442,20 +831,40 @@ of category~12\index{category!12};
 the first space of  category~10
 is the space that is generated by the line end.
 
+%For a `real-life' application of matching of category codes,
+%see the explanation of \cs{newif} in Chapter~\ref{if},
+%and the example on page~\pageref{ex:jobnumber}.
 For a `real-life' application of matching of category codes,
 see the explanation of \cs{newif} in Chapter~\ref{if},
 and the example on page~\pageref{ex:jobnumber}.
 
 
+%%\spoint Empty arguments
+%\subsection{Empty arguments}
 %\spoint Empty arguments
 \subsection{Empty arguments}
 
+%If the user specifies a \gr{balanced text} in braces
+%when \TeX\ expects a macro
+%argument, that text is used as the argument.
+%Thus, specifying \verb-{}- will give an argument that is
+%an empty list of tokens; this is called an `empty argument'.
 If the user specifies a \gr{balanced text} in braces
 when \TeX\ expects a macro
 argument, that text is used as the argument.
 Thus, specifying \verb-{}- will give an argument that is
 an empty list of tokens; this is called an `empty argument'.
 
+%Empty arguments can also arise from the use of delimited
+%parameters. For example, after the definition
+%\begin{verbatim}
+%\def\mac#1\ro{ ... }
+%\end{verbatim}
+%the call
+%\begin{verbatim}
+%\mac\ro
+%\end{verbatim}
+%will give an empty argument. 
 Empty arguments can also arise from the use of delimited
 parameters. For example, after the definition
 \begin{verbatim}
@@ -467,6 +876,22 @@ the call
 \end{verbatim}
 will give an empty argument. 
 
+%\begin{comment}
+%However, only
+%one empty argument can be created this way: 
+%if the macro had been defined as
+%\begin{verbatim}
+%\def\mac#1#2\ro{ ... }
+%\end{verbatim}
+%the same call
+%\begin{verbatim}
+%\mac\ro \othermacro \stillothermacro
+%\end{verbatim}
+%will probably cause a `\n{Runaway argument?}' error message.
+%Explanation: the first parameter is undelimited, so the corresponding
+%argument is `\cs{ro}'; after that \TeX\ starts looking for a list
+%of tokens delimited by~\cs{ro}.
+%\end{comment}
 \begin{comment}
 However, only
 one empty argument can be created this way: 
@@ -484,8 +909,16 @@ argument is `\cs{ro}'; after that \TeX\ starts looking for a list
 of tokens delimited by~\cs{ro}.
 \end{comment}
 
+%\subsection{The macro parameter character}
 \subsection{The macro parameter character}
 
+%When \TeX's input processor scans a macro definition text, it inserts
+%a parameter token for any occurrence of a macro
+%\indextermsub{parameter}{character}\index{character!parameter}
+%followed by a digit.  In effect, a
+%parameter token in the replacement text states `insert parameter
+%number such and such here'.  Two parameter characters in a row are
+%replaced by a single one.
 When \TeX's input processor scans a macro definition text, it inserts
 a parameter token for any occurrence of a macro
 \indextermsub{parameter}{character}\index{character!parameter}
@@ -494,6 +927,15 @@ parameter token in the replacement text states `insert parameter
 number such and such here'.  Two parameter characters in a row are
 replaced by a single one.
 
+%The latter fact can be used for nested macro definitions.
+%\label{nest:def}\howto Nested macro definitions\par
+%Thus
+%\begin{verbatim}
+%\def\a{\def\b#1{...}}
+%\end{verbatim}
+%gives an error message
+%because \cs{a} was defined without parameters, and
+%yet there is a parameter token in its replacement text.
 The latter fact can be used for nested macro definitions.
 \label{nest:def}\howto Nested macro definitions\par
 Thus
@@ -504,6 +946,22 @@ gives an error message
 because \cs{a} was defined without parameters, and
 yet there is a parameter token in its replacement text.
 
+%The following
+%\begin{verbatim}
+%\def\a#1{\def\b#1{...}}
+%\end{verbatim}
+%defines a macro \cs{a} that
+%defines a macro \cs{b}. However, \cs{b} still does not
+%have any parameters: the call
+%\begin{verbatim}
+%\a z
+%\end{verbatim}
+%defines a macro \cs{b} without parameters,
+%that has to be followed by a~\n z.
+%Note that this
+%does not attempt to define a macro \cs{bz}, because the
+%control sequence \cs{b} has already been formed in \TeX's
+%input processor when that input line was read.
 The following
 \begin{verbatim}
 \def\a#1{\def\b#1{...}}
@@ -521,6 +979,12 @@ does not attempt to define a macro \cs{bz}, because the
 control sequence \cs{b} has already been formed in \TeX's
 input processor when that input line was read.
 
+%Finally,
+%\begin{verbatim}
+%\def\a{\def\b##1{...}}
+%\end{verbatim}
+%defines a macro \cs{b} 
+%with one parameter.
 Finally,
 \begin{verbatim}
 \def\a{\def\b##1{...}}
@@ -528,6 +992,23 @@ Finally,
 defines a macro \cs{b} 
 with one parameter.
 
+%Let us examine the handling of the parameter character
+%in some detail.
+%Consider
+%\begin{verbatim}
+%\def\a#1{ .. #1 .. \def\b##1{ ... }}
+%\end{verbatim}
+%When this is read as input, the input processor
+%\begin{itemize}
+%\item replaces the characters \verb>#1> by \gr{parameter token$_1$}, and
+%\item replaces the characters \verb>##> by \verb>#>\end{itemize}
+%A macro call of \cs{a} will then let the input processor scan
+%\begin{verbatim}
+%\def\b#1{ ... }
+%\end{verbatim}
+%in which the two characters \verb>#1> are
+%\alt
+%replaced by a parameter token.
 Let us examine the handling of the parameter character
 in some detail.
 Consider
@@ -546,15 +1027,30 @@ in which the two characters \verb>#1> are
 \alt
 replaced by a parameter token.
 
+%%\spoint Brace delimiting
+%\subsection{Brace delimiting}
 %\spoint Brace delimiting
 \subsection{Brace delimiting}
 
+%Ordinarily, it is not possible to have left or right
+%braces in the \gr{parameter text} of a definition.
+%There is a special mechanism, however, that can make
+%the last parameter of a macro act as if it is delimited
+%by an opening brace. 
 Ordinarily, it is not possible to have left or right
 braces in the \gr{parameter text} of a definition.
 There is a special mechanism, however, that can make
 the last parameter of a macro act as if it is delimited
 by an opening brace. 
 
+%If the last parameter token
+%is followed by a parameter character (\verb>#>),
+%which in turn is followed by the opening brace of the
+%replacement text, \TeX\ makes the last parameter
+%be delimited by a beginning-of-group character.
+%Furthermore, unlike other delimiting tokens in
+%parameter texts, this opening brace is not
+%removed from the input stream.
 If the last parameter token
 is followed by a parameter character (\verb>#>),
 which in turn is followed by the opening brace of the
@@ -564,6 +1060,23 @@ Furthermore, unlike other delimiting tokens in
 parameter texts, this opening brace is not
 removed from the input stream.
 
+%Consider an example.
+%Suppose we want to have a macro
+%\cs{every} that can fill token lists as follows:
+%\begin{verbatim}
+%\every par{abc} \every display{def}
+%\end{verbatim}
+%This macro can be defined as
+%\begin{verbatim}
+%\def\every#1#{\csname every#1\endcsname}
+%\end{verbatim}
+%In the first call above, the argument corresponding to
+%the parameter is \n{abc}, so the call 
+%expands to
+%\begin{verbatim}
+%\csname everypar\endcsname{abc}
+%\end{verbatim}
+%which gives the desired result.
 Consider an example.
 Suppose we want to have a macro
 \cs{every} that can fill token lists as follows:
@@ -583,9 +1096,18 @@ expands to
 which gives the desired result.
 
 
+%\section{Construction of control sequences}
+%\label{cs:name}
 \section{Construction of control sequences}
 \label{cs:name}
 
+%The commands \csidx{csname} and \csidx{endcsname} can be used
+%to construct a control sequence. 
+%For instance
+%\begin{verbatim}
+%\csname hskip\endcsname 5pt
+%\end{verbatim}
+%is equivalent to \verb=\hskip5pt=.
 The commands \csidx{csname} and \csidx{endcsname} can be used
 to construct a control sequence. 
 For instance
@@ -594,6 +1116,21 @@ For instance
 \end{verbatim}
 is equivalent to \verb=\hskip5pt=.
 
+%During this construction process
+%all macros and other expandable control sequences
+%between \cs{csname} and \cs{endcsname}
+%are expanded as usual, until only unexpandable
+%character tokens remain. A~variation of the above example,
+%\begin{verbatim}
+%\csname \ifhmode h\else v\fi skip\endcsname 5pt
+%\end{verbatim}
+%performs an \cs{hskip} or \cs{vskip} depending on the mode.
+%The final result of the expansion should 
+%consist of only character tokens, but
+%their category codes do not matter.
+%An unexpandable control sequence gives an error here:
+%\TeX\ will insert an \cs{endcsname} right before it
+%as an attempt at error recovery.
 During this construction process
 all macros and other expandable control sequences
 between \cs{csname} and \cs{endcsname}
@@ -610,6 +1147,23 @@ An unexpandable control sequence gives an error here:
 \TeX\ will insert an \cs{endcsname} right before it
 as an attempt at error recovery.
 
+%With \cs{csname} it is possible to construct
+%control sequences that cannot ordinarily be written,
+%because the constituent character tokens may have another category
+%\alt
+%than~11, letter. This principle can be used to hide
+%\howto Hide counters from the user\par
+%inner control sequences of a macro package from the user.
+%\begin{example}
+%\begin{verbatim}
+%\def\newcounter#1{\expandafter\newcount
+%    \csname #1:counter\endcsname}
+%\def\stepcounter#1{\expandafter\advance
+%    \csname #1:counter\endcsname 1\relax}
+%\end{verbatim}
+%In the second definition the \cs{expandafter} is superfluous,
+%but it does no harm, and it is conceptually clearer.
+%\end{example}
 With \cs{csname} it is possible to construct
 control sequences that cannot ordinarily be written,
 because the constituent character tokens may have another category
@@ -628,6 +1182,14 @@ In the second definition the \cs{expandafter} is superfluous,
 but it does no harm, and it is conceptually clearer.
 \end{example}
 
+%The name of the actual counter created by \cs{newcounter}
+%contains a colon, so that it takes some effort to write this
+%control sequence. In effect, the counter
+%is now hidden from the user, who can only
+%access it through control sequences such as \cs{stepcounter}.
+%By the way, the macro \cs{newcount} is defined \cs{outer} in
+%the plain format, so the above definition of \cs{newcounter}
+%can only be written after \cs{newcount} has been redefined.
 The name of the actual counter created by \cs{newcounter}
 contains a colon, so that it takes some effort to write this
 control sequence. In effect, the counter
@@ -637,6 +1199,21 @@ By the way, the macro \cs{newcount} is defined \cs{outer} in
 the plain format, so the above definition of \cs{newcounter}
 can only be written after \cs{newcount} has been redefined.
 
+%If a control sequence formed with \verb>\csname...\endcsname>
+%has not been defined
+%before, its meaning is set to \cs{relax}.
+%Thus if \verb=\xx= is an undefined control sequence, the
+%command
+%\begin{verbatim}
+%\csname xx\endcsname
+%\end{verbatim}
+%will {\em not\/}
+%give an error message, as it is equivalent to \verb=\relax=.
+%Moreover, after this execution of the
+%\verb-\csname...\endcsname- statement, the control sequence
+%\verb=\xx= is itself equivalent to \cs{relax}, so it
+%will no longer give an `undefined control sequence' error
+%(see also page~\pageref{relax:cs}).
 If a control sequence formed with \verb>\csname...\endcsname>
 has not been defined
 before, its meaning is set to \cs{relax}.
@@ -654,9 +1231,19 @@ will no longer give an `undefined control sequence' error
 (see also page~\pageref{relax:cs}).
 
 
+%%\point Token assignments by \cs{let} and \cs{futurelet}
+%\section{Token assignments by \protect\cs{let} and \protect\cs{futurelet}}
 %\point Token assignments by \cs{let} and \cs{futurelet}
 \section{Token assignments by \protect\cs{let} and \protect\cs{futurelet}}
 
+%There are two \gr{let assignment}s in \TeX.
+%Their syntax is
+%\begin{disp}\cs{let}\gr{control sequence}\gr{equals}%
+%     \gr{one optional space}\gr{token}\nl
+%     \cs{futurelet}\gr{control sequence}\gr{token}\gr{token}
+%     \end{disp}
+%In the syntax of a \cs{futurelet} assignment
+%no optional equals sign appears.
 There are two \gr{let assignment}s in \TeX.
 Their syntax is
 \begin{disp}\cs{let}\gr{control sequence}\gr{equals}%
@@ -666,13 +1253,29 @@ Their syntax is
 In the syntax of a \cs{futurelet} assignment
 no optional equals sign appears.
 
+%%\spoint[let] \cs{let}
+%\subsection{\protect\cs{let}}
+%\label{let}
 %\spoint[let] \cs{let}
 \subsection{\protect\cs{let}}
 \label{let}
 
+%The primitive command \csidx{let} assigns the current meaning
+%of a~token to a control sequence or active character.
 The primitive command \csidx{let} assigns the current meaning
 of a~token to a control sequence or active character.
 
+%For instance, in the plain format \cs{endgraf} is defined
+%as
+%\begin{verbatim}
+%\let\endgraf=\par
+%\end{verbatim}
+%This enables macro writers to redefine \cs{par}, while
+%still having the functionality of the primitive \cs{par}
+%command available. For example,
+%\begin{verbatim}
+%\everypar={\bgroup\it\def\par{\endgraf\egroup}}
+%\end{verbatim}
 For instance, in the plain format \cs{endgraf} is defined
 as
 \begin{verbatim}
@@ -685,13 +1288,25 @@ command available. For example,
 \everypar={\bgroup\it\def\par{\endgraf\egroup}}
 \end{verbatim}
 
+%The case where the \gr{token} to be assigned is not a control
+%sequence but a character token instead has been treated 
+%in Chapter~\ref{char}.
 The case where the \gr{token} to be assigned is not a control
 sequence but a character token instead has been treated 
 in Chapter~\ref{char}.
 
+%%\spoint \cs{futurelet}
+%\subsection{\protect\cs{futurelet}}
 %\spoint \cs{futurelet}
 \subsection{\protect\cs{futurelet}}
 
+%As was explained above, the sequence with \cs{let}
+%\begin{disp}\cs{let}\gr{control sequence}\gr{token$_1$}\gr{token$_2$}%
+%       \gr{token$_3$}\gr{token$\cdots$}\end{disp}
+%assigns (the meaning of) \gr{token$_1$} to the control sequence, 
+%and the remaining input stream looks like
+%\begin{disp}\gr{token$_2$}\gr{token$_3$}\gr{token$\cdots$}\end{disp}
+%That is, the \gr{token$_1$} has disappeared from the stream.
 As was explained above, the sequence with \cs{let}
 \begin{disp}\cs{let}\gr{control sequence}\gr{token$_1$}\gr{token$_2$}%
        \gr{token$_3$}\gr{token$\cdots$}\end{disp}
@@ -700,6 +1315,18 @@ and the remaining input stream looks like
 \begin{disp}\gr{token$_2$}\gr{token$_3$}\gr{token$\cdots$}\end{disp}
 That is, the \gr{token$_1$} has disappeared from the stream.
 
+%The command \csidx{futurelet} works slightly differently:
+%given the input stream
+%\begin{disp}\cs{futurelet}\gr{control sequence}\gr{token$_1$}\gr{token$_2$}%
+%       \gr{token$_3$}\gr{token$\cdots$}\end{disp}
+%it assigns (the meaning of) \gr{token$_2$} to the control sequence, 
+%and the remaining stream looks like
+%\begin{disp}\gr{token$_1$}\gr{token$_2$}\gr{token$_3$}\gr{token$\cdots$}\end{disp}
+%That is, neither \gr{token$_1$} nor \gr{token$_2$} has
+%been lifted from the stream.
+%However, now \gr{token$_1$}
+%`knows' what \gr{token$_2$} is, without having had to absorb it
+%as a macro parameter. See an example below.
 The command \csidx{futurelet} works slightly differently:
 given the input stream
 \begin{disp}\cs{futurelet}\gr{control sequence}\gr{token$_1$}\gr{token$_2$}%
@@ -713,17 +1340,31 @@ However, now \gr{token$_1$}
 `knows' what \gr{token$_2$} is, without having had to absorb it
 as a macro parameter. See an example below.
 
+%If a character token has been \cs{futurelet} to a control
+%sequence, its category code is fixed.
+%The subsequent \gr{token$_1$} cannot change
+%it anymore.
 If a character token has been \cs{futurelet} to a control
 sequence, its category code is fixed.
 The subsequent \gr{token$_1$} cannot change
 it anymore.
 
+%%\point Assorted remarks
+%\section{Assorted remarks}
 %\point Assorted remarks
 \section{Assorted remarks}
 
+%%\spoint Active characters
+%\subsection{Active characters}
 %\spoint Active characters
 \subsection{Active characters}
 
+%A character token of category~13\index{category!13} is called an
+%\indexterm{active character}, and it
+%can be defined just like a control sequence.
+%If the definition of the character appears inside a macro,
+%the character has to be active at the time of the definition
+%of that macro.
 A character token of category~13\index{category!13} is called an
 \indexterm{active character}, and it
 can be defined just like a control sequence.
@@ -731,6 +1372,17 @@ If the definition of the character appears inside a macro,
 the character has to be active at the time of the definition
 of that macro.
 
+%Consider for example the following definition
+%(taken from Chapter~\ref{mouth}):
+%\begin{verbatim}
+%{\catcode`\^^M=13 %
+% \gdef\obeylines{\catcode`\^^M=13 \def^^M{\par}}%
+%}
+%\end{verbatim}
+%The unusual category of the \verb>^^M> character
+%has to be set during the definition of \cs{obeylines},
+%otherwise \TeX\ would think that the line ended
+%after \cs{def}.
 Consider for example the following definition
 (taken from Chapter~\ref{mouth}):
 \begin{verbatim}
@@ -743,8 +1395,28 @@ has to be set during the definition of \cs{obeylines},
 otherwise \TeX\ would think that the line ended
 after \cs{def}.
 
+%\subsection{Macros versus primitives}
 \subsection{Macros versus primitives}
 
+%The distinction between \indexterm{primitive
+%  commands}\indexterm{command !primitive} and user macros is not
+%nearly as important in \TeX\ as it is in other programming
+%languages.
+%\begin{itemize}
+%\item The user can use primitive commands under different names:
+%     
+%\begin{verbatim}
+%\let\StopThisParagraph=\par
+%\end{verbatim}
+%\item Names of primitive commands can be used for
+%      user macros:
+%\begin{verbatim}
+%\def\par{\hfill$\bullet$\endgraf}
+%\end{verbatim}
+%\item Both user macros and a number of \TeX\ primitives
+%      are subject to expansion, for instance all conditionals,
+%      and commands such as \cs{number} and~\cs{jobname}.
+%\end{itemize}
 The distinction between \indexterm{primitive
   commands}\indexterm{command !primitive} and user macros is not
 nearly as important in \TeX\ as it is in other programming
@@ -765,9 +1437,19 @@ languages.
       and commands such as \cs{number} and~\cs{jobname}.
 \end{itemize}
 
+%%\spoint Tail recursion
+%\subsection{Tail recursion}
 %\spoint Tail recursion
 \subsection{Tail recursion}
 
+%Macros in \TeX, like procedures in most modern programming
+%languages, are allowed to be \emph{recursive}\index{recursion}: that is, the 
+%definition of a macro can contain a call to this same macro,
+%or to another macro that will call this macro.
+%Recursive macros tend to clutter up \TeX's memory
+%if too many `incarnations' of such a macro are active
+%at the same time. However, \TeX\ is able to prevent this
+%in one frequently occurring case of recursion: tail recursion.
 Macros in \TeX, like procedures in most modern programming
 languages, are allowed to be \emph{recursive}\index{recursion}: that is, the 
 definition of a macro can contain a call to this same macro,
@@ -777,6 +1459,18 @@ if too many `incarnations' of such a macro are active
 at the same time. However, \TeX\ is able to prevent this
 in one frequently occurring case of recursion: tail recursion.
 
+%In order to  appreciate what goes on here, some background
+%knowledge is needed. When \TeX\ starts executing a macro
+%it absorbs the parameters, and places an item pointing to
+%the replacement text on the \indextermsub{input}{stack},
+%so that the scanner will next be directed to
+%this replacement. Once it has been processed, the item on the 
+%input stack can be removed.
+%However, if the definition text
+%of a macro contains further macros, this process will be
+%repeated for them: new items may be placed on the input stack
+%directing the scanner to other macros
+%even before the first one has been completed.
 In order to  appreciate what goes on here, some background
 knowledge is needed. When \TeX\ starts executing a macro
 it absorbs the parameters, and places an item pointing to
@@ -790,6 +1484,14 @@ repeated for them: new items may be placed on the input stack
 directing the scanner to other macros
 even before the first one has been completed.
 
+%In general this `stack build-up' is a necessary evil, but
+%it can be prevented if the nested macro call is the
+%{\em last\/} token in the replacement text of the original
+%macro. After the last token no further tokens need to be
+%considered, so one might as well clear the top item
+%from the input stack
+%before a new one is put there.
+%This is what \TeX\ does.
 In general this `stack build-up' is a necessary evil, but
 it can be prevented if the nested macro call is the
 {\em last\/} token in the replacement text of the original
@@ -799,6 +1501,32 @@ from the input stack
 before a new one is put there.
 This is what \TeX\ does.
 
+%The \csidx{loop} macro of plain \TeX\ provides a good illustration
+%\label{loop:ex}
+%of this principle. The definition is
+%\begin{verbatim}
+%\def\loop#1\repeat{\def\body{#1}\iterate}
+%\def\iterate{\body \let\next=\iterate
+%    \else \let\next=\relax\fi \next}
+%\end{verbatim}
+%and this macro can be called for example as follows:
+%\begin{verbatim}
+%\loop \message{\number\MyCount}
+%    \advance\MyCount by 1
+%    \ifnum\MyCount<100 \repeat
+%\end{verbatim}
+%The macro \cs{iterate} can call itself and, when it does so,
+%the recursive call is performed by the last token in the list.
+%It would have been possible to define \cs{iterate}
+%as
+%\begin{verbatim}
+%\def\iterate{\body \iterate\fi}
+%\end{verbatim}
+%but then \TeX\ would not have been able to resolve the recursion
+%as the call \cs{iterate} is not the last token in the replacement
+%text of \cs{iterate}. Assigning \verb>\let\next=\iterate>
+%is here a way to let
+%the recursive call be the last token in the list.
 The \csidx{loop} macro of plain \TeX\ provides a good illustration
 \label{loop:ex}
 of this principle. The definition is
@@ -826,6 +1554,15 @@ text of \cs{iterate}. Assigning \verb>\let\next=\iterate>
 is here a way to let
 the recursive call be the last token in the list.
 
+%Another way of resolving tail recursion is to use
+%\cs{expandafter} (see page~\pageref{after:cond}): in
+%\begin{verbatim}
+%\def\iterate{\body \expandafter\iterate\fi}
+%\end{verbatim}
+%it removes the \cs{fi} token.
+%Tail recursion would also be resolved if the last
+%tokens in the list were arguments for the
+%recursive macro.
 Another way of resolving tail recursion is to use
 \cs{expandafter} (see page~\pageref{after:cond}): in
 \begin{verbatim}
@@ -836,6 +1573,15 @@ Tail recursion would also be resolved if the last
 tokens in the list were arguments for the
 recursive macro.
 
+%An aside: by defining \cs{iterate} as
+%\begin{verbatim}
+%\def\iterate{\let\next\relax 
+%    \body \let\next\iterate \fi \next}
+%\end{verbatim}
+%it becomes possible to write
+%\begin{verbatim}
+%\loop ... \if... ... \else ... \repeat
+%\end{verbatim}
 An aside: by defining \cs{iterate} as
 \begin{verbatim}
 \def\iterate{\let\next\relax 
@@ -846,18 +1592,39 @@ it becomes possible to write
 \loop ... \if... ... \else ... \repeat
 \end{verbatim}
 
+%%\point Macro techniques
+%\section{Macro techniques}
 %\point Macro techniques
 \section{Macro techniques}
 
+%%\spoint Unknown number of arguments
+%\subsection{Unknown number of arguments}
 %\spoint Unknown number of arguments
 \subsection{Unknown number of arguments}
 
+%In some applications,
+%\howto  Macros with an undetermined number
+%of arguments\par
+%a macro is needed that can have a
+%number of arguments that is not specified in advance.
 In some applications,
 \howto  Macros with an undetermined number
 of arguments\par
 a macro is needed that can have a
 number of arguments that is not specified in advance.
 
+%Consider the problem of translating a position on a chess board
+%(for full macros and fonts, see~\cite{chess} and~\cite{Tut}),
+%given like
+%\begin{verbatim}
+%\White(Ke1,Qd1,Na1,e2,f4)
+%\end{verbatim} 
+%to a sequence of typesetting instructions
+%\begin{verbatim}
+%\WhitePiece{K}{e1} \WhitePiece{Q}{d1} \WhitePiece{N}{a1} 
+%\WhitePiece{P}{e2} \WhitePiece{P}{f4}
+%\end{verbatim}
+%Note that for pawns the `P' is omitted in the list of positions.
 Consider the problem of translating a position on a chess board
 (for full macros and fonts, see~\cite{chess} and~\cite{Tut}),
 given like
@@ -871,6 +1638,27 @@ to a sequence of typesetting instructions
 \end{verbatim}
 Note that for pawns the `P' is omitted in the list of positions.
 
+%The first problem is that the list of pieces 
+%is of variable length, so we append a terminator piece:
+%\begin{verbatim}
+%\def\White(#1){\xWhite#1,xxx,}
+%\def\endpiece{xxx}
+%\end{verbatim}
+%for which we can test.
+%Next, the macro \cs{xWhite} takes one position from the list,
+%tests whether it is the terminator, and if not,
+%subjects it to a test to see whether it is a pawn.
+%\begin{verbatim}
+%\def\xWhite#1,{\def\temp{#1}%
+%    \ifx\temp\endpiece 
+%    \else \WhitePieceOrPawn#1XY%
+%          \expandafter\xWhite 
+%    \fi}
+%\end{verbatim}
+%An \cs{expandafter} command is necessary to remove the
+%\cs{fi} (see page~\pageref{after:cond}), so that 
+%\cs{xWhite} will get the next position as argument
+%instead of \cs{fi}.
 The first problem is that the list of pieces 
 is of variable length, so we append a terminator piece:
 \begin{verbatim}
@@ -893,6 +1681,17 @@ An \cs{expandafter} command is necessary to remove the
 \cs{xWhite} will get the next position as argument
 instead of \cs{fi}.
 
+%Positions  are either two or three characters long.
+%The call to \cs{White\-Piece\-OrPawn}, a four-parameter macro,
+%appended a terminator string \n{XY}. 
+%In the case of a pawn, therefore, argument~3 is the character~\n X
+%and argument~4 is empty; for all other pieces argument~1
+%is the piece, 2~and~3 are the position, and argument~4 is~\n X.
+%\begin{verbatim}
+%\def\WhitePieceOrPawn#1#2#3#4Y{
+%    \if#3X \WhitePiece{P}{#1#2}%
+%    \else  \WhitePiece{#1}{#2#3}\fi}
+%\end{verbatim}
 Positions  are either two or three characters long.
 The call to \cs{White\-Piece\-OrPawn}, a four-parameter macro,
 appended a terminator string \n{XY}. 
@@ -905,9 +1704,18 @@ is the piece, 2~and~3 are the position, and argument~4 is~\n X.
     \else  \WhitePiece{#1}{#2#3}\fi}
 \end{verbatim}
 
+%%\spoint Examining the argument
+%\subsection{Examining the argument}
 %\spoint Examining the argument
 \subsection{Examining the argument}
 
+%It may be necessary in some cases to test whether a macro
+%\howto Examine a macro argument for the presence of some element\par
+%\howto Apply \cs{uppercase} when the argument has a \cs{footnote}\par
+%argument contains some element. For a real-life example,
+%consider the following (see also the \cs{DisplayEquation}
+%\alt
+%example on page~\pageref{left:display}).
 It may be necessary in some cases to test whether a macro
 \howto Examine a macro argument for the presence of some element\par
 \howto Apply \cs{uppercase} when the argument has a \cs{footnote}\par
@@ -916,6 +1724,28 @@ consider the following (see also the \cs{DisplayEquation}
 \alt
 example on page~\pageref{left:display}).
 
+%Suppose the title and author of an article are given as
+%\begin{verbatim}
+%\title{An angle trisector}
+%\author{A.B. Cee\footnote*{Research supported by the
+%Very Big Company of America}}
+%\end{verbatim}
+%with multiple authors
+%given as
+%\begin{verbatim}
+%\author{A.B. Cee\footnote*{Supported by NSF grant 1}
+%        \and
+%        X.Y. Zee\footnote{**}{Supported by NATO grant 2}}
+%\end{verbatim}
+%Suppose further that the \cs{title} and \cs{author} macros
+%are defined as
+%\begin{verbatim}
+%\def\title#1{\def\TheTitle{#1}}  \def\author#1{\def\TheAuthor{#1}}
+%\end{verbatim}
+%which will be used as
+%\begin{verbatim}
+%\def\ArticleHeading{ ... \TheTitle ... \TheAuthor ... }
+%\end{verbatim}
 Suppose the title and author of an article are given as
 \begin{verbatim}
 \title{An angle trisector}
@@ -939,6 +1769,25 @@ which will be used as
 \def\ArticleHeading{ ... \TheTitle ... \TheAuthor ... }
 \end{verbatim}
 
+%For some journals it is required to
+%have the authorship and the title of the article in all capitals.
+%The implementation of this could be
+%\begin{verbatim}
+%\def\ArticleCapitalHeading
+%   { ...
+%    \uppercase\expandafter{\TheTitle}
+%     ...
+%    \uppercase\expandafter{\TheAuthor}
+%     ...
+%   }
+%\end{verbatim}
+%Now the \cs{expandafter} commands will expand the title and
+%author into the actual texts, and the \cs{uppercase} commands
+%will capitalize them. However, for the authors this is wrong,
+%since the \cs{uppercase} command will also capitalize the
+%footnote texts.
+%The problem is then to uppercase only the parts
+%of the title in between the footnotes.
 For some journals it is required to
 have the authorship and the title of the article in all capitals.
 The implementation of this could be
@@ -959,6 +1808,26 @@ footnote texts.
 The problem is then to uppercase only the parts
 of the title in between the footnotes.
 
+%As a first attempt, let us take the case of one author, and
+%let the basic call be
+%\begin{verbatim}
+%\expandafter\UCnoFootnote\TheAuthor
+%\end{verbatim}
+%This expands into
+%\begin{verbatim}
+%\UCnoFootnote A.B. Cee\footnote*{Supported ... }
+%\end{verbatim}
+%The macro
+%\begin{verbatim}
+%\def\UCnoFootnote#1\footnote#2#3{\uppercase{#1}\footnote{#2}{#3}}
+%\end{verbatim}
+%will analyse this correctly:
+%\begin{verbatim}
+%#1<-A.B. Cee
+%#2<-*
+%#3<-Supported ...
+%\end{verbatim}
+%However, if there is no footnote, this macro is completely wrong.
 As a first attempt, let us take the case of one author, and
 let the basic call be
 \begin{verbatim}
@@ -980,6 +1849,25 @@ will analyse this correctly:
 \end{verbatim}
 However, if there is no footnote, this macro is completely wrong.
 
+%As a first refinement we add a footnote ourselves, just to make
+%sure that one is present:
+%\begin{verbatim}
+%\expandafter\UCnoFootnote\TheAuthor\footnote 00
+%\end{verbatim}
+%Now we have to test what kind of footnote we find:
+%\begin{verbatim}
+%\def\stopper{0}
+%\def\UCnoFootnote#1\footnote#2#3{\uppercase{#1}\def\tester{#2}%
+%    \ifx\stopper\tester
+%    \else\footnote{#2}{#3}\fi}
+%\end{verbatim}
+%With \cs{ifx} we test the delimiter footnote sign against the
+%actual sign encountered. Note that a solution with
+%\begin{verbatim}
+%\ifx0#2
+%\end{verbatim}
+%would be wrong if the footnote sign consists
+%of more than one token, for instance~\verb>{**}>.
 As a first refinement we add a footnote ourselves, just to make
 sure that one is present:
 \begin{verbatim}
@@ -1000,6 +1888,21 @@ actual sign encountered. Note that a solution with
 would be wrong if the footnote sign consists
 of more than one token, for instance~\verb>{**}>.
 
+%The macro so far is correct if there was no footnote,
+%but if there was one it is wrong:
+%the terminating tokens remain to be disposed of.
+%They are taken care of in the following version:
+%\begin{verbatim}
+%\def\stopper{0}
+%\def\UCnoFootnote#1\footnote#2#3{\uppercase{#1}\def\tester{#2}%
+%    \ifx\stopper\tester
+%    \else\footnote{#2}{#3}\expandafter\UCnoFootnote
+%    \fi}
+%\end{verbatim}
+%A repeated call to \cs{UCnoFootnote} removes the delimiter tokens
+%(the \cs{expandafter} first removes the \cs{fi}),
+%and as an added bonus, this macro is also correct for multiple
+%authors.
 The macro so far is correct if there was no footnote,
 but if there was one it is wrong:
 the terminating tokens remain to be disposed of.
@@ -1017,9 +1920,25 @@ and as an added bonus, this macro is also correct for multiple
 authors.
 
 
+%%\spoint Optional macro parameters with \cs{futurelet}
+%\subsection{Optional macro parameters with \protect\cs{futurelet}}
 %\spoint Optional macro parameters with \cs{futurelet}
 \subsection{Optional macro parameters with \protect\cs{futurelet}}
 
+%One standard application of \cs{futurelet} is implementing
+%\howto Macros with optional parameters\par
+%optional parameters of macros. The general course of action
+%is as follows:
+%\begin{verbatim}
+%\def\Com{\futurelet\testchar\MaybeOptArgCom}
+%\def\MaybeOptArgCom{\ifx[\testchar \let\next\OptArgCom 
+%                 \else \let\next\NoOptArgCom \fi \next}
+%\def\OptArgCom[#1]#2{ ... }\def\NoOptArgCom#1{ ... }
+%\end{verbatim}
+%Note that \cs{ifx} is used even though it tests
+%for a character. The reason is of course that,
+%if the optional argument is omitted, there might be an
+%expandable control sequence behind the~\cs{Com}.
 One standard application of \cs{futurelet} is implementing
 \howto Macros with optional parameters\par
 optional parameters of macros. The general course of action
@@ -1035,6 +1954,21 @@ for a character. The reason is of course that,
 if the optional argument is omitted, there might be an
 expandable control sequence behind the~\cs{Com}.
 
+%The macro \cs{Com} now has one optional and one regular
+%argument; it can be called as 
+%\begin{verbatim}
+%\Com{argument}
+%\end{verbatim}
+%or as
+%\begin{verbatim}
+%\Com[optional]{argument}
+%\end{verbatim}
+%Often the call without the optional argument will insert some
+%default value:
+%\begin{disp}\verb>\def\NoOptArgCom#1{\OptArgCom[>%
+%{\italic default\/}\verb>]{#1}}>\end{disp}
+%This mechanism is widely used in formats such as \LaTeX\ and
+%\LamsTeX; see also~\cite{svb:future}.
 The macro \cs{Com} now has one optional and one regular
 argument; it can be called as 
 \begin{verbatim}
@@ -1053,13 +1987,47 @@ This mechanism is widely used in formats such as \LaTeX\ and
 
 
 
+%%\spoint Two-step macros
+%\subsection{Two-step macros}
 %\spoint Two-step macros
 \subsection{Two-step macros}
 
+%Often what looks to the user like one macro is in reality
+%a two-step process, where one macro will set up conditions,
+%and a second macro will do the work.
 Often what looks to the user like one macro is in reality
 a two-step process, where one macro will set up conditions,
 and a second macro will do the work.
 
+%As an example, here is
+%a macro \cs{PickToEol}\label{pick:eol}
+%\howto Take an input line as macro argument\par
+%with an argument that is delimited by the line end.
+%First we write a macro without arguments that 
+%changes the category code of the line end, and then
+%calls the second macro.
+%\begin{verbatim}
+%\def\PickToEol{\begingroup\catcode`\^^M=12 \xPickToEol}
+%\end{verbatim}
+%The second macro can then take as an argument everything
+%up to the end of the line:
+%\begin{verbatim}
+%\def\xPickToEol#1^^M{ ... #1 ... \endgroup}
+%\end{verbatim}
+%There is one problem with this definition: the \verb>^^M> character
+%should have category~12. We arrive at the following:
+%\begin{verbatim}
+%\def\PickToEol{\begingroup\catcode`\^^M=12 \xPickToEol}
+%{\catcode`\^^M=12 %
+% \gdef\xPickToEol#1^^M{ ... #1 ... \endgroup}%
+%}
+%\end{verbatim}
+%where the category code of \verb>^^M> is changed for the
+%sake of the definition of \cs{xPickToEol}. Note that
+%the \verb>^^M> in \cs{PickToEol} occurs in a control symbol,
+%so there the category code  is irrelevant. Therefore that
+%definition can be outside the group where the category code 
+%of \verb>^^M> is redefined.
 As an example, here is
 a macro \cs{PickToEol}\label{pick:eol}
 \howto Take an input line as macro argument\par
@@ -1091,13 +2059,36 @@ definition can be outside the group where the category code
 of \verb>^^M> is redefined.
 
 
+%\subsection{A comment environment}
 \subsection{A comment environment}
 
+%As an application of the above idea of two-step macros,
+%\howto Comment environment\par
+%and in order to illustrate tail recursion, here are 
+%macros for a `comment' environment.
 As an application of the above idea of two-step macros,
 \howto Comment environment\par
 and in order to illustrate tail recursion, here are 
 macros for a `comment' environment.
 
+%Often it is necessary to remove a part of \TeX\
+%input temporarily. For this one would like to
+%write
+%\begin{verbatim}
+%\comment
+%...
+%\endcomment
+%\end{verbatim}
+%The simplest implementation of this, 
+%\begin{verbatim}
+%\def\comment#1\endcomment{}
+%\end{verbatim} 
+%has a number of weaknesses. For instance,
+%it cannot cope with outer macros or input that 
+%does not have balanced braces. Its worst
+%shortcoming, however, is that it reads the complete
+%comment text as a macro argument. This limits the size
+%of the comment to that of \TeX's input buffer.
 Often it is necessary to remove a part of \TeX\
 input temporarily. For this one would like to
 write
@@ -1117,6 +2108,25 @@ shortcoming, however, is that it reads the complete
 comment text as a macro argument. This limits the size
 of the comment to that of \TeX's input buffer.
 
+%It would be a better idea to take on the out-commented
+%text one line at a time. For this we want to write
+%a recursive macro with a basic structure
+%\begin{verbatim}
+%\def\comment#1^^M{ ... \comment }
+%\end{verbatim}
+%In order to be able to write this definition at all,
+%the category code of the line end must be changed; as above
+%\altt
+%we will have
+%\begin{verbatim}
+%\def\comment{\begingroup \catcode`\^^M=12 \xcomment}
+%{\catcode`\^^M=12 \endlinechar=-1 %
+% \gdef\xcomment#1^^M{ ... \xcomment}
+%}
+%\end{verbatim}
+%Changing the \cs{endlinechar} is merely to 
+%prevent having to put comment characters at the end
+%of every line of the definition.
 It would be a better idea to take on the out-commented
 text one line at a time. For this we want to write
 a recursive macro with a basic structure
@@ -1137,6 +2147,23 @@ Changing the \cs{endlinechar} is merely to
 prevent having to put comment characters at the end
 of every line of the definition.
 
+%Of course, the process must stop at a certain time.
+%To this purpose we investigate the line that was
+%scooped up as macro argument:
+%\begin{verbatim}
+%{\catcode`\^^M=12 \endlinechar=-1 %
+% \gdef\xcomment#1^^M{\def\test{#1}
+%    \ifx\test\endcomment \let\next=\endgroup
+%    \else \let\next=\xcomment \fi
+%    \next}
+%}
+%\end{verbatim}
+%and we have to define \cs{endcomment}:
+%\begin{verbatim}
+%\def\endcomment{\endcomment}
+%\end{verbatim}
+%This command will never be executed: it is merely for purposes
+%of testing whether the end of the environment has been reached.
 Of course, the process must stop at a certain time.
 To this purpose we investigate the line that was
 scooped up as macro argument:
@@ -1155,6 +2182,27 @@ and we have to define \cs{endcomment}:
 This command will never be executed: it is merely for purposes
 of testing whether the end of the environment has been reached.
 
+%We may want to comment out text that is not syntactically
+%correct. Therefore we switch to a
+%\indexterm{verbatim mode}
+%when commenting. The following macro is given 
+%in plain \TeX:
+%\begin{verbatim}
+%\def\dospecials{\do\ \do\\\do\{\do\}\do\$\do\&%
+%  \do\#\do\^\do\^^K\do\_\do\^^A\do\%\do\~}
+%\end{verbatim}
+%We use it to define \cs{comment} as follows:
+%\begin{verbatim}
+%\def\makeinnocent#1{\catcode`#1=12 }
+%\def\comment{\begingroup
+%    \let\do=\makeinnocent \dospecials
+%    \endlinechar`\^^M \catcode`\^^M=12 \xcomment}
+%\end{verbatim}
+%Apart from the possibility mentioned above of commenting
+%out text that is not syntactically correct, for instance
+%because of unmatched braces, this solution can handle
+%outer macros. The former implementation of \cs{xcomment}
+%would cause a \TeX\ error if one occurred in the comment text.
 We may want to comment out text that is not syntactically
 correct. Therefore we switch to a
 \indexterm{verbatim mode}
@@ -1177,6 +2225,26 @@ because of unmatched braces, this solution can handle
 outer macros. The former implementation of \cs{xcomment}
 would cause a \TeX\ error if one occurred in the comment text.
 
+%However, using verbatim mode poses the problem of concluding the 
+%environment.
+%\altt
+%The final line of the comment is now not the control sequence
+%\cs{endcomment}, but the characters constituting it. We have
+%to test for these then:
+%\begin{verbatim}
+%{\escapechar=-1
+% \xdef\endcomment{\string\\endcomment}
+%}
+%\end{verbatim}
+%The sequence \verb>\string\\> gives a backslash.
+%We could not have used
+%\begin{verbatim}
+%\edef\endcomment{\string\endcomment}
+%\end{verbatim}
+%because
+%the letters of the word \n{endcomment} would then have
+%category code~12, instead of the 11 that the ones on the
+%last line of the comment will have.
 However, using verbatim mode poses the problem of concluding the 
 environment.
 \altt
@@ -1198,5 +2266,7 @@ the letters of the word \n{endcomment} would then have
 category code~12, instead of the 11 that the ones on the
 last line of the comment will have.
 
+%\endofchapter
+%%%%% end of input file [macro]
 \endofchapter
 %%%% end of input file [macro]
