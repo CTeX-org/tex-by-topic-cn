@@ -1,0 +1,613 @@
+
+\chapter{Characters}\label{char}
+
+Internally, \TeX\ represents characters by their (integer) 
+character code. This chapter treats those codes, and the
+commands that have access to them.
+
+\label{cschap:char}\label{cschap:chardef}\label{cschap:accent}\label{cschap:uccode}\label{cschap:lccode}\label{cschap:uppercase}\label{cschap:lowercase}\label{cschap:string}\label{cschap:escapechar}
+\begin{inventory}
+\item [\cs{char}]
+      Explicit denotation of a character to be typeset. 
+
+\item [\cs{chardef}] 
+      Define a control sequence to be a synonym for
+      a~character code.
+
+\item [\cs{accent}] 
+      Command to place accent characters.
+
+\item [\cs{if}]
+      Test equality of character codes. 
+
+\item [\cs{ifx}]
+      Test equality of both character and category codes.
+
+\item [\cs{let}]
+      Define a control sequence to be a synonym of a token.
+
+\item [\cs{uccode}] 
+      Query or set
+      the character code that is the uppercase variant of a given code.
+
+\item [\cs{lccode}]
+      Query or set
+      the character code that is the lowercase variant of a given code.
+
+\item [\cs{uppercase}]
+      Convert the \gr{general text} argument to its uppercase form.
+
+\item [\cs{lowercase}] 
+      Convert the \gr{general text} argument to its lowercase form.
+
+\item [\cs{string}]
+      Convert a token to a string of one or more characters.
+\item [\cs{escapechar}]
+      Number of the character that is to be used 
+      for the escape character
+      when control sequences are being converted
+      into character tokens. \IniTeX\ default:~92~(\cs{}).
+\end{inventory}
+
+%\point[char:code] Character codes
+\section{Character codes}
+\label{char:code}
+
+Conceptually it is easiest to think that \TeX\ works with
+characters internally, but in fact
+\TeX\ works with integers: the \indextermsub{character}{codes}. 
+
+The way characters are encoded in a computer may differ
+from system to system.
+Therefore \TeX\ uses its own scheme of character codes.
+Any character that is read from a file (or from the user terminal)
+is converted to a character code according to the
+character code table.
+A~category code is then assigned based on this (see Chapter~\ref{mouth}).
+The character code table is based on the 7-bit \ascii{} table
+for numbers under~128 (see Section~\ref{sec:asciitable}).
+
+There is an explicit conversion between characters
+(better:  character tokens)
+and  character codes  using the left quote (grave, back quote)
+character~\n{`{}}:
+at all places where \TeX\ expects a \gram{number} you
+can use the left quote followed by a character
+token or
+a single-character control sequence.
+Thus both \verb.\count`a. and \verb.\count`\a. are synonyms
+for \verb.\count97.. See also Chapter~\ref{number}.
+
+The possibility of a single-character control
+sequence is necessary in certain cases such as
+\begin{disp}\verb>\catcode`\%=11>\quad or\quad \verb>\def\CommentSign{\char`\%}>\end{disp}
+which would be misunderstood if the backslash were left out.
+For instance
+\begin{verbatim}
+\catcode`%=11
+\end{verbatim}
+would consider
+the \n{=11} to be a comment.
+Single-character
+control sequences can be formed from characters with any
+category code.
+
+After the conversion to character codes any connection
+with external representations has disappeared. Of course,
+for most characters  the visible output will `equal' the input
+(that is, an `\n{a}' causes an~`a').
+There are exceptions, however, even among the common symbols.
+In the Computer Modern
+roman fonts there are no `less than' and `greater than'
+\message{Check <>! Dammit!}%
+signs, so the input `\verb.<>.' will give `<>' in the output.
+%{\MathRMx<>}
+
+In order to make \TeX\ machine independent at the output
+side, the character codes are also used in the \n{dvi} file:
+opcodes $n=0\ldots127$ denote simply the instruction `take
+character $n$ from the current font'. The complete definition
+of the opcodes in a \n{dvi} file can be found in~\cite{Knuth:TeXprogram}.
+
+
+%\point Control sequences for characters
+\section{Control sequences for characters}
+
+There are a number of ways in which a control sequence can denote
+a character. The \cs{char} command specifies a character to be
+typeset; the \cs{let} command introduces
+a synonym for a character token, that is,
+the combination of character code and category code.
+
+%\point Denoting characters to be typeset: \cs\char
+\section{Denoting characters to be typeset: \protect\cs{char}}
+
+Characters can be denoted numerically by, for example,
+\verb.\char98.\cstoidx char\par.
+This command tells \TeX\ to add character number~98 of the
+current font to the horizontal list currently under construction.
+
+Instead of decimal notation, it is often more convenient to
+use octal or hexadecimal notation. For octal the single quote is used:
+\verb.\char'142.; hexadecimal uses the double quote: \verb.\char"62..
+Note that \verb.\char''62. is incorrect; the process that replaces
+two quotes by a double quote works at a later stage of processing
+(the visual processor) than number scanning (the execution processor).
+
+Because of the explicit conversion to character codes by the
+back quote character it is also possible to get a `b' \ldash provided
+that you are using a font organized a bit like the \ascii{} table \rdash
+with \verb.\char`b.  or \verb.\char`\b..
+
+The \cs{char} command looks superficially a bit like
+the \verb-^^- substitution mechanism (Chapter~\ref{mouth}).
+Both mechanisms access characters without directly denoting them.
+However, the \verb-^^- mechanism operates in a very early stage of
+processing (in the input processor of \TeX,
+but before category code
+assignment); the \cs{char} command, on the other hand,
+comes in the final stages of processing. 
+In effect it says `typeset character number
+so-and-so'.
+
+There is a construction to let a control sequence stand
+for some character code: the \csterm chardef\par\ command.
+The syntax of this is \label{chardef}
+\begin{disp}\cs{chardef}\gram{control sequence}\gr{equals}\gram{number}, 
+\end{disp}
+where the number can be an explicit
+representation or a counter value, but it can also be
+a character code
+obtained using the left quote command (see above; 
+the full definition of \gr{number} is given in Chapter~\ref{number}). 
+In the plain format 
+the latter possibility is used in
+definitions such as
+\begin{verbatim}
+\chardef\%=`\%
+\end{verbatim}
+which could have been given equivalently as
+\begin{verbatim}
+\chardef\%=37
+\end{verbatim}
+After this command, the control symbol \verb>\%>
+used on its own is a synonym for \verb>\char37>,
+that is, the command to typeset character~37
+(usually the per cent character).
+
+A control sequence that has been defined with a \cs{chardef}
+command can also be used as a \gr{number}.
+This fact is used in  allocation commands such as 
+\cs{newbox} (see Chapters~\ref{number} and~\ref{alloc}).
+Tokens defined with \cs{mathchardef} can also be used this
+way.
+
+\subsection{Implicit character tokens: \protect\cs{let}}
+
+Another construction defining a control sequence
+to stand for (among other things)
+a character is~\cs{let}\cstoidx let\par:
+\begin{disp}\cs{let}\gr{control sequence}\gr{equals}\gr{token}\end{disp}
+with a character token on the right hand side of the (optional)
+equals sign. The result is called an \indextermbus{implicit}{character} token.
+(See page~\pageref{let} for a further discussion of~\cs{let}.)
+
+In the
+plain format there are for instance synonyms for
+the open and close brace:
+\begin{verbatim}
+\let\bgroup={ \let\egroup=}
+\end{verbatim}
+The resulting control sequences are called `implicit braces'
+(see Chapter~\ref{group}).
+
+Assigning characters by \cs{let}
+is different from defining control sequences by \cs{chardef}, 
+in the sense that \cs{let}
+makes the control sequence stand for the combination
+of a character code and category code. 
+
+As an example
+\begin{verbatim}
+\catcode`|=2 % make the bar an end of group
+\let\b=|  % make \b a bar character
+{\def\m{...}\b \m
+\end{verbatim}
+gives an `undefined control sequence \cs{m}'
+because the \cs{b} closed the group inside which \cs{m}
+was defined. On the other hand,
+\begin{verbatim}
+\let\b=| % make \b a bar character
+\catcode`|=2  % make the bar character end of group
+{\def\m{...}\b \m
+\end{verbatim}
+leaves one group open, and it prints a vertical bar
+(or whatever is in position 124 of the current font).
+The first of these examples
+implies that even when the braces have been redefined
+(for instance into active characters for macros that
+format C code) the beginning-of-group and end-of-group
+functionality is available through the control sequences
+\cs{bgroup} and~\cs{egroup}.
+
+Here is
+another example to show
+that implicit character tokens are hard to distinguish
+from real character tokens. After the above sequence
+\begin{verbatim}
+\catcode`|=2 \let\b=|
+\end{verbatim}
+the tests
+\begin{verbatim}
+\if\b|
+\end{verbatim}
+and
+\begin{verbatim}
+\ifcat\b}
+\end{verbatim}
+are both true.
+
+Yet another example can be found in the plain format:
+the commands
+\begin{verbatim}
+\let\sp=^ \let\sb=_ 
+\end{verbatim}
+allow people without an
+underscore or circumflex on their keyboard to 
+make sub- and superscripts in mathematics.
+For instance:
+\begin{disp}\verb>x\sp2\sb{ij}>\quad gives\quad $x\sp2\sb{ij}$\end{disp}
+If a person typing in the format itself does not have
+these keys, some further tricks are needed:\label{spsb:truc}
+\begin{verbatim}
+{\lccode`,=94 \lccode`.=95 \catcode`,=7 \catcode`.=8
+\lowercase{\global\let\sp=, \global\let\sb=.}}
+\end{verbatim}
+will do the job; see below for an explanation of lowercase codes.
+The \verb>^^> method as it was in \TeX\ version~2
+(see page~\pageref{hathat}) cannot be used here,
+as it would require typing two characters that can ordinarily
+not be input.
+With the extension in \TeX\ version~3 it would also be possible
+to write
+\begin{verbatim}
+{\catcode`\,=7
+\global\let\sp=,,5e \global\let\sb=,,5f}
+\end{verbatim}
+denoting the codes 94 and 95 hexadecimally.
+
+Finding out just what a control sequence has been defined to be with
+\cs{let} can be done using \cs{meaning}:
+the sequence
+\begin{verbatim}
+\let\x=3 \meaning\x
+\end{verbatim}
+gives
+`\n{the character 3}'.
+
+%\point Accents
+\section{Accents}
+
+\emph{Accents}\index{accents} can be placed by the
+\gr{horizontal command}~\csterm accent\par
+\label{character}:
+\begin{disp}\cs{accent}\gr{8-bit number}\gr{optional assignments}%
+     \gr{character}\end{disp} 
+where \gr{character} is a character of
+category 11\index{category!11} or~12\index{category!12},
+a~\cs{char}\gr{8-bit number} command, or a~\cs{chardef} token. If none
+of these four types of \gr{character} follows, the accent is taken to
+be a \cs{char} command itself; this gives an accent `suspended in
+mid-air'. Otherwise the accent is placed on top of the following
+character.  Font changes between the accent and the character can be
+effected by the \gr{optional assignments}.
+
+An unpleasant implication of the fact that an \cs{accent} command
+has to be followed by a \gr{character} is that it is not
+possible to place an accent on a ligature, or
+two accents on top of each other.
+In some languages, such as Hindi or Vietnamese,
+such double accents do occur.
+Positioning accents on top of each other is possible,
+however, in math mode.
+
+The width of a character with an accent is the same as that of
+the unaccented character. \TeX\ assumes that the 
+accent as it appears in the font file
+is properly positioned for a character that is as high
+as the x-height of the font; for characters with other heights
+it correspondingly lowers or raises the accent.
+
+No genuine under-accents exist in \TeX. They are
+implemented as low placed over-accents. A~way of handling
+them more correctly would be to write a macro that
+measures the following character, and raises or drops
+the accent accordingly.
+The cedilla macro, \cs{c}\cstoidx c\par,
+in plain \TeX\ does something along these lines. However,
+it does not drop the accent for characters with descenders.
+
+The horizontal positioning of an accent is controlled by
+\cs{fontdimen1}, \indextermsub{slant}{per point}. Kerns are used
+for the horizontal movement. Note that, although they
+are inserted automatically, these kerns are classified
+as {\italic explicit\/} kerns. Therefore they inhibit hyphenation
+in the parts of the word before and after the kern.
+
+As an example of kerning for accents, 
+here follows the dump of a horizontal list.
+\message{maybe italic correction for extra line}
+\begin{verbatim}
+\setbox0=\hbox{\it \`l}
+\showbox0
+\end{verbatim}
+gives
+\begin{verbatim}
+\hbox(9.58334+0.0)x2.55554
+.\kern -0.61803 (for accent)
+.\hbox(6.94444+0.0)x5.11108, shifted -2.6389
+..\tenit ^^R
+.\kern -4.49306 (for accent)
+.\tenit l
+\end{verbatim}
+Note that the accent is placed first, so afterwards the italic
+correction of the last character is still available.
+
+\section{Testing characters}
+
+Equality of character codes is tested by \cs{if}:
+\begin{disp}\cs{if}\gr{token$_1$}\gr{token$_2$}\end{disp}
+Tokens following this conditional are expanded until two
+unexpandable tokens are left. The condition is then true
+if those tokens are character tokens with the same character
+code, regardless of category code. 
+
+An unexpandable control
+sequence is considered to have character code 256 and
+category code~16\index{category!16}
+(so that it is unequal to anything except
+another control sequence), except in the case
+where it had been \cs{let} to a non-active character token.
+In that case it is considered to have the character code
+and category code of that character. This was mentioned above.
+
+The test \cs{ifcat} for category codes was mentioned
+in Chapter~\ref{mouth}; the test
+\begin{disp}\cs{ifx}\gr{token$_1$}\gr{token$_2$}\end{disp}
+can be used to test for category code and character code
+simultaneously.
+The tokens following this test are not expanded.
+However, if they are macros, \TeX\
+tests their expansions for equality.
+
+Quantities defined by \cs{chardef} can be tested with
+\cs{ifnum}:
+\begin{verbatim}
+\chardef\a=`x \chardef\b=`y \ifnum\a=\b % is false 
+\end{verbatim}
+based on the fact (see Chapter~\ref{number}) that
+\gr{chardef token}s can be used as numbers.
+
+See also section~\ref{sec:charactertests}
+
+
+\section{Uppercase and lowercase}
+
+%\spoint[uc/lc] Uppercase and lowercase codes
+\subsection{Uppercase and lowercase codes}
+\label{uc/lc}
+
+To each of the character codes correspond\cstoidx lccode\par\cstoidx uccode\par
+an \indextermsub{uppercase}{code}\index{code!uppercase|see{uppercase, code}}
+and a \indextermsub{lowercase}{code}\index{code!lowercase|see{lowercase, code}}
+(for still more codes see below).
+These can be assigned
+by 
+\begin{Disp}\cs{uccode}\gram{number}\gr{equals}\gram{number}\end{Disp}
+and 
+\begin{Disp}\cs{lccode}\gram{number}\gr{equals}\gram{number}.\end{Disp}
+In \IniTeX\ codes \verb-`a..`z-, \verb-`A..`Z- have uppercase code
+\label{ini:uclc}
+\verb-`A..`Z- and lowercase code \verb-`a..`z-.
+All other character codes have both uppercase and lowercase
+code zero.
+
+%\spoint[upcase] Uppercase and lowercase commands
+\subsection{Uppercase and lowercase commands}
+\label{upcase}
+
+The commands \verb-\uppercase{...}- and \verb-\lowercase{...}-
+\cstoidx uppercase\par\cstoidx lowercase\par
+go through their argument lists, replacing all character 
+codes of explicit character tokens
+by their uppercase and lowercase code respectively
+if these are non-zero,
+without changing the category codes. 
+
+The argument of \cs{uppercase} and \cs{lowercase}
+is a \gr{general text}, which is defined as
+\begin{Disp} \gr{general text} $\longrightarrow$ \gr{filler}\lb
+      \gr{balanced text}\gr{right brace}\end{Disp}
+(for the definition of \gr{filler} see Chapter~\ref{gramm})
+meaning that the left brace can be implicit, but the closing
+right brace must be an explicit character token with category
+code~2. \TeX\ performs expansion to find the opening
+brace.
+
+Uppercasing and lowercasing are executed in the execution processor;
+they are not `macro expansion' activities
+like \cs{number} or \cs{string}.
+The sequence (attempting to produce~\cs{A})
+\begin{verbatim}
+\expandafter\csname\uppercase{a}\endcsname
+\end{verbatim}
+gives an error (\TeX\ inserts an \cs{endcsname} before   the
+\cs{uppercase} because \cs{uppercase} is unexpandable), but
+\begin{verbatim}
+\uppercase{\csname a\endcsname}
+\end{verbatim}
+works.
+
+As an example of the correct use of \cs{uppercase}, here
+is a macro that tests if a character is uppercase:
+\begin{verbatim}
+\def\ifIsUppercase#1{\uppercase{\if#1}#1}
+\end{verbatim}
+The same test can be
+performed by \verb>\ifnum`#1=\uccode`#1>.
+
+Hyphenation of words starting with an uppercase character,
+that is, a character not equal to its own \cs{lccode},
+is subject to the \cs{uchyph} parameter: if this
+is positive, hyphenation of capitalized words is allowed.
+See also Chapter~\ref{line:break}.
+
+%\spoint Uppercase and lowercase forms of keywords
+\subsection{Uppercase and lowercase forms of keywords}
+
+Each character in \TeX\ keywords, such as \n{pt}, can be
+given in uppercase or lowercase form. 
+For instance, \n{pT}, \n{Pt}, \n{pt}, and~\n{PT} all have
+the same meaning. \TeX\ does not use
+the \cs{uccode} and \cs{lccode} tables here to
+determine the lowercase form. Instead it
+converts uppercase characters to lowercase by adding~32
+\ldash the \ascii{} difference between uppercase and lowercase
+characters \rdash to their character code. This has some implications
+for implementations of \TeX\ for non-roman alphabets;
+see page 370 of \TeXbook, \cite{Knuth:TeXbook}.
+
+\subsection{Creative use of \cs{uppercase} and \cs{lowercase}}
+
+The fact that \cs{uppercase} and \cs{lowercase} do not change
+category codes can sometimes be used to create certain
+character-code--category-code combinations that would
+otherwise be difficult to produce. See for instance the
+explanation of the \cs{newif} macro in Chapter~\ref{if},
+and another example on page~\pageref{spsb:truc}.
+
+For a slightly different application, consider the
+problem (solved by Rainer Sch\"opf) of,
+given a counter \verb-\newcount\mycount-, writing character
+number \verb-\mycount- to the terminal.
+Here is a solution:
+%\begin{verbatim}
+%\lccode`a=\mycount \chardef\terminal=16
+%\lowercase{\write\terminal{a}}
+%\end{verbatim}
+\begin{verbatim}
+\lccode`a=\mycount \chardef\terminal=16
+\end{verbatim}
+\begin{verbatim}
+\lowercase{\write\terminal{a}}
+\end{verbatim}
+The \cs{lowercase} command effectively changes the 
+argument of the \cs{write} command from~`\n a'
+into whatever it should be.
+
+%\point[codename] Codes of a character
+\section{Codes of a character}
+\label{codename}
+
+Each character code has a number of \gr{codename}s 
+associated\indexterm{codenames}
+with it. These are integers in various ranges that determine
+how the character is treated in various contexts, or
+how the occurrence of that character changes the workings
+of \TeX\ in certain contexts.
+
+The code names are as follows:
+\begin{description}\item [\cs{catcode}]
+\gr{4-bit number} (0--15); the category to which a character belongs.
+This is treated in Chapter~\ref{mouth}.
+\item [\cs{mathcode}]
+\gr{15-bit number} (0--\verb-"7FFF-) or \verb-"8000-;
+determines how a character is treated
+in math mode. See Chapter~\ref{mathchar}.
+\item [\cs{delcode}]
+\gr{27-bit number} (0--\n{\hex7$\,$FFF$\,$FFF});
+determines how a character is treated after
+\cs{left} or \cs{right} in math mode.
+See page~\pageref{delcodes}.
+\item [\cs{sfcode}]
+integer; determines how spacing is affected after this character.
+See Chapter~\ref{space}.
+\item [\cs{lccode}, \cs{uccode}]
+\gr{8-bit number} (0-255); lowercase and
+uppercase codes \rdash these were treated above.
+\end{description}
+
+%\point Converting tokens into character strings
+\section{Converting tokens into character strings}
+
+The command \cs{string} takes the next token and expands it
+\cstoidx string\par
+into a string of separate characters. Thus
+\begin{verbatim}
+\tt\string\control
+\end{verbatim}
+will give \cs{control} in the
+output, and
+\begin{verbatim}
+\tt\string$
+\end{verbatim}
+will give~\verb-$-, but, noting that the string 
+operation comes after the tokenizing,
+\begin{verbatim}
+\tt\string%
+\end{verbatim}
+will {\em not\/} give~\verb$%$,
+because the comment
+sign is removed by \TeX's input processor.
+Therefore, this command will `string' the first token on the next line.
+
+The \cs{string} command is executed by the expansion processor, thus
+it is expanded unless explicitly inhibited (see Chapter~\ref{expand}).
+
+%\spoint Output of control sequences
+\subsection{Output of control sequences}
+
+In the above examples the typewriter font was selected, because
+\cstoidx escapechar\par
+the Computer Modern roman font does not have a backslash character.
+However,
+\TeX\ need not have used the backslash character to display
+a control sequence: it uses character number \cs{escapechar}.
+This same value is also used when a control sequence is
+output with \cs{write}, \cs{message}, or \cs{errmessage},
+and it is used in the output of \cs{show}, \cs{showthe} and \cs{meaning}.
+If \cs{escapechar} is negative or more than~255,
+the escape character is not
+output; the default value (set in \IniTeX) is~92, the number
+of the backslash character.
+
+For use in a  \cs{write} statement the \cs{string} can 
+in some circumstances be
+replaced  by \cs{noexpand} (see page~\pageref{expand:write}).
+
+%\spoint Category codes of a \cs{string}
+\subsection{Category codes of a \cs{string}}
+
+The characters that are the result of a \cs{string} command have 
+category code~12\index{category!12}, except for any spaces in 
+a stringed control sequence;
+they have category code~10\index{category!10}. Since inside a control
+sequence there are no category codes, 
+any spaces resulting from \cs{string} are
+of necessity only space {\em characters}, that is,
+characters with code~32.
+However, \TeX's input processor converts
+all space tokens that have a character code other than~32
+into character tokens with character code~32, 
+so the chances are pretty slim that
+`funny spaces' wind up in control sequences.
+
+Other commands with the same behaviour with respect to 
+category codes as \cs{string}, are
+\cs{number},
+\cs{romannumeral}, \cs{jobname}, \cs{fontname}, \cs{meaning},
+and \cs{the}.
+
+
+\endofchapter
+%%%% end of input file [char]

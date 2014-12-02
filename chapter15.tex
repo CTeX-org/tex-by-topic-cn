@@ -1,0 +1,271 @@
+
+\chapter{Baseline Distances}\label{baseline}
+
+%\hbox{}\vfil\vfil\hbox{}
+Lines of text are in most cases not of equal height or depth.
+Therefore \TeX\ adds interline glue to keep baselines at a uniform
+distance from one another. 
+This chapter treats the computation of such
+interline glue.
+
+\label{cschap:baselineskip}\label{cschap:lineskiplimit}\label{cschap:lineskip}\label{cschap:prevdepth}\label{cschap:nointerlineskip}\label{cschap:offinterlineskip}\label{cschap:openup}
+\begin{inventory}
+
+\item [\cs{baselineskip}] 
+      The `ideal' baseline distance between neighbouring 
+      boxes on a vertical list. Plain \TeX\ default:~\n{12pt}.
+
+\item [\cs{lineskiplimit}] 
+      Distance to be maintained between the bottom and top of 
+      neighbouring boxes on a vertical list.
+      Plain \TeX\ default:~\n{0pt}.
+
+\item [\cs{lineskip}]  
+      Glue added if the distance between bottom
+      and top of neighbouring boxes 
+      is less than \cs{lineskiplimit}.
+      Plain \TeX\ default:~\n{1pt}.
+
+\item [\cs{prevdepth}]  
+      Depth of the last box added to a vertical list as it is 
+      perceived by \TeX.
+
+\item [\cs{nointerlineskip}]
+      Macro to prevent interline glue insertion once.
+
+\item [\cs{offinterlineskip}]
+      Macro to prevent interline glue globally
+      henceforth.
+
+\item [\cs{openup}]
+      Increase \cs{baselineskip}, \cs{lineskip}, 
+      and \cs{lineskiplimit} by specified amount.
+
+\end{inventory}
+
+
+\section{Interline glue}
+
+\input figs17
+%\message{fig17 missing}
+
+\TeX\ tries to keep a certain distance between the reference
+points of boxes that are added to a vertical list
+by inserting \indextermbus{interline}{glue}.
+In particular it tries to keep a constant \indextermsub{baseline}{distance}
+between lines of ordinary text: the \csidx{baselineskip}. Actually,
+the \cs{baselineskip} is  a \gr{glue}, so line distances can
+stretch or shrink. However, the natural sizes,
+as well as the stretch and the shrink, are the same
+between all lines.
+
+When boxes, whether they are lines of a paragraph or explicit boxes,
+are appended to a vertical list, glue 
+is added usually so that the depth of the preceding box
+and the height of the current one add up to the \cs{baselineskip}.
+This has the effect of keeping the reference points 
+of subsequent lines at regular intervals.
+
+%\eject
+
+\begin{quotation}
+  \figone
+\end{quotation}
+%\begin{disp}\leavevmode\hbox{}\nl\figone\end{disp}
+
+However, this process can bring the bottom and top of two
+subsequent boxes to be less than \cs{lineskiplimit} apart:
+\begin{quotation}
+  \figtwo
+\end{quotation}
+%\begin{disp}\leavevmode\figtwo\end{disp}
+
+In that case, \cs{lineskip} glue is added:
+\begin{quotation}
+  \figthree
+\end{quotation}
+%\begin{disp}\leavevmode\figthree\end{disp}
+Note that this will usually increase the distance
+between the baselines of the boxes to more than the
+\cs{baselineskip}.
+
+The exact process is this:
+\begin{itemize}
+\item if \cs{prevdepth} is \n{-1000pt} or less,
+no glue is added, otherwise
+\item \TeX\ calculates the distance between the bottom of the previous box
+and the top of the current one as the natural width of the
+\cs{baselineskip} minus \cs{prev\-depth} (the
+depth of the last box) and minus the height of the current box;
+\item if this distance is at least \csidx{lineskiplimit}, 
+glue is added with the calculated distance as natural size,
+and with the stretch and shrink of the \cs{baselineskip},
+\item otherwise \csidx{lineskip} glue is added.
+\item \csidx{prevdepth} is set to the depth of the
+current item.
+\end{itemize}
+
+There are two exceptional  situations:
+no interline glue is added before and after a rule,
+and the \cs{prevdepth} is not updated by an \cs{unvbox}
+or \cs{unvcopy} command. After a rule interline glue
+is prevented by a value of \n{-1000pt} of the \cs{prevdepth}.
+
+The above process is carried out, irrespective of what extra
+glue may have been inserted in between the boxes.
+Thus a skip in between boxes in vertical mode will not
+affect the distance calculated from the baseline distances,
+and therefore also not the amount of baselineskip glue.
+The same holds for glue added with \cs{vadjust} inside
+a paragraph.
+
+\begin{example}
+\begin{verbatim}
+\baselineskip=10pt \lineskiplimit=2pt \lineskip=2pt
+\setbox0=\vbox{\hbox{\vrule depth4pt}
+               \hbox{\vrule height 3pt}}
+\showbox0
+\end{verbatim}
+gives
+\begin{verbatim}
+\box0=
+\vbox(10.0+0.0)x0.4
+.\hbox(0.0+4.0)x0.4
+..\rule(*+4.0)x0.4
+.\glue(\baselineskip) 3.0
+.\hbox(3.0+0.0)x0.4
+..\rule(3.0+*)x0
+\end{verbatim}
+Bringing the boxes to within  \cs{lineskiplimit}
+of each other, that is
+\begin{verbatim}
+\setbox0\vbox{\hbox{\vrule depth4pt}
+              \hbox{\vrule height 5pt}}
+\showbox0
+\end{verbatim}
+gives
+\begin{verbatim}
+\box0=
+\vbox(11.0+0.0)x0.4
+.\hbox(0.0+4.0)x0.4
+..\rule(*+4.0)x0.4
+.\glue(\lineskip) 2.0
+.\hbox(5.0+0.0)x0.4
+..\rule(5.0+*)x0.4
+\end{verbatim}
+where \cs{lineskip} glue has been inserted
+instead of the usual \cs{baselineskip} glue.
+\end{example}
+
+The plain \TeX\ default values are
+\begin{verbatim}
+\lineskiplimit=0pt lineskip=1pt
+\end{verbatim}
+so, when boxes start to touch each other, they are
+moved one point apart.
+
+\section{The perceived depth of boxes}
+
+The decision process for interline glue uses \csidx{prevdepth}
+as the perceived depth of the preceding box on the vertical
+list. The \cs{prevdepth} parameter can be used only in
+vertical mode.
+
+The \cs{prevdepth} is set to the depth of boxes added to the
+vertical list, but it is not affected by \cs{unvbox}
+or \cs{unvcopy}. After an \cs{hrule} it is set to
+\n{-1000pt} to prevent interline glue before the next box.
+
+At the beginning of a vertical list \cs{prevdepth}
+is set to \n{-1000pt}, except in an \cs{halign}
+and \cs{noalign} code contained therein, where it
+is carried over from the surrounding list.
+At the end of the alignment the value of \cs{prevdepth}
+set by the last alignment row is carried to the outer list.
+
+In order to prevent interline glue just once, all that
+is needed is to alter the \cs{prevdepth}.
+\cstoidx nointerlineskip\par
+\begin{verbatim}
+\def\nointerlineskip{\prevdepth=-1000pt}
+\end{verbatim}
+
+The \csidx{offinterlineskip} macro is much more drastic:
+it prevents {\sl all\/} interline glue from the moment
+of its call onwards, or, if it is used inside a paragraph,
+from the start of that paragraph.
+Its definition is
+\begin{verbatim}
+\baselineskip=-1000pt \lineskip=0pt 
+\lineskiplimit\maxdimen
+\end{verbatim}
+where the second line is the essential one: it
+causes \TeX\ to add \cs{lineskip} glue (which is zero)
+always. 
+Settings for \cs{baselineskip} do not matter any more then.
+
+The \cs{offinterlineskip} macro has an important application
+in alignments (see Chapter~\ref{align}).
+
+By setting
+\begin{verbatim}
+\lineskiplimit=-\maxdimen
+\end{verbatim}
+you can force \TeX\  to apply the \cs{baselineskip}
+always, regardless of whether this would bring boxes too close
+together or, indeed, if this would make them overlap.
+
+%\point Terminology
+\section{Terminology}
+
+In hot metal typesetting, all letters of a particular font
+were on a `body' of the same
+size. Thus every line of type had the same height and depth, and
+the resulting distance between the baselines would be some suitable
+value for that type. If for some reason this distance should
+be larger (see~\cite{White:line} for a discussion of this),
+strips of lead would be inserted. The extra distance was
+called the `leading' (pronounced `ledding').
+
+With phototypesetting, when the baseline distance was sometimes
+called the `film transport', this terminology blurred, and the
+term `leading' was also used for the baseline distance. Some of this
+confusion is also present in \TeX: the parameter \cs{baselineskip}
+specifies the baseline distance, but in the trace output
+(see the examples above) the glue inserted to make the 
+baseline distance equal to \cs{baselineskip} is called
+\cs{baselineskip}.
+
+%\point Additional remarks
+\section{Additional remarks}
+
+In general, for documents longer than one page it is desirable
+to have the same baseline distance throughout. However,
+for one-page documents you may add stretchability to the
+baselineskip, for instance if the text has to be flush bottom.
+
+Increasing the distance between just one pair of lines
+can be done with \cs{vadjust}. The argument of this
+command is vertical material that\vadjust{\kern2pt}
+will be inserted in the
+vertical list right after the line where this command was given.
+The second line of this paragraph, for instance, 
+contains the command \verb-\vadjust{\kern2pt}-.
+
+The amount of leading cannot be changed in the middle of
+a paragraph, because the value for \cs{baselineskip}
+that is used is the one that
+is current when the paragraph is finally broken and
+added to the main vertical list. The same holds
+for the \cs{lineskip} and \cs{lineskiplimit}.
+
+The plain \TeX\ macro \csidx{openup}
+increases the \cs{baselineskip}, \cs{lineskip}, and
+\cs{lineskiplimit} by the amount of the argument
+to the macro. In effect, this increases line distances
+by this amount regardless of whether they are governed
+by \cs{baselineskip} or \cs{lineskip}.
+
+
+\endofchapter
+%%%% end of input file [baseline]

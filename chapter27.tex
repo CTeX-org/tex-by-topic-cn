@@ -1,0 +1,590 @@
+
+\chapter{Page Breaking}\label{page:break}
+
+\index{page!breaking|(}
+
+This chapter treats the `page builder': the part of \TeX\
+that decides where to break the main vertical list into pages.
+The page builder operates before the output routine,
+and it hands its result in \cs{box255} to the output routine.
+
+\label{cschap:vsplit2}\label{cschap:splittopskip}\label{cschap:pagegoal}\label{cschap:pagetotal}\label{cschap:pagedepth}\label{cschap:pagestretch}\label{cschap:pagefilstretch}\label{cschap:pagefillstretch}\label{cschap:pagefilllstretch}\label{cschap:pageshrink}\label{cschap:outputpenalty}\label{cschap:interlinepenalty}\label{cschap:clubpenalty}\label{cschap:widowpenalty}\label{cschap:displaywidowpenalty}\label{cschap:brokenpenalty}\label{cschap:penalty2}\label{cschap:lastpenalty}\label{cschap:unpenalty}
+\begin{inventory}
+\item [\cs{vsplit}]
+      Split of a top part of a box. This is comparable
+      with page breaking.
+
+\item [\cs{splittopskip}] 
+      Minimum distance between the top of what remains after a
+      \cs{vsplit} operation, and the first item in that box.
+      Plain \TeX\ default:~\n{10pt}
+
+\item [\cs{pagegoal}] 
+      Goal height of the page box. This starts at \cs{vsize},
+      and is diminished by heights of insertion items.
+
+\item [\cs{pagetotal}] 
+      Accumulated natural height of the current page.
+
+\item [\cs{pagedepth}] 
+      Depth of the current page.
+
+\item [\cs{pagestretch}] 
+      Accumulated zeroth-order stretch of the current page.
+
+\item [\cs{pagefilstretch}] 
+      Accumulated first-order stretch of the current page.
+
+\item [\cs{pagefillstretch}] 
+      Accumulated second-order stretch of the current page.
+
+\item [\cs{pagefilllstretch}] 
+      Accumulated third-order stretch of the current page.
+
+\item [\cs{pageshrink}] 
+      Accumulated shrink of the current page.
+
+\item [\cs{outputpenalty}]   
+      Value of the penalty at the current page break,
+      or $10\,000$ if the break was not at a penalty.
+
+\item [\cs{interlinepenalty}] 
+      Penalty for breaking a page between lines of a paragraph. 
+      Plain \TeX\ default:~\n{0}
+
+\item [\cs{clubpenalty}] 
+      Additional penalty for breaking a page after 
+      the first line of a paragraph. 
+      Plain \TeX\ default:~\n{150}
+
+\item [\cs{widowpenalty}] 
+      Additional penalty for breaking a page before 
+      the last line of a paragraph. 
+      Plain \TeX\ default:~\n{150}
+
+\item [\cs{displaywidowpenalty}] 
+      Additional penalty for breaking a page before the last line 
+      above a display formula. 
+      Plain \TeX\ default:~\n{50}
+
+\item [\cs{brokenpenalty}] 
+      Additional penalty for breaking a page after a hyphenated line. 
+      Plain \TeX\ default:~\n{100}
+
+\item [\cs{penalty}]
+      Place a penalty on the current list.
+\item [\cs{lastpenalty}]
+      If the last item on the list was a penalty, the value of this.
+\item [\cs{unpenalty}]
+      Remove the last item of the current list if this
+      was a penalty.
+
+\end{inventory}
+
+%\point The current page and the recent contributions
+\section{The current page and the recent contributions}
+
+The main vertical list of \TeX\ is divided in two parts:
+the \indexterm{current page} and the list of \indexterm{recent contributions}.
+Any material that is added to the main vertical list is
+appended to the recent contributions; the act of moving
+the recent contributions to the current page is known
+as exercising the \indextermsub{page}{builder}.
+
+Every time something is moved to the current page, \TeX\
+computes the cost of breaking the page at that point.
+If it decides that it is past the optimal point,
+the current page up to 
+\altt 
+the best break so far
+is put in \cs{box255} and the remainder of
+the current page is moved back on top of the recent contributions.
+If the page is broken at a penalty,
+\label{break:penalty}%
+that value is recorded in \cs{outputpenalty}, and 
+a penalty of size $10\,000$ is placed on top of the
+recent contributions; otherwise, \csidx{outputpenalty}
+is set to~$10\,000$.
+
+If the current page is empty, discardable items that are moved
+from the recent contributions are discarded. This is the mechanism
+that lets glue disappear after a page break and at the top of
+the first page. When the first non-discardable item is moved
+to the current page, the \cs{topskip} glue is inserted;
+see the previous chapter.
+
+The workings of the page builder can be made visible by
+setting \cs{tracingpages} to some positive value
+(see Chapter~\ref{trace}).
+
+%\point Activating the page builder
+\section{Activating the page builder}
+
+The page builder comes into play  in the
+following circumstances.
+\begin{itemize}\item Around paragraphs: after the \cs{everypar}
+    tokens have been inserted, and after the paragraph has been
+    added to the vertical list. See the end of this chapter for 
+    an example.
+\item Around display formulas: after the \cs{everydisplay}
+    tokens have been inserted, and after the display has been
+    added to the list.
+\item After \cs{par} commands, boxes, insertions, 
+    and explicit penalties in vertical mode. 
+\item After an output routine has ended. \end{itemize}
+In these places the page builder moves the recent
+contributions to the current page. Note that \TeX\ need not be 
+in vertical mode when the page builder is exercised.
+In horizontal mode, activating the page builder
+serves to move preceding vertical glue (for example, \cs{parskip},
+\cs{abovedisplayskip}) to the page.
+
+The \cs{end} command \ldash which is only allowed in
+external vertical mode \rdash  terminates a \TeX\ job, but only if the
+main vertical list is empty and \cs{deadcycles}${}=0$.
+If this is not the case the combination
+\label{end:play}%
+\begin{disp}\verb>\hbox{}\vfill\penalty>$-2^{30}$\end{disp}
+is appended, which forces the output routine to act.
+
+%\point Page length bookkeeping
+\section{Page length bookkeeping}
+
+\index{page!length|(}
+
+The height and depth of the page box that reaches the output
+routine are determined by \cs{vsize}, \cs{topskip},
+and~\cs{maxdepth} as described in the previous chapter.
+\TeX\ places the \cs{topskip} glue
+when the first box is placed on the current page; the
+\cs{vsize} and \cs{maxdepth} are read when the first
+box or insertion occurs on the page. Any subsequent changes to these
+parameters will not be noticeable until the next page or,
+more strictly, until after the output routine has been called.
+
+After the first box, rule, or insertion on the current page
+the \cs{vsize} is recorded in \cs{pagegoal},
+and its value is not looked at  until \cs{output}
+has been active.
+Changing \cs{pagegoal} does have an effect on the current
+page.
+When the page is empty,
+the pagegoal is \cs{maxdimen}, and \cs{pagetotal} is zero.
+
+Accumulated dimensions and stretch are available in
+the parameters \cs{pagetotal}, \cs{pagedepth}, 
+\cs{pagestretch}, \cs{pagefilstretch}, \cs{pagefillstretch}, 
+\cs{pageshrink},
+and \cs{pagefilllstretch}.
+\cstoidx pagetotal\par\cstoidx pagedepth\par
+\cstoidx pagestretch\par\cstoidx pagefilstretch\par
+\cstoidx pagefillstretch\par
+\cstoidx pageshrink\par\cstoidx pagefilllstretch\par
+They are set by the page builder. The stretch and
+shrink parameters are updated every time glue is added
+to the page. The depth parameter becomes zero
+if the last item was kern or glue.
+
+These parameters are \gr{special dimen}s; an assignment
+to any of them is an \gr{intimate assignment},
+and it is automatically global.
+
+\index{page!length|)}
+
+\section{Breakpoints}
+
+%\spoint Possible breakpoints
+\subsection{Possible breakpoints}
+
+Page breaks can occur at the same kind of locations where
+line breaks can occur. The \indexterm{breakpoints in vertical lists}
+are:
+\begin{itemize}\item at glue that is preceded by a non-discardable
+item;\item at a kern that is immediately followed by glue;
+\item at a penalty.\end{itemize}
+\TeX\ inserts interline glue and various sorts of
+interline penalties when the lines of a paragraph are
+added to the vertical list, so there will usually be 
+sufficient breakpoints on the page.
+
+%\spoint Breakpoint penalties
+\subsection{Breakpoint penalties}
+
+If \TeX\ decides to break a page at a penalty item, this
+penalty will, most of the time, be one that
+has been inserted automatically
+between the lines of a paragraph.
+
+If the last item on a list (not necessarily a vertical list)
+\alt
+is a penalty, the value of this is recorded
+in the parameter \csidx{lastpenalty}. If the item is other than
+a penalty, this parameter has the value zero.
+The last penalty of a list can be removed with the command
+\csidx{unpenalty}. See Section~\ref{varioset} for an example.
+\message{Spoint ref varioset}
+
+Here is a list of the \indextermsub{penalties}{in vertical mode}:
+\begin{inventory}
+\item [\csidx{interlinepenalty}] 
+      Penalty for breaking a page between lines of a paragraph. 
+      In plain \TeX\ this is zero, so no penalty is added in
+      between lines. \TeX\ can then find a valid breakpoint at the
+      \cs{baselineskip} glue.
+
+\item [\csidx{clubpenalty}] 
+      Extra penalty for breaking a page after the first line of a paragraph. 
+      In plain \TeX\ this is~\n{150}.
+      This amount, and the following penalties, are 
+      added to the \cs{interlinepenalty}, and
+      a penalty of the resulting size is inserted after the
+      \cs{hbox} containing the first line of a paragraph
+      instead of the \cs{interlinepenalty}.
+
+\item [\csidx{widowpenalty}] 
+      Extra penalty for breaking a page before the last line of a paragraph. 
+      In plain \TeX\ this is~\n{150}.
+
+\item [\csidx{displaywidowpenalty}] 
+      Extra penalty for breaking a page before the last line 
+      above a display formula. The default value in plain \TeX\
+      is~\n{50}.
+
+\item [\csidx{brokenpenalty}] 
+      Extra penalty for breaking a page after a hyphenated line. 
+      The default value in plain \TeX\ is~\n{100}.
+\end{inventory}
+If the resulting penalty is zero, it is not placed.
+
+Penalties can also be inserted by the user. For instance,
+the plain format has macros to encourage (possibly, force)
+or prohibit page breaks\cstoidx penalty\par:
+\begin{verbatim}
+\def\break{\penalty-10000 }        % force break
+\def\nobreak{\penalty10000 }       % prohibit break
+\def\goodbreak{\par\penalty-500 }  % encourage page break
+\end{verbatim}
+Also, \verb>\vadjust{\penalty ... }> is a way of getting
+penalties in the vertical list. This can be used to
+discourage or encourage page breaking after a certain
+line of a paragraph.
+
+%\spoint Breakpoint computation
+\subsection{Breakpoint computation}
+
+\index{breakpoints!computation of|(}
+\advance\rightskip by 5.5cm
+
+Whenever an item is moved to the current page, \TeX\
+\vadjust{\advance\hsize by -5.5cm
+  \hbox to \hsize{\hfil\rlap{\hskip.4cm\vtop to 0pt
+  {\kern-2\baselineskip
+    \SansSerif %\pointSize:8 \Style:roman
+   \parindent0pt \offinterlineskip
+   \def\tbox#1{\hbox{\quad\quad #1%
+               \vrule height 10pt depth3pt width0cm }}
+   \hbox
+   {\vrule width\lw \kern-\lw
+    \vbox{\hsize=5cm
+          \hrule height\lw \ \vskip0cm
+           \kern40pt
+           \tbox{underfull page}
+           \tbox{$b=10\,000$}
+           \kern40pt
+          \hrule height\lw
+           \kern8pt
+           \tbox{feasible breakpoints}
+           \tbox{$b<10\,000$}
+           \kern8pt
+          \hrule height\lw
+           \kern8pt
+           \tbox{overfull page}
+           \tbox{$b=\infty$}
+           \kern3pt
+           \tbox{.\vrule height3.5pt depth1pt width0cm}
+           \tbox{.\vrule height3.5pt depth1pt width0cm}
+           \tbox{.\vrule height3.5pt depth1pt width0cm}
+           \kern8pt
+           }%
+    \kern-\lw \vrule width\lw}%
+    \vss}}}}
+computes the penalty $p$ and the badness $b$ associated with
+breaking the page at that place. From the penalty and
+the badness the cost $c$ of breaking is computed.
+
+The place of least cost is remembered, and when
+the cost is infinite, that is, the page is overfull, or
+when the penalty is $p\leq-10\,000$, the current page is broken
+at  the (last remembered) place of least cost. 
+The broken-off piece is then
+put in \cs{box255} and the output routine token list
+is inserted. Box 255 is always given a height of \cs{vsize},
+regardless of how much material it has.
+
+The badness calculation is based on the amount of stretching
+or shrinking that is necessary to fit the page in
+a box with height \cs{vsize} 
+and maximum depth \cs{maxdepth}. This calculation is
+the same as for line breaking (see Chapter~\ref{glue}).
+Badness is a value $0\leq b\leq 10\,000$, except when
+pages are overfull; then~$b=\infty$.
+
+\advance\rightskip by -5.5cm
+
+Some penalties are implicitly inserted by \TeX, 
+for instance the \cs{interlinepenalty}
+which is put in between every pair of lines of a paragraph.
+Other penalties can
+be explicitly inserted by the user or a user macro. 
+A~penalty
+value $p\geq10\,000$ inhibits breaking; a penalty
+$p\leq-10\,000$ (in external vertical mode)
+\alt
+forces a page break, and immediately
+activates the output routine. 
+
+Cost calculation proceeds as follows:
+\begin{enumerate} \item When a penalty is so low that it forces
+a page break and immediate invocation of the output routine, 
+but the page is not overfull, that is
+\begin{disp}$b<\infty\quad\hbox{and}\quad p\leq-10\,000$\end{disp}
+the cost is equal to the penalty:~$c=p$.
+
+\item When penalties do not force anything, and the page is not
+overfull, that is
+\begin{disp}$b<\infty\quad\hbox{and}\quad |p|<10\,000$\end{disp}
+the cost is~$c=b+p$.
+
+\item For pages that are very bad, that is
+\begin{disp}$b=10\,000\quad\hbox{and}\quad |p|<10\,000$\end{disp}
+the cost is~$c=10\,000$.
+
+\item An overfull page, that is
+\begin{disp}$b=\infty\quad\hbox{and}\quad p<10\,000$\end{disp}
+gives infinite cost:~$c=\infty$.
+In this case \TeX\ decides that the optimal break point
+must have occurred earlier, and it invokes the output routine.
+Values of \cs{insertpenalties} (see Chapter~\ref{insert})
+that exceed $10\,000$
+also give infinite cost.
+\end{enumerate}
+
+The fact that a penalty $p\leq-10\,000$ activates
+the output routine is used extensively
+in the \LaTeX\ output routine: 
+the excess $\mathopen|p\mathclose|-10\,000$ is
+a code indicating the reason for calling the output routine;
+see also the second example in the next chapter.
+
+\index{breakpoints!computation of|)}
+
+\section{\protect\cs{vsplit}}
+\label{vsplit}
+
+The page-breaking operation is available to the user
+through the \csidx{vsplit} operation.
+
+\begin{example}
+\begin{verbatim}
+\setbox1 = \vsplit2 to \dimen3
+\end{verbatim}
+assigns to box~1 the top part of size \cs{dimen3}
+of box~2. This material is actually removed from box~2.
+Compare this with splitting off a chunk of size \cs{vsize}
+from the current page.
+\end{example}
+
+The extracted
+result of 
+\begin{disp}\cs{vsplit}\gr{8-bit number}\n{to}\gr{dimen}
+\end{disp} is a box with the following properties.
+\begin{itemize} \item Height equal to the specified \gr{dimen}; \TeX\ will
+      go through the original box register (which must contain
+      a vertical box) to find the best breakpoint. This may
+      result in an underfull box.
+\item Depth at most \csidx{splitmaxdepth}; this is analogous to
+            the \cs{maxdepth} for the page box, rather than the \cs{boxmaxdepth}
+      that holds for any box.
+\item A first and last mark in the \cs{splitfirstmark} and 
+      \cs{splitbotmark} registers.
+\end{itemize}
+
+The remainder of the \cs{vsplit} operation is a box where
+\begin{itemize} \item all discardables have been removed
+      from the top;
+\item glue of size \csidx{splittopskip} has been inserted on top;
+      if the box being split was box~255, it
+      already had \cs{topskip} glue on top;
+\item its depth has been forced to be at most \cs{splitmaxdepth}.
+\end{itemize}
+
+The bottom of the original box is always a valid breakpoint
+for the \cs{vsplit} operation. If this breakpoint is taken,
+the remainder box register is void. The extracted box
+can be empty; it is only void if the original box
+was void, or not a vertical box.
+
+Typically, the \cs{vsplit} operation is used to split off part
+of \cs{box255}. By setting \cs{splitmaxdepth} equal to \cs{boxmaxdepth}
+the result is something that could have been made by \TeX's page
+builder. After pruning the top of \cs{box255}, the 
+mark registers \cs{firstmark} and \cs{botmark} contain the first
+and last marks on the remainder of box~255.
+See the next chapter for more information on marks.
+
+%\point Examples of page breaking
+\section{Examples of page breaking}
+
+%\spoint Filling up a page
+\subsection{Filling up a page}
+
+Suppose a certain vertical box is too large
+to fit on the remainder of the page.
+Then
+\begin{verbatim}
+\vfil\vbox{ ... }
+\end{verbatim}
+is the wrong way
+to fill up the page and push the box to the next.
+\TeX\ can only break at the start of the glue, and
+the \cs{vfil} is discarded after the break: the result
+is an underfull, or at least horribly stretched, page.
+On the other hand,
+\begin{verbatim}
+\vfil\penalty0 % or any other value
+\vbox{ ... }
+\end{verbatim}
+is the correct way: \TeX\ will break
+at the penalty, and the page will be filled.
+
+%\spoint Determining the breakpoint
+\subsection{Determining the breakpoint}
+
+In the following examples the \cs{vsplit} operation is
+used, which has the same
+mechanism as page breaking.
+
+Let the macros and
+parameter settings
+\begin{verbatim}
+\offinterlineskip \showboxdepth=1
+\def\High{\hbox{\vrule height5pt}}
+\def\HighAndDeep{\hbox{\vrule height2.5pt depth2.5pt}}
+\end{verbatim}
+be given.
+
+First let us consider
+an example where a vertical list is simply stretched
+in order to reach a break point.
+\begin{verbatim}
+\splitmaxdepth=4pt 
+\setbox1=\vbox{\High \vfil \HighAndDeep}
+\setbox2=\vsplit1 to 9pt
+\end{verbatim}
+gives
+\begin{verbatim}
+> \box2=
+\vbox(9.0+2.5)x0.4, glue set 1.5fil
+.\hbox(5.0+0.0)x0.4 []
+.\glue 0.0 plus 1.0fil
+.\glue(\lineskip) 0.0
+.\hbox(2.5+2.5)x0.4 []
+\end{verbatim}
+The two boxes together have a height of \n{7.5pt},
+so the glue has to stretch~\n{1.5pt}.
+
+Next, we decrease the allowed depth of the resulting list.
+\begin{verbatim}
+\splitmaxdepth=2pt 
+\setbox1=\vbox{\High \vfil \HighAndDeep}
+\setbox2=\vsplit1 to 9pt
+\end{verbatim}
+gives
+\begin{verbatim}
+> \box2=
+\vbox(9.0+2.0)x0.4, glue set 1.0fil
+.\hbox(5.0+0.0)x0.4 []
+.\glue 0.0 plus 1.0fil
+.\glue(\lineskip) 0.0
+.\hbox(2.5+2.5)x0.4 []
+\end{verbatim}
+The reference point is moved down half a point,
+and the stretch is correspondingly diminished,
+\alt
+but this motion cannot lead to a larger dimension
+than was specified.
+
+As an example of this,
+\alt
+consider the sequence
+\begin{verbatim}
+\splitmaxdepth=3pt 
+\setbox1=\vbox{\High \kern1.5pt \HighAndDeep}
+\setbox2=\vsplit1 to 9pt
+\end{verbatim}
+This gives a box exactly 9 points high and 2.5 points deep.
+Setting \verb>\splitmaxdepth=2pt> does not increase
+the height by half a point; instead, an underfull box
+results because an earlier break is taken.
+
+Sometimes the timing of actions is important.
+\TeX\ first locates a breakpoint that will lead
+to the requested height, then checks whether accommodating
+the \cs{maxdepth} or \cs{splitmaxdepth} will not
+violate that height.
+
+Consider an example of this timing:
+\alt
+in
+\begin{verbatim}
+\splitmaxdepth=4pt 
+\setbox1=\vbox{\High \vfil \HighAndDeep}
+\setbox2=\vsplit1 to 7pt
+\end{verbatim}
+the result is {\italic not\/} a box
+of 7 points high and 3 points deep. Instead,
+\begin{verbatim}
+> \box2=
+\vbox(7.0+0.0)x0.4
+.\hbox(5.0+0.0)x0.4 []
+\end{verbatim}
+which is an underfull box.
+
+%\spoint[par:page:build] The page builder after a paragraph
+\subsection{The page builder after a paragraph}
+\label{par:page:build}
+
+After a paragraph, the page builder moves material
+to the current page, but it does not decide whether a breakpoint
+has been found yet.
+
+\begin{example}
+\begin{verbatim}
+\output{\interrupt \plainoutput}% show when you're active
+\def\nl{\hfil\break}\vsize=22pt % make pages of two lines
+a\nl b\nl c\par \showlists      % make a 3-line paragraph
+\end{verbatim}
+will report
+\begin{verbatim}
+### current page:
+[...]
+total height 34.0
+ goal height 22.0
+prevdepth 0.0, prevgraf 3 lines
+\end{verbatim}
+Even though more than enough
+material has been gathered, \cs{output} is only invoked
+when the next paragraph starts: typing a \n d gives
+\begin{verbatim}
+! Undefined control sequence.
+<output> {\interrupt 
+                     \plainoutput }
+<to be read again> 
+                   d
+\end{verbatim}
+when \cs{output} is inserted after \cs{everypar}.
+\end{example}
+
+\index{page!breaking|)}
+
+\endofchapter

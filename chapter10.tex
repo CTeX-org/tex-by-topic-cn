@@ -1,0 +1,302 @@
+
+\chapter{Grouping}\label{group}
+
+\TeX\ has a grouping mechanism that is able to confine most
+changes to a~particular locality. This chapter explains
+what sort of actions can be local, and how groups are formed.
+
+\label{cschap:bgroup}\label{cschap:egroup}\label{cschap:begingroup}\label{cschap:endgroup}\label{cschap:aftergroup}\label{cschap:global}\label{cschap:globaldefs}
+\begin{inventory}
+\item [\cs{bgroup}] 
+Implicit beginning of group character.
+\item [\cs{egroup}] 
+Implicit end of group character.
+\item [\cs{begingroup}] 
+Open a group that must be closed with \cs{endgroup}.
+\item [\cs{endgroup}] 
+Close a group that was opened with \cs{begingroup}.
+\item [\cs{aftergroup}] 
+Save the next token for insertion after the current group ends.
+\item [\cs{global}] 
+Make assignments, macro definitions, and arithmetic global.
+\item [\cs{globaldefs}] 
+Parameter for overriding \cs{global} prefixes.
+\IniTeX\ default:~0.
+\end{inventory}
+
+%\point The grouping mechanism
+\section{The grouping mechanism}
+
+A group is a sequence of tokens starting with a
+`beginning of group' token,
+and ending with an `end of group'
+token, and in which all such tokens are properly balanced. 
+
+The \indexterm{grouping} mechanism of \TeX\ is not the same as
+the block structured `scoping'
+of ordinary programming languages.
+Most languages with block structure are only able  to have
+local definitions. \TeX's grouping mechanism is stronger: 
+most assignments made inside a group
+are local to that group unless explicitly indicated otherwise,
+and outside the group old values are restored.
+
+An example of local definitions
+\begin{verbatim}
+{\def\a{b}}\a
+\end{verbatim}
+gives an `undefined control sequence'
+message because \cs{a} is only defined inside the group.
+Similarly, the code
+\begin{verbatim}
+\count0=1 {\count0=2 } \showthe\count0
+\end{verbatim}
+will display the value~1; the assignment made inside the group
+is undone at the end of the group.
+
+
+Bookkeeping of values that are to be restored outside the group
+is done through the mechanism
+of the \indexterm{save stack}. Overflow of the save stack is treated
+in Chapter~\ref{error}. The save stack is also used for
+a few other purposes: in calls such as \hbox{\verb>\hbox to 100pt{...}>}
+the specification \hbox{\n{to 100pt}} is put on the save
+stack before a new level of grouping is opened.
+
+In order to prevent a lot of trouble with the save stack,
+\IniTeX\ does not allow dumping a format inside a group.
+The \cs{end} command is allowed to occur inside a group,
+but \TeX\ will give a diagnostic message about this.
+
+The \cs{aftergroup} control sequence saves a token for
+insertion after the current group. Several tokens can be
+set aside by this command, and they are inserted in the left-to-right
+order in which they were stated.
+This is treated in Chapter~\ref{expand}.
+
+
+%\point[global:assign] Local and global assignments
+\section{Local and global assignments}
+\index{assignment!global|(}
+\index{assignment!local|(}
+\label{global:assign}
+
+An assignment or macro definition
+is usually made global by prefixing it with \csidx{global},
+but non-zero values of the \gr{integer parameter}
+\csidx{globaldefs} override \cs{global}
+specifications: if \cs{globaldefs} is positive every assignment
+is implicitly prefixed with \cs{global}, and if
+\cs{globaldefs} is negative, \cs{global} is
+ignored. Ordinarily this parameter is zero.
+
+Some assignment are always global: the \gr{global assignment}s are
+\begin{description}%\FlushRight:no
+\item [\gr{font assignment}]
+assignments involving \cs{fontdimen}, \cs{hyphenchar}, 
+and \cs{skew\-char}.
+\item [\gr{hyphenation assignment}]
+\cs{hyphenation} and \cs{patterns} commands
+(see Chapter~\ref{line:break}).
+\item [\gr{box size assignment}]
+altering box dimensions with \cs{ht}, \cs{dp}, and~\cs{wd}
+(see Chapter~\ref{boxes}).
+\item [\gr{interaction mode assignment}]
+run modes for a \TeX\ job (see Chapter~\ref{run}).
+\item [\gr{intimate assignment}]
+assignments to a \gr{special integer} or \gr{special dimen};
+see %Chapters \ref{number} and~\ref{glue}.
+pages \pageref{special:int:list} and~\pageref{special:dimen:list}.
+\end{description}
+
+\index{assignment!global|)}
+\index{assignment!local|)}
+
+\section{Group delimiters}
+
+The open and closing \indextermsub{group}{delimiters} can be character
+tokens of category code~1\index{category!1} for `beginning of group'
+and code~2\index{category!2} for `end of group'
+(\indextermbus{explicit}{braces}), or control sequence tokens that are
+\cs{let} to such characters (\indextermbus{implicit}{braces}), such as
+the \cs{bgroup} and \cs{egroup} in plain \TeX.  Implicit and explicit
+braces can match to delimit a group; see for instance the example in
+section~\ref{sec:aftergroup}.
+
+Groups can also be delimited by \csidx{begingroup} and
+\csidx{endgroup}. These two control sequences must
+be used together: they cannot be matched with implicit
+or explicit braces, nor can they function as the braces
+surrounding, for instance, boxed material.
+
+Delimiting with \cs{begingroup} and \cs{endgroup} can
+\label{begin:end:macros}%
+provide a limited form of run-time error checking. 
+In between these two group delimiters an excess
+open or close brace would result in
+\begin{verbatim}
+\begingroup ... } ... \endgroup
+\end{verbatim}
+or
+\begin{verbatim}
+\begingroup ... { ... \endgroup
+\end{verbatim}
+In both cases \TeX\ gives an error message about improper
+balancing. Using \cs{bgroup} and \cs{egroup} here would
+make an error much harder to find, because of the incorrect
+matching that would occur. This idea is used in the environment
+macros of several formats.
+
+The choice of the brace characters for the beginning and end of group
+characters is not hard-wired in \TeX. It is arranged
+\cstoidx bgroup\par\cstoidx egroup\par
+like this in the plain format:
+\begin{verbatim}
+\catcode`\{=1 % left brace is begin-group character
+\catcode`\}=2 % right brace is end-group character
+\end{verbatim}
+Implicit braces have also been defined in the plain format:
+\begin{verbatim}
+\let\bgroup={ \let\egroup=}
+\end{verbatim}
+
+Special cases are the following:
+\begin{itemize} \item The replacement text of a macro must be enclosed
+in  explicit beginning and end of group character tokens.
+\item  The open and close braces for boxes, \cs{vadjust},
+and \cs{insert} can be implicit. This makes it possible
+to define, for instance
+\begin{verbatim}
+\def\openbox#1{\setbox#1=\hbox\bgroup}
+\def\closebox#1{\egroup\box#1}
+\openbox{15}Foo bar\closebox{15}
+\end{verbatim}
+\item The right-hand side of a token list assignment and the
+argument of the commands \cs{write}, \cs{message}, \cs{errmessage}, 
+\cs{uppercase}, \cs{lowercase}, 
+\cs{special}, and \cs{mark} is a \gr{general text}, defined
+as
+\begin{Disp} \gr{general text} $\longrightarrow$ \gr{filler}\lb
+      \gr{balanced text}\gr{right brace}\end{Disp}
+meaning that the left brace can be implicit, but the closing
+right brace must be an explicit character token with category
+code~2\index{category!2}.
+\end{itemize}
+
+In cases where an implicit left brace suffices, and where
+expansion is not explicitly inhibited, \TeX\ will
+expand tokens until a left brace is encountered. This
+is the basis for such constructs as
+\verb=\uppercase\expandafter{\romannumeral80}=,
+which in this unexpanded form do not adhere to the
+syntax. If the first unexpandable token is not a left
+brace \TeX\ gives an error message.
+
+The grammar of \TeX\ (see Chapter~\ref{gramm})  uses
+\gr{left brace} and \gr{right brace} for explicit
+characters, that is, character tokens,
+and \n{\lb} and~\n{\rb} 
+for possibly implicit characters,
+\altt
+that is, control sequences that have been \cs{let} to such
+explicit characters.
+
+\section{More about braces}
+\index{braces|(}
+
+\subsection{Brace counters}
+
+\TeX\ has two counters for keeping  track of grouping levels:
+the {\it master counter} and the {\it balance counter}.
+Both of these counters are syntactic counters: they count the
+explicit brace character tokens, but are not affected by implicit
+braces (such as \cs{bgroup}) that are semantically equivalent
+to an explicit brace.
+
+The balance counter handles braces in all cases except in
+alignment. Its workings are intuitively clear: it goes up
+by one for every opening and down for every closing
+brace that is not being skipped. Thus
+\begin{verbatim}
+\iffalse{\fi
+\end{verbatim}
+increases the balance counter if
+this statement is merely scanned (for instance if it
+appears in a macro definition text); if this statement
+is executed the brace is skipped, so there is no effect on
+the balance counter.
+
+The master counter is more tricky;
+it is used in alignments instead of the balance counter.
+This counter records all braces, even when they are skipped
+such as in \verb>\iffalse{\fi>.
+For this counter uncounted skipped braces are still possible:
+the alphabetic constants \n{`\lb} and \n{`\rb} have
+no effect on this counter when they are
+use by the execution processor as a~\gr{number};
+they do affect this counter when they are seen by the 
+input processor (which merely sees characters, and not
+the context).
+
+%\spoint The brace as a token
+\subsection{The brace as a token}
+
+Explicit braces are character tokens, and as such they are
+unexpandable. This implies that they survive until the
+last stages of \TeX\ processing. For example,
+\begin{verbatim}
+\count255=1{2}
+\end{verbatim}
+will assign~1 to \cs{count255},
+and print~`2', because the
+opening brace functions as a delimiter for the number~1.
+Similarly
+\begin{verbatim}
+f{f}
+\end{verbatim}
+will prevent \TeX\ from forming
+an `\hbox{ff}' ligature.
+
+From the fact that braces are unexpandable,
+it follows that their nesting is independent
+of the nesting of conditionals. For instance
+\begin{verbatim}
+\iftrue{\else}\fi
+\end{verbatim}
+will give an open brace,
+as conditionals are handled by expansion. The closing
+brace is simply skipped as part of the \gr{false text};
+any consequences it has for grouping only come into
+play in a later stage of \TeX\ processing.
+
+Undelimited macro arguments are either single tokens
+or groups of tokens enclosed in explicit braces.
+Thus it is not possible for an explicit open or close brace
+to be a macro argument. However, braces can be assigned
+with \cs{let}, for instance as in
+\begin{verbatim}
+\let\bgroup={
+\end{verbatim}
+This is used in the plain \cs{footnote} macro
+(see page~\pageref{footnote:ex}).
+
+%\spoint \csc{\char 123} and \csc{\char 125}
+\subsection{Open and closing brace control symbols}
+% \csc{\char 123} and \csc{\char 125}}
+
+The control sequences \verb-\{- and \verb-\}- do not really belong
+\cstoidx\char123\par\cstoidx\char125\par
+in this chapter,  not being concerned with grouping.
+They have been defined with \cs{let} as synonyms of
+\cs{lbrace} and \cs{rbrace} respectively,
+and these control sequences are \cs{delimiter} instructions
+(see Chapter~\ref{mathchar}).
+
+The Computer Modern Roman font has no braces, but there are
+braces in the typewriter font, and for mathematics 
+there are braces of different sizes \ldash and extendable ones \rdash in
+the extension font.
+
+\index{braces|)}
+\endofchapter
+%%%% end of input file [group]

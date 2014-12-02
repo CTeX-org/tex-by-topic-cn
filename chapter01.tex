@@ -1,0 +1,448 @@
+
+\chapter{The Structure of the \TeX\ Processor}
+
+This book treats the various aspects of \TeX\ in chapters
+that are concerned with relatively small, well-delineated,
+topics. In this chapter, therefore, 
+a global picture of the way \TeX\ operates will be given.
+Of necessity, many details will be omitted here, but all of
+these are treated in later chapters. On the other hand,
+the few examples given in this chapter will be repeated
+in the appropriate places later on; they are included here
+to make this chapter self-contained.
+
+\section{Four \TeX\protect\ processors}
+
+The way \TeX\ processes its input can be viewed as
+happening on four levels. One might  say that
+the \TeX\ processor is split into four separate units,
+each one accepting the output of the previous stage, and
+delivering the input for the next stage. The input of
+the first stage is then the \n{.tex} input file; the output
+of the last stage is a \n{.dvi} file.
+
+For many purposes it is most convenient, and most insightful,
+to consider these four levels of processing as happening
+after one another, each one accepting the {\em completed\/}
+output of the previous level. In reality this is not true:
+all levels are simultaneously
+active, and there is interaction between them.
+
+The four levels are (corresponding roughly
+to the `eyes', `mouth', `stomach', and `bowels' respectively
+in Knuth's original terminology) as follows.
+\begin{enumerate}\item
+The input processor. This is the piece of \TeX\ that
+accepts input lines from the file system of whatever computer
+\TeX\ runs on, and turns them into tokens.
+Tokens are the internal objects of \TeX:
+there are character tokens that constitute the typeset
+text, and control sequence tokens that are commands 
+to be processed by the next two levels.
+\item The expansion processor. 
+Some but not all of the tokens generated in the first level
+\ldash macros, conditionals, and a number
+of primitive \TeX\ commands \rdash  are subject to expansion.
+Expansion is the process that replaces some (sequences of)
+tokens by other (or no) tokens.
+\item The execution processor. 
+Control sequences that are not expandable are executable,
+and this execution takes place on the third level of the
+\TeX\ processor.
+
+One part of the activity here concerns changes to
+\TeX's internal state: assignments (including
+macro definitions) are typical activities in this
+category. The other major thing happening on this level
+is the construction of horizontal, vertical, and
+mathematical lists.
+\item The visual processor. 
+In the final level of processing
+the visual part of \TeX\ processing is performed. Here
+horizontal lists are broken into paragraphs, 
+vertical lists are broken into pages,
+and  formulas are built out of math lists. 
+Also the output to the \n{dvi} file takes place on this level.
+The algorithms working here are not accessible to the user,
+but they can be influenced by a number of parameters.
+\end{enumerate}
+
+\section{The input processor}
+
+The input processor of \TeX\ is that part of \TeX\ that
+translates whatever characters it gets from the input file
+into tokens. The output of this processor is a stream
+of tokens: a token list. Most tokens fall into one of two categories:
+character tokens and control sequence tokens. 
+The remaining category is that of the parameter tokens;
+these will not be treated in this chapter.
+
+\subsection{Character input}
+
+For simple input text, characters are made into
+character tokens. However, \TeX\ can ignore input characters:
+a row of spaces in the input is usually equivalent to just one
+space. Also, \TeX\ itself can insert tokens that do not correspond
+to any character in the input, for instance the space token
+at the end of the line, or the \cs{par} token after an empty line.
+
+Not all character tokens signify characters to be typeset.
+\altt
+Characters fall into sixteen categories \ldash each one
+specifying a certain function that a character can have \rdash 
+of which only two contain the characters that will be
+typeset. The other categories contain such characters 
+as~\n{\char`\{}, \n{\char`\}}, 
+\n\&, and~\n\#. A~character token can be considered
+as a pair of numbers: the character code \ldash typically the \ascii\
+code \rdash  and the category code.
+It is possible to change
+the category code that is associated with a particular
+character code.
+
+When the escape character (by default~\cs{}$\,$) appears in the input,
+\TeX's behaviour in forming tokens is more complicated. 
+Basically,
+\TeX\ builds a control sequence by taking a number of characters
+from the input and lumping them together into a single token.
+
+The behaviour with which \TeX's input processor 
+reacts to category codes can be described
+as a machine that switches between three internal states:
+$N$,~new line; $M$,~middle of line; $S$,~skipping spaces.
+These states and the transitions between them are treated
+in Chapter~\ref{mouth}.
+
+\subsection{Two-level input processing}
+
+\TeX's input processor is in fact itself a two-level processor.
+Because of limitations of the terminal, the editor, or the operating
+system, the user may not be able to input certain desired characters.
+Therefore, \TeX\ provides a mechanism to access
+with two superscript characters all of the available character
+positions. This may be considered
+a separate stage of \TeX\ processing, taking place
+prior to the three-state machine mentioned above.
+
+For instance, the sequence \verb>^^+> is replaced by~\n{k} because
+the \ascii{} codes of \n k and \n + differ by~64. 
+Since this replacement takes place before tokens are formed,
+writing \verb>\vs^^+ip 5cm> has the same effect as
+\verb>\vskip 5cm>. Examples more useful than this exist.
+
+Note that this first stage is a transformation from
+characters to characters, without considering category
+codes. These come into play only in the second phase
+of input processing where characters are converted
+to character tokens by coupling the category code
+to the character code.
+
+\section{The expansion processor}
+
+\TeX's  expansion processor accepts a stream of tokens
+and, if possible, 
+expands the tokens in this stream one by one
+until only unexpandable tokens remain.
+Macro expansion is the clearest example of this:
+if a control sequence is a macro name, it is replaced
+(together possibly with parameter tokens) by 
+the definition text of the macro.
+
+Input for the expansion processor is provided mainly
+by the input processor. The stream of tokens coming
+from the first stage of \TeX\ processing is subject
+to the expansion process, and the result is a stream
+of unexpandable tokens which is fed to the execution processor.
+
+However, the expansion processor comes into play 
+also when (among others) an \cs{edef} or \cs{write} is processed.
+The parameter token list of these commands is
+expanded very much as if the lists had been
+on the top level, instead of the argument to a command.
+
+\subsection{The process of expansion}
+
+Expanding a token consists of the following steps:
+\begin{enumerate}
+\item See whether the token is expandable. 
+\item If the token is unexpandable, pass it to the token
+      list currently being built, and take on the next token. 
+
+\item If the token is expandable, replace it by its expansion.
+      For macros without parameters, and a few primitive commands
+      such as \cs{jobname}, this is indeed a simple replacement.
+      Usually, however, \TeX\ needs to absorb some argument tokens from
+      the stream in order to be able to form the replacement
+      of the current token.
+      For instance, if the token was a macro with parameters,
+      sufficiently many tokens need to be absorbed to form
+      the arguments corresponding to  these parameters.
+
+\item Go on expanding, starting with the first token of the
+      expansion. 
+\end{enumerate}
+%
+Deciding whether a token is expandable is
+a simple decision. Macros and active characters, 
+conditionals, and a number of primitive \TeX\ commands
+(see the list on page~\pageref{expand:lijst})
+are expandable, other tokens are not.
+Thus the expansion processor replaces macros by their expansion,
+it evaluates conditionals and eliminates any irrelevant parts of 
+these, but tokens such as \cs{vskip} and character tokens,
+including characters such as dollars and braces, are passed untouched.
+
+\subsection{Special cases: \cs{expandafter}, \cs{noexpand}, and \cs{the}}
+
+As stated above,
+after a token has been expanded, \TeX\ will start expanding
+the resulting tokens. At first sight the \cs{expandafter}
+command would seem to be an exception to this rule, because
+it expands only one step. What actually happens is that
+the sequence \begin{disp}\cs{expandafter}\gr{token$_1$}\gr{token$_2$}\end{disp}
+is replaced by 
+\begin{disp}\gr{token$_1$}\gr{\italic expansion of token$_2$}\end{disp}
+and this replacement is in fact reexamined by the expansion
+processor.
+
+Real exceptions do exist, however. If the 
+current token is the \cs{noexpand} command, the next
+token is considered for the moment to be unexpandable:
+it is handled as if it were \cs{relax}, and it is
+passed to the token list being built.
+
+For example,
+in the macro definition
+\begin{verbatim}
+\edef\a{\noexpand\b}
+\end{verbatim}
+the replacement text \verb>\noexpand\b> is expanded at definition 
+time. The expansion of \cs{noexpand} is the next token, with
+a temporary meaning of \cs{relax}. Thus, when the expansion
+processor tackles the next token, the~\cs{b}, it will consider
+that to be unexpandable, and just pass it to the token list
+being built, which is the replacement text of the macro.
+
+Another exception is that the tokens
+resulting from \cs{the}\gr{token variable}
+are not expanded further if this statement occurs
+inside an \cs{edef} macro definition.
+
+\subsection{Braces in the expansion processor}
+
+Above, it was said that braces are passed as unexpandable
+character tokens. In general this is true. For instance,
+the \cs{romannumeral} command is handled by the expansion
+processor; when confronted with 
+\begin{verbatim}
+\romannumeral1\number\count2 3{4 ...
+\end{verbatim} 
+\TeX\ will expand until the brace is encountered:
+if \cs{count2} has the value of zero, the result will be
+the roman numeral representation of~\n{103}.
+
+As another example, \begin{verbatim}
+\iftrue {\else }\fi
+\end{verbatim}
+is handled by the expansion processor 
+completely analogous to
+\begin{disp}\cs{iftrue} {\italic a}\cs{else} {\italic b}\cs{fi}\end{disp}
+The result is a character token, independent of its category.
+
+However, in the context of macro expansion 
+the expansion  processor will 
+recognize braces. 
+First of all, a balanced pair of braces marks off a group of tokens
+to be passed as one argument.
+If a macro has an argument \begin{verbatim}
+\def\macro#1{ ... }
+\end{verbatim}
+one can call it with a single token, as in
+\begin{verbatim}
+\macro 1 \macro \$
+\end{verbatim}
+or with a group of tokens, surrounded by braces
+\begin{verbatim}
+\macro {abc} \macro {d{ef}g}
+\end{verbatim}
+
+
+Secondly, when the arguments for a macro with
+parameters are read, no expressions with unbalanced braces
+are accepted. In 
+\begin{verbatim}
+\def\a#1\stop{ ... }
+\end{verbatim}
+the argument consists of all
+tokens up to the first occurrence of \cs{stop}
+that is not in braces: in
+\begin{verbatim}
+\a bc{d\stop}e\stop
+\end{verbatim}
+the argument of~\cs{a} is \verb>bc{d\stop}e>.
+Only balanced expressions
+are accepted here.
+
+\section{The execution processor}
+
+The execution processor builds lists: horizontal, vertical,
+and math lists. Corresponding to these lists, it works
+in horizontal, vertical, or math mode. Of these three modes
+`internal' and `external' variants exist.
+In addition to building lists, this part of the \TeX\ processor
+also performs mode-independent processing, such as
+assignments.
+
+Coming out of the expansion processor is a stream of
+unexpandable tokens to be processed by
+the execution processor. 
+\relax From the point of view of the execution processor, this
+stream contains two types of tokens:
+\begin{itemize}
+\item Tokens signalling an assignment (this includes
+      macro definitions), and
+      other tokens signalling actions
+      that are independent of the mode, such
+      as \cs{show} and \cs{aftergroup}.
+\item Tokens that build lists:
+      characters, boxes, and glue. The way they are handled
+      depends on the current mode.
+\end{itemize}
+
+Some objects can be used in any mode; for instance boxes
+can appear in horizontal, vertical, and math lists.
+The effect of such an object will of course still depend on the mode.
+Other objects are  specific for one mode.
+For instance, characters (to be more precise:
+character tokens of categories 11 and~12), 
+are intimately connected to horizontal mode:
+if the execution processor 
+is in vertical mode when it encounters a character, it will
+switch to horizontal mode.
+
+Not all character tokens signal characters to be typeset:
+the execution processor can also encounter math shift
+characters (by default~\n{\char`\$}) and beginning/end of group
+characters (by default \n{\char`\{} and~\n{\char`\}}).
+Math shift characters let \TeX\ enter or exit
+math mode, and braces let it enter or exit a~new level of
+grouping.
+
+One control sequence handled by the execution processor 
+deserves special mention: \cs{relax}.
+This control sequence is not expandable, but the execution
+is to do nothing. Compare the effect of \cs{relax} in
+\begin{verbatim}
+\count0=1\relax 2
+\end{verbatim}
+with that of \cs{empty}
+defined by
+\begin{verbatim}
+\def\empty{}
+\end{verbatim}
+in 
+\begin{verbatim}
+\count0=1\empty 2
+\end{verbatim}
+In the first case the expansion
+process that is forming the number stops at \cs{relax} and
+the number {\tt 1} is assigned; in the second case 
+\cs{empty} expands to nothing, so {\tt 12} is assigned.
+
+\section{The visual processor}
+
+\TeX's output processor encompasses those algorithms that
+are outside direct user control: paragraph breaking,
+alignment, page breaking, math typesetting, and \n{dvi} file
+generation. Various parameters control the operation
+of these parts of \TeX.
+
+Some of these algorithms return their results in a form that
+can be handled by the execution processor. For instance,
+a paragraph that has been broken into lines is added to
+the main vertical list as a sequence of horizontal boxes
+with intermediate glue and penalties. Also, the page breaking
+algorithm stores its result in \cs{box255}, so output
+routines can dissect it. On the other hand, a math formula
+can not be broken into pieces, and, naturally, 
+shipping a box to the \n{dvi} file is irreversible.
+
+\section{Examples}
+
+\subsection{Skipped spaces}
+
+Skipped spaces provide an illustration of the view that
+\TeX's levels of processing accept the completed input
+of the previous level. Consider the commands
+\begin{verbatim}
+\def\a{\penalty200}
+\a 0
+\end{verbatim} 
+This is {\italic not\/} equivalent to
+\begin{verbatim}
+\penalty200 0
+\end{verbatim} 
+which would place a penalty of \n{200}, and
+typeset the digit~\n0. Instead it expands to
+\begin{verbatim}
+\penalty2000
+\end{verbatim}
+because the space after \cs{a} is skipped in the
+input processor. Later stages of processing then receive
+the sequence \begin{verbatim}
+\a0
+\end{verbatim}
+
+\subsection{Internal quantities and their representations}
+
+\TeX\ uses various sorts of internal quantities,
+such as integers and dimensions. These internal
+quantities have an external representation,
+which is a string of characters, such as 
+\n{4711} or~\n{91.44cm}.
+
+Conversions between the internal value and the external
+representation take place on two different levels,
+depending on what direction the conversion goes.
+A~string of characters is converted to an internal
+value in assignments such as
+\begin{verbatim}
+\pageno=12 \baselineskip=13pt
+\end{verbatim}
+or statements such as
+\begin{verbatim}
+\vskip 5.71pt
+\end{verbatim}
+and all of these statements are handled by the execution
+processor.
+
+On the other hand, the conversion of the internal
+values into a representation as a string of
+characters is handled by the expansion processor.
+For instance, \begin{verbatim}
+\number\pageno \romannumeral\year
+\the\baselineskip
+\end{verbatim}
+are all processed by expansion.
+
+As a final example, suppose \verb>\count2=45>, and
+consider the statement
+\begin{verbatim}
+\count0=1\number\count2 3
+\end{verbatim}
+The expansion processor tackles \verb>\number\count2>
+to give the characters \n{45}, and the space after
+the \n 2 does not end the number being assigned:
+it only serves as a delimiter
+of the number of the \cs{count} register.
+In the next stage of processing, the execution processor
+will then see the statement
+\begin{verbatim}
+\count0=1453
+\end{verbatim}
+and execute this.
+
+%\endinput
+
+\endofchapter
+%%%% end of input file [bigpic]
