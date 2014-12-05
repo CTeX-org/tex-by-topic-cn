@@ -716,8 +716,10 @@ certain category codes are encountered in the input.
 
 %%\spoint 0: escape character
 %\subsection{0: escape character}
+%\index{escape!character|see{character, escape}}
 %\spoint 0: escape character
 \subsection{0: escape character}
+\index{escape!character|see{character, escape}}
 
 %When an \indextermbus{escape}{character} is encountered,
 %\TeX\ starts forming a control sequence token.
@@ -993,8 +995,7 @@ the subscripts denote the category codes).
 %For example,
 %\begin{disp}\verb>\string\end>\quad gives four character tokens\quad
 %\n{\char92$_{12}$e$_{12}$n$_{12}$d$_{12}$} \end{disp}
-%Note that the \indextermbus{character !escape}
-%\n{\char92$_{12}$}\label{use:escape}
+%Note that the \indextermbus{escape}{character}~\texttt{\char`\\}$_{12}$\label{use:escape}
 %is used in the output only because the
 %value of \cs{escapechar} is the character code for the
 %backslash. Another value of \cs{escapechar} leads to another
@@ -1003,8 +1004,7 @@ the subscripts denote the category codes).
 For example,
 \begin{disp}\verb>\string\end>\quad gives four character tokens\quad
 \n{\char92$_{12}$e$_{12}$n$_{12}$d$_{12}$} \end{disp}
-Note that the \indextermbus{character !escape}
-\n{\char92$_{12}$}\label{use:escape}
+Note that the \indextermbus{escape}{character}~\texttt{\char`\\}$_{12}$\label{use:escape}
 is used in the output only because the
 value of \cs{escapechar} is the character code for the
 backslash. Another value of \cs{escapechar} leads to another
