@@ -7,7 +7,7 @@
 \begin{document}
 
 %\chapter{Macros}\label{macro}
-\chapter{Macros}\label{macro}
+\chapter{宏定义}\label{macro}
 
 %Macros are \TeX's abbreviation mechanism for sequences of commands
 %that are needed more than once,
@@ -15,89 +15,84 @@
 %\TeX's parameter mechanism, however, is quite unusual.
 %This chapter explains how \TeX\ macros work. It also
 %treats the commands \cs{let} and~\cs{futurelet}.
-Macros are \TeX's abbreviation mechanism for sequences of commands
-that are needed more than once,
-somewhat like procedures in ordinary programming languages.
-\TeX's parameter mechanism, however, is quite unusual.
-This chapter explains how \TeX\ macros work. It also
-treats the commands \cs{let} and~\cs{futurelet}.
+在 \TeX\ 中，宏是对一串需要多次用到的命令的缩写机制，
+它有点像普通编程语言的过程。然而 \TeX\ 的参数机制是与众不同的。
+这一章解释 \TeX\ 的宏如何运作，并介绍命令\cs{let} 和 \cs{futurelet}。
 
-%\label{cschap:def}\label{cschap:gdef}\label{cschap:edef}\label{cschap:xdef}\label{cschap:csname}\label{cschap:endcsname}\label{cschap:global2}\label{cschap:outer}\label{cschap:long}\label{cschap:let}\label{cschap:futurelet}
+%\label{cschap:def}\label{cschap:gdef}\label{cschap:edef}\label{cschap:xdef}
+%\label{cschap:csname}\label{cschap:endcsname}\label{cschap:global2}
+%\label{cschap:outer}\label{cschap:long}\label{cschap:let}\label{cschap:futurelet}
 %\begin{inventory}
 %\item [\cs{def}] 
 %      Start a macro definition.
-\label{cschap:def}\label{cschap:gdef}\label{cschap:edef}\label{cschap:xdef}\label{cschap:csname}\label{cschap:endcsname}\label{cschap:global2}\label{cschap:outer}\label{cschap:long}\label{cschap:let}\label{cschap:futurelet}
+\label{cschap:def}\label{cschap:gdef}\label{cschap:edef}\label{cschap:xdef}
+\label{cschap:csname}\label{cschap:endcsname}\label{cschap:global2}
+\label{cschap:outer}\label{cschap:long}\label{cschap:let}\label{cschap:futurelet}
 \begin{inventory}
 \item [\cs{def}] 
-      Start a macro definition.
+      开始一个宏定义。
 
 %\item [\cs{gdef}] 
 %      Synonym for \verb-\global\def-.
 \item [\cs{gdef}] 
-      Synonym for \verb-\global\def-.
+      等同于 \verb-\global\def-。
 
 %\item [\cs{edef}] 
 %      Start a macro definition; 
 %      the replacement text is expanded at definition time.
 %      This command is treated also in the next chapter.
 \item [\cs{edef}] 
-      Start a macro definition; 
-      the replacement text is expanded at definition time.
-      This command is treated also in the next chapter.
+      开始一个宏定义；在定义时替换文本被展开。此命令在下一章也会介绍。 
 
 %\item [\cs{xdef}] 
 %      Synonym for \verb-\global\edef-.
 \item [\cs{xdef}] 
-      Synonym for \verb-\global\edef-.
+      等同于 \verb-\global\edef-。
 
 %\item [\cs{csname}] 
 %      Start forming the name of a control sequence.
 \item [\cs{csname}] 
-      Start forming the name of a control sequence.
+      开始生成一个控制序列的名称。
 
 %\item [\cs{endcsname}] 
 %      Stop forming the name of a control sequence.
 \item [\cs{endcsname}] 
-      Stop forming the name of a control sequence.
+      结束生成一个控制序列的名称。
 
 %\item [\cs{global}] 
 %      Make the next definition, arithmetic statement,
 %      or assignment global.
 \item [\cs{global}] 
-      Make the next definition, arithmetic statement,
-      or assignment global.
+      使得后面的定义、算术语句或赋值是全局的。
 
 %\item [\cs{outer}] 
 %      Prefix indicating that the macro being defined 
 %      can be used on the `outer' level only.
 \item [\cs{outer}] 
-      Prefix indicating that the macro being defined 
-      can be used on the `outer' level only.
+      此前缀表示正在定义的宏只能用在`外部'层级中。
 
 %\item [\cs{long}] 
 %      Prefix indicating that the arguments of the macro being defined
 %      may contain \cs{par} tokens.
 \item [\cs{long}] 
-      Prefix indicating that the arguments of the macro being defined
-      may contain \cs{par} tokens.
+      此前缀表示正在定义的宏的参量可以包含 \cs{par} 记号。
 
 %\item [\cs{let}] 
 %      Define a control sequence to be equivalent to the next token.
 \item [\cs{let}] 
-      Define a control sequence to be equivalent to the next token.
+      将一个控制序列定义为等价于下一个记号。
 
 %\item [\cs{futurelet}] 
 %      Define a control sequence to be equivalent to
 %      the token after the next token.
 \item [\cs{futurelet}] 
-      Define a control sequence to be equivalent to
-      the token after the next token.
+      将一个控制序列定义为等价于下一个记号之后的记号。
 
 %\end{inventory}
 \end{inventory}
 
 %\section{Introduction}
-\section{Introduction}
+\section{介绍}
 
 %A \indexterm{macro}
 %is basically a sequence of tokens that has
@@ -116,23 +111,15 @@ treats the commands \cs{let} and~\cs{futurelet}.
 %Any time that \TeX's expansion processor
 %encounters the control sequence \cs{abc},
 %it replaces it by the replacement text.
-A \indexterm{macro}
-is basically a sequence of tokens that has
-been abbreviated into a control sequence.
-Statements starting with (among others) \cs{def}
-are called {\italic macro definitions}\alt, and
-writing
+基本上\indexterm{宏}是缩写为一个控制序列的一串记号。
+以 \cs{def} 等开始的语句称为{\italic 宏定义}，而语句
 \begin{verbatim}
 \def\abc{\de f\g}
 \end{verbatim}
-defines the macro \cs{abc},
-with the {\italic replacement text\/} \verb>\de f\g>.
-Macros can be used in this way to abbreviate
-pieces of text or sequences of commands
-that have to be given more than once.
-Any time that \TeX's expansion processor
-encounters the control sequence \cs{abc},
-it replaces it by the replacement text.
+就定义了以 \verb>\de f\g> 为{\italic 替换文本\/}的宏 \cs{abc}。
+以这种方式，宏可以用于缩写需要多次用到的一段文本或一串命令。
+在任何时候，只要 \TeX\ 的展开处理器遇到控制序列 \cs{abc}，
+它就将这个宏用其替换文本代替。
 
 %If a macro should be sensitive to the context
 %where it is used, it can be defined with parameters.
@@ -144,16 +131,13 @@ it replaces it by the replacement text.
 %text, the corresponding \emph{arguments},
 %and reproduces them in parentheses.
 %For example:
-If a macro should be sensitive to the context
-where it is used, it can be defined with parameters.
-A~macro \verb+\PickTwo+ defined as
+如果想让宏依赖它被用到时的上下文，就可以将它定义为带参数的宏。
+像下面这样定义的 \verb+\PickTwo+
 \begin{verbatim}
 \def\PickTwo#1#2{(#1,#2)}
 \end{verbatim}
-has two \emph{parameters}. When it is used, it will scoop up two pieces of
-text, the corresponding \emph{arguments},
-and reproduces them in parentheses.
-For example:
+有两个\emph{参数}。这个宏被用到时将取出两段文本，即对应的\emph{参量}，
+并将它们排印在圆括号中。例如：
 
 %\begin{tabular}{|l|llllll|}
 %\hline
@@ -178,13 +162,12 @@ use&       \verb+\PickTwo+&\verb+{ab}+&\verb+{cd}+&&(ab,cd)&\\
 
 %The activity of substituting the replacement text
 %for a macro and its arguments is called {\italic macro expansion}.
-The activity of substituting the replacement text
-for a macro and its arguments is called {\italic macro expansion}.
+将宏及其参量用替换文本代替的活动称为{\italic 宏展开}。
 
 %%\point Layout of a macro definition
 %\section{Layout of a macro definition}
 %\point Layout of a macro definition
-\section{Layout of a macro definition}
+\section{宏定义的结构}
 
 %A \indextermsub{macro}{definition} consists of, in sequence,
 %\begin{enumerate} \item any number of \cs{global},
@@ -200,35 +183,31 @@ for a macro and its arguments is called {\italic macro expansion}.
 %in plain \TeX.
 %\end{enumerate}
 %These elements will all be explained in subsequent sections.
-A \indextermsub{macro}{definition} consists of, in sequence,
-\begin{enumerate} \item any number of \cs{global},
-\cs{long}, and \cs{outer} prefixes,
-\item a \gr{def} control sequence, or anything
-that has been \cs{let} to one,
-\item a control sequence or active character to be defined, 
-\item possibly a \gr{parameter text} specifying among other things
-how many parameters the macro has, and
-\item a replacement text enclosed in explicit character tokens
-with category codes 1\index{category!1} and~2\index{category!2},
-by default \verb-{- and~\verb-}-
-in plain \TeX.
+一个\indextermsub{宏}{定义}按照顺序包含下列各部分：
+\begin{enumerate}
+\item 任意多个 \cs{global}、\cs{long} 和 \cs{outer} 前缀，
+\item 一个 \gr{def} 控制序列，或者任何用 \cs{let} 等价到此种控制序列的东西，
+\item 一个将要定义的控制序列或活动字符，
+\item 一个可能存在的 \gr{parameter text} 用于指定宏参数的个数及其他东西，以及
+\item 一个用类别码为 1\index{category!1} 和\index{category!2} 2
+的显式字符记号包围的替换文本，在 plain \TeX\ 中这两类字符默认为
+\verb-{- 和 \verb-}-。
 \end{enumerate}
-These elements will all be explained in subsequent sections.
+这些元素将在接下来各节中解释。
 
 %After a macro definition is completed, any saved \cs{afterassignment}
 %token (see section~\ref{sec:afterassignment}) is inserted.
-After a macro definition is completed, any saved \cs{afterassignment}
-token (see section~\ref{sec:afterassignment}) is inserted.
+在宏定义完成之后，任何已保存的 \cs{afterassignment} 记号（见
+第~\ref{sec:afterassignment}~节）将被插入进来。
 
 %The `expanding' definitions \cs{edef} and \cs{xdef}
 %are treated in Chapter~\ref{expand}.
-The `expanding' definitions \cs{edef} and \cs{xdef}
-are treated in Chapter~\ref{expand}.
+`展开的'定义 \cs{edef} 和 \cs{xdef} 将在第~\ref{expand}~章讨论。
 
 %%\point Prefixes
 %\section{Prefixes}
 %\point Prefixes
-\section{Prefixes}
+\section{前缀}
 
 %There are three \emph{prefixes}\index{prefixes !macro}
 %that alter the status of the
@@ -245,20 +224,15 @@ are treated in Chapter~\ref{expand}.
 %\end{disp} and
 %\begin{disp}\verb>\xdef\foo...>\quad is equivalent to\quad \verb>\global\edef\foo...>
 %\end{disp}
-There are three \emph{prefixes}\index{prefixes !macro}
-that alter the status of the
-macro definition:
+有三种\emph{前缀}\index{prefixes !macro}用于改变宏定义的状态：
 \begin{description}
 \item [\csidx{global}]
-If the definition occurs inside a  group, this prefix
-makes the definition global.
-This prefix can also be used for assignments other than
-macro definitions; in fact,
-for macro definitions abbreviations exist obviating the
-use of \cs{global}:
-\begin{disp}\verb>\gdef\foo...>\quad is equivalent to\quad \verb>\global\def\foo...>
-\end{disp} and
-\begin{disp}\verb>\xdef\foo...>\quad is equivalent to\quad \verb>\global\edef\foo...>
+如果定义出现在编组内，此前缀将使得该定义成为全局的。
+除了宏定义之外，此前缀还能用于赋值；实际上，对于宏定义，
+可以用缩写形式而不用 \cs{global}：
+\begin{disp}\verb>\gdef\foo...>\quad 等价于\quad \verb>\global\def\foo...>
+\end{disp} 而
+\begin{disp}\verb>\xdef\foo...>\quad 等价于\quad \verb>\global\edef\foo...>
 \end{disp}
 
 %If the parameter \cs{globaldefs}
@@ -268,13 +242,9 @@ use of \cs{global}:
 %ignored,
 %and \cs{gdef} and \cs{xdef} make local definitions
 %(see Chapter~\ref{group}).
-If the parameter \cs{globaldefs}
-is positive, all assignments are
-implicitly global;
-if\handbreak \cs{globaldefs} is negative any \cs{global} prefixes are
-ignored,
-and \cs{gdef} and \cs{xdef} make local definitions
-(see Chapter~\ref{group}).
+如果参数 \cs{globaldefs} 为正数，所有赋值都被视为全局的；
+而如果 \cs{globaldefs} 为负数，所有 \cs{global} 前缀都被忽略，
+而且 \cs{gdef} 和 \cs{xdef} 也生成局部的定义（见第~\ref{group}~章）。
 
 %\item [\cs{outer}]
 %The mechanism of defining an \indextermbus{outer}{macro} is supposed to facilitate
@@ -298,26 +268,21 @@ and \cs{gdef} and \cs{xdef} make local definitions
 %redefine them, without the `outer' option, which
 %is done for instance in \LaTeX, but  cleverer tricks are possible.
 \item [\cs{outer}]
-The mechanism of defining an \indextermbus{outer}{macro} is supposed to facilitate
+\emph{外部宏}\index{宏!外部的}的定义机制用于帮助%
 \cstoidx outer\par
-locating (among other errors) unbalanced braces: an \cs{outer}
-macro is supposed
-to  appear only in non-embedded contexts.
-To be precise, it is not allowed to occur 
+定位未配对花括号（及其他错误）：\cs{outer} 宏只能出现在非嵌入语境中。
+更准确地说，它不可以出现
 \begin{itemize}
-\item in macro replacement texts (but it can appear in
-    for instance \cs{edef} after 
-    \cs{noexpand}, and after \cs{meaning}),
-\item in parameter texts,
-\item in skipped conditional text,
-\item in alignment preambles, and
-\item in the \gram{balanced text} of a \cs{message}, \cs{write},
-et cetera. \end{itemize}
-For certain applications, however, it is inconvenient
-that some of the plain macros  are outer, 
-in particular macros such as \cs{newskip}. One remedy is to
-redefine them, without the `outer' option, which
-is done for instance in \LaTeX, but  cleverer tricks are possible.
+\item 在宏的替换文本中（但如果将它放在 \cs{noexpand} 或 \cs{meaning} 之后，
+就可以出现在 \cs{edef} 的替换文本中），
+\item 在参数文本中，
+\item 在跳过的条件文本中，
+\item 在阵列的导言中，以及
+\item 在 \cs{message}、\cs{write} 等的 \gram{balanced text} 中。
+\end{itemize}
+然而，在特定应用中某些 plain 宏是外部的很不方便，
+特别是像 \cs{newskip} 这样的宏。有个补救方法是将它们重新定义为非外部的宏，
+这正是 \LaTeX\ 所做的，但还有更巧妙的做法。
 
 %\item [\cs{long}]
 %Ordinarily, macro parameters are not supposed to contain
@@ -338,14 +303,10 @@ is done for instance in \LaTeX, but  cleverer tricks are possible.
 %The empty line generates a \cs{par}, which most of the times
 %means that a closing brace has been forgotten.
 \item [\cs{long}]
-Ordinarily, macro parameters are not supposed to contain
-\cstoidx long\par
-\cs{par} tokens. This restriction is useful (much more so
-than the \cs{outer} definitions) in locating
-forgotten closing braces. 
-For example, \TeX\ will complain about a `runaway argument'
+宏的参量通常不允许包含 \cstoidx long\par\cs{par} 记号。
+这个限制在定位遗漏的右括号时很有用（比 \cs{outer} 定义有用得多）。
+例如，对于下面的输入 \TeX\ 将抱怨`runaway argument'：
 \message{Example on}
-in the following sequence:
 \begin{verbatim}
 \def\a#1{ ... #1 ... }
 \a {This sentence should be in braces.
@@ -353,22 +314,18 @@ in the following sequence:
 And this is not supposed to be part of the argument
 \end{verbatim}
 \message{one page}
-The empty line generates a \cs{par}, which most of the times
-means that a closing brace has been forgotten.
+其中的空行生成一个 \cs{par}，这在多数时候意味着有个右花括号漏掉了。
 
 %If arguments to a particular macro should be allowed
 %to contain \cs{par} tokens,  then the macro must be declared
 %to be \cs{long}. \end{description}
-If arguments to a particular macro should be allowed
-to contain \cs{par} tokens,  then the macro must be declared
-to be \cs{long}. \end{description}
+如果某个宏允许其参量包含 \cs{par} 记号，则这个宏应当定义为 \cs{long} 宏。
+\end{description}
 
 %The \cs{ifx} test for equality of tokens 
 %(see Chapter~\ref{if}) takes prefixes into
 %account when testing whether two tokens have the same definition.
-The \cs{ifx} test for equality of tokens 
-(see Chapter~\ref{if}) takes prefixes into
-account when testing whether two tokens have the same definition.
+在测试两个记号是否相等时（见第~\ref{if}~章），\cs{ifx} 也会将前缀考虑在内。
 
 %\begin{comment}
 %With a little ingenuity it is possible 
@@ -400,7 +357,7 @@ this is of no importance in general.
 %%\point The definition type
 %\section{The definition type}
 %\point The definition type
-\section{The definition type}
+\section{定义的类型}
 
 %There are four \gr{def} control sequences in \TeX:
 %\csidx{def}, \csidx{gdef}, \csidx{edef}, and \csidx{xdef}.
@@ -410,29 +367,24 @@ this is of no importance in general.
 %\cs{xdef} is a synonym for \verb>\global\edef>.
 %The `expanding definition' \cs{edef} is treated in 
 %Chapter~\ref{expand}.
-There are four \gr{def} control sequences in \TeX:
-\csidx{def}, \csidx{gdef}, \csidx{edef}, and \csidx{xdef}.
-The control sequence 
-\alt
-\cs{gdef} is a synonym for \verb>\global\def> and
-\cs{xdef} is a synonym for \verb>\global\edef>.
-The `expanding definition' \cs{edef} is treated in 
-Chapter~\ref{expand}.
+在 \TeX\ 中有四种 \gr{def} 控制序列：
+\csidx{def}、\csidx{gdef}、\csidx{edef} 和 \csidx{xdef}。
+其中
+\cs{gdef} 是 \verb>\global\def> 的同义词，而
+\cs{xdef} 是 \verb>\global\edef> 的同义词。
+而`展开的定义' \cs{edef} 在第~\ref{expand}~章中介绍。
 
 %The difference between the various types of macro definitions
 %is only relevant at the time of the definition.
 %When a macro is called there is no way of telling how
 %it was defined.
-The difference between the various types of macro definitions
-is only relevant at the time of the definition.
-When a macro is called there is no way of telling how
-it was defined.
+各种宏定义仅在定义时有区别。在宏被调用时是无法知道它们是如何定义的。
 
 %%\point[param:text] The parameter text
 %\section{The parameter text}
 %\label{param:text}
 %\point[param:text] The parameter text
-\section{The parameter text}
+\section{参数文本}
 \label{param:text}
 
 %Between the control sequence or active character to be defined
@@ -443,14 +395,10 @@ it was defined.
 %how many, and how they are delimited. 
 %The \gr{parameter text} cannot contain
 %explicit braces.
-Between the control sequence or active character to be defined
-and the opening brace of the replacement text, a \gr{parameter
-text} can occur, somewhat corresponding to \indexterm{arguments}
-in regular programming languages. This specifies whether the macro has 
-parameters\index{parameter},
-how many, and how they are delimited. 
-The \gr{parameter text} cannot contain
-explicit braces.
+在所定义的控制序列或活动字符以及替换文本的左花括号之间，
+可以有\gr{parameter text}，参数文本有点像普通编程语言的\indexterm{参量}。
+它指定这个宏是否有\indexterm{参数}，有多少个参数，以及各参数之间如何定界。
+\gr{parameter text} 不能包含显式花括号。
 
 %A macro can have at most nine parameters. 
 %A~parameter is indicated by a parameter token,
@@ -461,24 +409,17 @@ explicit braces.
 %For instance, \verb>#6>~denotes the sixth parameter of a macro.
 %Parameter tokens cannot appear outside the context
 %of a macro definition.
-A macro can have at most nine parameters. 
-A~parameter is indicated by a parameter token,
-consisting of a macro parameter character
-(that is, a character of category code~6\index{category!6},
-in plain \TeX~\verb=#=) 
-followed by a digit~\n1--\n9. 
-For instance, \verb>#6>~denotes the sixth parameter of a macro.
-Parameter tokens cannot appear outside the context
-of a macro definition.
+一个宏最多可以有九个参数。参数用参数记号表示，参数记号由宏参数字符%
+（即类别码为~6\index{category!6} 的字符，在 plain \TeX\ 中为 \verb=#=）% 
+后跟一个 \n1--\n9 的数字组成。举个例子，\verb>#6> 表示宏的第六个参数。
+参数记号不能出现在宏定义之外的其他地方。
 
 %In the parameter text,
 %parameters must be numbered consecutively, starting at~1.
 %A~space after a parameter token is significant,
 %both in the parameter text and the replacement text.
-In the parameter text,
-parameters must be numbered consecutively, starting at~1.
-A~space after a parameter token is significant,
-both in the parameter text and the replacement text.
+在参数文本中，参数必须从~1~开始顺序编号。
+参数记号后的空格是有意义的，不管是在参数文本还是在替换文本中。
 
 %Parameters can be delimited or undelimited; this determines what the
 %extent of the macro arguments will be. A~parameter
@@ -490,30 +431,25 @@ both in the parameter text and the replacement text.
 %A~parameter is called delimited if it is followed by any other token; 
 %in \verb+\def\foo#1!#2{...}+ the first parameter is delimited by the
 %exclamation sign.
-Parameters can be delimited or undelimited; this determines what the
-extent of the macro arguments will be. A~parameter
-is called undelimited if it is followed immediately
-by another parameter in the \gr{parameter text}, so in
-\verb+\def\foo#1#2+ the first parameter is undelimited.
-A~parameter is also undelimited if it is immediately followed
-by the opening brace of the replacement text, as in \verb+\def\foo#1{...}+.
-A~parameter is called delimited if it is followed by any other token; 
-in \verb+\def\foo#1!#2{...}+ the first parameter is delimited by the
-exclamation sign.
+参数分为定界参数和非定界参数；它决定宏参量的范围。
+如果在 \gr{parameter text} 中一个参数后面紧跟着另一个参数，就像
+\verb+\def\foo#1#2+ 这样，则前面的参数就是非定界的。
+如果一个参数后面紧跟着替换文本的左花括号，就像
+\verb+\def\foo#1{...}+ 这样，则它也是非定界的。
+一个参数称为定界的，如果它后面紧跟着其他记号；
+比如 \verb+\def\foo#1!#2{...}+ 的第一个参数就是被感叹号定界的参数。
 
 %The tokens (zero or more) that are substituted for
 %a parameter when a macro is expanded (or `called')
 %are called
 %the `argument' corresponding to that parameter.
-The tokens (zero or more) that are substituted for
-a parameter when a macro is expanded (or `called')
-are called
-the `argument' corresponding to that parameter.
+在宏展开（或`调用'）时，
+用于替换参数的（零个或多个）记号称为该参数对应的`参量'。
 
 %%\spoint Undelimited parameters
 %\subsection{Undelimited parameters}
 %\spoint Undelimited parameters
-\subsection{Undelimited parameters}
+\subsection{非定界参数}
 
 %When a macro with an \indextermbus{undelimited}{parameter}, for instance
 %a macro \cs{foo} with one parameter
@@ -529,20 +465,14 @@ the `argument' corresponding to that parameter.
 %\gr{right brace} has been found.
 %This balanced text then
 %constitutes the argument.
-When a macro with an \indextermbus{undelimited}{parameter}, for instance
-a macro \cs{foo} with one parameter
+在带有\indextermbus{非定界}{参数}的宏，比如单参数宏 \cs{foo}
 \begin{verbatim}
 \def\foo#1{ ... #1 ...}
 \end{verbatim}
-is expanded, \TeX\ scans ahead (without expanding)
-until a non-blank token is found.
-If this token is not an explicit \gr{left brace}, 
-it is taken to be the argument
-corresponding to the parameter. Otherwise a \gr{balanced text}
-is absorbed by scanning until the matching explicit
-\gr{right brace} has been found.
-This balanced text then
-constitutes the argument.
+被展开时，\TeX\ 往前扫描（但不展开）直到遇到一个非空格记号。
+如果这个记号不是显式 \gr{left brace}，它就被取为对应于该参数的参量。
+否则，通过扫描直到找到匹配的显式 \gr{right brace}，
+\TeX\ 得到一个 \gr{balanced text}。这个平衡文本就要找的参量。
 
 %An example with three undelimited parameters follows: with
 %\begin{verbatim}
@@ -558,20 +488,17 @@ constitutes the argument.
 %skips all blanks, in this case exactly one. As second
 %parameter \TeX\ finds then the~\n2. Similarly the third
 %parameter is~\n3.
-An example with three undelimited parameters follows: with
+这里是个带有三个非定界参数的宏的例子：对于
 \begin{verbatim}
 \def\foo#1#2#3{#1(#2)#3}
 \end{verbatim}
-the macro call \cs{foo123} gives `\hbox{1(2)3}';
-but \hbox{\verb-\foo 1 2 3-} also gives the same result.
-In the call
+宏调用 \cs{foo123} 给出 `\hbox{1(2)3}'；
+而 \hbox{\verb-\foo 1 2 3-} 给出同样的结果。在调用
 \begin{disp}\cs{foo}\n{\char32 1\char32 2\char 32 3}\end{disp}
-the first space is skipped in the input processor of \TeX.
-The argument corresponding to the first parameter is then
-the~\n1. In order to find the second parameter \TeX\ then
-skips all blanks, in this case exactly one. As second
-parameter \TeX\ finds then the~\n2. Similarly the third
-parameter is~\n3.
+中，第一个空格被 \TeX\ 的输入处理器跳过。
+从而对应于第一个参数的参量是~\n1。为找到第二个参量，
+\TeX\ 跳过所有空格（在此例子中跳过一个空格），
+最后找到的第二个参量是~\n2。类似的第三个参量是~\n3。
 
 
 %In order to pass several tokens as one undelimited argument
@@ -594,38 +521,31 @@ parameter is~\n3.
 %\end{verbatim}
 %would
 %assign~1 and print~23.
-In order to pass several tokens as one undelimited argument
-one can use braces. With the above definition of \cs{foo}
-the call \verb>\foo a{bc}d> gives `\hbox{a(bc)d}'.
-When the argument of a macro is a balanced text instead of
-a single token, the delimiting braces are not inserted when 
-the argument is
-inserted in the replacement text.
-For example:
+为了将多个记号作为一个非定界参量，你可以使用花括号。
+对于上述的 \cs{foo} 定义，调用 \verb>\foo a{bc}d> 将给出 `\hbox{a(bc)d}'。
+当宏的参量是平衡文本而非单个记号时，
+在将参量插入替换文本时定界花括号会被去掉。例如：
 \begin{verbatim}
 \def\foo#1{\count0=1#1\relax}
 \foo{23}
 \end{verbatim}
-will expand to \verb>\count0=123\relax>,
-which assigns the value of 123 to the counter.
-On the other hand,  the statement
+将展开为 \verb>\count0=123\relax>，这将对计数器赋值 123。
+另一方面，下面语句
 \begin{verbatim}
 \count0=1{23}
 \end{verbatim}
-would
-assign~1 and print~23.
+将赋值 1 并排印~23。
 
 %%\spoint Delimited parameters
 %\subsection{Delimited parameters}
 %\spoint Delimited parameters
-\subsection{Delimited parameters}
+\subsection{定界参数}
 
 %Apart from enclosing it in braces there is another way
 %to pass a sequence of tokens as a single argument to a macro,
 %namely by using a \indextermbus{delimited}{parameter}.
-Apart from enclosing it in braces there is another way
-to pass a sequence of tokens as a single argument to a macro,
-namely by using a \indextermbus{delimited}{parameter}.
+除了将它们括在花括号里面，还有另一种方式可将一串记号作为宏的一个参量，
+即使用\indextermbus{定界的}{参数}。
 
 %Any non-parameter tokens in the \gr{parameter text} occurring
 %after a macro parameter (that is, after the parameter number
@@ -634,13 +554,10 @@ namely by using a \indextermbus{delimited}{parameter}.
 %a space after a parameter number is significant.
 %Delimiting tokens can also occur between the control
 %sequence being defined and the first parameter token~\verb>#1>.
-Any non-parameter tokens in the \gr{parameter text} occurring
-after a macro parameter (that is, after the parameter number
-following the parameter character)
-act as a delimiter for that parameter. This includes space tokens:
-a space after a parameter number is significant.
-Delimiting tokens can also occur between the control
-sequence being defined and the first parameter token~\verb>#1>.
+在 \gr{parameter text} 中，出现在宏参数之后%
+（即在紧跟参数字符的参数编号之后）的非参数记号被当作该参数的定界子。
+定界子可以包含空格记号：参数编号之后的空格是有意义的。
+定界记号同样出现在所定义的控制序列和它的第一个参数记号 \verb>#1> 之间。
 
 %Character tokens acting as delimiters in the parameter text
 %have both their character code and
@@ -654,18 +571,13 @@ sequence being defined and the first parameter token~\verb>#1>.
 %\end{verbatim}
 %the macro \cs{foo}
 %can be used outside math mode.
-Character tokens acting as delimiters in the parameter text
-have both their character code and
-category code stored; the delimiting character tokens of the
-actual arguments have to match both.
-Category codes of such characters may include some that
-can normally only appear in special contexts; for instance, after
-the definition
+对于在参数文本中充当定界子的字符记号，它们的字符码和类别码都被存储下来；
+实际参量的定界字符记号必须和两者都匹配。
+这些字符可以拥有一些通常只出现在特殊环境中的类别码；比如，在定义
 \begin{verbatim}
 \def\foo#1_#2^{...}
 \end{verbatim}
-the macro \cs{foo}
-can be used outside math mode.
+之后，宏 \cs{foo} 可以在数学模式之外使用。
 
 %When looking for the argument corresponding to
 %a delimited parameter, \TeX\ absorbs all tokens without expansion (but
@@ -673,17 +585,15 @@ can be used outside math mode.
 %(exact sequence of) delimiting tokens is encountered.
 %The delimiting tokens are not part of the argument;
 %they are removed from the input stream during the macro call.
-When looking for the argument corresponding to
-a delimited parameter, \TeX\ absorbs all tokens without expansion (but
-balancing braces) until the 
-(exact sequence of) delimiting tokens is encountered.
-The delimiting tokens are not part of the argument;
-they are removed from the input stream during the macro call.
+在寻找对应于一个定界参数的参量时，
+\TeX\ 吸收所有记号而不展开它们（但保持花括号配对），
+直到遇到（完全一致的）定界记号串。
+定界记号串不是参量的一部分；在宏调用时它们被从输入流中移除。
 
 %%\spoint Examples with delimited arguments
 %\subsection{Examples with delimited arguments}
 %\spoint Examples with delimited arguments
-\subsection{Examples with delimited arguments}
+\subsection{定界参量举例}
 
 %As a simple example,
 %\begin{verbatim}
@@ -702,23 +612,21 @@ they are removed from the input stream during the macro call.
 %\end{verbatim}
 %Note that the closing period is not in the argument, but it has
 %been absorbed; it is no longer in the input stream.
-As a simple example,
+作为一个简单例子，我们定义一个宏
 \begin{verbatim}
 \def\DoASentence#1#2.{{#1#2.}}
 \end{verbatim}
-defines a macro with an undelimited first parameter,
-and a second parameter delimited by a period.
-In the call
+它的第一个参数是非定界的，而第二个参数是用句号定界的。
+像下面这样调用时
 \begin{verbatim}
 \DoASentence \bf This sentence is the argument.
 \end{verbatim}
-the arguments are:
+它的两个参量分别是：
 \begin{verbatim}
 #1<-\bf
 #2<-This sentence is the argument
 \end{verbatim}
-Note that the closing period is not in the argument, but it has
-been absorbed; it is no longer in the input stream.
+注意结尾的句号不在参量中，但它已经被吸收了，不会再出现在输入流中。
 
 %A~commonly used delimiter is \cs{par}:
 %\begin{verbatim}
@@ -732,13 +640,12 @@ been absorbed; it is no longer in the input stream.
 
 %The text of the section...
 %\end{verbatim}
-A~commonly used delimiter is \cs{par}:
+常用的定界子是 \cs{par}，例如：
 \begin{verbatim}
 \def\section#1. #2\par{\medskip\noindent {\bf#1. #2\par}}
 \end{verbatim}
-This macro has a first parameter that is delimited by~`\n{.\char32}',
-and a second parameter that is delimited by \cs{par}.
-The call\message{example on one page}
+这个宏第一个参数用 `\n{.\char32}' 定界，而第二个参数用 \cs{par} 定界。
+像下面调用此宏\message{example on one page}
 \begin{verbatim}
 \section 2.5. Some title
 
@@ -762,24 +669,21 @@ The text of the section...
 %One way out of this dilemma is to write
 %\verb>#2\unskip> on all places in the definition text
 %where the trailing space would be unwanted.
-will give
+将给出
 \begin{disp}\verb>#1<-2.5>\nl
 \verb>#2<-Some title>\n{\char32}\end{disp}
-Note that there is a space at the end of the second argument
-generated by the line end. If this space is unwanted one might
-define
+注意在第二个由行尾符生成的参量的末尾有个空格。
+如果这个空格是多余的，你可以定义
 \begin{verbatim}
 \def\section#1. #2 \par{...}
 \end{verbatim}
-with \n{\char32}\cs{par} delimiting the second
-argument. This approach, however,
-precludes  the user's writing the \cs{par} explicitly:
+从而用 \n{\char32}\cs{par} 定界第二个参量。
+然而这种方法导致用户不可以显式写上 \cs{par}：
 \begin{verbatim}
 \section 2.5 Some title\par
 \end{verbatim}
-One way out of this dilemma is to write
-\verb>#2\unskip> on all places in the definition text
-where the trailing space would be unwanted.
+解决这种两难选择的其中一种方法是，
+在需要去掉结尾空格时，在定义文本中写上 \verb>#2\unskip> 。
 
 %Control sequences acting as delimiters need not be defined,
 %as they are absorbed without expansion. Thus
@@ -788,13 +692,11 @@ where the trailing space would be unwanted.
 %\end{verbatim}
 %is a useful
 %definition, even if \cs{sequence} is undefined.
-Control sequences acting as delimiters need not be defined,
-as they are absorbed without expansion. Thus
+充当定界子的控制序列不需要已经定义，因为它们只被吸收不会被展开。因此
 \begin{verbatim}
 \def\control#1\sequence{...}
 \end{verbatim}
-is a useful
-definition, even if \cs{sequence} is undefined.
+是有效的定义，即使在 \cs{sequence} 未定义时。
 
 %The importance of category codes in delimited arguments
 %is shown by the following example:
@@ -816,50 +718,43 @@ definition, even if \cs{sequence} is undefined.
 %of category~12\index{category!12};
 %the first space of  category~10
 %is the space that is generated by the line end.
-The importance of category codes in delimited arguments
-is shown by the following example:
+下面的例子展示了定界参量的类别码是至关重要的：
 \begin{verbatim}
 \def\a#1 #2.{ ... }
 \catcode`\ =12
 \a b c
 d.
 \end{verbatim}
-which gives
+将给出
 \begin{verbatim}
 \a #1 #2.-> ...
 #1<- b c
 #2<-d
 \end{verbatim}
-Explanation: the delimiter between parameters 1 and~2 is a space
-of category~10\index{category!10}.
-In between \n{a} and \n{b} there is a space
-of category~12\index{category!12};
-the first space of  category~10
-is the space that is generated by the line end.
+解释：参数~1 和参数~2 之间的定界子是一个第~10~类\index{category!10}的空格。
+在 \n{a} 和 \n{b} 之间有一个第~12~类\index{category!12}的空格；
+第一个第~10~类的空格是由行尾生成的空格。
 
 %For a `real-life' application of matching of category codes,
 %see the explanation of \cs{newif} in Chapter~\ref{if},
 %and the example on page~\pageref{ex:jobnumber}.
-For a `real-life' application of matching of category codes,
-see the explanation of \cs{newif} in Chapter~\ref{if},
-and the example on page~\pageref{ex:jobnumber}.
+在第~\ref{if}~章对 \cs{newif} 的解释，以及
+在第~\pageref{ex:jobnumber}~页的例子中，有类别码匹配的实际例子。
 
 
 %%\spoint Empty arguments
 %\subsection{Empty arguments}
 %\spoint Empty arguments
-\subsection{Empty arguments}
+\subsection{空参量}
 
 %If the user specifies a \gr{balanced text} in braces
 %when \TeX\ expects a macro
 %argument, that text is used as the argument.
 %Thus, specifying \verb-{}- will give an argument that is
 %an empty list of tokens; this is called an `empty argument'.
-If the user specifies a \gr{balanced text} in braces
-when \TeX\ expects a macro
-argument, that text is used as the argument.
-Thus, specifying \verb-{}- will give an argument that is
-an empty list of tokens; this is called an `empty argument'.
+在 \TeX\ 需要一个宏参量时，如果用户指定一个围在花括号中的
+\gr{balanced text}，则该文本就被用作参量。
+因此，指定 \verb-{}- 给出的参量是一个空记号列；它称为`空参量'。
 
 %Empty arguments can also arise from the use of delimited
 %parameters. For example, after the definition
@@ -871,16 +766,15 @@ an empty list of tokens; this is called an `empty argument'.
 %\mac\ro
 %\end{verbatim}
 %will give an empty argument. 
-Empty arguments can also arise from the use of delimited
-parameters. For example, after the definition
+在使用定界参数时也可能得到空参量。例如，在下述定义
 \begin{verbatim}
 \def\mac#1\ro{ ... }
 \end{verbatim}
-the call
+之后，这样调用
 \begin{verbatim}
 \mac\ro
 \end{verbatim}
-will give an empty argument. 
+将给出一个空参量。
 
 %\begin{comment}
 %However, only
@@ -916,7 +810,7 @@ of tokens delimited by~\cs{ro}.
 \end{comment}
 
 %\subsection{The macro parameter character}
-\subsection{The macro parameter character}
+\subsection{宏参数字符}
 
 %When \TeX's input processor scans a macro definition text, it inserts
 %a parameter token for any occurrence of a macro
@@ -925,13 +819,10 @@ of tokens delimited by~\cs{ro}.
 %parameter token in the replacement text states `insert parameter
 %number such and such here'.  Two parameter characters in a row are
 %replaced by a single one.
-When \TeX's input processor scans a macro definition text, it inserts
-a parameter token for any occurrence of a macro
-\indextermsub{parameter}{character}\index{character!parameter}
-followed by a digit.  In effect, a
-parameter token in the replacement text states `insert parameter
-number such and such here'.  Two parameter characters in a row are
-replaced by a single one.
+在 \TeX\ 的输入处理器扫描宏定义文本时，它对后面跟着数字的每个宏%
+\indextermsub{参数}{字符}\index{character!parameter}插入一个参数记号。
+实际上，在替换文本中，参数记号表示`在这里插入某某编号的参量'。
+连续两个参数字符被替换为一个。
 
 %The latter fact can be used for nested macro definitions.
 %\label{nest:def}\howto Nested macro definitions\par
@@ -942,15 +833,14 @@ replaced by a single one.
 %gives an error message
 %because \cs{a} was defined without parameters, and
 %yet there is a parameter token in its replacement text.
-The latter fact can be used for nested macro definitions.
+后一个的事实可以用于嵌套的宏定义。
 \label{nest:def}\howto Nested macro definitions\par
-Thus
+下面的定义
 \begin{verbatim}
 \def\a{\def\b#1{...}}
 \end{verbatim}
-gives an error message
-because \cs{a} was defined without parameters, and
-yet there is a parameter token in its replacement text.
+给出一个错误信息，因为 \cs{a} 被定义为不带参数的宏，
+而在它的替换文本中有一个参数记号。
 
 %The following
 %\begin{verbatim}
@@ -968,22 +858,18 @@ yet there is a parameter token in its replacement text.
 %does not attempt to define a macro \cs{bz}, because the
 %control sequence \cs{b} has already been formed in \TeX's
 %input processor when that input line was read.
-The following
+下面的语句
 \begin{verbatim}
 \def\a#1{\def\b#1{...}}
 \end{verbatim}
-defines a macro \cs{a} that
-defines a macro \cs{b}. However, \cs{b} still does not
-have any parameters: the call
+定义了宏 \cs{a}，这个宏又定义了另一个宏 \cs{b}。然而，
+\cs{b} 任然不带任何参数：这样调用
 \begin{verbatim}
 \a z
 \end{verbatim}
-defines a macro \cs{b} without parameters,
-that has to be followed by a~\n z.
-Note that this
-does not attempt to define a macro \cs{bz}, because the
-control sequence \cs{b} has already been formed in \TeX's
-input processor when that input line was read.
+就定义了一个不带参数的宏 \cs{b}，其后必须跟着 \n z。
+注意这并不是在定义宏 \cs{bz}，
+因为 \TeX\ 的输入处理器读取输入行时就已经形成了控制序列 \cs{b}。
 
 %Finally,
 %\begin{verbatim}
@@ -991,12 +877,11 @@ input processor when that input line was read.
 %\end{verbatim}
 %defines a macro \cs{b} 
 %with one parameter.
-Finally,
+最后，
 \begin{verbatim}
 \def\a{\def\b##1{...}}
 \end{verbatim}
-defines a macro \cs{b} 
-with one parameter.
+定义了带一个参数的宏 \cs{b}。
 
 %Let us examine the handling of the parameter character
 %in some detail.
@@ -1015,39 +900,33 @@ with one parameter.
 %in which the two characters \verb>#1> are
 %\alt
 %replaced by a parameter token.
-Let us examine the handling of the parameter character
-in some detail.
-Consider
+我们来仔细检查一下参数字符的处理过程。考虑下面定义
 \begin{verbatim}
 \def\a#1{ .. #1 .. \def\b##1{ ... }}
 \end{verbatim}
-When this is read as input, the input processor
+当这个语句作为输入被读取时，输入处理器
 \begin{itemize}
-\item replaces the characters \verb>#1> by \gr{parameter token$_1$}, and
-\item replaces the characters \verb>##> by \verb>#>\end{itemize}
-A macro call of \cs{a} will then let the input processor scan
+\item 将字符串 \verb>#1> 替换为 \gr{parameter token$_1$}，并且
+\item 将字符串 \verb>##> 替换为 \verb>#>
+\end{itemize}
+在调用宏 \cs{a} 时，输入处理器将扫描
 \begin{verbatim}
 \def\b#1{ ... }
 \end{verbatim}
-in which the two characters \verb>#1> are
-\alt
-replaced by a parameter token.
+并将其中两个字符的 \verb>#1> 替换为一个参数记号。
 
 %%\spoint Brace delimiting
 %\subsection{Brace delimiting}
 %\spoint Brace delimiting
-\subsection{Brace delimiting}
+\subsection{花括号定界}
 
 %Ordinarily, it is not possible to have left or right
 %braces in the \gr{parameter text} of a definition.
 %There is a special mechanism, however, that can make
 %the last parameter of a macro act as if it is delimited
 %by an opening brace. 
-Ordinarily, it is not possible to have left or right
-braces in the \gr{parameter text} of a definition.
-There is a special mechanism, however, that can make
-the last parameter of a macro act as if it is delimited
-by an opening brace. 
+在定义的 \gr{parameter text} 中通常是不可能有左或右花括号的。
+然而，有一种特殊规定可以让宏的最后一个参数看似用左花括号定界的。
 
 %If the last parameter token
 %is followed by a parameter character (\verb>#>),
@@ -1057,14 +936,9 @@ by an opening brace.
 %Furthermore, unlike other delimiting tokens in
 %parameter texts, this opening brace is not
 %removed from the input stream.
-If the last parameter token
-is followed by a parameter character (\verb>#>),
-which in turn is followed by the opening brace of the
-replacement text, \TeX\ makes the last parameter
-be delimited by a beginning-of-group character.
-Furthermore, unlike other delimiting tokens in
-parameter texts, this opening brace is not
-removed from the input stream.
+如果最后一个参数记号后面是一个参数字符（\verb>#>），
+接着是替换文本的左花括号，\TeX\ 将让最后一个参数以组开始符定界。
+此外，与参数文本的其他定界记号不同，这个左花括号不会被从输入流中移除。
 
 %Consider an example.
 %Suppose we want to have a macro
@@ -1083,23 +957,19 @@ removed from the input stream.
 %\csname everypar\endcsname{abc}
 %\end{verbatim}
 %which gives the desired result.
-Consider an example.
-Suppose we want to have a macro
-\cs{every} that can fill token lists as follows:
+考虑一个例子。假设你想有个宏 \cs{every} 宏用于像下面这样填充记号列：
 \begin{verbatim}
 \every par{abc} \every display{def}
 \end{verbatim}
-This macro can be defined as
+这个宏可以定义为
 \begin{verbatim}
 \def\every#1#{\csname every#1\endcsname}
 \end{verbatim}
-In the first call above, the argument corresponding to
-the parameter is \n{abc}, so the call 
-expands to
+在上面的第一个调用中，对应于参数的参量是 \n{abc}，因此该调用展开为
 \begin{verbatim}
 \csname everypar\endcsname{abc}
 \end{verbatim}
-which gives the desired result.
+这就给出所要的结果。
 
 
 %\section{Construction of control sequences}
