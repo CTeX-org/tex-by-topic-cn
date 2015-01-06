@@ -19,7 +19,7 @@
 \usepackage{xcolor}
 \usepackage{fancyvrb}
 \DefineVerbatimEnvironment{verbatim}{Verbatim}
-  {xleftmargin=2em,baselinestretch=1,formatcom=\color{teal}}
+  {xleftmargin=2em,baselinestretch=1,formatcom=\color{teal}\upshape}
 
 \usepackage{etoolbox}
 \makeatletter
@@ -82,10 +82,14 @@
 \def\AmsTeX{Ams\TeX}
 \def\TeXbook{the \TeX\ book}\def\web{{\sc web}}
 % needs major thinking
-\newenvironment{disp}{\begin{quotation}}{\end{quotation}}
-\newenvironment{Disp}{\begin{quotation}}{\end{quotation}}
-\newenvironment{tdisp}{\begin{quotation}}{\end{quotation}}
-\newenvironment{example}{\begin{quotation}}{\end{quotation}}
+\newenvironment{myquote}{\list{}{%
+    \topsep=2pt \partopsep=0pt%
+    \leftmargin=\parindent \rightmargin=\parindent
+    }\item[]}{\endlist}
+\newenvironment{disp}{\begin{myquote}}{\end{myquote}}
+\newenvironment{Disp}{\begin{myquote}}{\end{myquote}}
+\newenvironment{tdisp}{\begin{myquote}}{\end{myquote}}
+\newenvironment{example}{\begin{myquote}\noindent\itshape 例子：}{\end{myquote}}
 \newenvironment{inventory}{\begin{description}\raggedright}{\end{description}}
 \newenvironment{glossinventory}{\begin{description}}{\end{description}}
 \def\gram#1{\gr{#1}}%???
