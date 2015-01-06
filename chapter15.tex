@@ -335,14 +335,14 @@ Plain \TeX\ 中的默认值为
 %always. 
 %Settings for \cs{baselineskip} do not matter any more then.
 \csidx{offinterlineskip} 宏要彻底得多：
-它阻止{\sl 所有\/}行间粘连，从调用它的时刻算起，
+它使得{\sl 所有\/}行间粘连都为零，从调用它的时刻算起，
 或者，倘若在段落中间使用它，从段落开头处算起。
 它的定义为
 \begin{verbatim}
 \baselineskip=-1000pt \lineskip=0pt 
 \lineskiplimit\maxdimen
 \end{verbatim}
-其中第二行是关键之处：它使得 \TeX\ 始终添加 \cs{lineskip} 粘连（其值为零）。
+其中第二行是关键之处：它使得 \TeX\ 添加的 \cs{lineskip} 粘连始终等于零。
 这样 \cs{baselineskip} 的设置将不再重要。
 
 %The \cs{offinterlineskip} macro has an important application
