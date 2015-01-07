@@ -1,0 +1,16 @@
+% -*- coding: utf-8 -*-
+\documentclass[openany]{book}
+
+\input{preamble}
+\makeatletter
+\patchcmd{\@starttoc}{\jobname}{TeXByTopic}{}{}
+\makeatother
+
+\begin{document}
+
+\renewcommand{\contentsname}{目录}
+\phantomsection
+\pdfbookmark{\contentsname}{Contents}
+\tableofcontents
+
+\end{document}
