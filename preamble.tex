@@ -35,6 +35,15 @@
     {1em}
     {}
 %\titlespacing{\subsection}{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+%
+\newpagestyle{special}[\small\sffamily]{
+  \headrule
+  \sethead[\usepage][][\chaptertitle]
+  {\chaptertitle}{}{\usepage}}
+\newpagestyle{main}[\small\sffamily]{
+  \headrule
+  \sethead[\usepage][][第\thechapter 章\quad\chaptertitle]
+  {\thesection\quad\sectiontitle}{}{\usepage}}
 
 \usepackage{enumitem}
 \setlist{topsep=2pt,itemsep=2pt,parsep=1pt,leftmargin=\parindent}
@@ -67,21 +76,6 @@
 \def\mdqoff{\catcode`"=12\relax}
 \makeindex
 \hyphenation{ex-em-pli-fies}
-
-\usepackage{fancyhdr}
-% headers & footers
-\pagestyle{fancy}
-% foot
-\lfoot[\thepage]{\protect\small\protect\it Victor Eijkhout -- \protect\TeX\ by Topic}
-\rfoot[{\protect\small\protect\it Victor Eijkhout -- \protect\TeX\ by Topic}]{\thepage}
-\cfoot{}
-% head is actually defined later.
-\chead{}
-\def\normalheads{
-\lhead[\let\\\relax \let\uppercase\relax \leftmark]{\relax}
-\rhead[\relax]{\let\\\relax \let\uppercase\relax \rightmark}
-}
-\lhead{}\rhead{}
 
 \newdimen\tempdima \newdimen\tempdimb
 
