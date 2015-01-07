@@ -45,6 +45,16 @@
   \sethead[\usepage][][第\thechapter 章\quad\chaptertitle]
   {\thesection\quad\sectiontitle}{}{\usepage}}
 
+\usepackage{titletoc}
+\setcounter{tocdepth}{1}
+%\titlecontents{标题层次}[左间距]{上间距和整体格式}{标题序号}{标题内容}{指引线和页码}[下间距]
+\titlecontents{chapter}[1.5em]{\vspace{.5em}\bfseries\sffamily}{\color{myblue}\contentslabel{1.5em}}{}
+    {\titlerule*[20pt]{$\cdot$}\contentspage}[]
+\titlecontents{section}[4.5em]{\sffamily}{\color{myblue}\contentslabel{3em}}{}
+    {\titlerule*[20pt]{$\cdot$}\contentspage}[]
+%\titlecontents{subsection}[8.5em]{\sffamily}{\contentslabel{4em}}{}
+%    {\titlerule*[20pt]{$\cdot$}\contentspage}
+
 \usepackage{enumitem}
 \setlist{topsep=2pt,itemsep=2pt,parsep=1pt,leftmargin=\parindent}
 
