@@ -13,10 +13,32 @@
 \linespread{1.25}
 \setlength{\parindent}{2em}
 
+\usepackage{xcolor}
+\definecolor{myblue}{rgb}{0,0.2,0.6}
+
+\usepackage{titlesec}
+\titleformat{\chapter}
+    {\normalfont\Huge\sffamily\color{myblue}}
+    {第\thechapter 章}
+    {1em}
+    {}
+%\titlespacing{\chapter}{0pt}{50pt}{40pt}
+\titleformat{\section}
+    {\normalfont\Large\sffamily\color{myblue}}
+    {\thesection}
+    {1em}
+    {}
+%\titlespacing{\section}{0pt}{3.5ex plus 1ex minus .2ex}{2.3ex plus .2ex}
+\titleformat{\subsection}
+    {\normalfont\large\sffamily\color{myblue}}
+    {\thesubsection}
+    {1em}
+    {}
+%\titlespacing{\subsection}{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+
 \usepackage{enumitem}
 \setlist{topsep=2pt,itemsep=2pt,parsep=1pt,leftmargin=\parindent}
 
-\usepackage{xcolor}
 \usepackage{fancyvrb}
 \DefineVerbatimEnvironment{verbatim}{Verbatim}
   {xleftmargin=2em,baselinestretch=1,formatcom=\color{teal}\upshape}
