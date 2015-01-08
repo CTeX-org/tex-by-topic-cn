@@ -67,10 +67,6 @@
 \preto{\FV@ListVSpace}{\topsep=2pt \partopsep=0pt }
 \makeatother
 
-\usepackage{comment,makeidx,multicol}
-\usepackage{svn-multi}
-\svnid{$Id: TeXbyTopic.tex 3 2008-02-02 11:19:13Z victor $}
-
 \usepackage[colorlinks,plainpages,pagebackref]{hyperref}
 \hypersetup{
    pdfstartview={FitH},
@@ -80,13 +76,13 @@
    bookmarksnumbered
 }
 
-\begin{comment}
-\usepackage{german}
-% german
-\righthyphenmin=3
-\mdqoff
-\captionsenglish
-\end{comment}
+\usepackage{comment,makeidx,multicol}
+
+%\usepackage{german}
+%% german
+%\righthyphenmin=3
+%\mdqoff
+%\captionsenglish
 \usepackage[english]{babel} 
 {\catcode`"=13 \gdef"#1{\ifx#1"\discretionary{}{}{}\fi\relax}}
 \def\mdqon{\catcode`"=13\relax}
@@ -178,12 +174,10 @@
 \makeatother
 %%%%%%%%%%%%%%%%%%%
 
-\begin{comment}
-\def\SansSerif{\Typeface:macHelvetica }
-\def\SerifFont{\Typeface:macTimes }
-\def\SansSerif{\Typeface:bsGillSans }
-\def\SerifFont{\Typeface:bsBaskerville }
-\end{comment}
+%\def\SansSerif{\Typeface:macHelvetica }
+%\def\SerifFont{\Typeface:macTimes }
+%\def\SansSerif{\Typeface:bsGillSans }
+%\def\SerifFont{\Typeface:bsBaskerville }
 \let\SansSerif\relax \def\italic{\it}
 \let\SerifFont\relax \def\MainFont{\rm}
 \let\SansSerif\relax
@@ -191,15 +185,13 @@
 \let\PopIndentLevel\relax \let\PushIndentLevel\relax
 \let\ToVerso\relax \let\ToRecto\relax
 
-\begin{comment}
-\def\stop@command@suffix{stop}
-\let\PopListLevel\PopIndentLevel
-\let\FlushRight\relax
-\let\flushright\FlushRight
-\let\SetListIndent\LevelIndent
-\def\awp{\ifhmode\vadjust{\penalty-10000 }\else
-    \penalty-10000 \fi}
-\end{comment}
+%\def\stop@command@suffix{stop}
+%\let\PopListLevel\PopIndentLevel
+%\let\FlushRight\relax
+%\let\flushright\FlushRight
+%\let\SetListIndent\LevelIndent
+%\def\awp{\ifhmode\vadjust{\penalty-10000 }\else
+%    \penalty-10000 \fi}
 \let\awp\relax
 \let\PopIndentLevel\relax \let\PopListLevel\relax
 
