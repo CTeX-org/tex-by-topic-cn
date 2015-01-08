@@ -1,7 +1,7 @@
 % -*- coding: utf-8 -*-
 % This file is part of TeX by Topic
 % Copyright 2007 Victor
-\documentclass{book}
+\documentclass[openany]{book}
 
 \input{preamble}
 \setcounter{chapter}{37}
@@ -11,7 +11,7 @@
 %\chapter{Tables}
 %%\stepcounter{chapter}\addcontentsline{toc}{section}{Tables}\pagestyle{plain}\clearpage
 %\input tables
-\chapter{Tables}
+\chapter{编码表格}
 %\stepcounter{chapter}\addcontentsline{toc}{section}{Tables}\pagestyle{plain}\clearpage
 
 %%\storecat\"
@@ -21,15 +21,14 @@
 
 %\leavevmode\hbox{}\vfill\hbox{}
 %\pagebreak
-\leavevmode\hbox{}\vfill\hbox{}
-\pagebreak
+\newpage
 
 %\section{Character tables}
 %\label{sec:asciitable}
 %\hbox{}\vskip-20pt \hbox{}
-\section{Character tables}
+\section{字符编码表}
 \label{sec:asciitable}
-\hbox{}\vskip-20pt \hbox{}
+\subsection{ASCII 字符编码}
 
 %%% fonts
 %\def\titlefont{\SansSerif \pointSize:10 \Style:roman }
@@ -352,7 +351,7 @@
                      \fatline#&\asc#\ii&\thinline#&\asc#\ii&
                      \tabskip=0pt\fatline#\cr
           \omit\span\omit&\multispan{12}\hskip\thinlinewidth
-                            \titlefont ASCII CONTROL CODES\hfil
+                            \titlefont ASCII CHARACTER CODES\hfil
           &\multispan2\hskip\fatlinewidth
             \hbox{\vrule
              \vbox to \rowheight{
@@ -390,7 +389,8 @@
           }
 
 %\pagebreak %\eject
-\pagebreak %\eject
+\newpage
+\subsection{\TeX\ 字符编码}
 
 %\rowcount=-1
 %\colcount=0
@@ -488,7 +488,7 @@
       }
 
 %\pagebreak %\eject
-\pagebreak %\eject
+\newpage
 
 %\def\fonttitle#1{\noalign{\hbox{\titlefont \uppercase{#1}}
 %    \nointerlineskip\kern3pt\hrule}}
@@ -499,7 +499,9 @@
     \nointerlineskip\kern3pt\hrule}}
 \def\drop{\hbox{}\vskip3.5pt\vskip12pt}
 %\point Computer modern fonts
-\section{ Computer modern fonts}
+\section{计算机现代字体}
+
+\subsection{计算机现代罗马字体}
 
 %\term font tables\par
 %\rowcount=-1
@@ -574,7 +576,8 @@
       }
 
 %\pagebreak %\vfill\eject
-\pagebreak %\vfill\eject
+\newpage
+\subsection{计算机现代打字机字体}
 
 %%% typewriter
 %\rowcount=-1
@@ -636,7 +639,8 @@
       }
 
 %\pagebreak %\vfill\eject
-\pagebreak %\vfill\eject
+\newpage
+\subsection{计算机现代意大利字体}
 
 %\rowcount=-1
 %\colcount=0
@@ -700,7 +704,8 @@
       }
 
 %\pagebreak %\vfill\eject
-\pagebreak %\vfill\eject
+\newpage
+\subsection{计算机现代符号字体}
 
 %%% Symbol
 %% Symbol
@@ -763,7 +768,8 @@
       }
 
 %\pagebreak %\vfill\eject
-\pagebreak %\vfill\eject
+\newpage
+\subsection{计算机现代数学扩展字体}
 
 %\rowcount=-1
 %\colcount=0
@@ -827,13 +833,13 @@
       }
 
 %\pagebreak %\vfill\eject
-\pagebreak %\vfill\eject
+\newpage
 
 %%\point[math:sym:tables] Plain \TeX\ math symbols
 %\section{Plain \TeX\ math symbols}
 %\label{math:sym:tables}
 %\point[math:sym:tables] Plain \TeX\ math symbols
-\section{Plain \TeX\ math symbols}
+\section{Plain \TeX\ 数学符号}
 \label{math:sym:tables}
 
 %\term math symbols, lists of\par
@@ -861,7 +867,7 @@
 %%\spoint Mathcharacter codes
 %\subsection{ Mathcharacter codes}
 %\spoint Mathcharacter codes
-\subsection{ Mathcharacter codes}
+\subsection{字符的数学码}
 
 %The following characters have been defined
 %in a
@@ -869,11 +875,9 @@
 %\end{disp}
 %assignment.
 %\par\leavevmode\par
-The following characters have been defined
-in a
+下面列出的字符是用这个赋值定义的：
 \begin{disp}\cs{mathcode}\gr{8-bit number}\gr{equals}\gr{15-bit number}
 \end{disp}
-assignment.
 \par\leavevmode\par
 
 %\tabskip=0cm
@@ -963,30 +967,24 @@ assignment.
 }
 \endgroup
 
-
 %\clearpage
 %%\vfill
 %%\pagebreak
 %%\vfil\eject
-\clearpage
-%\vfill
-%\pagebreak
-%\vfil\eject
 
 %%\spoint Delimiter codes
 %\subsection{ Delimiter codes}
 %\spoint Delimiter codes
-\subsection{ Delimiter codes}
+\subsection{字符的定界码}
 
 % The following characters have been defined
 %in a
 %\begin{disp}\cs{delcode}\gr{8-bit number}\gr{equals}\gr{24-bit number}\end{disp}
 %assignment. They can be used with \cs{left} and~\cs{right}.
 %\par\leavevmode\par
- The following characters have been defined
-in a
+下面列出的字符是用这个赋值定义的：
 \begin{disp}\cs{delcode}\gr{8-bit number}\gr{equals}\gr{24-bit number}\end{disp}
-assignment. They can be used with \cs{left} and~\cs{right}.
+它们可以与 \cs{left} 和 \cs{right} 一起使用。
 \par\leavevmode\par
 
 %\begingroup\bodyfont
@@ -1041,7 +1039,6 @@ assignment. They can be used with \cs{left} and~\cs{right}.
 }\endgroup
 
 %\vfil\eject
-\vfil\eject
 
 %\def\prevclass{}\def\prevfaml{}
 \def\prevclass{}\def\prevfaml{}
@@ -1049,7 +1046,7 @@ assignment. They can be used with \cs{left} and~\cs{right}.
 %%\spoint \gr{mathchardef tokens}: ordinary symbols
 %\subsection{ \gr{mathchardef tokens}: ordinary symbols}
 %\spoint \gr{mathchardef tokens}: ordinary symbols
-\subsection{ \gr{mathchardef tokens}: ordinary symbols}
+\subsection{定义普通符号}
 
 % The following characters have been defined
 %in a
@@ -1057,11 +1054,9 @@ assignment. They can be used with \cs{left} and~\cs{right}.
 %\end{disp}
 %assignment.
 %\par\leavevmode\par
- The following characters have been defined
-in a
+下面列出的字符是用这个赋值定义的：
 \begin{disp}\cs{mathchardef}\gr{control sequence}\gr{equals}\gr{15-bit number}
 \end{disp}
-assignment.
 \par\leavevmode\par
 
 %\begingroup\bodyfont
@@ -1149,7 +1144,6 @@ $\diamondsuit$&diamondsuit&       "027D&2&7D\cr
 $\heartsuit$&heartsuit&         "027E&2&7E\cr
 $\spadesuit$&spadesuit&         "027F&2&7F\cr
 }\endgroup
-\vfil\eject
 
 %\def\prevclass{}\def\prevfaml{}
 \def\prevclass{}\def\prevfaml{}
@@ -1157,7 +1151,7 @@ $\spadesuit$&spadesuit&         "027F&2&7F\cr
 %%\spoint \gr{mathchardef tokens}: large operators
 %\subsection{ \gr{mathchardef tokens}: large operators}
 %\spoint \gr{mathchardef tokens}: large operators
-\subsection{ \gr{mathchardef tokens}: large operators}
+\subsection{定义巨算符}
 
 %The following characters have been defined
 %in a
@@ -1165,11 +1159,9 @@ $\spadesuit$&spadesuit&         "027F&2&7F\cr
 %\end{disp}
 %assignment.
 %\par\leavevmode\par
-The following characters have been defined
-in a
+下面列出的字符是用这个赋值定义的：
 \begin{disp}\cs{mathchardef}\gr{control sequence}\gr{equals}\gr{15-bit number}
 \end{disp}
-assignment.
 \par\leavevmode\par
 
 %\begingroup\bodyfont
@@ -1261,7 +1253,6 @@ $\bigvee \displaystyle\bigvee$&
 $\coprod \displaystyle\coprod$&
     coprod&            "1360&3&60\cr
 }\endgroup
-\vfil\eject
 
 %\def\prevclass{}\def\prevfaml{}
 \def\prevclass{}\def\prevfaml{}
@@ -1269,7 +1260,7 @@ $\coprod \displaystyle\coprod$&
 %%\spoint \gr{mathchardef tokens}: binary operations
 %\subsection{ \gr{mathchardef tokens}: binary operations}
 %\spoint \gr{mathchardef tokens}: binary operations
-\subsection{ \gr{mathchardef tokens}: binary operations}
+\subsection{定义二元运算符}
 
 %The following characters have been defined
 %in a
@@ -1277,11 +1268,9 @@ $\coprod \displaystyle\coprod$&
 %\end{disp}
 %assignment.
 %\par\leavevmode\par
-The following characters have been defined
-in a
+下面列出的字符是用这个赋值定义的：
 \begin{disp}\cs{mathchardef}\gr{control sequence}\gr{equals}\gr{15-bit number}
 \end{disp}
-assignment.
 \par\leavevmode\par
 
 %\begingroup\bodyfont
@@ -1377,7 +1366,6 @@ $\sqcap$&sqcap&             "2275&2&75\cr
 $\dagger$&dagger&            "2279&2&79\cr
 $\ddagger$&ddagger&           "227A&2&7A\cr
 }\endgroup
-\vfil\eject
 
 %\def\prevclass{}\def\prevfaml{}
 \def\prevclass{}\def\prevfaml{}
@@ -1385,7 +1373,7 @@ $\ddagger$&ddagger&           "227A&2&7A\cr
 %%\spoint \gr{mathchardef tokens}: relations
 %\subsection{ \gr{mathchardef tokens}: relations}
 %\spoint \gr{mathchardef tokens}: relations
-\subsection{ \gr{mathchardef tokens}: relations}
+\subsection{定义二元关系符}
 
 %The following characters have been defined
 %in a
@@ -1393,11 +1381,9 @@ $\ddagger$&ddagger&           "227A&2&7A\cr
 %\end{disp}
 %assignment.
 %\par\leavevmode\par
-The following characters have been defined
-in a
+下面列出的字符是用这个赋值定义的：
 \begin{disp}\cs{mathchardef}\gr{control sequence}\gr{equals}\gr{15-bit number}
 \end{disp}
-assignment.
 \par\leavevmode\par
 
 %\begingroup\bodyfont
@@ -1524,7 +1510,7 @@ $\sqsupseteq$&sqsupseteq&        "3277&2&77\cr
 %%\spoint \cs{delimiter} macros
 %\subsection{\protect\cs{delimiter} macros}
 %\spoint \cs{delimiter} macros
-\subsection{\protect\cs{delimiter} macros}
+\subsection{定义定界符}
 
 %The following characters have been defined
 %in a
@@ -1532,11 +1518,9 @@ $\sqsupseteq$&sqsupseteq&        "3277&2&77\cr
 %\end{disp}
 %assignment.
 %\par\leavevmode\par
-The following characters have been defined
-in a
+下面列出的字符是用这个赋值定义的：
 \begin{disp}\cs{def}\gr{control sequence}\lb\cs{delimiter}\gr{27-bit number}\rb
 \end{disp}
-assignment.
 \par\leavevmode\par
 
 %\halign to 30pc
@@ -1740,7 +1724,5 @@ assignment.
 
 %\endofchapter
 %%%%% end of input file [tables]
-\endofchapter
-%%%% end of input file [tables]
 
 \end{document}
