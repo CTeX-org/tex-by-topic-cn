@@ -1,4 +1,8 @@
 % -*- coding: utf-8 -*-
+% This file is part of TeX by Topic
+% Copyright 2007-2014 Victor Eijkhout
+% Translated by LiYanrui@bbs.ctex.org
+% Translated by zoho@bbs.ctex.org
 \documentclass{book}
 
 \input{preamble}
@@ -6,7 +10,7 @@
 \begin{document}
 
 %\chapter{The Structure of the \TeX\ Processor}
-\chapter{The Structure of the \TeX\ Processor}
+\chapter{\TeX\ 处理器的结构}
 
 %This book treats the various aspects of \TeX\ in chapters
 %that are concerned with relatively small, well-delineated,
@@ -17,18 +21,13 @@
 %the few examples given in this chapter will be repeated
 %in the appropriate places later on; they are included here
 %to make this chapter self-contained.
-This book treats the various aspects of \TeX\ in chapters
-that are concerned with relatively small, well-delineated,
-topics. In this chapter, therefore, 
-a global picture of the way \TeX\ operates will be given.
-Of necessity, many details will be omitted here, but all of
-these are treated in later chapters. On the other hand,
-the few examples given in this chapter will be repeated
-in the appropriate places later on; they are included here
-to make this chapter self-contained.
+这本书覆盖了 \TeX\ 多个方面的知识，其中每一章都对应着一个相对较小且易于讲述的主题。
+不过，在开始各个主题之前，有必要对 \TeX\ 的工作机理进行一个概述，这就是本章的主题，
+显然其中许多细节应当忽略，留待后续各章讲述。另外，为了内容的完整性，
+本章的末尾还会给出几份示例，它们在后续的一些章节中还会被重提。
 
 %\section{Four \TeX\protect\ processors}
-\section{Four \TeX\protect\ processors}
+\section{\TeX\ 的 4 个处理器}
 
 %The way \TeX\ processes its input can be viewed as
 %happening on four levels. One might  say that
@@ -37,13 +36,10 @@ to make this chapter self-contained.
 %delivering the input for the next stage. The input of
 %the first stage is then the \n{.tex} input file; the output
 %of the last stage is a \n{.dvi} file.
-The way \TeX\ processes its input can be viewed as
-happening on four levels. One might  say that
-the \TeX\ processor is split into four separate units,
-each one accepting the output of the previous stage, and
-delivering the input for the next stage. The input of
-the first stage is then the \n{.tex} input file; the output
-of the last stage is a \n{.dvi} file.
+\TeX\ 处理输入的方式可分为 4 个层面。
+你可以认为 \TeX\ 处理器（很多文档也称为 \TeX\ 引擎）是分成了 4 个独立的阶段，
+每个阶段都接受前一阶段的输出，其处理结果则作为后一阶段的输入。
+第一个阶段的输入来自 \n{.tex} 文件，最后一个阶段的输出是 \n{.dvi} 文件%
 
 %For many purposes it is most convenient, and most insightful,
 %to consider these four levels of processing as happening
@@ -51,12 +47,8 @@ of the last stage is a \n{.dvi} file.
 %output of the previous level. In reality this is not true:
 %all levels are simultaneously
 %active, and there is interaction between them.
-For many purposes it is most convenient, and most insightful,
-to consider these four levels of processing as happening
-after one another, each one accepting the {\em completed\/}
-output of the previous level. In reality this is not true:
-all levels are simultaneously
-active, and there is interaction between them.
+通常而言，将上述的 4 个层面理解为{\em 完整传承的} 4 个工作阶段比较直观且易于理解，
+但事实上这种理解并不正确，因为这 4 个层面是同时活动的，并且彼此之间互通有无。
 
 %The four levels are (corresponding roughly
 %to the `eyes', `mouth', `stomach', and `bowels' respectively
@@ -79,27 +71,18 @@ active, and there is interaction between them.
 %Control sequences that are not expandable are executable,
 %and this execution takes place on the third level of the
 %\TeX\ processor.
-The four levels are (corresponding roughly
-to the `eyes', `mouth', `stomach', and `bowels' respectively
-in Knuth's original terminology) as follows.
-\begin{enumerate}\item
-The input processor. This is the piece of \TeX\ that
-accepts input lines from the file system of whatever computer
-\TeX\ runs on, and turns them into tokens.
-Tokens are the internal objects of \TeX:
-there are character tokens that constitute the typeset
-text, and control sequence tokens that are commands 
-to be processed by the next two levels.
-\item The expansion processor. 
-Some but not all of the tokens generated in the first level
-\ldash macros, conditionals, and a number
-of primitive \TeX\ commands \rdash  are subject to expansion.
-Expansion is the process that replaces some (sequences of)
-tokens by other (or no) tokens.
-\item The execution processor. 
-Control sequences that are not expandable are executable,
-and this execution takes place on the third level of the
-\TeX\ processor.
+这 4 个层面（使用 Knuth 最初的术语，可分别大致理解为‘眼睛’、‘嘴巴’、
+‘胃’和‘肠道’）如下：
+\begin{enumerate}
+\item 输入处理器：
+这是 \TeX\ 从文件中接受文本行输入并将其处理为记号的部分。
+记号是 \TeX\ 的内部对象：有构成所排版文本的字符记号，
+有可被后续两个层面作为命令进行处理的控制序列记号。
+\item 展开处理器：
+在第一层面所产生的一些（并非全部）记号\ldash 宏、条件式以及
+\TeX\ 的一些原始命令\rdash 都是要被展开的目标。
+所谓展开，就是将一些记号序列替换为其它记号的过程。
+\item 执行处理器：那些不能再被进一步展开的控制序列在这一层会被执行。
 
 %One part of the activity here concerns changes to
 %\TeX's internal state: assignments (including
@@ -117,25 +100,19 @@ and this execution takes place on the third level of the
 %The algorithms working here are not accessible to the user,
 %but they can be influenced by a number of parameters.
 %\end{enumerate}
-One part of the activity here concerns changes to
-\TeX's internal state: assignments (including
-macro definitions) are typical activities in this
-category. The other major thing happening on this level
-is the construction of horizontal, vertical, and
-mathematical lists.
-\item The visual processor. 
-In the final level of processing
-the visual part of \TeX\ processing is performed. Here
-horizontal lists are broken into paragraphs, 
-vertical lists are broken into pages,
-and  formulas are built out of math lists. 
-Also the output to the \n{dvi} file takes place on this level.
-The algorithms working here are not accessible to the user,
-but they can be influenced by a number of parameters.
+这里需要关注的部分是 \TeX\ 内部状态的变化：
+赋值（包括宏定义）是该层最典型的行为，
+另外就是水平列、竖直列和数学列的构建。
+\item 可视化处理器：
+在这一层面完成 \TeX\ 排版内容的可视化。诸如水平列会被划分为段，
+竖直列会被划分为页，数学列会被构建为公式。此外此层面还会输出 \n{dvi} 文件%
+【译注：对于现代 \TeX\ 处理器而言，还可以是 \n{pdf} 和 \n{xml} 等文件】。
+在这一层面工作的算法对于用户而言是不可见的，
+但是用户可通过一部分参数去控制它们。
 \end{enumerate}
 
 %\section{The input processor}
-\section{The input processor}
+\section{输入处理器}
 
 %The input processor of \TeX\ is that part of \TeX\ that
 %translates whatever characters it gets from the input file
@@ -144,16 +121,12 @@ but they can be influenced by a number of parameters.
 %character tokens and control sequence tokens. 
 %The remaining category is that of the parameter tokens;
 %these will not be treated in this chapter.
-The input processor of \TeX\ is that part of \TeX\ that
-translates whatever characters it gets from the input file
-into tokens. The output of this processor is a stream
-of tokens: a token list. Most tokens fall into one of two categories:
-character tokens and control sequence tokens. 
-The remaining category is that of the parameter tokens;
-these will not be treated in this chapter.
+\TeX\ 的输入处理器是 \TeX\ 从输入文件所接受的任何字符翻译为记号的部分，
+它输出记号流：记号列表。大部分记号可归为两类：字符记号与控制序列记号。
+还有一类是参数记号，但本章不讨论它。
 
 %\subsection{Character input}
-\subsection{Character input}
+\subsection{字符的输入}
 
 %For simple input text, characters are made into
 %character tokens. However, \TeX\ can ignore input characters:
@@ -161,12 +134,10 @@ these will not be treated in this chapter.
 %space. Also, \TeX\ itself can insert tokens that do not correspond
 %to any character in the input, for instance the space token
 %at the end of the line, or the \cs{par} token after an empty line.
-For simple input text, characters are made into
-character tokens. However, \TeX\ can ignore input characters:
-a row of spaces in the input is usually equivalent to just one
-space. Also, \TeX\ itself can insert tokens that do not correspond
-to any character in the input, for instance the space token
-at the end of the line, or the \cs{par} token after an empty line.
+对于所输入的简单文本，字符会被直接转换为字符记号。
+不过，\TeX\ 会忽略这样一些字符：将多个连续的空格符号仅视为一个空格。
+还有，\TeX 自身会向记号列表中插入一些不太明显的记号，例如行尾的空格记号，
+每个空行之后的 \cs{par} 记号。
 
 %Not all character tokens signify characters to be typeset.
 %\altt
@@ -181,30 +152,22 @@ at the end of the line, or the \cs{par} token after an empty line.
 %It is possible to change
 %the category code that is associated with a particular
 %character code.
-Not all character tokens signify characters to be typeset.
-\altt
-Characters fall into sixteen categories \ldash each one
-specifying a certain function that a character can have \rdash 
-of which only two contain the characters that will be
-typeset. The other categories contain such characters 
-as~\n{\char`\{}, \n{\char`\}}, 
-\n\&, and~\n\#. A~character token can be considered
-as a pair of numbers: the character code \ldash typically the \ascii\
-code \rdash  and the category code.
-It is possible to change
-the category code that is associated with a particular
-character code.
+字符可被输入处理器转换为字符记号，
+但是这并非意味着所有字符可被排印（排版及印刷）。
+在 \TeX\ 中，字符被划分为 16 类——每一类都有特定的功能——%
+其中仅有两类字符可被排印。其它字符类，像 \n{\char`\{}、\n{\char`\}}、\n\&
+和 \n\#，都是不可被排印的。
+一个字符记号可视为一对数字：字符码和类别码。字符码通常使用 \ascii\ 编码。
+一个字符对应的类别码是可以修改的。
 
 %When the escape character (by default~\cs{}$\,$) appears in the input,
 %\TeX's behaviour in forming tokens is more complicated. 
 %Basically,
 %\TeX\ builds a control sequence by taking a number of characters
 %from the input and lumping them together into a single token.
-When the escape character (by default~\cs{}$\,$) appears in the input,
-\TeX's behaviour in forming tokens is more complicated. 
-Basically,
-\TeX\ builds a control sequence by taking a number of characters
-from the input and lumping them together into a single token.
+有一种字符叫做转义字符，默认是~\cs{}$\,$。
+当这种字符出现在输入的文本中时，为了生成它的记号，\TeX\ 输入处理器的行为会非常复杂。
+基本上，输入处理器会将尾随于转义字符的字符序列处理为单个记号，从而构建一个控制序列记号。
 
 %The behaviour with which \TeX's input processor 
 %reacts to category codes can be described
@@ -212,15 +175,11 @@ from the input and lumping them together into a single token.
 %$N$,~new line; $M$,~middle of line; $S$,~skipping spaces.
 %These states and the transitions between them are treated
 %in Chapter~\ref{mouth}.
-The behaviour with which \TeX's input processor 
-reacts to category codes can be described
-as a machine that switches between three internal states:
-$N$,~new line; $M$,~middle of line; $S$,~skipping spaces.
-These states and the transitions between them are treated
-in Chapter~\ref{mouth}.
+对于类别码的处理，\TeX\ 输入处理器的行为可想像为在三种内部状态（$N$，新行；$M$，
+行内；$S$，忽略空格）中切换的机器。在第~\ref{mouth}~章中我们会讨论这些状态及其切换。
 
 %\subsection{Two-level input processing}
-\subsection{Two-level input processing}
+\subsection{输入处理器的两个层面}
 
 %\TeX's input processor is in fact itself a two-level processor.
 %Because of limitations of the terminal, the editor, or the operating
@@ -230,25 +189,21 @@ in Chapter~\ref{mouth}.
 %positions. This may be considered
 %a separate stage of \TeX\ processing, taking place
 %prior to the three-state machine mentioned above.
-\TeX's input processor is in fact itself a two-level processor.
-Because of limitations of the terminal, the editor, or the operating
-system, the user may not be able to input certain desired characters.
-Therefore, \TeX\ provides a mechanism to access
-with two superscript characters all of the available character
-positions. This may be considered
-a separate stage of \TeX\ processing, taking place
-prior to the three-state machine mentioned above.
+实际上 \TeX\ 的输入处理器自身又可划分为两个层面。
+由于终端、编辑器或者操作系统的限制，用户可能无法输入一些所需的字符。
+所以 \TeX\ 提供了使用两个上标字符来获取各个有效字符的编码的机制。
+这一机制可视为 \TeX\ 输入处理过程中的一个独立的阶段，
+在时序上要早于上一节中的三态状态机。
 
 %For instance, the sequence \verb>^^+> is replaced by~\n{k} because
 %the \ascii{} codes of \n k and \n + differ by~64. 
 %Since this replacement takes place before tokens are formed,
 %writing \verb>\vs^^+ip 5cm> has the same effect as
 %\verb>\vskip 5cm>. Examples more useful than this exist.
-For instance, the sequence \verb>^^+> is replaced by~\n{k} because
-the \ascii{} codes of \n k and \n + differ by~64. 
-Since this replacement takes place before tokens are formed,
-writing \verb>\vs^^+ip 5cm> has the same effect as
-\verb>\vskip 5cm>. Examples more useful than this exist.
+例如，\verb>^^+> 这个字串的输入会被处理为 \n{k}，
+这是因为 \n k 和 \n + 的 \ascii{} 码之差为 64，
+由于这个替换过程发生在形成字符记号之前，所以输入 \verb>\vs^^+ip 5cm>
+与输入 \verb>\vskip 5cm> 是等价的。还有一些例子比这个例子更有用。
 
 %Note that this first stage is a transformation from
 %characters to characters, without considering category
@@ -256,15 +211,12 @@ writing \verb>\vs^^+ip 5cm> has the same effect as
 %of input processing where characters are converted
 %to character tokens by coupling the category code
 %to the character code.
-Note that this first stage is a transformation from
-characters to characters, without considering category
-codes. These come into play only in the second phase
-of input processing where characters are converted
-to character tokens by coupling the category code
-to the character code.
+上述过程即为 \TeX\ 输入处理器的第一层面，所做的工作是将字符转换为字符，
+并不考虑类别码的问题，后者是在第二层面（三态状态机）产生的，
+它与字符码组合成字符记号。
 
 %\section{The expansion processor}
-\section{The expansion processor}
+\section{展开处理器}
 
 %\TeX's  expansion processor accepts a stream of tokens
 %and, if possible, 
@@ -274,50 +226,39 @@ to the character code.
 %if a control sequence is a macro name, it is replaced
 %(together possibly with parameter tokens) by 
 %the definition text of the macro.
-\TeX's  expansion processor accepts a stream of tokens
-and, if possible, 
-expands the tokens in this stream one by one
-until only unexpandable tokens remain.
-Macro expansion is the clearest example of this:
-if a control sequence is a macro name, it is replaced
-(together possibly with parameter tokens) by 
-the definition text of the macro.
+\TeX\ 的展开处理器可以接受记号流并且对其中的记号逐一进行展开，
+直至记号流中所有的记号都是不可展开的。最有代表性的例子是宏的展开：
+如果一个控制序列记号是一个宏名，那么该记号（可能还包括它的参数记号）%
+会被替换为这个宏的定义文本。
 
 %Input for the expansion processor is provided mainly
 %by the input processor. The stream of tokens coming
 %from the first stage of \TeX\ processing is subject
 %to the expansion process, and the result is a stream
 %of unexpandable tokens which is fed to the execution processor.
-Input for the expansion processor is provided mainly
-by the input processor. The stream of tokens coming
-from the first stage of \TeX\ processing is subject
-to the expansion process, and the result is a stream
-of unexpandable tokens which is fed to the execution processor.
+展开处理器所接受的记号流主要来自输入处理器，
+展开结果是一串不可展开的记号流，将会交给执行处理器。
 
 %However, the expansion processor comes into play 
 %also when (among others) an \cs{edef} or \cs{write} is processed.
 %The parameter token list of these commands is
 %expanded very much as if the lists had been
 %on the top level, instead of the argument to a command.
-However, the expansion processor comes into play 
-also when (among others) an \cs{edef} or \cs{write} is processed.
-The parameter token list of these commands is
-expanded very much as if the lists had been
-on the top level, instead of the argument to a command.
+然而，在处理 \cs{edef} 或 \cs{write} 等时也会执行展开处理器。
+在展开时，这些命令的参数记号列很像在顶层而非在命令参量中的。
 
 %\subsection{The process of expansion}
-\subsection{The process of expansion}
+\subsection{记号的展开过程}
 
 %Expanding a token consists of the following steps:
 %\begin{enumerate}
 %\item See whether the token is expandable. 
 %\item If the token is unexpandable, pass it to the token
 %      list currently being built, and take on the next token. 
-Expanding a token consists of the following steps:
+展开处理器展开一个记号的步骤如下：
 \begin{enumerate}
-\item See whether the token is expandable. 
-\item If the token is unexpandable, pass it to the token
-      list currently being built, and take on the next token. 
+\item 查看这个记号是否可展开。
+\item 如果记号不可展开，那么就将它放入当前构建的记号列表中，然后读入下一个记号。
 
 %\item If the token is expandable, replace it by its expansion.
 %      For macros without parameters, and a few primitive commands
@@ -328,15 +269,10 @@ Expanding a token consists of the following steps:
 %      For instance, if the token was a macro with parameters,
 %      sufficiently many tokens need to be absorbed to form
 %      the arguments corresponding to  these parameters.
-\item If the token is expandable, replace it by its expansion.
-      For macros without parameters, and a few primitive commands
-      such as \cs{jobname}, this is indeed a simple replacement.
-      Usually, however, \TeX\ needs to absorb some argument tokens from
-      the stream in order to be able to form the replacement
-      of the current token.
-      For instance, if the token was a macro with parameters,
-      sufficiently many tokens need to be absorbed to form
-      the arguments corresponding to  these parameters.
+\item 如果记号可展开，那么它可以展开成什么，就将其替换为什么。对于不带参数的宏以及像
+\cs{jobname} 这样的一些原始命令，只需进行简单的记号序列替换即可。不过，通常 \TeX\
+需要从记号流中吸收一些参量记号，以形成当前记号的替换文本。例如，对于一个带参数的宏，
+那么就需要从记号流中析取足够的记号，以形成与它的参数对应的参量。
 
 %\item Go on expanding, starting with the first token of the
 %      expansion. 
@@ -351,22 +287,17 @@ Expanding a token consists of the following steps:
 %it evaluates conditionals and eliminates any irrelevant parts of 
 %these, but tokens such as \cs{vskip} and character tokens,
 %including characters such as dollars and braces, are passed untouched.
-\item Go on expanding, starting with the first token of the
-      expansion. 
+\item 对于当前记号的展开结果中的第一个记号，返回至步骤1 继续进行展开。
 \end{enumerate}
 %
-Deciding whether a token is expandable is
-a simple decision. Macros and active characters, 
-conditionals, and a number of primitive \TeX\ commands
-(see the list on page~\pageref{expand:lijst})
-are expandable, other tokens are not.
-Thus the expansion processor replaces macros by their expansion,
-it evaluates conditionals and eliminates any irrelevant parts of 
-these, but tokens such as \cs{vskip} and character tokens,
-including characters such as dollars and braces, are passed untouched.
+判断一个记号是否可展开很简单。宏和活动字符、条件式以及一部分 \TeX\ 原始命令%
+（见第~\pageref{expand:lijst}~页的列表）都是可展开的，其他记号则都是不可展开的。
+展开处理器根据这个判定规则将宏的记号替换为它的定义，对条件式进行计算以忽略无关的记号。
+不过，对于像 \cs{vskip} 这样的记号和字符记号，包括像美元符和花括号这样的字符，
+展开处理器会将它们原封不动地传送到执行处理器。
 
 %\subsection{Special cases: \cs{expandafter}, \cs{noexpand}, and \cs{the}}
-\subsection{Special cases: \cs{expandafter}, \cs{noexpand}, and \cs{the}}
+\subsection{几个特例}
 
 %As stated above,
 %after a token has been expanded, \TeX\ will start expanding
@@ -378,27 +309,24 @@ including characters such as dollars and braces, are passed untouched.
 %\begin{disp}\gr{token$_1$}\gr{\italic expansion of token$_2$}\end{disp}
 %and this replacement is in fact reexamined by the expansion
 %processor.
-As stated above,
-after a token has been expanded, \TeX\ will start expanding
-the resulting tokens. At first sight the \cs{expandafter}
-command would seem to be an exception to this rule, because
-it expands only one step. What actually happens is that
-the sequence \begin{disp}\cs{expandafter}\gr{token$_1$}\gr{token$_2$}\end{disp}
-is replaced by 
+如上文所述，在一个记号被展开后，\TeX\ 会对其展开结果中的记号继续进行展开。
+但是 \cs{expandafter} 这个控制序列初看破坏了这个游戏规则，
+因为它只做一步展开。实际发生的事情是：记号列
+\begin{disp}\cs{expandafter}\gr{token$_1$}\gr{token$_2$}\end{disp}
+会被替换为
 \begin{disp}\gr{token$_1$}\gr{\italic expansion of token$_2$}\end{disp}
-and this replacement is in fact reexamined by the expansion
-processor.
+而这个替换结果还会被展开处理器再次处理。
 
 %Real exceptions do exist, however. If the 
 %current token is the \cs{noexpand} command, the next
 %token is considered for the moment to be unexpandable:
 %it is handled as if it were \cs{relax}, and it is
 %passed to the token list being built.
-Real exceptions do exist, however. If the 
-current token is the \cs{noexpand} command, the next
-token is considered for the moment to be unexpandable:
-it is handled as if it were \cs{relax}, and it is
-passed to the token list being built.
+然而确实存在不遵守展开处理器游戏规则的情况。
+如果当前处理的记号是 \cs{noexpand} 控制序列，
+那么展开处理器把它的下一个记号视为不可展开的：
+展开处理器如同 \cs{relax} 那样处理这个记号，
+直接将其传送到所构建的记号列表中。
 
 %For example,
 %in the macro definition
@@ -411,29 +339,24 @@ passed to the token list being built.
 %processor tackles the next token, the~\cs{b}, it will consider
 %that to be unexpandable, and just pass it to the token list
 %being built, which is the replacement text of the macro.
-For example,
-in the macro definition
+例如下面这个宏的定义：
 \begin{verbatim}
 \edef\a{\noexpand\b}
 \end{verbatim}
-the replacement text \verb>\noexpand\b> is expanded at definition 
-time. The expansion of \cs{noexpand} is the next token, with
-a temporary meaning of \cs{relax}. Thus, when the expansion
-processor tackles the next token, the~\cs{b}, it will consider
-that to be unexpandable, and just pass it to the token list
-being built, which is the replacement text of the macro.
+替换文本 \verb>\noexpand\b> 会在宏定义时被展开。
+\cs{noexpand} 的展开结果是其后的那个记号临时改变成 \cs{relax} 的含义。
+因此，在展开处理器处理下个记号 \cs{b} 时，就将它视为不可展开的，
+而直接将它扔到在建的记号列表中，从而 \cs{b} 就是这个宏的替换文本。
 
 %Another exception is that the tokens
 %resulting from \cs{the}\gr{token variable}
 %are not expanded further if this statement occurs
 %inside an \cs{edef} macro definition.
-Another exception is that the tokens
-resulting from \cs{the}\gr{token variable}
-are not expanded further if this statement occurs
-inside an \cs{edef} macro definition.
+还有一种特例：在 \cs{edef} 语句里，
+\cs{the}\gr{token variable} 的展开结果是不会被进一步展开的。
 
 %\subsection{Braces in the expansion processor}
-\subsection{Braces in the expansion processor}
+\subsection{展开处理器中的花括号}
 
 %Above, it was said that braces are passed as unexpandable
 %character tokens. In general this is true. For instance,
@@ -445,16 +368,13 @@ inside an \cs{edef} macro definition.
 %\TeX\ will expand until the brace is encountered:
 %if \cs{count2} has the value of zero, the result will be
 %the roman numeral representation of~\n{103}.
-Above, it was said that braces are passed as unexpandable
-character tokens. In general this is true. For instance,
-the \cs{romannumeral} command is handled by the expansion
-processor; when confronted with 
+上一节提到，花括号会被展开处理器作为不可展开的字符记号忽略。
+通常而言这个说法是正确的。例如下面这个 \cs{romannumeral} 控制序列：
 \begin{verbatim}
 \romannumeral1\number\count2 3{4 ...
-\end{verbatim} 
-\TeX\ will expand until the brace is encountered:
-if \cs{count2} has the value of zero, the result will be
-the roman numeral representation of~\n{103}.
+\end{verbatim}
+它会被 \TeX\ 展开至花括号处停止：如果 \cs{count2} 的值是 0，
+那么这个控制序列的展开结果是~\n{103}~的罗马数字表示。
 
 %As another example, \begin{verbatim}
 %\iftrue {\else }\fi
@@ -463,13 +383,13 @@ the roman numeral representation of~\n{103}.
 %completely analogous to
 %\begin{disp}\cs{iftrue} {\italic a}\cs{else} {\italic b}\cs{fi}\end{disp}
 %The result is a character token, independent of its category.
-As another example, \begin{verbatim}
+另外一个例子，对于
+\begin{verbatim}
 \iftrue {\else }\fi
 \end{verbatim}
-is handled by the expansion processor 
-completely analogous to
+展开处理器将使用与
 \begin{disp}\cs{iftrue} {\italic a}\cs{else} {\italic b}\cs{fi}\end{disp}
-The result is a character token, independent of its category.
+完全类似的方式进行处理，结果是 \verb|{| 字符记号，与它的类别码无关。
 
 %However, in the context of macro expansion 
 %the expansion  processor will 
@@ -487,23 +407,20 @@ The result is a character token, independent of its category.
 %\begin{verbatim}
 %\macro {abc} \macro {d{ef}g}
 %\end{verbatim}
-However, in the context of macro expansion 
-the expansion  processor will 
-recognize braces. 
-First of all, a balanced pair of braces marks off a group of tokens
-to be passed as one argument.
-If a macro has an argument \begin{verbatim}
+但是在宏展开的环境中，展开处理器需要识别和处理花括号。
+首先，配对的花括号可以标定一组记号用于形成一个参量，
+例如下面这个带有 1 个参数的宏：
+\begin{verbatim}
 \def\macro#1{ ... }
 \end{verbatim}
-one can call it with a single token, as in
+你可以使用单个记号作为参量调用这个宏，如下：
 \begin{verbatim}
 \macro 1 \macro \$
 \end{verbatim}
-or with a group of tokens, surrounded by braces
+也可以使用配对花括号包围的一组记号作为这个宏的参量，如下：
 \begin{verbatim}
 \macro {abc} \macro {d{ef}g}
 \end{verbatim}
-
 
 %Secondly, when the arguments for a macro with
 %parameters are read, no expressions with unbalanced braces
@@ -520,24 +437,19 @@ or with a group of tokens, surrounded by braces
 %the argument of~\cs{a} is \verb>bc{d\stop}e>.
 %Only balanced expressions
 %are accepted here.
-Secondly, when the arguments for a macro with
-parameters are read, no expressions with unbalanced braces
-are accepted. In 
+其次，对于带参数的宏，未配对花括号内的表达式不能形成宏参量。例如：
 \begin{verbatim}
 \def\a#1\stop{ ... }
 \end{verbatim}
-the argument consists of all
-tokens up to the first occurrence of \cs{stop}
-that is not in braces: in
+它的参量由第一次出现并且不在配对花括号内的 \cs{stop} 之前的记号组成：
+对于
 \begin{verbatim}
 \a bc{d\stop}e\stop
 \end{verbatim}
-the argument of~\cs{a} is \verb>bc{d\stop}e>.
-Only balanced expressions
-are accepted here.
+其中 \cs{a} 的参量是 \verb>bc{d\stop}e>。这里只接受平衡表达式作为参量。
 
 %\section{The execution processor}
-\section{The execution processor}
+\section{执行处理器}
 
 %The execution processor builds lists: horizontal, vertical,
 %and math lists. Corresponding to these lists, it works
@@ -546,13 +458,11 @@ are accepted here.
 %In addition to building lists, this part of the \TeX\ processor
 %also performs mode-independent processing, such as
 %assignments.
-The execution processor builds lists: horizontal, vertical,
-and math lists. Corresponding to these lists, it works
-in horizontal, vertical, or math mode. Of these three modes
-`internal' and `external' variants exist.
-In addition to building lists, this part of the \TeX\ processor
-also performs mode-independent processing, such as
-assignments.
+执行处理器用于构建水平、竖直和数学列表。
+与这些列表相应，执行处理器在水平、竖直和数学模式中运行。
+这三种模式每种都有`内部的'和`外部的'两个类型。
+执行处理器在构建列表的过程中，还需要进行一些与模式无关的操作，
+例如赋值。
 
 %Coming out of the expansion processor is a stream of
 %unexpandable tokens to be processed by
@@ -569,20 +479,13 @@ assignments.
 %      characters, boxes, and glue. The way they are handled
 %      depends on the current mode.
 %\end{itemize}
-Coming out of the expansion processor is a stream of
-unexpandable tokens to be processed by
-the execution processor. 
-\relax From the point of view of the execution processor, this
-stream contains two types of tokens:
+执行处理器的输入来自展开处理器的输出，是一个不可展开的记号流。
+从执行处理器的角度来看，这条记号流所包含的记号有两种类型：
 \begin{itemize}
-\item Tokens signalling an assignment (this includes
-      macro definitions), and
-      other tokens signalling actions
-      that are independent of the mode, such
-      as \cs{show} and \cs{aftergroup}.
-\item Tokens that build lists:
-      characters, boxes, and glue. The way they are handled
-      depends on the current mode.
+\item 用于赋值的记号（包括宏定义）以及像 \cs{show}、\cs{aftergroup}
+  这样执行与模式无关操作的记号。
+\item 用于构建列表的记号：字符、盒子和粘连。
+  对这些记号的处理方式依赖执行处理器当前处于的模式。
 \end{itemize}
 
 %Some objects can be used in any mode; for instance boxes
@@ -595,16 +498,11 @@ stream contains two types of tokens:
 %if the execution processor 
 %is in vertical mode when it encounters a character, it will
 %switch to horizontal mode.
-Some objects can be used in any mode; for instance boxes
-can appear in horizontal, vertical, and math lists.
-The effect of such an object will of course still depend on the mode.
-Other objects are  specific for one mode.
-For instance, characters (to be more precise:
-character tokens of categories 11 and~12), 
-are intimately connected to horizontal mode:
-if the execution processor 
-is in vertical mode when it encounters a character, it will
-switch to horizontal mode.
+有些记号可以用于任何模式，例如盒子既可以出现在水平模式、竖直模式，
+也可以出现在数学模式中，但是这些对象的作用与效果需要依赖于具体的模式。
+其他记号是模式专用的，例如字符记号（确切的说是类别码为 11 和 12 的字符记号）%
+只能用于水平模式，这意味着：当执行处理器在竖直模式中遇到字符记号时，
+便会转入水平模式中工作。
 
 %Not all character tokens signal characters to be typeset:
 %the execution processor can also encounter math shift
@@ -613,13 +511,11 @@ switch to horizontal mode.
 %Math shift characters let \TeX\ enter or exit
 %math mode, and braces let it enter or exit a~new level of
 %grouping.
-Not all character tokens signal characters to be typeset:
-the execution processor can also encounter math shift
-characters (by default~\n{\char`\$}) and beginning/end of group
-characters (by default \n{\char`\{} and~\n{\char`\}}).
-Math shift characters let \TeX\ enter or exit
-math mode, and braces let it enter or exit a~new level of
-grouping.
+并非所有的字符记号都是可排印的，例如在 \TeX\ 的默认状态中，
+执行处理器会将 \n{\char`\$} 作为数学模式的切换符，
+并将\n{\char`\{} 和\n{\char`\}} 作为编组的起止符。
+数学模式切换符用于告知执行处理器进入和退出数学模式，
+而花括号让执行处理器进入和退出一个编组。
 
 %One control sequence handled by the execution processor 
 %deserves special mention: \cs{relax}.
@@ -641,40 +537,36 @@ grouping.
 %process that is forming the number stops at \cs{relax} and
 %the number {\tt 1} is assigned; in the second case 
 %\cs{empty} expands to nothing, so {\tt 12} is assigned.
-One control sequence handled by the execution processor 
-deserves special mention: \cs{relax}.
-This control sequence is not expandable, but the execution
-is to do nothing. Compare the effect of \cs{relax} in
+控制序列 \cs{relax} 需要在此关注一下，
+它是横跨展开处理器与执行处理器两界的特殊公民，
+在展开处理器中它是不可展开的，在执行处理器中它什么也不执行，
+但是它并非一无是处，可以比较下面的两个示例的效果，
+从中发现 \cs{relax} 的用途。\par 示例 1：
 \begin{verbatim}
 \count0=1\relax 2
 \end{verbatim}
-with that of \cs{empty}
-defined by
+\par 示例 2：
 \begin{verbatim}
 \def\empty{}
-\end{verbatim}
-in 
-\begin{verbatim}
 \count0=1\empty 2
 \end{verbatim}
-In the first case the expansion
-process that is forming the number stops at \cs{relax} and
-the number {\tt 1} is assigned; in the second case 
-\cs{empty} expands to nothing, so {\tt 12} is assigned.
+这两个示例都是在为计数寄存器赋值，但是示例 1 赋的值为 {\tt 1}，
+而示例 2 赋的值为 {\tt 12}。这是因为在示例 1 中，\cs{relax}
+在执行处理器获得数值 {\tt 1} 的时候阻断了它进一步获取数值 {\tt 2}，
+而在示例 2 中 \cs{empty} 的展开结果为空，执行处理器轻而易举地继 {\tt 1}
+之后就拿到了{\tt 2}，所以形成{\tt 12}。
 
 %\section{The visual processor}
-\section{The visual processor}
+\section{可视化处理器}
 
 %\TeX's output processor encompasses those algorithms that
 %are outside direct user control: paragraph breaking,
 %alignment, page breaking, math typesetting, and \n{dvi} file
 %generation. Various parameters control the operation
 %of these parts of \TeX.
-\TeX's output processor encompasses those algorithms that
-are outside direct user control: paragraph breaking,
-alignment, page breaking, math typesetting, and \n{dvi} file
-generation. Various parameters control the operation
-of these parts of \TeX.
+\TeX\ 的可视化处理器包含了用户不可直接控制的一些算法，
+用于处理断行、阵列、分页、数学排版以及 \n{dvi} 文件生成等。
+用户可以通过一些参数间接控制 \TeX\ 的这部分操作。
 
 %Some of these algorithms return their results in a form that
 %can be handled by the execution processor. For instance,
@@ -685,21 +577,17 @@ of these parts of \TeX.
 %routines can dissect it. On the other hand, a math formula
 %can not be broken into pieces, and, naturally, 
 %shipping a box to the \n{dvi} file is irreversible.
-Some of these algorithms return their results in a form that
-can be handled by the execution processor. For instance,
-a paragraph that has been broken into lines is added to
-the main vertical list as a sequence of horizontal boxes
-with intermediate glue and penalties. Also, the page breaking
-algorithm stores its result in \cs{box255}, so output
-routines can dissect it. On the other hand, a math formula
-can not be broken into pieces, and, naturally, 
-shipping a box to the \n{dvi} file is irreversible.
+可视化处理器中有一部分算法返回的是可被执行处理器处理的结果。
+例如，已完成断行的段落是一组带有行间粘连和惩罚的水平盒子，
+并被添加到主竖直列中。再者，分页算法会将其处理结果存储在
+\cs{box255} 中，以使输出例程能够产生页面。另一方面，
+数学公式不可以被分解，而输送至 \n{dvi} 文件的盒子也是不可逆的。
 
 %\section{Examples}
-\section{Examples}
+\section{示例}
 
 %\subsection{Skipped spaces}
-\subsection{Skipped spaces}
+\subsection{被忽略的空格}
 
 %Skipped spaces provide an illustration of the view that
 %\TeX's levels of processing accept the completed input
@@ -722,41 +610,34 @@ shipping a box to the \n{dvi} file is irreversible.
 %the sequence \begin{verbatim}
 %\a0
 %\end{verbatim}
-Skipped spaces provide an illustration of the view that
-\TeX's levels of processing accept the completed input
-of the previous level. Consider the commands
+被忽略的空格可以反映数据在 \TeX\ 各层处理器之间的流动情况。例如：
 \begin{verbatim}
 \def\a{\penalty200}
 \a 0
 \end{verbatim} 
-This is {\italic not\/} equivalent to
+展开的结果{\italic 并非}是（这将放置值为 \n{200} 的惩罚项，并排印数字 \n0）
 \begin{verbatim}
 \penalty200 0
 \end{verbatim} 
-which would place a penalty of \n{200}, and
-typeset the digit~\n0. Instead it expands to
+而是
 \begin{verbatim}
 \penalty2000
 \end{verbatim}
-because the space after \cs{a} is skipped in the
-input processor. Later stages of processing then receive
-the sequence \begin{verbatim}
+这是由于 \cs{a} 后的空格会被输入处理器忽略，从而展开处理器所得到的控制序列是
+\begin{verbatim}
 \a0
 \end{verbatim}
 
 %\subsection{Internal quantities and their representations}
-\subsection{Internal quantities and their representations}
+\subsection{内部量值及其表示}
 
 %\TeX\ uses various sorts of internal quantities,
 %such as integers and dimensions. These internal
 %quantities have an external representation,
 %which is a string of characters, such as 
 %\n{4711} or~\n{91.44cm}.
-\TeX\ uses various sorts of internal quantities,
-such as integers and dimensions. These internal
-quantities have an external representation,
-which is a string of characters, such as 
-\n{4711} or~\n{91.44cm}.
+\TeX\ 拥有多种内部量值，诸如整数和尺寸。这些内部量值的外部表示方法只有一种，
+那就是字符串表示，例如 \n{4711} 或者 \n{91.44cm}。
 
 %Conversions between the internal value and the external
 %representation take place on two different levels,
@@ -772,20 +653,16 @@ which is a string of characters, such as
 %\end{verbatim}
 %and all of these statements are handled by the execution
 %processor.
-Conversions between the internal value and the external
-representation take place on two different levels,
-depending on what direction the conversion goes.
-A~string of characters is converted to an internal
-value in assignments such as
+内部量值与外部表示之间的转换分别发生在两个不同的层面，具体依赖于转换的方向。
+对于字符串转换为内部量值，例如：
 \begin{verbatim}
 \pageno=12 \baselineskip=13pt
 \end{verbatim}
-or statements such as
+或者
 \begin{verbatim}
 \vskip 5.71pt
 \end{verbatim}
-and all of these statements are handled by the execution
-processor.
+像这样的语句会在执行处理器中被处理。
 
 %On the other hand, the conversion of the internal
 %values into a representation as a string of
@@ -795,14 +672,12 @@ processor.
 %\the\baselineskip
 %\end{verbatim}
 %are all processed by expansion.
-On the other hand, the conversion of the internal
-values into a representation as a string of
-characters is handled by the expansion processor.
-For instance, \begin{verbatim}
+另一方面，内部量值到外部表示的转换是由展开处理器完成的。例如：
+\begin{verbatim}
 \number\pageno \romannumeral\year
 \the\baselineskip
 \end{verbatim}
-are all processed by expansion.
+这些语句会被展开处理器处理为内部量值的字符串记号。
 
 %As a final example, suppose \verb>\count2=45>, and
 %consider the statement
@@ -820,22 +695,18 @@ are all processed by expansion.
 %\count0=1453
 %\end{verbatim}
 %and execute this.
-As a final example, suppose \verb>\count2=45>, and
-consider the statement
+最后一个例子，假设 \verb>\count2=45>，看下面的语句：
 \begin{verbatim}
 \count0=1\number\count2 3
 \end{verbatim}
-The expansion processor tackles \verb>\number\count2>
-to give the characters \n{45}, and the space after
-the \n 2 does not end the number being assigned:
-it only serves as a delimiter
-of the number of the \cs{count} register.
-In the next stage of processing, the execution processor
-will then see the statement
+展开处理器可将 \verb>\number\count2> 展开为字符串 \n{45}，
+而 \n2 之后的空格并不会结束正在赋予的数值：
+它只用于定界 \cs{count} 寄存器的数字。
+从而下一层级的执行处理器看到的是：
 \begin{verbatim}
 \count0=1453
 \end{verbatim}
-and execute this.
+于是它便奉命行事。
 
 %%\endinput
 %\endinput
