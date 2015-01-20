@@ -1,4 +1,8 @@
 % -*- coding: utf-8 -*-
+% This file is part of TeX by Topic
+% Copyright 2007-2014 Victor Eijkhout
+% Translated by LiYanrui@bbs.ctex.org
+% Translated by zoho@bbs.ctex.org
 \documentclass{book}
 
 \input{preamble}
@@ -7,74 +11,63 @@
 \begin{document}
 
 %\chapter{Characters}\label{char}
-\chapter{Characters}\label{char}
+\chapter{字符}\label{char}
 
 %Internally, \TeX\ represents characters by their (integer) 
 %character code. This chapter treats those codes, and the
 %commands that have access to them.
-Internally, \TeX\ represents characters by their (integer) 
-character code. This chapter treats those codes, and the
-commands that have access to them.
+\TeX\ 在其内部使用字符编码来表示字符。这一章讨论字符编码及相关命令。
 
-%\label{cschap:char}\label{cschap:chardef}\label{cschap:accent}\label{cschap:uccode}\label{cschap:lccode}\label{cschap:uppercase}\label{cschap:lowercase}\label{cschap:string}\label{cschap:escapechar}
+%\label{cschap:char}\label{cschap:chardef}\label{cschap:accent}\label{cschap:uccode}\label{cschap:lccode}
+%\label{cschap:uppercase}\label{cschap:lowercase}\label{cschap:string}\label{cschap:escapechar}
 %\begin{inventory}
 %\item [\cs{char}]
 %      Explicit denotation of a character to be typeset. 
-\label{cschap:char}\label{cschap:chardef}\label{cschap:accent}\label{cschap:uccode}\label{cschap:lccode}\label{cschap:uppercase}\label{cschap:lowercase}\label{cschap:string}\label{cschap:escapechar}
+\label{cschap:char}\label{cschap:chardef}\label{cschap:accent}\label{cschap:uccode}\label{cschap:lccode}
+\label{cschap:uppercase}\label{cschap:lowercase}\label{cschap:string}\label{cschap:escapechar}
 \begin{inventory}
-\item [\cs{char}]
-      Explicit denotation of a character to be typeset. 
+\item [\cs{char}] 显式表示所要排印的字符。
 
 %\item [\cs{chardef}] 
 %      Define a control sequence to be a synonym for
 %      a~character code.
-\item [\cs{chardef}] 
-      Define a control sequence to be a synonym for
-      a~character code.
+\item [\cs{chardef}] 定义一个控制序列用以表示一个字符编码。
 
 %\item [\cs{accent}] 
 %      Command to place accent characters.
-\item [\cs{accent}] 
-      Command to place accent characters.
+\item [\cs{accent}] 放置重音符号的命令。
 
 %\item [\cs{if}]
 %      Test equality of character codes. 
-\item [\cs{if}]
-      Test equality of character codes. 
+\item [\cs{if}] 测试字符编码是否相等。
 
 %\item [\cs{ifx}]
 %      Test equality of both character and category codes.
-\item [\cs{ifx}]
-      Test equality of both character and category codes.
+\item [\cs{ifx}] 测试字符编码与类别码是否都相等。
 
 %\item [\cs{let}]
 %      Define a control sequence to be a synonym of a token.
-\item [\cs{let}]
-      Define a control sequence to be a synonym of a token.
+\item [\cs{let}] 定义一个控制序列，使之成为一个记号的别名。
 
 %\item [\cs{uccode}] 
 %      Query or set
 %      the character code that is the uppercase variant of a given code.
-\item [\cs{uccode}] 
-      Query or set
-      the character code that is the uppercase variant of a given code.
+\item [\cs{uccode}] 对于给定的字符编码，查询或设置其对应的大写字符编码。
 
 %\item [\cs{lccode}]
 %      Query or set
 %      the character code that is the lowercase variant of a given code.
-\item [\cs{lccode}]
-      Query or set
-      the character code that is the lowercase variant of a given code.
+\item [\cs{lccode}] 对于给定的字符编码，查询或设置其对应的小写字符编码。
 
 %\item [\cs{uppercase}]
 %      Convert the \gr{general text} argument to its uppercase form.
 \item [\cs{uppercase}]
-      Convert the \gr{general text} argument to its uppercase form.
+      将 \gr{general text} 转换为大写形式。
 
 %\item [\cs{lowercase}] 
 %      Convert the \gr{general text} argument to its lowercase form.
 \item [\cs{lowercase}] 
-      Convert the \gr{general text} argument to its lowercase form.
+      将 \gr{general text} 转换为小写形式。
 
 %\item [\cs{string}]
 %      Convert a token to a string of one or more characters.
@@ -85,27 +78,23 @@ commands that have access to them.
 %      into character tokens. \IniTeX\ default:~92~(\cs{}).
 %\end{inventory}
 \item [\cs{string}]
-      Convert a token to a string of one or more characters.
-\item [\cs{escapechar}]
-      Number of the character that is to be used 
-      for the escape character
-      when control sequences are being converted
-      into character tokens. \IniTeX\ default:~92~(\cs{}).
+      将一个记号转换为一个字符串。
+\item [\cs{escapechar}] 在将控制序列转换为字符记号列时，
+      用于转义符的字符编码。\IniTeX\ 默认为~92（\cs{}）。
 \end{inventory}
 
 %%\point[char:code] Character codes
 %\section{Character codes}
 %\label{char:code}
 %\point[char:code] Character codes
-\section{Character codes}
+\section{字符编码}
 \label{char:code}
 
 %Conceptually it is easiest to think that \TeX\ works with
 %characters internally, but in fact
 %\TeX\ works with integers: the \indextermsub{character}{codes}. 
-Conceptually it is easiest to think that \TeX\ works with
-characters internally, but in fact
-\TeX\ works with integers: the \indextermsub{character}{codes}. 
+表面上看，\TeX\ 内部处理的是字符，但实际上 \TeX\ 处理的是整型数：
+\emph{字符编码}\index{字符!字符编码}。
 
 %The way characters are encoded in a computer may differ
 %from system to system.
@@ -116,15 +105,12 @@ characters internally, but in fact
 %A~category code is then assigned based on this (see Chapter~\ref{mouth}).
 %The character code table is based on the 7-bit \ascii{} table
 %for numbers under~128 (see Section~\ref{sec:asciitable}).
-The way characters are encoded in a computer may differ
-from system to system.
-Therefore \TeX\ uses its own scheme of character codes.
-Any character that is read from a file (or from the user terminal)
-is converted to a character code according to the
-character code table.
-A~category code is then assigned based on this (see Chapter~\ref{mouth}).
-The character code table is based on the 7-bit \ascii{} table
-for numbers under~128 (see Section~\ref{sec:asciitable}).
+在计算机中，字符编码在各个系统中可能有差别。
+因而 \TeX\ 不得不使用它自己的字符编码方式。
+从文件中读取的任何字符都会根据 \TeX\ 的字符码表转换为字符编码，
+并赋以相应的类别码（见第~\ref{mouth}~章）。
+\TeX\ 的字符码表是基于 7 位的 \ascii{} 码表构建的，
+只有 128 个字符编码（见第~\ref{sec:asciitable}~节）。
 
 %There is an explicit conversion between characters
 %(better:  character tokens)
@@ -136,16 +122,11 @@ for numbers under~128 (see Section~\ref{sec:asciitable}).
 %a single-character control sequence.
 %Thus both \verb.\count`a. and \verb.\count`\a. are synonyms
 %for \verb.\count97.. See also Chapter~\ref{number}.
-There is an explicit conversion between characters
-(better:  character tokens)
-and  character codes  using the left quote (grave, back quote)
-character~\n{`{}}:
-at all places where \TeX\ expects a \gram{number} you
-can use the left quote followed by a character
-token or
-a single-character control sequence.
-Thus both \verb.\count`a. and \verb.\count`\a. are synonyms
-for \verb.\count97.. See also Chapter~\ref{number}.
+利用左引号（或称为反引号）字符 \n{`{}}，可以将字符记号显式地转换为对应的字符编码：
+在 \TeX\ 要求 \gram{number} 的所有地方，
+你都可以用左引号加一个字符记号或一个单字符控制序列。
+因此 \verb.\count`a. 和 \verb.\count`\a. 都表示 \verb.\count97.。
+另见第~\ref{number}~章。
 
 %The possibility of a single-character control
 %sequence is necessary in certain cases such as
@@ -160,19 +141,13 @@ for \verb.\count97.. See also Chapter~\ref{number}.
 %Single-character
 %control sequences can be formed from characters with any
 %category code.
-The possibility of a single-character control
-sequence is necessary in certain cases such as
-\begin{disp}\verb>\catcode`\%=11>\quad or\quad \verb>\def\CommentSign{\char`\%}>\end{disp}
-which would be misunderstood if the backslash were left out.
-For instance
+虽然上述两种写法是等价的，但有时必须使用后者的形式，例如：
+\begin{disp}\verb>\catcode`\%=11>\quad 或\quad \verb>\def\CommentSign{\char`\%}>\end{disp}
+此时如果去掉 \verb-\-，就会让 \TeX\ 误解。比如
 \begin{verbatim}
 \catcode`%=11
 \end{verbatim}
-would consider
-the \n{=11} to be a comment.
-Single-character
-control sequences can be formed from characters with any
-category code.
+中的 \n{=11} 将被当成注释。单字符控制序列可以由任意类别码的字符构成。
 
 %After the conversion to character codes any connection
 %with external representations has disappeared. Of course,
@@ -184,15 +159,12 @@ category code.
 %\message{Check <>! Dammit!}%
 %signs, so the input `\verb.<>.' will give `<>' in the output.
 %%{\MathRMx<>}
-After the conversion to character codes any connection
-with external representations has disappeared. Of course,
-for most characters  the visible output will `equal' the input
-(that is, an `\n{a}' causes an~`a').
-There are exceptions, however, even among the common symbols.
-In the Computer Modern
-roman fonts there are no `less than' and `greater than'
+在转换为字符编码后，字符与其外部表示的联系都已经消失了。
+当然，对于大多数字符，见到的输出将`等同'于输入%
+（即 `\n{a}' 将输出 `a'）。然而即使对于常见符号也还是有例外。
+在计算机现代罗马字体中，没有`小于号'和`大于号'，
 \message{Check <>! Dammit!}%
-signs, so the input `\verb.<>.' will give `<>' in the output.
+而输入 `\verb.<>.' 得到的输出是 `{\font\cmr=cmr10 \cmr<>}'。
 %{\MathRMx<>}
 
 %In order to make \TeX\ machine independent at the output
@@ -200,42 +172,35 @@ signs, so the input `\verb.<>.' will give `<>' in the output.
 %opcodes $n=0\ldots127$ denote simply the instruction `take
 %character $n$ from the current font'. The complete definition
 %of the opcodes in a \n{dvi} file can be found in~\cite{Knuth:TeXprogram}.
-In order to make \TeX\ machine independent at the output
-side, the character codes are also used in the \n{dvi} file:
-opcodes $n=0\ldots127$ denote simply the instruction `take
-character $n$ from the current font'. The complete definition
-of the opcodes in a \n{dvi} file can be found in~\cite{Knuth:TeXprogram}.
-
+为了使 \TeX\ 输出不依赖于系统环境，在 \n{dvi} 文件中也是使用字符编码：
+操作码 $n=0\ldots127$ 用于表示指令 “从当前字体中取第 $n$ 个字符”。
+在~\cite{Knuth:TeXprogram}~中可以找到 \n{dvi} 文件的操作码的完整定义。
 
 %%\point Control sequences for characters
 %\section{Control sequences for characters}
 %\point Control sequences for characters
-\section{Control sequences for characters}
+\section{用于字符的控制序列}
 
 %There are a number of ways in which a control sequence can denote
 %a character. The \cs{char} command specifies a character to be
 %typeset; the \cs{let} command introduces
 %a synonym for a character token, that is,
 %the combination of character code and category code.
-There are a number of ways in which a control sequence can denote
-a character. The \cs{char} command specifies a character to be
-typeset; the \cs{let} command introduces
-a synonym for a character token, that is,
-the combination of character code and category code.
+用控制序列表示字符的方式有多种。
+\cs{char} 命令可以使用字符编码形式指定要排印的字符；
+\cs{let} 命令可以使用一个控制序列作为字符记号的别名。
 
 %%\point Denoting characters to be typeset: \cs\char
-%\section{Denoting characters to be typeset: \protect\cs{char}}
+%\subsection{Denoting characters to be typeset: \protect\cs{char}}
 %\point Denoting characters to be typeset: \cs\char
-\section{Denoting characters to be typeset: \protect\cs{char}}
+\subsection{表示要排印的字符：\protect\cs{char}}
 
 %Characters can be denoted numerically by, for example,
 %\verb.\char98.\cstoidx char\par.
 %This command tells \TeX\ to add character number~98 of the
 %current font to the horizontal list currently under construction.
-Characters can be denoted numerically by, for example,
-\verb.\char98.\cstoidx char\par.
-This command tells \TeX\ to add character number~98 of the
-current font to the horizontal list currently under construction.
+字符可以用数值来表示，比如 \cstoidx char\par\verb-\char98-。
+这个命令告诉 \TeX\ 将当前字体中编码为 98 的字符添加到当前正在构建的水平列中。
 
 %Instead of decimal notation, it is often more convenient to
 %use octal or hexadecimal notation. For octal the single quote is used:
@@ -243,21 +208,19 @@ current font to the horizontal list currently under construction.
 %Note that \verb.\char''62. is incorrect; the process that replaces
 %two quotes by a double quote works at a later stage of processing
 %(the visual processor) than number scanning (the execution processor).
-Instead of decimal notation, it is often more convenient to
-use octal or hexadecimal notation. For octal the single quote is used:
-\verb.\char'142.; hexadecimal uses the double quote: \verb.\char"62..
-Note that \verb.\char''62. is incorrect; the process that replaces
-two quotes by a double quote works at a later stage of processing
-(the visual processor) than number scanning (the execution processor).
+但是通常不使用十进制而使用八进制或十六进制来表示字符编码。
+八进制数前面用单引号引导，比如 \verb.\char'142.；
+十六进制数前面用双引号引导，比如 \verb.\char"62.。
+注意 \verb.\char''62. 是错误的；因为数值扫描操作（由执行处理器处理）%
+发生在将两个单引号替换为一个双引号的操作（由可视化处理器处理）之前。
 
 %Because of the explicit conversion to character codes by the
 %back quote character it is also possible to get a `b' \ldash provided
 %that you are using a font organized a bit like the \ascii{} table \rdash
 %with \verb.\char`b.  or \verb.\char`\b..
-Because of the explicit conversion to character codes by the
-back quote character it is also possible to get a `b' \ldash provided
-that you are using a font organized a bit like the \ascii{} table \rdash
-with \verb.\char`b.  or \verb.\char`\b..
+由于使用反引号 \verb-`- 可以将字符转换为字符编码，
+所以用 \verb-\char`b- 或 \verb-\char- 也可以得到 `b' 这个字符；
+前提是当前字体的字符编码是符合 \ascii{} 码表。
 
 %The \cs{char} command looks superficially a bit like
 %the \verb-^^- substitution mechanism (Chapter~\ref{mouth}).
@@ -269,16 +232,10 @@ with \verb.\char`b.  or \verb.\char`\b..
 %comes in the final stages of processing. 
 %In effect it says `typeset character number
 %so-and-so'.
-The \cs{char} command looks superficially a bit like
-the \verb-^^- substitution mechanism (Chapter~\ref{mouth}).
-Both mechanisms access characters without directly denoting them.
-However, the \verb-^^- mechanism operates in a very early stage of
-processing (in the input processor of \TeX,
-but before category code
-assignment); the \cs{char} command, on the other hand,
-comes in the final stages of processing. 
-In effect it says `typeset character number
-so-and-so'.
+表面上看，\cs{char} 有点像 \verb-^^-（第~\ref{mouth}~章），
+因为这两种机制都是采用间接的方式来表示字符。
+但是，\verb-^^- 机制的工作时机要早于 \cs{char}，
+前者是在输入处理器的第一阶段运作，而后者则是在 \TeX\ 可视化处理阶段运作。
 
 %There is a construction to let a control sequence stand
 %for some character code: the \csterm chardef\par\ command.
@@ -304,30 +261,23 @@ so-and-so'.
 %used on its own is a synonym for \verb>\char37>,
 %that is, the command to typeset character~37
 %(usually the per cent character).
-There is a construction to let a control sequence stand
-for some character code: the \csterm chardef\par\ command.
-The syntax of this is \label{chardef}
-\begin{disp}\cs{chardef}\gram{control sequence}\gr{equals}\gram{number}, 
+利用 \csterm chardef\par\ 命令可以定义一个控制序列来代替某个字符编码。
+这个命令的语法如下：\label{chardef}
+\begin{disp}
+\cs{chardef}\gram{control sequence}\gr{equals}\gram{number}, 
 \end{disp}
-where the number can be an explicit
-representation or a counter value, but it can also be
-a character code
-obtained using the left quote command (see above; 
-the full definition of \gr{number} is given in Chapter~\ref{number}). 
-In the plain format 
-the latter possibility is used in
-definitions such as
+其中的数值可以显式给出或者用计数器值表示，还可以用反引号命令给出的字符码表示%
+（如上所述；\gr{number} 的定义在第~\ref{number}~章给出）。
+在 Plain \TeX\ 中，类似下面的定义就使用后面这种写法：
 \begin{verbatim}
 \chardef\%=`\%
 \end{verbatim}
-which could have been given equivalently as
+当然，它可以用下面的等价方式定义：
 \begin{verbatim}
 \chardef\%=37
 \end{verbatim}
-After this command, the control symbol \verb>\%>
-used on its own is a synonym for \verb>\char37>,
-that is, the command to typeset character~37
-(usually the per cent character).
+在此定义之后，控制符 \verb>\%> 就可以作为 \verb>\char37> 同义词使用，
+也就是说，这个命令将排版第~37~个字符（通常是英文百分号）。
 
 %A control sequence that has been defined with a \cs{chardef}
 %command can also be used as a \gr{number}.
@@ -335,15 +285,13 @@ that is, the command to typeset character~37
 %\cs{newbox} (see Chapters~\ref{number} and~\ref{alloc}).
 %Tokens defined with \cs{mathchardef} can also be used this
 %way.
-A control sequence that has been defined with a \cs{chardef}
-command can also be used as a \gr{number}.
-This fact is used in  allocation commands such as 
-\cs{newbox} (see Chapters~\ref{number} and~\ref{alloc}).
-Tokens defined with \cs{mathchardef} can also be used this
-way.
+
+用 \cs{chardef} 命令定义的控制序列也可以作为 \gr{number} 使用。
+此事实在类似 \cs{newbox} 的寄存器分配命令中用到（见第 \ref{number} 和
+\ref{alloc} 章）。用 \cs{mathchardef} 定义的记号同样可以这样使用。
 
 %\subsection{Implicit character tokens: \protect\cs{let}}
-\subsection{Implicit character tokens: \protect\cs{let}}
+\subsection{隐式字符记号：\protect\cs{let}}
 
 %Another construction defining a control sequence
 %to stand for (among other things)
@@ -352,13 +300,10 @@ way.
 %with a character token on the right hand side of the (optional)
 %equals sign. The result is called an \indextermbus{implicit}{character} token.
 %(See page~\pageref{let} for a further discussion of~\cs{let}.)
-Another construction defining a control sequence
-to stand for (among other things)
-a character is~\cs{let}\cstoidx let\par:
+再一种利用控制序列来表示字符的方式是使用 \cstoidx let\par\cs{let} 命令：
 \begin{disp}\cs{let}\gr{control sequence}\gr{equals}\gr{token}\end{disp}
-with a character token on the right hand side of the (optional)
-equals sign. The result is called an \indextermbus{implicit}{character} token.
-(See page~\pageref{let} for a further discussion of~\cs{let}.)
+如果可选等号的右边是一个字符记号，得到的控制序列称为\emph{隐式字符}记号%
+\index{字符!隐式字符}（见第~\pageref{let}~页对~\cs{let}~的进一步讨论。）
 
 %In the
 %plain format there are for instance synonyms for
@@ -368,25 +313,19 @@ equals sign. The result is called an \indextermbus{implicit}{character} token.
 %\end{verbatim}
 %The resulting control sequences are called `implicit braces'
 %(see Chapter~\ref{group}).
-In the
-plain format there are for instance synonyms for
-the open and close brace:
+比如在 Plain \TeX\ 中用下面方式定义左右花括号的同义词：
 \begin{verbatim}
 \let\bgroup={ \let\egroup=}
 \end{verbatim}
-The resulting control sequences are called `implicit braces'
-(see Chapter~\ref{group}).
+这样得到的控制序列称为`隐式花括号'（见第~\ref{group}~章）。
 
 %Assigning characters by \cs{let}
 %is different from defining control sequences by \cs{chardef}, 
 %in the sense that \cs{let}
 %makes the control sequence stand for the combination
 %of a character code and category code. 
-Assigning characters by \cs{let}
-is different from defining control sequences by \cs{chardef}, 
-in the sense that \cs{let}
-makes the control sequence stand for the combination
-of a character code and category code. 
+但是 \cs{let} 与 \cs{chardef} 是有区别的，
+因为 \cs{let} 是用控制序列来表示字符码与类别码的组合结构。
 
 %As an example
 %\begin{verbatim}
@@ -410,28 +349,25 @@ of a character code and category code.
 %format C code) the beginning-of-group and end-of-group
 %functionality is available through the control sequences
 %\cs{bgroup} and~\cs{egroup}.
-As an example
+例如
 \begin{verbatim}
 \catcode`|=2 % make the bar an end of group
 \let\b=|  % make \b a bar character
 {\def\m{...}\b \m
 \end{verbatim}
-gives an `undefined control sequence \cs{m}'
-because the \cs{b} closed the group inside which \cs{m}
-was defined. On the other hand,
+会得到“未定义的控制序列\cs{m}”的错误，这是因为 \cs{b} 关闭了 \cs{m}
+定义所在的编组。另一方面，
 \begin{verbatim}
 \let\b=| % make \b a bar character
 \catcode`|=2  % make the bar character end of group
 {\def\m{...}\b \m
 \end{verbatim}
-leaves one group open, and it prints a vertical bar
-(or whatever is in position 124 of the current font).
-The first of these examples
-implies that even when the braces have been redefined
-(for instance into active characters for macros that
-format C code) the beginning-of-group and end-of-group
-functionality is available through the control sequences
-\cs{bgroup} and~\cs{egroup}.
+构造的只是一个不闭合的编组，因为这次 \cs{b} 无法作为组结束符来用，
+它只能表示一个竖线（或者是当前字体位于第 124 个位置的字符）。
+
+本小节的第一个例子实际上说明，即使花括号已经被重新定义%
+（比如在排版 C 语言代码的宏中将它们定义为活动符），
+编组开始和编组结束的功能还是可以通过 \cs{bgroup} 和 \cs{egroup} 使用。
 
 %Here is
 %another example to show
@@ -449,22 +385,20 @@ functionality is available through the control sequences
 %\ifcat\b}
 %\end{verbatim}
 %are both true.
-Here is
-another example to show
-that implicit character tokens are hard to distinguish
-from real character tokens. After the above sequence
+这里还有另一个例子，说明隐式字符记号与真实字符记号难以区分。
+在下面的控制序列之后：
 \begin{verbatim}
 \catcode`|=2 \let\b=|
 \end{verbatim}
-the tests
+这个测试
 \begin{verbatim}
 \if\b|
 \end{verbatim}
-and
+和这个测试
 \begin{verbatim}
 \ifcat\b}
 \end{verbatim}
-are both true.
+都给出真值。
 
 %Yet another example can be found in the plain format:
 %the commands
@@ -494,34 +428,26 @@ are both true.
 %\global\let\sp=,,5e \global\let\sb=,,5f}
 %\end{verbatim}
 %denoting the codes 94 and 95 hexadecimally.
-Yet another example can be found in the plain format:
-the commands
+在 Plain \TeX\ 中还有下面的定义：
 \begin{verbatim}
 \let\sp=^ \let\sb=_ 
 \end{verbatim}
-allow people without an
-underscore or circumflex on their keyboard to 
-make sub- and superscripts in mathematics.
-For instance:
-\begin{disp}\verb>x\sp2\sb{ij}>\quad gives\quad $x\sp2\sb{ij}$\end{disp}
-If a person typing in the format itself does not have
-these keys, some further tricks are needed:\label{spsb:truc}
+它使得键盘上没有扬抑符和底线符的用户也能够在数学公式中写出上下标。比如
+\begin{disp}\verb>x\sp2\sb{ij}>\quad 给出\quad $x\sp2\sb{ij}$\end{disp}
+如果编写格式文件的人也无法键入这两个字符，则需要更多花招。
+比如下面的代码就可以完成此任务：\label{spsb:truc}
 \begin{verbatim}
 {\lccode`,=94 \lccode`.=95 \catcode`,=7 \catcode`.=8
 \lowercase{\global\let\sp=, \global\let\sb=.}}
 \end{verbatim}
-will do the job; see below for an explanation of lowercase codes.
-The \verb>^^> method as it was in \TeX\ version~2
-(see page~\pageref{hathat}) cannot be used here,
-as it would require typing two characters that can ordinarily
-not be input.
-With the extension in \TeX\ version~3 it would also be possible
-to write
+详见下面对 \cs{lowercase} 命令的解释。
+此时无法使用 \TeX\ 2 中的 \verb>^^> 表示法（见第~\pageref{hathat}~页），
+因为这需要键入两个无法输入的字符。用 \TeX\ 3 中扩展的表示法，下面的方法也是可行的：
 \begin{verbatim}
 {\catcode`\,=7
 \global\let\sp=,,5e \global\let\sb=,,5f}
 \end{verbatim}
-denoting the codes 94 and 95 hexadecimally.
+其中用十六进制表示 \verb-^- 和 \verb-_- 的字符码 94 和 95。
 
 %Finding out just what a control sequence has been defined to be with
 %\cs{let} can be done using \cs{meaning}:
@@ -531,19 +457,16 @@ denoting the codes 94 and 95 hexadecimally.
 %\end{verbatim}
 %gives
 %`\n{the character 3}'.
-Finding out just what a control sequence has been defined to be with
-\cs{let} can be done using \cs{meaning}:
-the sequence
+要查看 \cs{let} 定义的控制序列代表的是哪个字符，可使用 \cs{meaning}，例如：
 \begin{verbatim}
 \let\x=3 \meaning\x
 \end{verbatim}
-gives
-`\n{the character 3}'.
+可给出`\n{the character 3}'。
 
 %%\point Accents
 %\section{Accents}
 %\point Accents
-\section{Accents}
+\section{重音}
 
 %\emph{Accents}\index{accents} can be placed by the
 %\gr{horizontal command}~\csterm accent\par
@@ -558,19 +481,16 @@ gives
 %mid-air'. Otherwise the accent is placed on top of the following
 %character.  Font changes between the accent and the character can be
 %effected by the \gr{optional assignments}.
-\emph{Accents}\index{accents} can be placed by the
+\emph{重音}\index{accents}可以用
 \gr{horizontal command}~\csterm accent\par
-\label{character}:
+\label{character} 给出：
 \begin{disp}\cs{accent}\gr{8-bit number}\gr{optional assignments}%
      \gr{character}\end{disp} 
-where \gr{character} is a character of
-category 11\index{category!11} or~12\index{category!12},
-a~\cs{char}\gr{8-bit number} command, or a~\cs{chardef} token. If none
-of these four types of \gr{character} follows, the accent is taken to
-be a \cs{char} command itself; this gives an accent `suspended in
-mid-air'. Otherwise the accent is placed on top of the following
-character.  Font changes between the accent and the character can be
-effected by the \gr{optional assignments}.
+其中 \gr{character} 或者是第 11 类\index{category!11} 或 12 类\index{category!12}
+的字符，或者是 \cs{char}\gr{8-bit number} 命令，或者是 \cs{chardef} 记号。
+如果 \gr{character} 不是这四种类型，\cs{accent} 命令就被视为 \cs{char} 命令；
+从而给出 `悬在半空中'的重音。否则重音被放置在后面跟随的字符的顶部。
+\gr{optional assignments} 可用于在重音和字符之间改变字体。
 
 %An unpleasant implication of the fact that an \cs{accent} command
 %has to be followed by a \gr{character} is that it is not
@@ -580,14 +500,10 @@ effected by the \gr{optional assignments}.
 %such double accents do occur.
 %Positioning accents on top of each other is possible,
 %however, in math mode.
-An unpleasant implication of the fact that an \cs{accent} command
-has to be followed by a \gr{character} is that it is not
-possible to place an accent on a ligature, or
-two accents on top of each other.
-In some languages, such as Hindi or Vietnamese,
-such double accents do occur.
-Positioning accents on top of each other is possible,
-however, in math mode.
+\cs{accent} 命令后面跟随的必须是一个 \gr{character}，
+这意味着一个令人不悦的事实，即不可能将重音放置在连写上，
+或者将重音放在另一个重音上。在某些语言中，比如印地语或越南语，
+这种连写重音确实存在。将重音放在另一个重音是可能的，但只能用于数学模式。
 
 %The width of a character with an accent is the same as that of
 %the unaccented character. \TeX\ assumes that the 
@@ -595,12 +511,9 @@ however, in math mode.
 %is properly positioned for a character that is as high
 %as the x-height of the font; for characters with other heights
 %it correspondingly lowers or raises the accent.
-The width of a character with an accent is the same as that of
-the unaccented character. \TeX\ assumes that the 
-accent as it appears in the font file
-is properly positioned for a character that is as high
-as the x-height of the font; for characters with other heights
-it correspondingly lowers or raises the accent.
+字符添加重音后宽度保持不变。对于字体中高度等于 x-height 的字符，
+\TeX\ 假定按照字体文件中描述的位置可以正确放置重音；
+对于其他字符，它相应地升高或降低重音的位置。
 
 %No genuine under-accents exist in \TeX. They are
 %implemented as low placed over-accents. A~way of handling
@@ -610,14 +523,10 @@ it correspondingly lowers or raises the accent.
 %The cedilla macro, \cs{c}\cstoidx c\par,
 %in plain \TeX\ does something along these lines. However,
 %it does not drop the accent for characters with descenders.
-No genuine under-accents exist in \TeX. They are
-implemented as low placed over-accents. A~way of handling
-them more correctly would be to write a macro that
-measures the following character, and raises or drops
-the accent accordingly.
-The cedilla macro, \cs{c}\cstoidx c\par,
-in plain \TeX\ does something along these lines. However,
-it does not drop the accent for characters with descenders.
+在 \TeX 中没有真正的下重音。它们都是作为位置很低的上重音实现的。
+更好的解决方法是写一个宏测量后面跟随的字符，并相应地升高或降低重音。
+Plain \TeX\ 中的变音符 \cs{c}\cstoidx c\par\ 是用这种方式实现的。
+然而，对于包含降部的字符，它并不会降低重音的位置。
 
 %The horizontal positioning of an accent is controlled by
 %\cs{fontdimen1}, \indextermsub{slant}{per point}. Kerns are used
@@ -625,12 +534,9 @@ it does not drop the accent for characters with descenders.
 %are inserted automatically, these kerns are classified
 %as {\italic explicit\/} kerns. Therefore they inhibit hyphenation
 %in the parts of the word before and after the kern.
-The horizontal positioning of an accent is controlled by
-\cs{fontdimen1}, \indextermsub{slant}{per point}. Kerns are used
-for the horizontal movement. Note that, although they
-are inserted automatically, these kerns are classified
-as {\italic explicit\/} kerns. Therefore they inhibit hyphenation
-in the parts of the word before and after the kern.
+重音的水平位置由 \cs{fontdimen1}（\indextermsub{slant}{per point}）控制，
+其水平位移用紧排表示。注意，虽然这些紧排是被自动插入的，
+它们被划分为{\italic 显式\/}紧排。所以，它们会抑制在紧排前后连字。
 
 %As an example of kerning for accents, 
 %here follows the dump of a horizontal list.
@@ -650,14 +556,13 @@ in the parts of the word before and after the kern.
 %\end{verbatim}
 %Note that the accent is placed first, so afterwards the italic
 %correction of the last character is still available.
-As an example of kerning for accents, 
-here follows the dump of a horizontal list.
+作为重音对应的紧排的例子，下面显示了一个水平列表：
 \message{maybe italic correction for extra line}
 \begin{verbatim}
 \setbox0=\hbox{\it \`l}
 \showbox0
 \end{verbatim}
-gives
+给出
 \begin{verbatim}
 \hbox(9.58334+0.0)x2.55554
 .\kern -0.61803 (for accent)
@@ -666,11 +571,10 @@ gives
 .\kern -4.49306 (for accent)
 .\tenit l
 \end{verbatim}
-Note that the accent is placed first, so afterwards the italic
-correction of the last character is still available.
+注意 \TeX\ 先放置重音，这样最后一个字符的倾斜校正仍然有效。
 
 %\section{Testing characters}
-\section{Testing characters}
+\section{字符测试}
 
 %Equality of character codes is tested by \cs{if}:
 %\begin{disp}\cs{if}\gr{token$_1$}\gr{token$_2$}\end{disp}
@@ -678,12 +582,11 @@ correction of the last character is still available.
 %unexpandable tokens are left. The condition is then true
 %if those tokens are character tokens with the same character
 %code, regardless of category code. 
-Equality of character codes is tested by \cs{if}:
+要测试字符编码是否相等，可使用 \cs{if} 命令：
 \begin{disp}\cs{if}\gr{token$_1$}\gr{token$_2$}\end{disp}
-Tokens following this conditional are expanded until two
-unexpandable tokens are left. The condition is then true
-if those tokens are character tokens with the same character
-code, regardless of category code. 
+注意 \cs{if} 后面的记号会被展开，直到得到两个不可展开的记号，
+然后 \cs{if} 如果它们是两个字符码相同的字符记号（不考虑它们的类别码），
+则结果为真。
 
 %An unexpandable control
 %sequence is considered to have character code 256 and
@@ -693,14 +596,10 @@ code, regardless of category code.
 %where it had been \cs{let} to a non-active character token.
 %In that case it is considered to have the character code
 %and category code of that character. This was mentioned above.
-An unexpandable control
-sequence is considered to have character code 256 and
-category code~16\index{category!16}
-(so that it is unequal to anything except
-another control sequence), except in the case
-where it had been \cs{let} to a non-active character token.
-In that case it is considered to have the character code
-and category code of that character. This was mentioned above.
+
+\TeX\ 将不可展开的控制序列的字符码和类别码分别视为 256 和 16\index{category!16}。%
+（因此它只能与另一个控制序列相等），除非用 \cs{let} 让它等同于一个非活动符。
+在那种情况下，该控制序列的字符码和类别码就与该字符的相同。这在之前提到过。
 
 %The test \cs{ifcat} for category codes was mentioned
 %in Chapter~\ref{mouth}; the test
@@ -710,14 +609,12 @@ and category code of that character. This was mentioned above.
 %The tokens following this test are not expanded.
 %However, if they are macros, \TeX\
 %tests their expansions for equality.
-The test \cs{ifcat} for category codes was mentioned
-in Chapter~\ref{mouth}; the test
+
+用于测试类别码是否相等的 \cs{ifcat} 在第~\ref{mouth}~章已经介绍。
+而要同时测试字符的字符码和类别码是否相等，可使用 \cs{ifx} 命令：
 \begin{disp}\cs{ifx}\gr{token$_1$}\gr{token$_2$}\end{disp}
-can be used to test for category code and character code
-simultaneously.
-The tokens following this test are not expanded.
-However, if they are macros, \TeX\
-tests their expansions for equality.
+在执行此测试时 \cs{ifx} 后面的记号不会被展开。
+然若它们均为宏，\TeX\ 会比较它们的展开是否相等。
 
 %Quantities defined by \cs{chardef} can be tested with
 %\cs{ifnum}:
@@ -726,26 +623,24 @@ tests their expansions for equality.
 %\end{verbatim}
 %based on the fact (see Chapter~\ref{number}) that
 %\gr{chardef token}s can be used as numbers.
-Quantities defined by \cs{chardef} can be tested with
-\cs{ifnum}:
+使用 \cs{chardef} 定义的量值可使用 \cs{ifnum} 来测试：
 \begin{verbatim}
 \chardef\a=`x \chardef\b=`y \ifnum\a=\b % is false 
 \end{verbatim}
-based on the fact (see Chapter~\ref{number}) that
-\gr{chardef token}s can be used as numbers.
+此测试用到 \gr{chardef token} 可以作为数值使用的事实（见第~\ref{number}~章）。
 
 %See also section~\ref{sec:charactertests}
-See also section~\ref{sec:charactertests}
+另外可以参考第~\ref{sec:charactertests}~节。
 
 
 %\section{Uppercase and lowercase}
-\section{Uppercase and lowercase}
+\section{大写和小写}
 
 %%\spoint[uc/lc] Uppercase and lowercase codes
 %\subsection{Uppercase and lowercase codes}
 %\label{uc/lc}
 %\spoint[uc/lc] Uppercase and lowercase codes
-\subsection{Uppercase and lowercase codes}
+\subsection{大写码和小写码}
 \label{uc/lc}
 
 %To each of the character codes correspond\cstoidx lccode\par\cstoidx uccode\par
@@ -762,26 +657,23 @@ See also section~\ref{sec:charactertests}
 %\verb-`A..`Z- and lowercase code \verb-`a..`z-.
 %All other character codes have both uppercase and lowercase
 %code zero.
-To each of the character codes correspond\cstoidx lccode\par\cstoidx uccode\par
-an \indextermsub{uppercase}{code}\index{code!uppercase|see{uppercase, code}}
-and a \indextermsub{lowercase}{code}\index{code!lowercase|see{lowercase, code}}
-(for still more codes see below).
-These can be assigned
-by 
+每个字符码都对应一个\emph{大写码}和一个\emph{小写码}（下面列出了更多编码）。%
+\cstoidx lccode\par\cstoidx uccode\par
+\index{大写!大写码}\index{code!uppercase|see{uppercase, code}}%
+\index{小写!小写码}\index{code!lowercase|see{lowercase, code}}%
+它们可以分别用
 \begin{Disp}\cs{uccode}\gram{number}\gr{equals}\gram{number}\end{Disp}
-and 
+以及
 \begin{Disp}\cs{lccode}\gram{number}\gr{equals}\gram{number}.\end{Disp}
-In \IniTeX\ codes \verb-`a..`z-, \verb-`A..`Z- have uppercase code
+指定。在 \IniTeX\ 中 \verb-`a..`z- 和 \verb-`A..`Z- 的大写码为
 \label{ini:uclc}
-\verb-`A..`Z- and lowercase code \verb-`a..`z-.
-All other character codes have both uppercase and lowercase
-code zero.
+\verb-`A..`Z-，小写码为 \verb-`a..`z-。其他字符码的大写码和小写码均为零。
 
 %%\spoint[upcase] Uppercase and lowercase commands
 %\subsection{Uppercase and lowercase commands}
 %\label{upcase}
 %\spoint[upcase] Uppercase and lowercase commands
-\subsection{Uppercase and lowercase commands}
+\subsection{大写和小写命令}
 \label{upcase}
 
 %The commands \verb-\uppercase{...}- and \verb-\lowercase{...}-
@@ -791,13 +683,10 @@ code zero.
 %by their uppercase and lowercase code respectively
 %if these are non-zero,
 %without changing the category codes. 
-The commands \verb-\uppercase{...}- and \verb-\lowercase{...}-
+命令 \verb-\uppercase{...}- 和 \verb-\lowercase{...}-
 \cstoidx uppercase\par\cstoidx lowercase\par
-go through their argument lists, replacing all character 
-codes of explicit character tokens
-by their uppercase and lowercase code respectively
-if these are non-zero,
-without changing the category codes. 
+遍历它们的参量记号列，将所有显式字符记号的字符码分别替换为它们的大写码和小写码，
+只要这两个编码非零，但不改动字符记号的类别码。
 
 %The argument of \cs{uppercase} and \cs{lowercase}
 %is a \gr{general text}, which is defined as
@@ -808,15 +697,13 @@ without changing the category codes.
 %right brace must be an explicit character token with category
 %code~2. \TeX\ performs expansion to find the opening
 %brace.
-The argument of \cs{uppercase} and \cs{lowercase}
-is a \gr{general text}, which is defined as
+\cs{uppercase} 和 \cs{lowercase} 的参量是一个 \gr{general text}，
+它的定义如下：
 \begin{Disp} \gr{general text} $\longrightarrow$ \gr{filler}\lb
       \gr{balanced text}\gr{right brace}\end{Disp}
-(for the definition of \gr{filler} see Chapter~\ref{gramm})
-meaning that the left brace can be implicit, but the closing
-right brace must be an explicit character token with category
-code~2. \TeX\ performs expansion to find the opening
-brace.
+其中 \gr{filler} 的定义可以见第~\ref{gramm}~章。
+这个定义意味着左花括号可以是隐式的，但右花括号必须是类别码为 2 的显式字符记号。
+\TeX\ 展开表达式以找到左花括号。
 
 %Uppercasing and lowercasing are executed in the execution processor;
 %they are not `macro expansion' activities
@@ -831,19 +718,17 @@ brace.
 %\uppercase{\csname a\endcsname}
 %\end{verbatim}
 %works.
-Uppercasing and lowercasing are executed in the execution processor;
-they are not `macro expansion' activities
-like \cs{number} or \cs{string}.
-The sequence (attempting to produce~\cs{A})
+大小写转换在执行处理器中执行；它们并非像\cs{number} 或 \cs{string}
+这样的`宏展开'活动。下面的语句（试图生成 \cs{A}）
 \begin{verbatim}
 \expandafter\csname\uppercase{a}\endcsname
 \end{verbatim}
-gives an error (\TeX\ inserts an \cs{endcsname} before   the
-\cs{uppercase} because \cs{uppercase} is unexpandable), but
+将给出一个错误（由于 \cs{uppercase} 是不可展开的，
+\TeX\ 会在 \cs{uppercase} 前插入 \cs{endcsname}），然而
 \begin{verbatim}
 \uppercase{\csname a\endcsname}
 \end{verbatim}
-works.
+就是正确的。
 
 %As an example of the correct use of \cs{uppercase}, here
 %is a macro that tests if a character is uppercase:
@@ -852,29 +737,26 @@ works.
 %\end{verbatim}
 %The same test can be
 %performed by \verb>\ifnum`#1=\uccode`#1>.
-As an example of the correct use of \cs{uppercase}, here
-is a macro that tests if a character is uppercase:
+下面的例子正确地使用了 \cs{uppercase}，它是一个测试字符是否为大写的宏：
 \begin{verbatim}
 \def\ifIsUppercase#1{\uppercase{\if#1}#1}
 \end{verbatim}
-The same test can be
-performed by \verb>\ifnum`#1=\uccode`#1>.
+用 \verb>\ifnum`#1=\uccode`#1> 也可以执行相同的测试。
 
 %Hyphenation of words starting with an uppercase character,
 %that is, a character not equal to its own \cs{lccode},
 %is subject to the \cs{uchyph} parameter: if this
 %is positive, hyphenation of capitalized words is allowed.
 %See also Chapter~\ref{line:break}.
-Hyphenation of words starting with an uppercase character,
-that is, a character not equal to its own \cs{lccode},
-is subject to the \cs{uchyph} parameter: if this
-is positive, hyphenation of capitalized words is allowed.
-See also Chapter~\ref{line:break}.
+大写字符就是与其 \cs{lccode} 不同的字符。
+首字母大写的单词是否可以连字化取决于 \cs{uchyph} 参数：
+如果它大于零，就允许对这种单词连字化。
+这将在第~\ref{line:break}~章中介绍。
 
 %%\spoint Uppercase and lowercase forms of keywords
 %\subsection{Uppercase and lowercase forms of keywords}
 %\spoint Uppercase and lowercase forms of keywords
-\subsection{Uppercase and lowercase forms of keywords}
+\subsection{关键词的大小写形式}
 
 %Each character in \TeX\ keywords, such as \n{pt}, can be
 %given in uppercase or lowercase form. 
@@ -887,20 +769,15 @@ See also Chapter~\ref{line:break}.
 %characters \rdash to their character code. This has some implications
 %for implementations of \TeX\ for non-roman alphabets;
 %see page 370 of \TeXbook, \cite{Knuth:TeXbook}.
-Each character in \TeX\ keywords, such as \n{pt}, can be
-given in uppercase or lowercase form. 
-For instance, \n{pT}, \n{Pt}, \n{pt}, and~\n{PT} all have
-the same meaning. \TeX\ does not use
-the \cs{uccode} and \cs{lccode} tables here to
-determine the lowercase form. Instead it
-converts uppercase characters to lowercase by adding~32
-\ldash the \ascii{} difference between uppercase and lowercase
-characters \rdash to their character code. This has some implications
-for implementations of \TeX\ for non-roman alphabets;
-see page 370 of \TeXbook, \cite{Knuth:TeXbook}.
+对于 \TeX\ 关键词，比如 \n{pt}，其中每个字符都可以用大写或小写表示。
+例如  \n{pT}、\n{Pt}、\n{pt} 和 \n{PT} 都表示同一个关键词。
+这里 \TeX\ 并没有用 \cs{uccode} 和 \cs{lccode} 表确定小写形式，
+而是直接将大写字符加上 32（即两者编码之差）以转换为小写字符。
+这影响到在非罗马字母表上的 \TeX\ 实现；
+见 \TeXbook\ \cite{Knuth:TeXbook} 第 370 页。
 
 %\subsection{Creative use of \cs{uppercase} and \cs{lowercase}}
-\subsection{Creative use of \cs{uppercase} and \cs{lowercase}}
+\subsection{妙用 \cs{uppercase} 和 \cs{lowercase}}
 
 %The fact that \cs{uppercase} and \cs{lowercase} do not change
 %category codes can sometimes be used to create certain
@@ -908,12 +785,10 @@ see page 370 of \TeXbook, \cite{Knuth:TeXbook}.
 %otherwise be difficult to produce. See for instance the
 %explanation of the \cs{newif} macro in Chapter~\ref{if},
 %and another example on page~\pageref{spsb:truc}.
-The fact that \cs{uppercase} and \cs{lowercase} do not change
-category codes can sometimes be used to create certain
-character-code--category-code combinations that would
-otherwise be difficult to produce. See for instance the
-explanation of the \cs{newif} macro in Chapter~\ref{if},
-and another example on page~\pageref{spsb:truc}.
+前面已经说到 \cs{uppercase} 和 \cs{lowercase} 不改变类别码，
+这个事实有时可以用于制造用其他方式很难得到的(字符码,类别码)组合。
+比如可以参考第~\ref{if}~章的 \cs{newif} 宏，
+以及另一个在第~\pageref{spsb:truc}~页的例子。
 
 %For a slightly different application, consider the
 %problem (solved by Rainer Sch\"opf) of,
@@ -933,11 +808,9 @@ and another example on page~\pageref{spsb:truc}.
 %The \cs{lowercase} command effectively changes the 
 %argument of the \cs{write} command from~`\n a'
 %into whatever it should be.
-For a slightly different application, consider the
-problem (solved by Rainer Sch\"opf) of,
-given a counter \verb-\newcount\mycount-, writing character
-number \verb-\mycount- to the terminal.
-Here is a solution:
+这里给出一个稍微不同的应用。考虑 Rainer Sch\"opf 解决的问题：
+如何将寄存器 \verb-\newcount\mycount- 的编号 \verb-\mycount- 
+输出到终端？下面是一种解法：
 %\begin{verbatim}
 %\lccode`a=\mycount \chardef\terminal=16
 %\lowercase{\write\terminal{a}}
@@ -948,15 +821,14 @@ Here is a solution:
 \begin{verbatim}
 \lowercase{\write\terminal{a}}
 \end{verbatim}
-The \cs{lowercase} command effectively changes the 
-argument of the \cs{write} command from~`\n a'
-into whatever it should be.
+其中 \cs{lowercase} 命令成功地将 \cs{write} 命令的参量中的
+`\n a' 修改成所需要的编号。
 
 %%\point[codename] Codes of a character
 %\section{Codes of a character}
 %\label{codename}
 %\point[codename] Codes of a character
-\section{Codes of a character}
+\section{字符相关编码}
 \label{codename}
 
 %Each character code has a number of \gr{codename}s 
@@ -965,12 +837,9 @@ into whatever it should be.
 %how the character is treated in various contexts, or
 %how the occurrence of that character changes the workings
 %of \TeX\ in certain contexts.
-Each character code has a number of \gr{codename}s 
-associated\indexterm{codenames}
-with it. These are integers in various ranges that determine
-how the character is treated in various contexts, or
-how the occurrence of that character changes the workings
-of \TeX\ in certain contexts.
+每个字符都带有一系列 \gr{codename}\index{codenames}。
+这些整数的取值范围各不相同，它们决定在各个地方如何处理该字符，
+或者在某些地方 \TeX\ 的活动方式如何被该字符改变。
 
 %The code names are as follows:
 %\begin{description}\item [\cs{catcode}]
@@ -992,31 +861,26 @@ of \TeX\ in certain contexts.
 %\gr{8-bit number} (0-255); lowercase and
 %uppercase codes \rdash these were treated above.
 %\end{description}
-The code names are as follows:
+这些编码名称如下所列：
 \begin{description}\item [\cs{catcode}]
-\gr{4-bit number} (0--15); the category to which a character belongs.
-This is treated in Chapter~\ref{mouth}.
+\gr{4-bit number} (0--15)；字符所属的类别。在第~\ref{mouth}~章中介绍。
 \item [\cs{mathcode}]
-\gr{15-bit number} (0--\verb-"7FFF-) or \verb-"8000-;
-determines how a character is treated
-in math mode. See Chapter~\ref{mathchar}.
+\gr{15-bit number} (0--\verb-"7FFF-) 或 \verb-"8000-；
+确定在数学模式中如何处理该字符。见第~\ref{mathchar}~章。
 \item [\cs{delcode}]
-\gr{27-bit number} (0--\n{\hex7$\,$FFF$\,$FFF});
-determines how a character is treated after
-\cs{left} or \cs{right} in math mode.
-See page~\pageref{delcodes}.
+\gr{27-bit number} (0--\n{\hex7$\,$FFF$\,$FFF})；
+确定在数学模式的 \cs{left} 或 \cs{right} 命令后如何处理该字符。
+见第~\pageref{delcodes}~页。
 \item [\cs{sfcode}]
-integer; determines how spacing is affected after this character.
-See Chapter~\ref{space}.
+整数；确定该字符如何影响其后的空白。见第~\ref{space}~章。
 \item [\cs{lccode}, \cs{uccode}]
-\gr{8-bit number} (0-255); lowercase and
-uppercase codes \rdash these were treated above.
+\gr{8-bit number} (0-255)；小写码和大写码。上面刚介绍过。
 \end{description}
 
 %%\point Converting tokens into character strings
 %\section{Converting tokens into character strings}
 %\point Converting tokens into character strings
-\section{Converting tokens into character strings}
+\section{将记号转换为字符串}
 
 %The command \cs{string} takes the next token and expands it
 %\cstoidx string\par
@@ -1038,36 +902,32 @@ uppercase codes \rdash these were treated above.
 %because the comment
 %sign is removed by \TeX's input processor.
 %Therefore, this command will `string' the first token on the next line.
-The command \cs{string} takes the next token and expands it
+\cs{string} 命令可将其后尾随的记号转为字串。例如：
 \cstoidx string\par
-into a string of separate characters. Thus
 \begin{verbatim}
 \tt\string\control
 \end{verbatim}
-will give \cs{control} in the
-output, and
+的排版结果为 \cs{control}。再例如：
 \begin{verbatim}
 \tt\string$
 \end{verbatim}
-will give~\verb-$-, but, noting that the string 
-operation comes after the tokenizing,
+的排版结果为 \verb-$-。要注意的是，
+\cs{string} 是在输入处理器产生记号这个过程之后运作的，所以
 \begin{verbatim}
 \tt\string%
 \end{verbatim}
-will {\em not\/} give~\verb$%$,
-because the comment
-sign is removed by \TeX's input processor.
-Therefore, this command will `string' the first token on the next line.
+就\emph{没法}排出 \verb-%-，因为注释符在 \TeX\ 输入处理器中会被移除。
+因此，这个命令将会给出下一行第一个记号转换为字符串。
 
 %The \cs{string} command is executed by the expansion processor, thus
 %it is expanded unless explicitly inhibited (see Chapter~\ref{expand}).
-The \cs{string} command is executed by the expansion processor, thus
-it is expanded unless explicitly inhibited (see Chapter~\ref{expand}).
+\cs{string} 命令是在展开处理器中运行的，因此除非显式抑制才能阻止它被展开；
+这是第 \ref{expand} 章的话题。
 
 %%\spoint Output of control sequences
 %\subsection{Output of control sequences}
 %\spoint Output of control sequences
-\subsection{Output of control sequences}
+\subsection{输出控制序列}
 
 %In the above examples the typewriter font was selected, because
 %\cstoidx escapechar\par
@@ -1082,31 +942,24 @@ it is expanded unless explicitly inhibited (see Chapter~\ref{expand}).
 %the escape character is not
 %output; the default value (set in \IniTeX) is~92, the number
 %of the backslash character.
-In the above examples the typewriter font was selected, because
+前面例子选用了打字机字体，这是因计算机现代罗马字体不包含反斜线字符。
 \cstoidx escapechar\par
-the Computer Modern roman font does not have a backslash character.
-However,
-\TeX\ need not have used the backslash character to display
-a control sequence: it uses character number \cs{escapechar}.
-This same value is also used when a control sequence is
-output with \cs{write}, \cs{message}, or \cs{errmessage},
-and it is used in the output of \cs{show}, \cs{showthe} and \cs{meaning}.
-If \cs{escapechar} is negative or more than~255,
-the escape character is not
-output; the default value (set in \IniTeX) is~92, the number
-of the backslash character.
+然而，\TeX\ 显示控制序列时未必得用反斜线：它使用 \cs{escapechar} 字符码。
+在用 \cs{write}、\cs{message}、\cs{errmessage}、\cs{show}、
+\cs{showthe} 或 \cs{meaning} 输出控制序列时，也使用这个编码。
+如果 \cs{escapechar} 大于零或者大于 255，转义符将不会被显式；
+在 \IniTeX\ 中它的默认值为 92，也就是反斜线字符的编码。
 
 %For use in a  \cs{write} statement the \cs{string} can 
 %in some circumstances be
 %replaced  by \cs{noexpand} (see page~\pageref{expand:write}).
-For use in a  \cs{write} statement the \cs{string} can 
-in some circumstances be
-replaced  by \cs{noexpand} (see page~\pageref{expand:write}).
+在 \cs{write} 语句中的 \cs{string} 有时可以用 \cs{noexpand} 代替，
+见第~\pageref{expand:write}~页。
 
 %%\spoint Category codes of a \cs{string}
 %\subsection{Category codes of a \cs{string}}
 %\spoint Category codes of a \cs{string}
-\subsection{Category codes of a \cs{string}}
+\subsection{\cs{string} 的类别码}
 
 %The characters that are the result of a \cs{string} command have 
 %category code~12\index{category!12}, except for any spaces in 
@@ -1121,30 +974,19 @@ replaced  by \cs{noexpand} (see page~\pageref{expand:write}).
 %into character tokens with character code~32, 
 %so the chances are pretty slim that
 %`funny spaces' wind up in control sequences.
-The characters that are the result of a \cs{string} command have 
-category code~12\index{category!12}, except for any spaces in 
-a stringed control sequence;
-they have category code~10\index{category!10}. Since inside a control
-sequence there are no category codes, 
-any spaces resulting from \cs{string} are
-of necessity only space {\em characters}, that is,
-characters with code~32.
-However, \TeX's input processor converts
-all space tokens that have a character code other than~32
-into character tokens with character code~32, 
-so the chances are pretty slim that
-`funny spaces' wind up in control sequences.
+在 \cs{string} 命令给出的字符串中，各个字符的类别码都是~12\index{category!12}，
+但空格字符除外，它们的类别码是~10\index{category!10}。
+由于在控制序列中没有类别码，从 \cs{string} 得到的空格必定只有空格{\em 字符}，
+即编码为 32 的字符。然而，\TeX\ 的输入处理器将任何字符码不为 32
+的空格记号转换为字符码为 32 的字符记号，因此`滑稽空格'有可能出现在控制序列中。
 
 %Other commands with the same behaviour with respect to 
 %category codes as \cs{string}, are
 %\cs{number},
 %\cs{romannumeral}, \cs{jobname}, \cs{fontname}, \cs{meaning},
 %and \cs{the}.
-Other commands with the same behaviour with respect to 
-category codes as \cs{string}, are
-\cs{number},
-\cs{romannumeral}, \cs{jobname}, \cs{fontname}, \cs{meaning},
-and \cs{the}.
+在所给出的类别码这方面，这些命令的表现与 \cs{string} 是一致的：\cs{number}、
+\cs{romannumeral}、\cs{jobname}、\cs{fontname}、\cs{meaning} 和 \cs{the}。
 
 
 %\endofchapter
