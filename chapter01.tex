@@ -3,6 +3,7 @@
 % Copyright 2007-2014 Victor Eijkhout
 % Translated by LiYanrui@bbs.ctex.org
 % Translated by zoho@bbs.ctex.org
+% Translated by Liam0205@bbs.ctex.org
 \documentclass{book}
 
 \input{preamble}
@@ -14,17 +15,17 @@
 
 %This book treats the various aspects of \TeX\ in chapters
 %that are concerned with relatively small, well-delineated,
-%topics. In this chapter, therefore, 
+%topics. In this chapter, therefore,
 %a global picture of the way \TeX\ operates will be given.
 %Of necessity, many details will be omitted here, but all of
 %these are treated in later chapters. On the other hand,
 %the few examples given in this chapter will be repeated
 %in the appropriate places later on; they are included here
 %to make this chapter self-contained.
-这本书覆盖了 \TeX\ 多个方面的知识，其中每一章都对应着一个相对较小且易于讲述的主题。
-不过，在开始各个主题之前，有必要对 \TeX\ 的工作机理进行一个概述，这就是本章的主题，
-显然其中许多细节应当忽略，留待后续各章讲述。另外，为了内容的完整性，
-本章的末尾还会给出几份示例，它们在后续的一些章节中还会被重提。
+本书涵盖了 \TeX\ 诸多方面的内容；其中每一章都讲述一个相对较小且易于描述的主题。
+本章将简介 \TeX\ 处理文档的基本流程。
+当然，本章会忽略很多细节，留待后续章节继续讨论。
+相应的，为了说明问题，本章会给出一些例子；这些例子在后续的这些章节中会继续讨论。
 
 %\section{Four \TeX\protect\ processors}
 \section{\TeX\ 的 4 个处理器}
@@ -59,15 +60,15 @@
 %\TeX\ runs on, and turns them into tokens.
 %Tokens are the internal objects of \TeX:
 %there are character tokens that constitute the typeset
-%text, and control sequence tokens that are commands 
+%text, and control sequence tokens that are commands
 %to be processed by the next two levels.
-%\item The expansion processor. 
+%\item The expansion processor.
 %Some but not all of the tokens generated in the first level
 %\ldash macros, conditionals, and a number
 %of primitive \TeX\ commands \rdash  are subject to expansion.
 %Expansion is the process that replaces some (sequences of)
 %tokens by other (or no) tokens.
-%\item The execution processor. 
+%\item The execution processor.
 %Control sequences that are not expandable are executable,
 %and this execution takes place on the third level of the
 %\TeX\ processor.
@@ -90,12 +91,12 @@
 %category. The other major thing happening on this level
 %is the construction of horizontal, vertical, and
 %mathematical lists.
-%\item The visual processor. 
+%\item The visual processor.
 %In the final level of processing
 %the visual part of \TeX\ processing is performed. Here
-%horizontal lists are broken into paragraphs, 
+%horizontal lists are broken into paragraphs,
 %vertical lists are broken into pages,
-%and  formulas are built out of math lists. 
+%and  formulas are built out of math lists.
 %Also the output to the \n{dvi} file takes place on this level.
 %The algorithms working here are not accessible to the user,
 %but they can be influenced by a number of parameters.
@@ -118,7 +119,7 @@
 %translates whatever characters it gets from the input file
 %into tokens. The output of this processor is a stream
 %of tokens: a token list. Most tokens fall into one of two categories:
-%character tokens and control sequence tokens. 
+%character tokens and control sequence tokens.
 %The remaining category is that of the parameter tokens;
 %these will not be treated in this chapter.
 \TeX\ 的输入处理器是 \TeX\ 从输入文件所接受的任何字符翻译为记号的部分，
@@ -142,10 +143,10 @@
 %Not all character tokens signify characters to be typeset.
 %\altt
 %Characters fall into sixteen categories \ldash each one
-%specifying a certain function that a character can have \rdash 
+%specifying a certain function that a character can have \rdash
 %of which only two contain the characters that will be
-%typeset. The other categories contain such characters 
-%as~\n{\char`\{}, \n{\char`\}}, 
+%typeset. The other categories contain such characters
+%as~\n{\char`\{}, \n{\char`\}},
 %\n\&, and~\n\#. A~character token can be considered
 %as a pair of numbers: the character code \ldash typically the \ascii\
 %code \rdash  and the category code.
@@ -161,7 +162,7 @@
 一个字符对应的类别码是可以修改的。
 
 %When the escape character (by default~\cs{}$\,$) appears in the input,
-%\TeX's behaviour in forming tokens is more complicated. 
+%\TeX's behaviour in forming tokens is more complicated.
 %Basically,
 %\TeX\ builds a control sequence by taking a number of characters
 %from the input and lumping them together into a single token.
@@ -169,7 +170,7 @@
 当这种字符出现在输入的文本中时，为了生成它的记号，\TeX\ 输入处理器的行为会非常复杂。
 基本上，输入处理器会将尾随于转义字符的字符序列处理为单个记号，从而构建一个控制序列记号。
 
-%The behaviour with which \TeX's input processor 
+%The behaviour with which \TeX's input processor
 %reacts to category codes can be described
 %as a machine that switches between three internal states:
 %$N$,~new line; $M$,~middle of line; $S$,~skipping spaces.
@@ -196,7 +197,7 @@
 在时序上要早于上一节中的三态状态机。
 
 %For instance, the sequence \verb>^^+> is replaced by~\n{k} because
-%the \ascii{} codes of \n k and \n + differ by~64. 
+%the \ascii{} codes of \n k and \n + differ by~64.
 %Since this replacement takes place before tokens are formed,
 %writing \verb>\vs^^+ip 5cm> has the same effect as
 %\verb>\vskip 5cm>. Examples more useful than this exist.
@@ -219,12 +220,12 @@
 \section{展开处理器}
 
 %\TeX's  expansion processor accepts a stream of tokens
-%and, if possible, 
+%and, if possible,
 %expands the tokens in this stream one by one
 %until only unexpandable tokens remain.
 %Macro expansion is the clearest example of this:
 %if a control sequence is a macro name, it is replaced
-%(together possibly with parameter tokens) by 
+%(together possibly with parameter tokens) by
 %the definition text of the macro.
 \TeX\ 的展开处理器可以接受记号流并且对其中的记号逐一进行展开，
 直至记号流中所有的记号都是不可展开的。最有代表性的例子是宏的展开：
@@ -239,7 +240,7 @@
 展开处理器所接受的记号流主要来自输入处理器，
 展开结果是一串不可展开的记号流，将会交给执行处理器。
 
-%However, the expansion processor comes into play 
+%However, the expansion processor comes into play
 %also when (among others) an \cs{edef} or \cs{write} is processed.
 %The parameter token list of these commands is
 %expanded very much as if the lists had been
@@ -252,9 +253,9 @@
 
 %Expanding a token consists of the following steps:
 %\begin{enumerate}
-%\item See whether the token is expandable. 
+%\item See whether the token is expandable.
 %\item If the token is unexpandable, pass it to the token
-%      list currently being built, and take on the next token. 
+%      list currently being built, and take on the next token.
 展开处理器展开一个记号的步骤如下：
 \begin{enumerate}
 \item 查看这个记号是否可展开。
@@ -275,16 +276,16 @@
 那么就需要从记号流中析取足够的记号，以形成与它的参数对应的参量。
 
 %\item Go on expanding, starting with the first token of the
-%      expansion. 
+%      expansion.
 %\end{enumerate}
 %%
 %Deciding whether a token is expandable is
-%a simple decision. Macros and active characters, 
+%a simple decision. Macros and active characters,
 %conditionals, and a number of primitive \TeX\ commands
 %(see the list on page~\pageref{expand:lijst})
 %are expandable, other tokens are not.
 %Thus the expansion processor replaces macros by their expansion,
-%it evaluates conditionals and eliminates any irrelevant parts of 
+%it evaluates conditionals and eliminates any irrelevant parts of
 %these, but tokens such as \cs{vskip} and character tokens,
 %including characters such as dollars and braces, are passed untouched.
 \item 对于当前记号的展开结果中的第一个记号，返回至步骤1 继续进行展开。
@@ -305,7 +306,7 @@
 %command would seem to be an exception to this rule, because
 %it expands only one step. What actually happens is that
 %the sequence \begin{disp}\cs{expandafter}\gr{token$_1$}\gr{token$_2$}\end{disp}
-%is replaced by 
+%is replaced by
 %\begin{disp}\gr{token$_1$}\gr{\italic expansion of token$_2$}\end{disp}
 %and this replacement is in fact reexamined by the expansion
 %processor.
@@ -317,7 +318,7 @@
 \begin{disp}\gr{token$_1$}\gr{\italic expansion of token$_2$}\end{disp}
 而这个替换结果还会被展开处理器再次处理。
 
-%Real exceptions do exist, however. If the 
+%Real exceptions do exist, however. If the
 %current token is the \cs{noexpand} command, the next
 %token is considered for the moment to be unexpandable:
 %it is handled as if it were \cs{relax}, and it is
@@ -333,7 +334,7 @@
 %\begin{verbatim}
 %\edef\a{\noexpand\b}
 %\end{verbatim}
-%the replacement text \verb>\noexpand\b> is expanded at definition 
+%the replacement text \verb>\noexpand\b> is expanded at definition
 %time. The expansion of \cs{noexpand} is the next token, with
 %a temporary meaning of \cs{relax}. Thus, when the expansion
 %processor tackles the next token, the~\cs{b}, it will consider
@@ -361,10 +362,10 @@
 %Above, it was said that braces are passed as unexpandable
 %character tokens. In general this is true. For instance,
 %the \cs{romannumeral} command is handled by the expansion
-%processor; when confronted with 
+%processor; when confronted with
 %\begin{verbatim}
 %\romannumeral1\number\count2 3{4 ...
-%\end{verbatim} 
+%\end{verbatim}
 %\TeX\ will expand until the brace is encountered:
 %if \cs{count2} has the value of zero, the result will be
 %the roman numeral representation of~\n{103}.
@@ -379,7 +380,7 @@
 %As another example, \begin{verbatim}
 %\iftrue {\else }\fi
 %\end{verbatim}
-%is handled by the expansion processor 
+%is handled by the expansion processor
 %completely analogous to
 %\begin{disp}\cs{iftrue} {\italic a}\cs{else} {\italic b}\cs{fi}\end{disp}
 %The result is a character token, independent of its category.
@@ -391,9 +392,9 @@
 \begin{disp}\cs{iftrue} {\italic a}\cs{else} {\italic b}\cs{fi}\end{disp}
 完全类似的方式进行处理，结果是 \verb|{| 字符记号，与它的类别码无关。
 
-%However, in the context of macro expansion 
-%the expansion  processor will 
-%recognize braces. 
+%However, in the context of macro expansion
+%the expansion  processor will
+%recognize braces.
 %First of all, a balanced pair of braces marks off a group of tokens
 %to be passed as one argument.
 %If a macro has an argument \begin{verbatim}
@@ -424,7 +425,7 @@
 
 %Secondly, when the arguments for a macro with
 %parameters are read, no expressions with unbalanced braces
-%are accepted. In 
+%are accepted. In
 %\begin{verbatim}
 %\def\a#1\stop{ ... }
 %\end{verbatim}
@@ -466,7 +467,7 @@
 
 %Coming out of the expansion processor is a stream of
 %unexpandable tokens to be processed by
-%the execution processor. 
+%the execution processor.
 %\relax From the point of view of the execution processor, this
 %stream contains two types of tokens:
 %\begin{itemize}
@@ -493,9 +494,9 @@
 %The effect of such an object will of course still depend on the mode.
 %Other objects are  specific for one mode.
 %For instance, characters (to be more precise:
-%character tokens of categories 11 and~12), 
+%character tokens of categories 11 and~12),
 %are intimately connected to horizontal mode:
-%if the execution processor 
+%if the execution processor
 %is in vertical mode when it encounters a character, it will
 %switch to horizontal mode.
 有些记号可以用于任何模式，例如盒子既可以出现在水平模式、竖直模式，
@@ -517,7 +518,7 @@
 数学模式切换符用于告知执行处理器进入和退出数学模式，
 而花括号让执行处理器进入和退出一个编组。
 
-%One control sequence handled by the execution processor 
+%One control sequence handled by the execution processor
 %deserves special mention: \cs{relax}.
 %This control sequence is not expandable, but the execution
 %is to do nothing. Compare the effect of \cs{relax} in
@@ -529,13 +530,13 @@
 %\begin{verbatim}
 %\def\empty{}
 %\end{verbatim}
-%in 
+%in
 %\begin{verbatim}
 %\count0=1\empty 2
 %\end{verbatim}
 %In the first case the expansion
 %process that is forming the number stops at \cs{relax} and
-%the number {\tt 1} is assigned; in the second case 
+%the number {\tt 1} is assigned; in the second case
 %\cs{empty} expands to nothing, so {\tt 12} is assigned.
 控制序列 \cs{relax} 需要在此关注一下，
 它是横跨展开处理器与执行处理器两界的特殊公民，
@@ -575,7 +576,7 @@
 %with intermediate glue and penalties. Also, the page breaking
 %algorithm stores its result in \cs{box255}, so output
 %routines can dissect it. On the other hand, a math formula
-%can not be broken into pieces, and, naturally, 
+%can not be broken into pieces, and, naturally,
 %shipping a box to the \n{dvi} file is irreversible.
 可视化处理器中有一部分算法返回的是可被执行处理器处理的结果。
 例如，已完成断行的段落是一组带有行间粘连和惩罚的水平盒子，
@@ -595,11 +596,11 @@
 %\begin{verbatim}
 %\def\a{\penalty200}
 %\a 0
-%\end{verbatim} 
+%\end{verbatim}
 %This is {\italic not\/} equivalent to
 %\begin{verbatim}
 %\penalty200 0
-%\end{verbatim} 
+%\end{verbatim}
 %which would place a penalty of \n{200}, and
 %typeset the digit~\n0. Instead it expands to
 %\begin{verbatim}
@@ -614,11 +615,11 @@
 \begin{verbatim}
 \def\a{\penalty200}
 \a 0
-\end{verbatim} 
+\end{verbatim}
 展开的结果{\italic 并非}是（这将放置值为 \n{200} 的惩罚项，并排印数字 \n0）
 \begin{verbatim}
 \penalty200 0
-\end{verbatim} 
+\end{verbatim}
 而是
 \begin{verbatim}
 \penalty2000
@@ -634,7 +635,7 @@
 %\TeX\ uses various sorts of internal quantities,
 %such as integers and dimensions. These internal
 %quantities have an external representation,
-%which is a string of characters, such as 
+%which is a string of characters, such as
 %\n{4711} or~\n{91.44cm}.
 \TeX\ 拥有多种内部量值，诸如整数和尺寸。这些内部量值的外部表示方法只有一种，
 那就是字符串表示，例如 \n{4711} 或者 \n{91.44cm}。
