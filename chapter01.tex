@@ -37,10 +37,10 @@
 %delivering the input for the next stage. The input of
 %the first stage is then the \n{.tex} input file; the output
 %of the last stage is a \n{.dvi} file.
-\TeX\ 处理输入的方式可分为 4 个层面。
-你可以认为 \TeX\ 处理器（很多文档也称为 \TeX\ 引擎）是分成了 4 个独立的阶段，
-每个阶段都接受前一阶段的输出，其处理结果则作为后一阶段的输入。
-第一个阶段的输入来自 \n{.tex} 文件，最后一个阶段的输出是 \n{.dvi} 文件%
+\TeX\ 处理输入的过程可分为 4 个层次。
+你可以认为 \TeX\ 处理器（也成 \TeX\ 引擎）有 4 个独立的单元，
+每个单元接收前序步骤的输出，并将输出作为后续单元的输入。
+第一阶段的输入是 \n{.tex} 文件，最后一个阶段的输出是 \n{.dvi} 文件\footnote{译注（Liam0205）：此处讨论的 \TeX\ 是 Knuth \TeX。后续扩展的 pdf\TeX 等不一定输出 \n{.tex} 文件。}。%
 
 %For many purposes it is most convenient, and most insightful,
 %to consider these four levels of processing as happening
