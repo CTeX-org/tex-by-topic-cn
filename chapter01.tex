@@ -121,9 +121,11 @@
 %character tokens and control sequence tokens.
 %The remaining category is that of the parameter tokens;
 %these will not be treated in this chapter.
-\TeX\ 的输入处理器是 \TeX\ 从输入文件所接受的任何字符翻译为记号的部分，
-它输出记号流：记号列表。大部分记号可归为两类：字符记号与控制序列记号。
-还有一类是参数记号，但本章不讨论它。
+输入处理器是 \TeX\ 的一部分，负责将 \TeX\ 从输入文件中读入的内容翻译成记号。
+它的输出是记号流（stream of tokens）：记号组成的列表。
+大部分记号属于以下两类：
+字符记号和控制序列记号。
+还有一类记号是参数记号，留待后续章节讨论。
 
 %\subsection{Character input}
 \subsection{字符的输入}
@@ -134,10 +136,10 @@
 %space. Also, \TeX\ itself can insert tokens that do not correspond
 %to any character in the input, for instance the space token
 %at the end of the line, or the \cs{par} token after an empty line.
-对于所输入的简单文本，字符会被直接转换为字符记号。
-不过，\TeX\ 会忽略这样一些字符：将多个连续的空格符号仅视为一个空格。
-还有，\TeX 自身会向记号列表中插入一些不太明显的记号，例如行尾的空格记号，
-每个空行之后的 \cs{par} 记号。
+对于简单的输入文本，其中的字符被输入处理器翻译为字符记号。
+在某些情况下，\TeX\ 会忽略一些输入字符；例如，连续空格通常等价于单个空格。
+此外，\TeX\ 也会向记号流中插入一些与输入字符无关的记号。
+例如在每一行的末尾插入一个空格，以及在每一个空行末尾插入一个 \cs{par} 记号。
 
 %Not all character tokens signify characters to be typeset.
 %\altt
@@ -152,22 +154,22 @@
 %It is possible to change
 %the category code that is associated with a particular
 %character code.
-字符可被输入处理器转换为字符记号，
-但是这并非意味着所有字符可被排印（排版及印刷）。
-在 \TeX\ 中，字符被划分为 16 类——每一类都有特定的功能——%
-其中仅有两类字符可被排印。其它字符类，像 \n{\char`\{}、\n{\char`\}}、\n\&
-和 \n\#，都是不可被排印的。
-一个字符记号可视为一对数字：字符码和类别码。字符码通常使用 \ascii\ 编码。
-一个字符对应的类别码是可以修改的。
+并非所有的字符记号都会被最终排版出来。
+事实上，在 \TeX 中，字符被分类为 16 类
+\ldash 每一类都有特定的功能\rdash
+而只有两类最终会被排版出来。
+其它字符类，像 \n{\char`\{}、\n{\char`\}}、\n\&
+和 \n\#，都不会被排版出来。
+因此，\TeX 的字符记号的含义由一对数字决定：
+字符编码\ldash 通常是 \ascii 编码\rdash 和分类码。
+具体某一编码的字符对应的分类码是可修改的\footnote{译注（Liam0205）：也就是说，字符在 \TeX 看来是何种含义不光取决于这个字符是什么（字符编码），还取决于它是什么类型（分类码）。对于某个具体的字符来说（字符编码确定），它的类型是可以改变的（分类码可以改变）。}。
 
 %When the escape character (by default~\cs{}$\,$) appears in the input,
 %\TeX's behaviour in forming tokens is more complicated.
 %Basically,
 %\TeX\ builds a control sequence by taking a number of characters
 %from the input and lumping them together into a single token.
-有一种字符叫做转义字符，默认是~\cs{}$\,$。
-当这种字符出现在输入的文本中时，为了生成它的记号，\TeX\ 输入处理器的行为会非常复杂。
-基本上，输入处理器会将尾随于转义字符的字符序列处理为单个记号，从而构建一个控制序列记号。
+当输入处理器遇到转义字符时（默认是 \cs{}），它会将转义字符之后的若干连续个字符拼在一起，形成一个控制序列记号。
 
 %The behaviour with which \TeX's input processor
 %reacts to category codes can be described
@@ -175,11 +177,12 @@
 %$N$,~new line; $M$,~middle of line; $S$,~skipping spaces.
 %These states and the transitions between them are treated
 %in Chapter~\ref{mouth}.
+% FIXME (Liam0205): 这一段的翻译感觉有问题，但是等到后续再说吧。
 对于类别码的处理，\TeX\ 输入处理器的行为可想像为在三种内部状态（$N$，新行；$M$，
 行内；$S$，忽略空格）中切换的机器。在第~\ref{mouth}~章中我们会讨论这些状态及其切换。
 
 %\subsection{Two-level input processing}
-\subsection{输入处理器的两个层面}
+\subsection{输入处理器的两个阶段}
 
 %\TeX's input processor is in fact itself a two-level processor.
 %Because of limitations of the terminal, the editor, or the operating
@@ -189,21 +192,22 @@
 %positions. This may be considered
 %a separate stage of \TeX\ processing, taking place
 %prior to the three-state machine mentioned above.
-实际上 \TeX\ 的输入处理器自身又可划分为两个层面。
-由于终端、编辑器或者操作系统的限制，用户可能无法输入一些所需的字符。
-所以 \TeX\ 提供了使用两个上标字符来获取各个有效字符的编码的机制。
-这一机制可视为 \TeX\ 输入处理过程中的一个独立的阶段，
-在时序上要早于上一节中的三态状态机。
+\TeX 的输入处理器本身也可分为两个阶段。
+因为一些限制（来自终端、编辑器或者操作系统），某些字符可能很难输入。
+为此，\TeX 设计了一套机制来表达这些字符：以两个连续的上标字符来获取所有可用字符。
+这套机制可视作输入处理器中相对独立的阶段；
+它运行于上述三状态机之前。
 
 %For instance, the sequence \verb>^^+> is replaced by~\n{k} because
 %the \ascii{} codes of \n k and \n + differ by~64.
 %Since this replacement takes place before tokens are formed,
 %writing \verb>\vs^^+ip 5cm> has the same effect as
 %\verb>\vskip 5cm>. Examples more useful than this exist.
-例如，\verb>^^+> 这个字串的输入会被处理为 \n{k}，
-这是因为 \n k 和 \n + 的 \ascii{} 码之差为 64，
-由于这个替换过程发生在形成字符记号之前，所以输入 \verb>\vs^^+ip 5cm>
-与输入 \verb>\vskip 5cm> 是等价的。还有一些例子比这个例子更有用。
+例如，由于 \n k 和 \n + 的 \ascii{} 码之差为 64，
+所以 \verb>^^+> 会被输入处理器等价地转换为 \n k。
+由于这种替换机制发生在形成记号之前，
+所以输入 \verb>\vs^^+ip 5cm> 与输入 \verb>\vskip 5cm> 是等价的。
+某些情况下，这种用法是很有用的。
 
 %Note that this first stage is a transformation from
 %characters to characters, without considering category
@@ -211,9 +215,8 @@
 %of input processing where characters are converted
 %to character tokens by coupling the category code
 %to the character code.
-上述过程即为 \TeX\ 输入处理器的第一层面，所做的工作是将字符转换为字符，
-并不考虑类别码的问题，后者是在第二层面（三态状态机）产生的，
-它与字符码组合成字符记号。
+注意，这是 \TeX 输入处理器的第一阶段，它不考虑分类码，而只是一个从字符到字符的变换。
+分类码只在输入处理器的第二阶段才起作用：字符的编码和分类码组合在一起，变成一个字符记号。
 
 %\section{The expansion processor}
 \section{展开处理器}
