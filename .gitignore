@@ -1,3 +1,14 @@
 TeXbyTopic.pdf
 chapter*.pdf
 output
+*.aux
+*.fdb_latexmk
+*.fls
+*.idx
+*.ilg
+*.ind
+*.log
+*.out
+*.synctex.gz
+*.xdv
+
