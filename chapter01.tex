@@ -229,38 +229,38 @@
 %if a control sequence is a macro name, it is replaced
 %(together possibly with parameter tokens) by
 %the definition text of the macro.
-\TeX\ 的展开处理器可以接受记号流并且对其中的记号逐一进行展开，
-直至记号流中所有的记号都是不可展开的。最有代表性的例子是宏的展开：
-如果一个控制序列记号是一个宏名，那么该记号（可能还包括它的参数记号）%
-会被替换为这个宏的定义文本。
+\TeX 的展开处理器接受记号流，并将记号流里的记号逐一展开，知道再无可展开记号为止。
+宏展开即是其中一例：如果一个控制序列是一个宏名，
+则根据定义，它将（和可能的参数记号一起）被替换。
 
 %Input for the expansion processor is provided mainly
 %by the input processor. The stream of tokens coming
 %from the first stage of \TeX\ processing is subject
 %to the expansion process, and the result is a stream
 %of unexpandable tokens which is fed to the execution processor.
-展开处理器所接受的记号流主要来自输入处理器，
-展开结果是一串不可展开的记号流，将会交给执行处理器。
+展开处理器的输入主要来自输入处理器。
+自输入处理器而来的记号流被展开处理器展开成仅含有不可展开记号的记号流，
+最终流向执行处理器。
 
 %However, the expansion processor comes into play
 %also when (among others) an \cs{edef} or \cs{write} is processed.
 %The parameter token list of these commands is
 %expanded very much as if the lists had been
 %on the top level, instead of the argument to a command.
-然而，在处理 \cs{edef} 或 \cs{write} 等时也会执行展开处理器。
-在展开时，这些命令的参数记号列很像在顶层而非在命令参量中的。
+此外，在处理类似 \cs{edef} 及 \cs{write} 命令时，展开处理器也会参与工作。
+这些命令的参数记号会被直接展开，变成顶层的替换文本，而不是这些命令的参数。
 
 %\subsection{The process of expansion}
 \subsection{记号的展开过程}
 
 %Expanding a token consists of the following steps:
+记号展开的步骤如下：
 %\begin{enumerate}
 %\item See whether the token is expandable.
 %\item If the token is unexpandable, pass it to the token
 %      list currently being built, and take on the next token.
-展开处理器展开一个记号的步骤如下：
 \begin{enumerate}
-\item 查看这个记号是否可展开。
+\item 确认记号是否可展开。
 \item 如果记号不可展开，那么就将它放入当前构建的记号列表中，然后读入下一个记号。
 
 %\item If the token is expandable, replace it by its expansion.
