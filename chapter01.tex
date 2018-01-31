@@ -625,7 +625,7 @@
 \def\a{\penalty200}
 \a 0
 \end{verbatim}
-展开的结果{\italic 并非}是（这将放置值为 \n{200} 的惩罚项，并排印数字 \n0）
+展开的结果\emph{不是}（设置惩罚项为 \n{200}，并排版数字 \n0）
 \begin{verbatim}
 \penalty200 0
 \end{verbatim}
@@ -633,7 +633,7 @@
 \begin{verbatim}
 \penalty2000
 \end{verbatim}
-这是由于 \cs{a} 后的空格会被输入处理器忽略，从而展开处理器所得到的控制序列是
+这是由于输入处理器会忽略 \cs{a} 后的空格，因此展开处理器的输入流中的内容是：
 \begin{verbatim}
 \a0
 \end{verbatim}
@@ -646,8 +646,9 @@
 %quantities have an external representation,
 %which is a string of characters, such as
 %\n{4711} or~\n{91.44cm}.
-\TeX\ 拥有多种内部量值，诸如整数和尺寸。这些内部量值的外部表示方法只有一种，
-那就是字符串表示，例如 \n{4711} 或者 \n{91.44cm}。
+\TeX 使用了多重内部量，比如说整数和尺寸。
+这些内部量的外部表示是同一的：字符组成的字符串。
+例如 \n{4711} 和 \n{91.44cm}。
 
 %Conversions between the internal value and the external
 %representation take place on two different levels,
@@ -663,16 +664,12 @@
 %\end{verbatim}
 %and all of these statements are handled by the execution
 %processor.
-内部量值与外部表示之间的转换分别发生在两个不同的层面，具体依赖于转换的方向。
-对于字符串转换为内部量值，例如：
+内部量与外部表示之间的转换发生在执行处理器或展开处理器中。
+具体来说，外部表示向内部量的转换发生在执行处理器中：
 \begin{verbatim}
 \pageno=12 \baselineskip=13pt
-\end{verbatim}
-或者
-\begin{verbatim}
 \vskip 5.71pt
 \end{verbatim}
-像这样的语句会在执行处理器中被处理。
 
 %On the other hand, the conversion of the internal
 %values into a representation as a string of
@@ -682,12 +679,11 @@
 %\the\baselineskip
 %\end{verbatim}
 %are all processed by expansion.
-另一方面，内部量值到外部表示的转换是由展开处理器完成的。例如：
+内部量向外部表示的转换发生在展开处理器中：
 \begin{verbatim}
 \number\pageno \romannumeral\year
 \the\baselineskip
 \end{verbatim}
-这些语句会被展开处理器处理为内部量值的字符串记号。
 
 %As a final example, suppose \verb>\count2=45>, and
 %consider the statement
@@ -705,18 +701,18 @@
 %\count0=1453
 %\end{verbatim}
 %and execute this.
-最后一个例子，假设 \verb>\count2=45>，看下面的语句：
+最后再举一例。
+假设 \verb|\count2=45|，
+则下列代码
 \begin{verbatim}
 \count0=1\number\count2 3
 \end{verbatim}
-展开处理器可将 \verb>\number\count2> 展开为字符串 \n{45}，
-而 \n2 之后的空格并不会结束正在赋予的数值：
-它只用于定界 \cs{count} 寄存器的数字。
-从而下一层级的执行处理器看到的是：
+首先将 \verb>\number\count2>\textvisiblespace 被展开为字符串 \n{45}，
+注意 \verb|\count2| 后的空格被用于界定计数器编号而已被展开。
+因此，下一级处理时，执行处理器看到并执行的是：
 \begin{verbatim}
 \count0=1453
 \end{verbatim}
-于是它便奉命行事。
 
 %%\endinput
 %\endinput
