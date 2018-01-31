@@ -180,32 +180,39 @@
 %character tokens, control sequence tokens, and parameter tokens.
 %These tokens are then passed to \TeX's expansion and execution
 %processes.
-256 个字符编码（0--255）的每一个都关联一个不尽相同的\indexterm{分类码}。
-共有 16 个类别，编号从 0 到 15。在扫描输入行的过程中，
-\TeX\ 会生成(字符编码,分类码)对。\TeX\ 的输入处理器的眼里只有(字符编码,分类码)对，
-从中生成字符记号、控制序列记号和参数记号。
-这些记号随后被传送到 \TeX\ 的展开处理器与执行处理器。
+256 个字符编码（0--255）中，每一个都有一个不尽相同的关联的\indexterm{分类码}。
+\TeX 的分类码编号从 0 到 15，共有 16 个类别。
+在扫描输入流的过程中，\TeX 会生成由字符编码和分类码组成的字符编码-分类码配对（character-code--category-code pairs）；
+而后，自上述配对而始，输入处理器生成字符记号、控制序列记号和参数记号。
+这些记号随后被传给 \TeX 的展开处理器和执行处理器。
 
 %A~character token is a character-code--category-code
 %pair that is passed unchanged.
 %A~control sequence token consists of one or more characters
 %preceded by an escape character; see below.
 %Parameter tokens are also explained below.
-字符记号是(字符编码,分类码)对，它在展开处理器与执行处理器中不会被改变。
-控制序列记号是由一个或多个前缀为转义符的字符构成，详见下文。
-参数记号的解释也详见下文。
+字符记号是简单的字符编码-分类码配对会直接传给展开处理器。
+控制序列记号则有转义字符引导，后接一个或多个字符。
+关于控制序列记号和参数记号的介绍详见下文。
 
 %This is the list of the categories, together with a brief
 %description. More elaborate explanations follow in this and
 %later chapters.
-%\begin{enumerate} \message{set counter}%\SetCounter:item=-1
-%\setcounter{enumi}{-1}
+下面是对类别的简明解释。
+详细解释则在本章及后续章节当中。
+\begin{enumerate}
+\message{set counter}%\SetCounter:item=-1
+\setcounter{enumi}{-1}
 %\item\label{ini:esc}\index{category!0} Escape character; this signals
 %  the start of a control sequence. \IniTeX\ makes the backslash
 %  \verb-\- (code~92) an escape character.
+\item\label{ini:esc}\index{category!0}
+        转义字符；用于标记控制序列的开始。\IniTeX 默认使用 \ascii 码为 92 的反斜线 \verb-\- 作为转义字符。
 %\item\index{category!1} Beginning of group; such a character causes
 %  \TeX\ to enter a new level of grouping. The plain format makes the
 %  open brace \verb-{- \mdqon a beginning"-of-group character.  \mdqoff
+\item\index{category!1}组开始符：
+此类字符可让 \TeX\ 进入新一层的编组。在 Plain \TeX\ 中，组开始符默认是 \verb-{-。
 %\item\index{category!2} End of group; \TeX\ closes the current level
 %  of grouping.  Plain \TeX\ has the closing brace \verb-}- as
 %  end-of-group character.
@@ -255,15 +262,6 @@
 %  category is for characters that should not appear in the
 %  input. \IniTeX\ assigns the \ascii\ \gr{delete} character, code~127,
 %  to this category.
-%\end{enumerate}
-下面是 16 个类别列表的大致解释，更多的细节知识散布于后文以及后续各章之中。
-\begin{enumerate} \message{set counter}%\SetCounter:item=-1
-\setcounter{enumi}{-1}
-\item\label{ini:esc}\index{category!0}转义符：
-用于表示控制序列的开始。\IniTeX\ 使用反斜线 \verb-\-（ASCII 码为~92）作为转义符。
-
-\item\index{category!1}组开始符：
-此类字符可让 \TeX\ 进入新一层的编组。在 Plain \TeX\ 中，组开始符默认是 \verb-{-。
 
 \item\index{category!2}组结束符：
 此类字符可让 \TeX\ 结束当前层的编组。在 Plain \TeX\ 中，组结束符默认是 \verb-}-。
