@@ -93,9 +93,10 @@
 %This automaton will be treated here both from the point of view of the
 %internal states and of the category codes governing the
 %transitions.
-\TeX\ 的输入处理器从文件或终端中扫描输入的文本行，将字符转化为记号。输入处理器可
-视为一种简单的有限状态自动机，具有三种内部状态，不同的状态对应不同的扫描行为。本章
-分别从内部状态和分类码这两个角度考察这个自动机。
+\TeX 的输入处理器从文件或中断扫描输入行，而后将字符转换成记号。
+输入处理器可视作一简单的有限状态自动机，其具有三种内部状态；
+根据输入处理器所处内部状态的不同，其扫描行为有所不同。
+本章将分别从内部状态和控制内部状态转换的分类码两个角度来考察该自动机。
 
 %\section{Initial processing}
 \section{初始处理}
