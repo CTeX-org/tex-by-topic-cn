@@ -467,10 +467,10 @@
 %In addition to building lists, this part of the \TeX\ processor
 %also performs mode-independent processing, such as
 %assignments.
-执行处理器用于构建水平、竖直和数学列表。
-与这些列表相应，执行处理器在水平、竖直和数学模式中运行。
-这三种模式每种都有`内部的'和`外部的'两个类型。
-执行处理器在构建列表的过程中，还需要进行一些与模式无关的操作，
+执行处理器构建水平列表、竖直列表和数学列表。
+与之相应，执行处理器有三种工作模式：水平模式、竖直模式、数学模式。
+这三种模式又分别有「内部」和「外部」两种类型。
+除了构建列表，执行处理器还需要处理一些与模式无关的操作，
 例如赋值。
 
 %Coming out of the expansion processor is a stream of
@@ -478,6 +478,8 @@
 %the execution processor.
 %\relax From the point of view of the execution processor, this
 %stream contains two types of tokens:
+执行处理器的输入是展开处理器输出的不可展开记号组成的流。
+在执行处理器看来，这条记号流中有两种类型的记号：
 %\begin{itemize}
 %\item Tokens signalling an assignment (this includes
 %      macro definitions), and
@@ -488,13 +490,12 @@
 %      characters, boxes, and glue. The way they are handled
 %      depends on the current mode.
 %\end{itemize}
-执行处理器的输入来自展开处理器的输出，是一个不可展开的记号流。
-从执行处理器的角度来看，这条记号流所包含的记号有两种类型：
 \begin{itemize}
-\item 用于赋值的记号（包括宏定义）以及像 \cs{show}、\cs{aftergroup}
-  这样执行与模式无关操作的记号。
-\item 用于构建列表的记号：字符、盒子和粘连。
-  对这些记号的处理方式依赖执行处理器当前处于的模式。
+\item 触发赋值操作（包括宏定义）的记号，
+      以及触发与模式无关的其他操作的记号（例如 \cs{show} 和 \cs{aftergroup}）。
+\item 构建列表的记号：
+      字符、盒子、粘连。
+      执行处理器对它们的处理方式根据所处模式的不同而改变。
 \end{itemize}
 
 %Some objects can be used in any mode; for instance boxes
