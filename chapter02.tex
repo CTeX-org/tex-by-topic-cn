@@ -99,15 +99,16 @@
 本章将分别从内部状态和控制内部状态转换的分类码两个角度来考察该自动机。
 
 %\section{Initial processing}
-\section{初始处理}
+\section{初始工作}
 
 %Input from a file (or from the user terminal, but this
 %will not be mentioned specifically
 %most of the time) is handled one line at a time.
 %Here follows a discussion of what exactly is an input line
 %for \TeX.
-\TeX\ 对输入文件（也可能是来自终端的输入，但实际很少有人使用，下文不再刻意提它）%
-是逐行处理的，因此首先要讨论 \TeX\ 输入处理器是如何识别输入行的。
+\TeX 对来自文件的输入（也可能是来自终端的输入，但实际甚少使用，故不再提及）
+是逐行处理的。
+此处讨论在 \TeX 语境下，到底什么是「输入行」。
 
 %Computer systems differ with respect to
 %\index{line! input}\index{line! end}\index{machine independence}
@@ -121,11 +122,13 @@
 %some systems with fixed record length (block) storage do not have
 %a line terminator at all. Therefore \TeX\ has its
 %own way of terminating an input line.
-不同的计算机系统对输入行有不同的定义。
+不同计算机系统对
 \index{line!input}\index{line!end}\index{machine independence}
-最常见的方式是采用回车符加换行符作为行终止符，但是有些系统只使用换行符，
-还有一些系统是固定宽度的输入行（块存储）而根本不使用终止符。
-为了对这些系统一视同仁，\TeX\ 必须要掌控输入行的终止方式，大致步骤如下：
+输入行的具体定义有所不同。
+最常见的方式是用回车符紧跟换行符作为行终止符，
+有些系统单用换行符作为行终止符，
+一些有定长存储（块存储）的系统则根本不使用行终止符。
+因此，\TeX 自己有一套终止输入行的方式。
 
 %\begin{enumerate}
 %\item An input line is read from an input file  (minus the
@@ -144,14 +147,13 @@
 %if the line were to end with a comment character.
 %\end{enumerate}
 \begin{enumerate}
-\item 从输入文件读取一行（去掉输入行终止符，如果有的话）。
-\item 移除行尾空格（这是针对采用块存储的系统的操作，而且也避免了混乱，
-因为在编辑器中行尾空格通常是不可见的）。
-\item 将 \csterm endlinechar\par （默认为\gram{return}，其 \ascii\ 码为 13）%
-添加到输入行尾部。如果 \cs{endlinechar} 的值为负值或者大于 255%
-（在 \TeX\ 3 之前则为大于 127；见第~\pageref{2vs3}~页介绍的更多差异），
-\label{append:elc}%
-行尾不需要添加字符；其效果与该行以注释符结尾相同。
+\item 从输入文件读取一行（不包含可能的行终止符）。
+\item 移除行尾空格（这是针对块存储系统设计的，同时避免了因行为空格不可见而导致的混乱）。
+\item 将 \csterm endlinechar\par （默认是 \ascii 编码为 13 的 \gram{return}）
+      添加在输入行尾。
+      如果 \cs{endlinechar} 的值为负\label{append:elc}%
+      或大于 255（在低于 \TeX 3 的版本中则是 127；\pageref{2vs3} 页介绍了更多差异）时，不添加任何字符。
+      此时的效果与在行尾手工添加注释字符一样。
 \end{enumerate}
 
 
@@ -161,10 +163,10 @@
 %own character codes. These codes are then used exclusively,
 %so that \TeX\ will perform the same on any system.
 %For more on this, see Chapter~\ref{char}.
-不同的计算机系统可能在字符编码方面也存在区别%
-（最常见的编码是 \ascii{} 和 \ebcdic{}），
-因此 \TeX\ 必须要将文件输入的字符编码转换为它的内部编码，
-藉此 \TeX\ 可以兼容任何系统中的字符编码。更多内容详见第~\ref{char}~章。
+不同计算机在字符编码方面也存在差异（最常见的是 \ascii 和 \ebcdic{}）。
+因此，\TeX 有必要将从文件读入的字符转换为其内部编码。
+这些编码仅在 \TeX 内适用，因此 \TeX 在任何操作系统上的行为都保持一致。
+更多内容详见第~\ref{char}~章。
 
 %\section{Category codes}
 \section{分类码}
