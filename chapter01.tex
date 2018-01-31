@@ -178,7 +178,7 @@
 %These states and the transitions between them are treated
 %in Chapter~\ref{mouth}.
 % FIXME (Liam0205): 这一段的翻译感觉有问题，但是等到后续再说吧。
-对于类别码的处理，\TeX\ 输入处理器的行为可想像为在三种内部状态（$N$，新行；$M$，
+对于分类码的处理，\TeX\ 输入处理器的行为可想像为在三种内部状态（$N$，新行；$M$，
 行内；$S$，忽略空格）中切换的机器。在第~\ref{mouth}~章中我们会讨论这些状态及其切换。
 
 %\subsection{Two-level input processing}
@@ -260,8 +260,8 @@
 %\item If the token is unexpandable, pass it to the token
 %      list currently being built, and take on the next token.
 \begin{enumerate}
-\item 确认记号是否可展开。
-\item 如果记号不可展开，那么就将它放入当前构建的记号列表中，然后读入下一个记号。
+\item 确认当前待处理的记号是否可展开。
+\item 若当前待处理的记号不可展开，则直接将其加入正在构建的记号列表中，并读入下一个记号。
 
 %\item If the token is expandable, replace it by its expansion.
 %      For macros without parameters, and a few primitive commands
@@ -272,14 +272,20 @@
 %      For instance, if the token was a macro with parameters,
 %      sufficiently many tokens need to be absorbed to form
 %      the arguments corresponding to  these parameters.
-\item 如果记号可展开，那么它可以展开成什么，就将其替换为什么。对于不带参数的宏以及像
-\cs{jobname} 这样的一些原始命令，只需进行简单的记号序列替换即可。不过，通常 \TeX\
-需要从记号流中吸收一些参量记号，以形成当前记号的替换文本。例如，对于一个带参数的宏，
-那么就需要从记号流中析取足够的记号，以形成与它的参数对应的参量。
+\item 若当前待处理记号可展开，则将其替换为其展开。
+      对不带参数的宏以及一些 \TeX 原语（例如 \cs{jobname}），
+      该过程只需简单地进行记号替换即可。
+      不过，通常 \TeX 需要从输入流中读取一些参数记号，
+      以便构造当前待处理记号的替换形式。
+      举例说，对于带参数的宏，\TeX 将读取足够的参数（parameters）记号，
+      而后将这些参数记号作为宏的参数（arguments）。
 
 %\item Go on expanding, starting with the first token of the
 %      expansion.
 %\end{enumerate}
+%
+\item 将展开结果的第一个记号作为待处理记号，继续展开。
+\end{enumerate}
 %%
 %Deciding whether a token is expandable is
 %a simple decision. Macros and active characters,
@@ -290,17 +296,14 @@
 %it evaluates conditionals and eliminates any irrelevant parts of
 %these, but tokens such as \cs{vskip} and character tokens,
 %including characters such as dollars and braces, are passed untouched.
-\item 对于当前记号的展开结果中的第一个记号，返回至步骤1 继续进行展开。
-\end{enumerate}
-%
-判断一个记号是否可展开很简单。宏和活动字符、条件式以及一部分 \TeX\ 原始命令%
-（见第~\pageref{expand:lijst}~页的列表）都是可展开的，其他记号则都是不可展开的。
-展开处理器根据这个判定规则将宏的记号替换为它的定义，对条件式进行计算以忽略无关的记号。
-不过，对于像 \cs{vskip} 这样的记号和字符记号，包括像美元符和花括号这样的字符，
-展开处理器会将它们原封不动地传送到执行处理器。
+宏的可展开性之判断很简单：
+所有的宏、活动字符、条件式以及部分 \TeX 原语（见第~\pageref{expand:lijst}~页的列表）
+是可展开的，其他记号都不可展开。
+因此，展开处理器会负责诸如将宏替换为其展开、对条件是求值而后忽略条件为假的部分的任务；
+诸如 \cs{vskip}、字符记号（包括美元符号和花括号）则原封不动地传到输出流。
 
 %\subsection{Special cases: \cs{expandafter}, \cs{noexpand}, and \cs{the}}
-\subsection{几个特例}
+\subsection{几个特例：\cs{expandafter}、\cs{noexpand} 及 \cs{the}}
 
 %As stated above,
 %after a token has been expanded, \TeX\ will start expanding
@@ -312,24 +315,27 @@
 %\begin{disp}\gr{token$_1$}\gr{\italic expansion of token$_2$}\end{disp}
 %and this replacement is in fact reexamined by the expansion
 %processor.
-如上文所述，在一个记号被展开后，\TeX\ 会对其展开结果中的记号继续进行展开。
-但是 \cs{expandafter} 这个控制序列初看破坏了这个游戏规则，
-因为它只做一步展开。实际发生的事情是：记号列
+如前所述，记号被展开后，\TeX 会继续展开其展开后得到的记号%
+\footnote{译注（Liam0205）：展开处理器负责「展开到底」，
+但展开结果中可能存在需要继续展开的记号。}。
+
+\cs{expandafter} 是一个特例。初看之下，它只做一步展开，因而破坏了这个规则。
+例如说，
 \begin{disp}\cs{expandafter}\gr{token$_1$}\gr{token$_2$}\end{disp}
 会被替换为
 \begin{disp}\gr{token$_1$}\gr{\italic expansion of token$_2$}\end{disp}
-而这个替换结果还会被展开处理器再次处理。
+但实际上，这个替换结果还会被展开处理器再次处理%
+\footnote{译注（Liam0205）：因而不算完全破坏了规则。}。
 
 %Real exceptions do exist, however. If the
 %current token is the \cs{noexpand} command, the next
 %token is considered for the moment to be unexpandable:
 %it is handled as if it were \cs{relax}, and it is
 %passed to the token list being built.
-然而确实存在不遵守展开处理器游戏规则的情况。
-如果当前处理的记号是 \cs{noexpand} 控制序列，
-那么展开处理器把它的下一个记号视为不可展开的：
-展开处理器如同 \cs{relax} 那样处理这个记号，
-直接将其传送到所构建的记号列表中。
+\cs{noexpand} 是另一个特例。
+当 \TeX 遇到 \cs{noexpand}，则其下一个记号会被展开处理器当做是不可展开的。
+因此，展开处理器会把 \cs{noexpand} 的下一个记号当做是 \cs{relax} 那样，
+直接将其加入正在构建的记号列表。
 
 %For example,
 %in the macro definition
@@ -342,21 +348,20 @@
 %processor tackles the next token, the~\cs{b}, it will consider
 %that to be unexpandable, and just pass it to the token list
 %being built, which is the replacement text of the macro.
-例如下面这个宏的定义：
+举例说，以下宏定义中，其替换文本 \verb>\noexpand\b> 会在宏定义时被展开：
 \begin{verbatim}
 \edef\a{\noexpand\b}
 \end{verbatim}
-替换文本 \verb>\noexpand\b> 会在宏定义时被展开。
-\cs{noexpand} 的展开结果是其后的那个记号临时改变成 \cs{relax} 的含义。
-因此，在展开处理器处理下个记号 \cs{b} 时，就将它视为不可展开的，
-而直接将它扔到在建的记号列表中，从而 \cs{b} 就是这个宏的替换文本。
+\cs{noexpand} 展开后，其后的记号暂时会被当做是 \cs{relax} 的意思。
+于是，当展开处理器处理下一个记号 \cs{b} 时，认为它是不可展开的，并将其
+直接加入正在构建的记号列表中。因此 \cs{b} 就是这个宏的替换文本。
 
 %Another exception is that the tokens
 %resulting from \cs{the}\gr{token variable}
 %are not expanded further if this statement occurs
 %inside an \cs{edef} macro definition.
-还有一种特例：在 \cs{edef} 语句里，
-\cs{the}\gr{token variable} 的展开结果是不会被进一步展开的。
+\cs{the} 也是一个特例。在 \cs{edef} 宏定义中，
+\cs{the}\gr{token variable} 的展开结果不会被继续展开。
 
 %\subsection{Braces in the expansion processor}
 \subsection{展开处理器中的花括号}
@@ -371,14 +376,14 @@
 %\TeX\ will expand until the brace is encountered:
 %if \cs{count2} has the value of zero, the result will be
 %the roman numeral representation of~\n{103}.
-上一节提到，花括号会被展开处理器作为不可展开的字符记号忽略。
-通常而言这个说法是正确的。例如下面这个 \cs{romannumeral} 控制序列：
+之前提到，展开处理器将花括号视为不可展开的字符记号。
+通常而言，这没错。例如说 \TeX 在展开下列 \cs{romannumeral} 控制序列时，
+会一直展开，直到遇见花括号：
 \begin{verbatim}
 \romannumeral1\number\count2 3{4 ...
 \end{verbatim}
-它会被 \TeX\ 展开至花括号处停止：如果 \cs{count2} 的值是 0，
+因此，如果 \cs{count2} 的值是 0，
 那么这个控制序列的展开结果是~\n{103}~的罗马数字表示。
-
 %As another example, \begin{verbatim}
 %\iftrue {\else }\fi
 %\end{verbatim}
@@ -386,13 +391,13 @@
 %completely analogous to
 %\begin{disp}\cs{iftrue} {\italic a}\cs{else} {\italic b}\cs{fi}\end{disp}
 %The result is a character token, independent of its category.
-另外一个例子，对于
+又例如说，展开处理器对待
 \begin{verbatim}
 \iftrue {\else }\fi
 \end{verbatim}
-展开处理器将使用与
+的方式与对待
 \begin{disp}\cs{iftrue} {\italic a}\cs{else} {\italic b}\cs{fi}\end{disp}
-完全类似的方式进行处理，结果是 \verb|{| 字符记号，与它的类别码无关。
+的方式完全一致；即：此时 \verb|{| 只是一个字符记号，与它的分类码无关。
 
 %However, in the context of macro expansion
 %the expansion  processor will
@@ -410,17 +415,17 @@
 %\begin{verbatim}
 %\macro {abc} \macro {d{ef}g}
 %\end{verbatim}
-但是在宏展开的环境中，展开处理器需要识别和处理花括号。
-首先，配对的花括号可以标定一组记号用于形成一个参量，
-例如下面这个带有 1 个参数的宏：
+不过，在宏展开的上下文中，展开处理器会识别和处理花括号。
+首先，配对的花括号内可用于将其内的一组记号标记为宏的参数。
+例如，下面定义的单参数宏：
 \begin{verbatim}
 \def\macro#1{ ... }
 \end{verbatim}
-你可以使用单个记号作为参量调用这个宏，如下：
+你可以单传一个参数来调用它：
 \begin{verbatim}
 \macro 1 \macro \$
 \end{verbatim}
-也可以使用配对花括号包围的一组记号作为这个宏的参量，如下：
+也可以使用配对的花括号包裹一组记号作为其参数：
 \begin{verbatim}
 \macro {abc} \macro {d{ef}g}
 \end{verbatim}
@@ -503,7 +508,7 @@
 %switch to horizontal mode.
 有些记号可以用于任何模式，例如盒子既可以出现在水平模式、竖直模式，
 也可以出现在数学模式中，但是这些对象的作用与效果需要依赖于具体的模式。
-其他记号是模式专用的，例如字符记号（确切的说是类别码为 11 和 12 的字符记号）%
+其他记号是模式专用的，例如字符记号（确切的说是分类码为 11 和 12 的字符记号）%
 只能用于水平模式，这意味着：当执行处理器在竖直模式中遇到字符记号时，
 便会转入水平模式中工作。
 
