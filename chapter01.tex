@@ -508,11 +508,11 @@
 %if the execution processor
 %is in vertical mode when it encounters a character, it will
 %switch to horizontal mode.
-有些记号可以用于任何模式，例如盒子既可以出现在水平模式、竖直模式，
-也可以出现在数学模式中，但是这些对象的作用与效果需要依赖于具体的模式。
-其他记号是模式专用的，例如字符记号（确切的说是分类码为 11 和 12 的字符记号）%
-只能用于水平模式，这意味着：当执行处理器在竖直模式中遇到字符记号时，
-便会转入水平模式中工作。
+有些记号在所有模式下都可用；比如盒子可用于水平、竖直、数学三种模式。
+当然，这些记号的作用与效果，根据所处的模式不同而不同。
+也有记号只在特定模式下可用。
+例如说，字符记号（确切说是分类码为 11 和 12 的字符记号）则与水平模式密切相关：
+当执行处理器在竖直模式中遇到字符记号时，会切换到水平模式继续工作。
 
 %Not all character tokens signal characters to be typeset:
 %the execution processor can also encounter math shift
@@ -521,11 +521,11 @@
 %Math shift characters let \TeX\ enter or exit
 %math mode, and braces let it enter or exit a~new level of
 %grouping.
-并非所有的字符记号都是可排印的，例如在 \TeX\ 的默认状态中，
-执行处理器会将 \n{\char`\$} 作为数学模式的切换符，
-并将\n{\char`\{} 和\n{\char`\}} 作为编组的起止符。
-数学模式切换符用于告知执行处理器进入和退出数学模式，
-而花括号让执行处理器进入和退出一个编组。
+并非所有字符记号都是可排版的。
+执行处理器可能遇到数学模式切换标志（默认是 \n{\char`\$}）、
+分组起止符（默认是 \n{\char`\{} 和 \n{\char`\}}）。
+当执行处理器遇到数学模式切换标志时，它会进入或退出数学模式；
+而分组起止符则让执行处理器进入或退出新的一层分组。
 
 %One control sequence handled by the execution processor
 %deserves special mention: \cs{relax}.
@@ -547,24 +547,21 @@
 %process that is forming the number stops at \cs{relax} and
 %the number {\tt 1} is assigned; in the second case
 %\cs{empty} expands to nothing, so {\tt 12} is assigned.
-控制序列 \cs{relax} 需要在此关注一下，
-它是横跨展开处理器与执行处理器两界的特殊公民，
-在展开处理器中它是不可展开的，在执行处理器中它什么也不执行，
-但是它并非一无是处，可以比较下面的两个示例的效果，
-从中发现 \cs{relax} 的用途。\par 示例 1：
+控制序列 \cs{relax} 有些特别：
+该控制序列是不可展开的，同时执行时啥也不做。
+为说明 \cs{relax} 的作用，可与 \cs{empty} 进行比较。
+\cs{empty} 的定义如下：
+\begin{verbatim}
+\def\empty{}
+\end{verbatim}
+使用 \cs{relax} 时，因其不可展开，故而下例中计数寄存器被赋值为 \texttt{1}：
 \begin{verbatim}
 \count0=1\relax 2
 \end{verbatim}
-\par 示例 2：
+使用 \cs{empty} 时，因 \cs{empty} 的展开结果为空，故而下例中计数寄存器被赋值为 \texttt{12}：
 \begin{verbatim}
-\def\empty{}
 \count0=1\empty 2
 \end{verbatim}
-这两个示例都是在为计数寄存器赋值，但是示例 1 赋的值为 {\tt 1}，
-而示例 2 赋的值为 {\tt 12}。这是因为在示例 1 中，\cs{relax}
-在执行处理器获得数值 {\tt 1} 的时候阻断了它进一步获取数值 {\tt 2}，
-而在示例 2 中 \cs{empty} 的展开结果为空，执行处理器轻而易举地继 {\tt 1}
-之后就拿到了{\tt 2}，所以形成{\tt 12}。
 
 %\section{The visual processor}
 \section{可视化处理器}
