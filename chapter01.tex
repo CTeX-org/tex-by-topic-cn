@@ -571,9 +571,9 @@
 %alignment, page breaking, math typesetting, and \n{dvi} file
 %generation. Various parameters control the operation
 %of these parts of \TeX.
-\TeX\ 的可视化处理器包含了用户不可直接控制的一些算法，
-用于处理断行、阵列、分页、数学排版以及 \n{dvi} 文件生成等。
-用户可以通过一些参数间接控制 \TeX\ 的这部分操作。
+\TeX 的可视化处理器使用了若干用户不可直接控制的算法：
+断行、切齐、分页、数学排版以及 \n{dvi} 文件生成算法。
+尽管用户不可直接控制这些算法，但可通过一些参数，间接控制它们。
 
 %Some of these algorithms return their results in a form that
 %can be handled by the execution processor. For instance,
@@ -584,11 +584,14 @@
 %routines can dissect it. On the other hand, a math formula
 %can not be broken into pieces, and, naturally,
 %shipping a box to the \n{dvi} file is irreversible.
-可视化处理器中有一部分算法返回的是可被执行处理器处理的结果。
-例如，已完成断行的段落是一组带有行间粘连和惩罚的水平盒子，
-并被添加到主竖直列中。再者，分页算法会将其处理结果存储在
-\cs{box255} 中，以使输出例程能够产生页面。另一方面，
-数学公式不可以被分解，而输送至 \n{dvi} 文件的盒子也是不可逆的。
+这些算法当中，部分算法的输出结果可被执行处理器继续处理。
+例如说，分段成行得到一系列行组成的列表；
+这些行会被加入主竖直列表当中；
+而每一行又是由若干水平盒子及其中的行间粘连和惩罚组成的。
+又例如说，分页算法将其结果保存在 \cs{box255} 当中；
+而后交由输出例程继续处理\liamfnote{最简单的是 \cs{output}\marg{\cs{shipout}\cs{box255}}。}。
+其余算法的输出结果则不然，例如数学公式不可以分解，
+又例如输出至 \n{dvi} 文件的盒子也是不可逆的。
 
 %\section{Examples}
 \section{示例}

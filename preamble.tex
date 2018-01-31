@@ -101,6 +101,8 @@
 \let\csc\cs
 \def\lb{{\tt\char`\{}}\def\rb{{\tt\char`\}}}
 \def\gr#1{\texorpdfstring{$\langle$#1$\rangle$}{<#1>}} %\def\gr#1{$\langle$#1$\rangle$}
+\def\marg#1{{\tt \{}#1{\tt \}}}
+\def\oarg#1{{\tt [}#1{\tt }}
 \def\key#1{{\tt#1}}
 \def\alt{}\def\altt{}%this way in manstijl
 \def\ldash{\unskip\ ——\nobreak\ \ignorespaces}
@@ -201,3 +203,5 @@
 
 %\input figs
 \def\endofchapter{\vfill\noindent}
+
+\newcommand{\liamfnote}[1]{\footnote{译注（Liam0205）：#1}}
