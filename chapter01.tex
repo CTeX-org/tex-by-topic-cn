@@ -425,7 +425,7 @@
 \begin{verbatim}
 \macro 1 \macro \$
 \end{verbatim}
-也可以使用配对的花括号包裹一组记号作为其参数：
+也可以使用配对的花括号包裹一组记号作为宏的参数：
 \begin{verbatim}
 \macro {abc} \macro {d{ef}g}
 \end{verbatim}
@@ -445,16 +445,17 @@
 %the argument of~\cs{a} is \verb>bc{d\stop}e>.
 %Only balanced expressions
 %are accepted here.
-其次，对于带参数的宏，未配对花括号内的表达式不能形成宏参量。例如：
+其次，对于带参数的宏，其参数中不得包含未配对的花括号。
+例如，如下定义的 \cs{a} 带有一个参数：
+包含从 \cs{a} 之后开始，直到遇见第一个花括号外的 \cs{stop} 位置的全部记号。
 \begin{verbatim}
 \def\a#1\stop{ ... }
 \end{verbatim}
-它的参量由第一次出现并且不在配对花括号内的 \cs{stop} 之前的记号组成：
-对于
+对于以下用法，\cs{a} 的参数应当是 \verb>bc{d\stop}e>；
+因为宏的参数中花括号必须是配对的。
 \begin{verbatim}
 \a bc{d\stop}e\stop
 \end{verbatim}
-其中 \cs{a} 的参量是 \verb>bc{d\stop}e>。这里只接受平衡表达式作为参量。
 
 %\section{The execution processor}
 \section{执行处理器}
