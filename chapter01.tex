@@ -467,10 +467,10 @@
 %In addition to building lists, this part of the \TeX\ processor
 %also performs mode-independent processing, such as
 %assignments.
-执行处理器用于构建水平、竖直和数学列表。
-与这些列表相应，执行处理器在水平、竖直和数学模式中运行。
-这三种模式每种都有`内部的'和`外部的'两个类型。
-执行处理器在构建列表的过程中，还需要进行一些与模式无关的操作，
+执行处理器构建水平列表、竖直列表和数学列表。
+与之相应，执行处理器有三种工作模式：水平模式、竖直模式、数学模式。
+这三种模式又分别有「内部」和「外部」两种类型。
+除了构建列表，执行处理器还需要处理一些与模式无关的操作，
 例如赋值。
 
 %Coming out of the expansion processor is a stream of
@@ -478,6 +478,8 @@
 %the execution processor.
 %\relax From the point of view of the execution processor, this
 %stream contains two types of tokens:
+执行处理器的输入是展开处理器输出的不可展开记号组成的流。
+在执行处理器看来，这条记号流中有两种类型的记号：
 %\begin{itemize}
 %\item Tokens signalling an assignment (this includes
 %      macro definitions), and
@@ -488,13 +490,12 @@
 %      characters, boxes, and glue. The way they are handled
 %      depends on the current mode.
 %\end{itemize}
-执行处理器的输入来自展开处理器的输出，是一个不可展开的记号流。
-从执行处理器的角度来看，这条记号流所包含的记号有两种类型：
 \begin{itemize}
-\item 用于赋值的记号（包括宏定义）以及像 \cs{show}、\cs{aftergroup}
-  这样执行与模式无关操作的记号。
-\item 用于构建列表的记号：字符、盒子和粘连。
-  对这些记号的处理方式依赖执行处理器当前处于的模式。
+\item 触发赋值操作（包括宏定义）的记号，
+      以及触发与模式无关的其他操作的记号（例如 \cs{show} 和 \cs{aftergroup}）。
+\item 构建列表的记号：
+      字符、盒子、粘连。
+      执行处理器对它们的处理方式根据所处模式的不同而改变。
 \end{itemize}
 
 %Some objects can be used in any mode; for instance boxes
@@ -507,11 +508,11 @@
 %if the execution processor
 %is in vertical mode when it encounters a character, it will
 %switch to horizontal mode.
-有些记号可以用于任何模式，例如盒子既可以出现在水平模式、竖直模式，
-也可以出现在数学模式中，但是这些对象的作用与效果需要依赖于具体的模式。
-其他记号是模式专用的，例如字符记号（确切的说是分类码为 11 和 12 的字符记号）%
-只能用于水平模式，这意味着：当执行处理器在竖直模式中遇到字符记号时，
-便会转入水平模式中工作。
+有些记号在所有模式下都可用；比如盒子可用于水平、竖直、数学三种模式。
+当然，这些记号的作用与效果，根据所处的模式不同而不同。
+也有记号只在特定模式下可用。
+例如说，字符记号（确切说是分类码为 11 和 12 的字符记号）则与水平模式密切相关：
+当执行处理器在竖直模式中遇到字符记号时，会切换到水平模式继续工作。
 
 %Not all character tokens signal characters to be typeset:
 %the execution processor can also encounter math shift
@@ -520,11 +521,11 @@
 %Math shift characters let \TeX\ enter or exit
 %math mode, and braces let it enter or exit a~new level of
 %grouping.
-并非所有的字符记号都是可排印的，例如在 \TeX\ 的默认状态中，
-执行处理器会将 \n{\char`\$} 作为数学模式的切换符，
-并将\n{\char`\{} 和\n{\char`\}} 作为编组的起止符。
-数学模式切换符用于告知执行处理器进入和退出数学模式，
-而花括号让执行处理器进入和退出一个编组。
+并非所有字符记号都是可排版的。
+执行处理器可能遇到数学模式切换标志（默认是 \n{\char`\$}）、
+分组起止符（默认是 \n{\char`\{} 和 \n{\char`\}}）。
+当执行处理器遇到数学模式切换标志时，它会进入或退出数学模式；
+而分组起止符则让执行处理器进入或退出新的一层分组。
 
 %One control sequence handled by the execution processor
 %deserves special mention: \cs{relax}.
@@ -546,24 +547,21 @@
 %process that is forming the number stops at \cs{relax} and
 %the number {\tt 1} is assigned; in the second case
 %\cs{empty} expands to nothing, so {\tt 12} is assigned.
-控制序列 \cs{relax} 需要在此关注一下，
-它是横跨展开处理器与执行处理器两界的特殊公民，
-在展开处理器中它是不可展开的，在执行处理器中它什么也不执行，
-但是它并非一无是处，可以比较下面的两个示例的效果，
-从中发现 \cs{relax} 的用途。\par 示例 1：
+控制序列 \cs{relax} 有些特别：
+该控制序列是不可展开的，同时执行时啥也不做。
+为说明 \cs{relax} 的作用，可与 \cs{empty} 进行比较。
+\cs{empty} 的定义如下：
+\begin{verbatim}
+\def\empty{}
+\end{verbatim}
+使用 \cs{relax} 时，因其不可展开，故而下例中计数寄存器被赋值为 \texttt{1}：
 \begin{verbatim}
 \count0=1\relax 2
 \end{verbatim}
-\par 示例 2：
+使用 \cs{empty} 时，因 \cs{empty} 的展开结果为空，故而下例中计数寄存器被赋值为 \texttt{12}：
 \begin{verbatim}
-\def\empty{}
 \count0=1\empty 2
 \end{verbatim}
-这两个示例都是在为计数寄存器赋值，但是示例 1 赋的值为 {\tt 1}，
-而示例 2 赋的值为 {\tt 12}。这是因为在示例 1 中，\cs{relax}
-在执行处理器获得数值 {\tt 1} 的时候阻断了它进一步获取数值 {\tt 2}，
-而在示例 2 中 \cs{empty} 的展开结果为空，执行处理器轻而易举地继 {\tt 1}
-之后就拿到了{\tt 2}，所以形成{\tt 12}。
 
 %\section{The visual processor}
 \section{可视化处理器}
@@ -573,9 +571,9 @@
 %alignment, page breaking, math typesetting, and \n{dvi} file
 %generation. Various parameters control the operation
 %of these parts of \TeX.
-\TeX\ 的可视化处理器包含了用户不可直接控制的一些算法，
-用于处理断行、阵列、分页、数学排版以及 \n{dvi} 文件生成等。
-用户可以通过一些参数间接控制 \TeX\ 的这部分操作。
+\TeX 的可视化处理器使用了若干用户不可直接控制的算法：
+断行、切齐、分页、数学排版以及 \n{dvi} 文件生成算法。
+尽管用户不可直接控制这些算法，但可通过一些参数，间接控制它们。
 
 %Some of these algorithms return their results in a form that
 %can be handled by the execution processor. For instance,
@@ -586,11 +584,14 @@
 %routines can dissect it. On the other hand, a math formula
 %can not be broken into pieces, and, naturally,
 %shipping a box to the \n{dvi} file is irreversible.
-可视化处理器中有一部分算法返回的是可被执行处理器处理的结果。
-例如，已完成断行的段落是一组带有行间粘连和惩罚的水平盒子，
-并被添加到主竖直列中。再者，分页算法会将其处理结果存储在
-\cs{box255} 中，以使输出例程能够产生页面。另一方面，
-数学公式不可以被分解，而输送至 \n{dvi} 文件的盒子也是不可逆的。
+这些算法当中，部分算法的输出结果可被执行处理器继续处理。
+例如说，分段成行得到一系列行组成的列表；
+这些行会被加入主竖直列表当中；
+而每一行又是由若干水平盒子及其中的行间粘连和惩罚组成的。
+又例如说，分页算法将其结果保存在 \cs{box255} 当中；
+而后交由输出例程继续处理\liamfnote{最简单的是 \cs{output}\marg{\cs{shipout}\cs{box255}}。}。
+其余算法的输出结果则不然，例如数学公式不可以分解，
+又例如输出至 \n{dvi} 文件的盒子也是不可逆的。
 
 %\section{Examples}
 \section{示例}
@@ -624,7 +625,7 @@
 \def\a{\penalty200}
 \a 0
 \end{verbatim}
-展开的结果{\italic 并非}是（这将放置值为 \n{200} 的惩罚项，并排印数字 \n0）
+展开的结果\emph{不是}（设置惩罚项为 \n{200}，并排版数字 \n0）
 \begin{verbatim}
 \penalty200 0
 \end{verbatim}
@@ -632,7 +633,7 @@
 \begin{verbatim}
 \penalty2000
 \end{verbatim}
-这是由于 \cs{a} 后的空格会被输入处理器忽略，从而展开处理器所得到的控制序列是
+这是由于输入处理器会忽略 \cs{a} 后的空格，因此展开处理器的输入流中的内容是：
 \begin{verbatim}
 \a0
 \end{verbatim}
@@ -645,8 +646,9 @@
 %quantities have an external representation,
 %which is a string of characters, such as
 %\n{4711} or~\n{91.44cm}.
-\TeX\ 拥有多种内部量值，诸如整数和尺寸。这些内部量值的外部表示方法只有一种，
-那就是字符串表示，例如 \n{4711} 或者 \n{91.44cm}。
+\TeX 使用了多重内部量，比如说整数和尺寸。
+这些内部量的外部表示是同一的：字符组成的字符串。
+例如 \n{4711} 和 \n{91.44cm}。
 
 %Conversions between the internal value and the external
 %representation take place on two different levels,
@@ -662,16 +664,12 @@
 %\end{verbatim}
 %and all of these statements are handled by the execution
 %processor.
-内部量值与外部表示之间的转换分别发生在两个不同的层面，具体依赖于转换的方向。
-对于字符串转换为内部量值，例如：
+内部量与外部表示之间的转换发生在执行处理器或展开处理器中。
+具体来说，外部表示向内部量的转换发生在执行处理器中：
 \begin{verbatim}
 \pageno=12 \baselineskip=13pt
-\end{verbatim}
-或者
-\begin{verbatim}
 \vskip 5.71pt
 \end{verbatim}
-像这样的语句会在执行处理器中被处理。
 
 %On the other hand, the conversion of the internal
 %values into a representation as a string of
@@ -681,12 +679,11 @@
 %\the\baselineskip
 %\end{verbatim}
 %are all processed by expansion.
-另一方面，内部量值到外部表示的转换是由展开处理器完成的。例如：
+内部量向外部表示的转换发生在展开处理器中：
 \begin{verbatim}
 \number\pageno \romannumeral\year
 \the\baselineskip
 \end{verbatim}
-这些语句会被展开处理器处理为内部量值的字符串记号。
 
 %As a final example, suppose \verb>\count2=45>, and
 %consider the statement
@@ -704,18 +701,18 @@
 %\count0=1453
 %\end{verbatim}
 %and execute this.
-最后一个例子，假设 \verb>\count2=45>，看下面的语句：
+最后再举一例。
+假设 \verb|\count2=45|，
+则下列代码
 \begin{verbatim}
 \count0=1\number\count2 3
 \end{verbatim}
-展开处理器可将 \verb>\number\count2> 展开为字符串 \n{45}，
-而 \n2 之后的空格并不会结束正在赋予的数值：
-它只用于定界 \cs{count} 寄存器的数字。
-从而下一层级的执行处理器看到的是：
+首先将 \verb>\number\count2>\textvisiblespace 被展开为字符串 \n{45}，
+注意 \verb|\count2| 后的空格被用于界定计数器编号而已被展开。
+因此，下一级处理时，执行处理器看到并执行的是：
 \begin{verbatim}
 \count0=1453
 \end{verbatim}
-于是它便奉命行事。
 
 %%\endinput
 %\endinput
