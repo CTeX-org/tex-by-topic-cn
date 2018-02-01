@@ -207,113 +207,106 @@
 %  the start of a control sequence. \IniTeX\ makes the backslash
 %  \verb-\- (code~92) an escape character.
 \item\label{ini:esc}\index{category!0}
-        转义字符；用于标记控制序列的开始。\IniTeX 默认使用 \ascii 码为 92 的反斜线 \verb-\- 作为转义字符。
+        转义字符；用于标记控制序列的开始。\IniTeX 默认使用反斜线 \verb-\- 作为转义字符（\ascii 码为 92）。
 %\item\index{category!1} Beginning of group; such a character causes
 %  \TeX\ to enter a new level of grouping. The plain format makes the
 %  open brace \verb-{- \mdqon a beginning"-of-group character.  \mdqoff
-\item\index{category!1}组开始符：
-此类字符可让 \TeX\ 进入新一层的编组。在 Plain \TeX\ 中，组开始符默认是 \verb-{-。
+\item\index{category!1}分组开始符；
+        \TeX 遇到此类字符时，会进入新的一层分组。
+        在 Plain \TeX 中，默认的分组开始符是左花括号 \verb-{-。
 %\item\index{category!2} End of group; \TeX\ closes the current level
 %  of grouping.  Plain \TeX\ has the closing brace \verb-}- as
 %  end-of-group character.
+\item\index{category!2}分组结束符；
+        \TeX 遇到此类字符时，会关闭并从当前分组中退出。
+        在 Plain \TeX 中，默认的分组开始符是左花括号 \verb-}-。
 %\item\index{category!3} Math shift; this is the opening and closing
 %  delimiter for math formulas. Plain \TeX\ uses the dollar
 %  sign~\verb-$- for this.
+\item\index{category!3}数学切换符；
+        此类字符是数学公式的左右定界符。
+        在 Plain \TeX 中，默认的数学切换符是美元符号 \verb-$-。
 %\item\index{category!4} Alignment tab; the column (row) separator in
 %  tables made with \cs{halign} (\cs{valign}). In plain \TeX\ this is
 %  the ampersand~\verb-&-.
+\item\index{category!4}制表符；
+        在 \cs{halign}（\cs{valign}）制作的表格中，作为列（行）间分隔符。
+        在 Plain \TeX 中，默认的制表符是与符号 \verb-&-。
 %\item\index{category!5}\label{ini:eol} End of line; a character that
 %  \TeX\ considers to signal the end of an input line.
 %  \IniTeX\ assigns this code to the \gram{return}, that is, code~13.
 %  Not coincidentally, 13~is also the value that \IniTeX\ assigns to
 %  the \cs{endlinechar} parameter; see above.
+\item\index{category!5}\label{ini:eol}行结束符；
+        \TeX 用来表达输入行结束的字符。
+        \IniTeX 将回车符 \gram{return}（\ascii 编码为 13）作为默认的行结束符。
+        这就是为什么 \IniTeX 中，参量 \cs{endlinechar} 的值是 13（详见前文）。
 %\item\index{category!6} Parameter character; this indicates parameters
 %  for macros.  In plain \TeX\ this is the hash sign~\verb-#-.
+\item\index{category!6}参数符；
+        用于表示宏的参数。
+        在 Plain \TeX 中，默认的参数符是井号 \verb-#-。
 %\item\index{category!7} Superscript; this precedes superscript
 %  expressions in math mode. It is also used to denote character codes
 %  that cannot be entered in an input file; see below.  In plain
 %  \TeX\ this is the circumflex~\verb-^-.
+\item\index{category!7}上标符；
+        在数学模式中表示上标；也可用于在输入文件中表示无法直接输入的字符（详见后文）。
+        在 Plain \TeX 中，默认的上标符即是 \verb_^_。
 %\item\index{category!8} Subscript; this precedes subscript expressions
 %  in math mode.  In plain \TeX\ the underscore~\verb-_- is used for
 %  this.
+\item\index{category!8}下标符；
+        在数学模式中表示下标。
+        在 Plain \TeX 中，默认的下标符是下划线 \verb-_-。
 %\item\index{category!9} Ignored; characters of this category are
 %  removed from the input, and have therefore no influence on further
 %  \TeX\ processing. In plain \TeX\ this is the \gr{null} character,
 %  that is, code~0.
+\item\index{category!9}被忽略字符；
+        此类字符将被 \TeX 自输入流中清除，因此不会影响后续处理。
+        在 Plain \TeX 中，默认将空字符 \gr{null}（\ascii 编码为 0）设置为被忽略字符。
 %\item\index{category!10}\label{ini:sp} Space; space characters receive
 %  special treatment.  \IniTeX\ assigns this category to the \ascii{}
 %  \gr{space} character, code~32.
+\item\index{category!10}\label{ini:sp}空格符；
+        \TeX 对待空格符的方式较为特殊。
+        \IniTeX\ 将空格 \gr{space}（\ascii 编码为 32）作为默认的空格符。
 %\item\index{category!11}\label{ini:let} Letter; in \IniTeX\ only the
 %  characters \n{a..z}, \n{A..Z} are in this category. Often, macro
 %  packages make some `secret' character (for instance~\n@) into a
 %  letter.
+\item\index{category!11}\label{ini:let}字母；
+        \IniTeX 默认只将 \n{a ... z} 和 \n{A ... Z} 分为此类。
+        在宏包中，某些特殊字符（例如 \n{@}）会被暂时分为此类%
+        \liamfnote{此类字符在普通用户文档中的分类码不同，在宏包中暂时分为此类，以起到「提示当前控制序列是内部的」这样的作用。}。
 %\item\index{category!12}\label{ini:other} Other; \IniTeX\ puts
 %  everything that is not in the other categories into this
 %  category. Thus it includes, for instance, digits and punctuation.
+\item\index{category!12}\label{ini:other}其他字符；
+        \IniTeX 将所有未归于其他类的字符归于此类。
+        因此，数字和标点都属于此类。
 %\item\index{category!13} Active; active characters function as a
 %  \TeX\ command, without being preceded by an escape character.  In
 %  plain \TeX\ this is only the tie character~\verb-~-, which is
 %  defined to produce an unbreakable space; see page~\pageref{tie}.
+\item\index{category!13}活动字符；
+        活动字符相当于一个无需转义字符前导的 \TeX 控制序列。
+        在 Plain \TeX 中，只有带子 \verb_~_ 是活动字符，表示不可断行的空格（参见第~\pageref{tie}~页）。
 %\item\index{category!14}\label{ini:comm} Comment character; from a
 %  comment character onwards, \TeX\ considers the rest of an input line
 %  to be comment and ignores it. In \IniTeX\ the per cent sign \verb-%-
 %  is made a comment character.
+\item\index{category!14}\label{ini:comm}注释符；
+        \TeX 遇见注释符后，会将从注释符开始到输入行尾的所有内容视作注释而忽略。
+        在 \IniTeX 中，默认的注释符是百分号 \verb-%-。
 %\item\index{category!15}\label{ini:invalid} Invalid character; this
 %  category is for characters that should not appear in the
 %  input. \IniTeX\ assigns the \ascii\ \gr{delete} character, code~127,
 %  to this category.
-
-\item\index{category!2}组结束符：
-此类字符可让 \TeX\ 结束当前层的编组。在 Plain \TeX\ 中，组结束符默认是 \verb-}-。
-
-\item\index{category!3}数学切换符：
-置于数学公式两侧，向 \TeX\ 表示这是数学公式。在 Plain \TeX\ 中，
-数学切换符默认为 \verb-$-。
-
-\item\index{category!4}制表符：
-在 \cs{halign}（\cs{valign}）制作的表格中作为列（行）的分割符。
-在 Plain \TeX\ 中，制表符默认为 \verb-&-。
-
-\item\index{category!5}\label{ini:eol}行结束符：
-用于表示此处为输入行的结束之处。
-\IniTeX\ 默认将 \gram{return} 字符（ASCII 码为~13）视为行结束符，
-所以 \IniTeX\ 将 13 作为 \cs{endlinechar} 的值并非巧合；见下面所述。
-
-\item\index{category!6}参数符：
-用于表示宏的参数。Plain \TeX\ 默认使用~\verb-#-~作为参数符。
-
-\item\index{category!7}上标符：
-在数学模式中用于表示上标，也可用于表示那些无法直接在文本中输入的字符；
-见下面所述。Plain \TeX\ 默认使用 \verb-^- 作为上标符。
-
-\item\index{category!8}下标符：
-在数学模式中用于表示下标。Plain \TeX\ 使用下划线 \verb-_- 作为下标符。
-
-\item\index{category!9}可忽略符：
-\TeX\ 将会从输入中去掉此类字符，因此它不会影响 \TeX\ 的后续处理。
-Plain \TeX\ 使用 \gr{null} 字符（ASCII 码为0）作为可忽略符。
-
-\item\index{category!10}\label{ini:sp}空格符：
-这个符号会受到 \TeX\ 的特殊礼遇，它默认被 \IniTeX\ 赋予 \gr{space} 字符（ASCII 码为 32）。
-
-\item\index{category!11}\label{ini:let}字母符：
-对于该类字符，\IniTeX\ 只定义了 \n{a..z} 和 \n{A..Z} 这些。通常在写宏包的时候，
-为了避免宏名冲突，宏包作者通常会将某些非字母符（例如~\n@）打扮为字母符而使用。
-
-\item\index{category!12}\label{ini:other}其他字符：
-\IniTeX\ 将不属于其他 15 类的字符归到该类，最常见的是数字、标点符号等。
-
-\item\index{category!13}活动符：
-活动符在功能上相当于 \TeX\ 控制序列，但是它不需要转义符作为前缀。
-在 Plain \TeX\ 中只有~\verb-~-~是活动符，用于产生不可断行的空格；
-见第~\pageref{tie}~页。
-
-\item\index{category!14}\label{ini:comm}注释符：
-\TeX\ 将忽略从注释符开始的该行所有字符。\IniTeX\ 使用分号~\verb-%-~作为注释符。
-
-\item\index{category!15}\label{ini:invalid}无效符：
-这个字符类是为那些不应该在 \TeX\ 输入中出现的字符而设置的。
-\IniTeX\ 将 \gr{delete} 字符（ASCII 码为~127）归入此类。
+\item\index{category!15}\label{ini:invalid}无效字符；
+        该分类包含了不应在 \TeX 中出现的字符。
+        \IniTeX 将退格字符（\ascii 编码为 127）\gr{delete} 归于此类。
 \end{enumerate}
 
 %The user can change the mapping
