@@ -396,12 +396,16 @@ Plain \TeX 格式使用 \cs{chardef} 命令%
 %of \TeX\ scans input lines from a file or from the
 %user terminal, and converts the characters in the input
 %to tokens. There are three types of tokens.
-%\begin{itemize}\item Character tokens: any character that is
-%	passed on its own to \TeX's
+\TeX 的输入处理器自文件或用户终端扫描输入行，而后将输入的字符转换为记号。
+记号分为以下三类：
+\begin{itemize}
+%\item Character tokens: any character that is
+%   passed on its own to \TeX's
 %further levels of processing with an appropriate
 %category code attached.
+\item 字符记号：字符记号会被打上相应的分类码，而后直接传给 \TeX 的后续处理器。
 %\item Control sequence tokens, of which there are two kinds:
-%	an escape character
+%   an escape character
 %\ldash that is,\message{ldash nobreak?}
 %a character of category~0\index{category!0} \rdash  followed
 %by a string of `letters' is
@@ -412,31 +416,23 @@ Plain \TeX 格式使用 \cs{chardef} 命令%
 %If the distinction between control word and control symbol is
 %irrelevant, both are called
 %\indextermsub{control}{sequence}.
-\TeX\ 的输入处理器对来自文件或用户终端的输入行进行扫描，
-将其中的字符转化为记号。记号的类型分为以下三种：
-\begin{itemize}
-\item 字符记号：任何本身会被传递到 \TeX\ 后续处理器并具有相应的分类码的字符。
-\item 控制序列记号：这种记号分为两种类型，第一种类型是{\em 控制词}，
-由转义符\index{category!0}（即分类码为 0 的字符）后跟一串`字母'而成；
-第二种类型是{\em 控制符}，由转义符后跟任何非字母（即分类码不是 11）
-\index{category!11}的单个字符组成。在没必要区分控制词与控制符时，
-可以将它们统称为{\em 控制序列}\index{控制!控制序列}。
+\item 控制序列记号：严格来说，控制序列记号分为两种。
+其一是\emph{控制词}\ldash 分类码为 0 的字符\index{category!0}后紧跟一串字母。
+其二是\emph{控制字符}\index{控制!控制字符}\ldash 转义字符后紧跟一个分类码不是 11\index{category!11} 的单个字符。
+在无需区分控制词和控制字符的场合，他们统称为\emph{控制序列}\index{控制!控制序列}。
 
 %The control symbol that results from an escape character followed
 %\csterm \char32\par
 %by a space character is called
 %\indextermbus{control}{space}.
-由转义符与一个空格字符 \csterm\char32\par 构成的控制序列，称为{\em 控制空格}。
-\index{控制!控制空格}
+由转义符与一个空格字符 \cstoidx \char32\par\cs{}\textvisiblespace 构成的控制序列，称为\emph{控制空格}\index{控制!控制空格}。
 
 %\item Parameter tokens: a parameter character \ldash that is, a
 %  character of category~6\index{category!6}, by default~\verb=#=
 %  \rdash followed by a digit \n{1..9} is replaced by a parameter
 %  token.  Parameter tokens are allowed only in the context of macros
 %  (see Chapter~\ref{macro}).
-\item 参数记号：由参数字符（分类码为 6，Plain \TeX\ 中默认为 \verb=#=）%
-尾随一位在 \n{1..9} 中的数字构成。参数记号只能在宏的环境中出现%
-（见第~\ref{macro}~章）。
+\item 参数记号：由一个参数符\ldash 分类码为 6\index{category!6}，默认为 \verb-#-\rdash 和一个紧跟着的\n{1..9} 中的数字构成。参数记号只能在宏（见第~\ref{macro}~章）的上下文中出现。
 
 %A macro parameter character followed by another macro parameter
 %character (not necessarily with the same character code)
@@ -446,12 +442,10 @@ Plain \TeX 格式使用 \cs{chardef} 命令%
 %The most common instance is of this is
 %replacing \n{\#\#} by~\n{\#$_6$}, where the subscript
 %denotes the category code.
-在宏的替换文本中，如果一个宏参数字符之后又跟随了一个宏参数字符%
-（字符编码可以不相同），那么它们会被替换为单个字符记号，
-其分类码为 6（宏参数），字符编码等于第 2 个参数字符的编码。
-常见情形是输入行内的 \n{\#\#} 会被替换为 \n{\#$_6$}，这里的下标表示分类码。
-
-%\end{itemize}
+连续两个参数符（字符编码不一定相同）会被替换为单个字符记号。
+该字符记号的分类码是 6（参数符），字符编码则是上述连续两个参数符中后者的字符编码。
+最常见的情形是 \n{\#\#} 会被替换为 \n{$\text{\#}_6$}。
+此处下标表示分类码。
 \end{itemize}
 
 %\section{The input processor as a finite state automaton}
