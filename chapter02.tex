@@ -449,8 +449,7 @@ Plain \TeX 格式使用 \cs{chardef} 命令%
 \end{itemize}
 
 %\section{The input processor as a finite state automaton}
-%\label{input:states}
-\section{输入处理器视为有限状态自动机}
+\section{输入处理器是个有限状态自动机}
 \label{input:states}
 
 %\TeX's input processor can be considered to be a finite state
@@ -458,9 +457,9 @@ Plain \TeX 格式使用 \cs{chardef} 命令%
 %that is, at any moment in time it is in one of three states,
 %and after transition to another state there is no memory of the
 %previous states.
-\TeX\ 的输入处理器可视为三态的有限状态自动机，也就是说在任意的瞬间，
-它都处于这三种\indextermbus{内部}{状态}的某一种状态之中，
-并且在转移到另一种状态之后，对于前一状态没有任何记忆。
+\TeX 的输入处理器有三种\indextermbus{内部}{状态}，可看做是一个有限状态自动机。
+这也就是说，在任意瞬间，\TeX 的输入处理器都处于并且只能处于三种状态的一种；
+并且在状态切换完成后，\TeX 的输入处理器对先前的状态没有任何记忆。
 
 %\subsection{State {\italic N}: new line}
 \subsection{状态 {\italic N}：新行}
