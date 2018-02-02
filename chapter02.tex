@@ -278,7 +278,7 @@
 %  letter.
 \item\index{category!11}\label{ini:let}字母；
         \IniTeX 默认只将 \n{a ... z} 和 \n{A ... Z} 分为此类。
-        在宏包中，某些特殊字符（例如 \n{@}）会被暂时分为此类%
+        在宏包中，某些「隐秘」字符（例如 \n{@}）会被暂时分为此类%
         \liamfnote{此类字符在普通用户文档中的分类码不同，在宏包中暂时分为此类，以起到「提示当前控制序列是内部的」这样的作用。}。
 %\item\index{category!12}\label{ini:other} Other; \IniTeX\ puts
 %  everything that is not in the other categories into this
@@ -318,12 +318,12 @@
 %\begin{disp}\verb>`>\gr{character}\quad or\quad \verb>`\>\gr{character}\end{disp}
 %both of which denote the character code of the character
 %(see pages \pageref{char:code} and~\pageref{int:denotation}).
-用户可以修改任意字符的分类码，途径是使用 \csterm catcode\par\ 命令%
-（见第~\ref{gramm}~章对诸如 \gr{equals} 的概念的解释）：
+用户可使用 \csterm catcode\par 命令修改字符编码到分类码的映射%
+（见第~\ref{gramm}~章对诸如 \gr{equals} 等概念的解释）：
 \begin{disp}\cs{catcode}\gram{number}\gr{equals}\gram{number}.\end{disp}
-此语句的第一个参数是需要修改分类码的字符的编码，它通常可用下面形式给出：
+该语句中，第一个参数可用如下方式给出：
 \begin{disp}\verb>`>\gr{character}\quad 或\quad \verb>`\>\gr{character}\end{disp}
-这两种写法都表示该字符的字符编码（见第~\pageref{char:code}~和~\pageref{int:denotation}~页）。
+两种写法都表示该字符的字符编码（见第~\pageref{char:code}~页和~\pageref{int:denotation}~页）。
 
 %The plain format defines
 %\csterm active\par
@@ -336,15 +336,16 @@
 %\end{verbatim}
 %The \cs{chardef} command is  treated
 %on pages \pageref{chardef} and~\pageref{num:chardef}.
-Plain \TeX\ 格式将 \csterm active\par 定义为：
+Plain \TeX 格式使用 \cs{chardef} 命令%
+（将在第~\pageref{chardef}~页和~\pageref{num:chardef}~页介绍）%
+将 \csterm active\par 定义为：
 \begin{verbatim}
 \chardef\active=13
 \end{verbatim}
-因此你可以像下面这样写
+因此上述语句可写成这样：
 \begin{verbatim}
 \catcode`\{=\active
 \end{verbatim}
-上面的 \cs{chardef} 命令将在第 \pageref{chardef} 和 \pageref{num:chardef} 页中介绍。
 
 %The \LaTeX\ format has the control sequences
 %\begin{verbatim}
@@ -353,12 +354,11 @@ Plain \TeX\ 格式将 \csterm active\par 定义为：
 %\end{verbatim}
 %in order to switch on and off the `secret' character~\n@
 %(see below).
-\LaTeX\ 格式有下面这样的控制序列：
+\LaTeX 格式定义了如下两个控制序列，用于开启或关闭「隐秘字符」\n{@}（详见下文）：
 \begin{verbatim}
 \def\makeatletter{\catcode`@=11 }
 \def\makeatother{\catcode`@=12 }
 \end{verbatim}
-它可用于开启或关闭“隐秘”字符 \n@（见下述）。
 
 %The \cs{catcode} command can also be used to query category
 %codes: in
@@ -366,11 +366,11 @@ Plain \TeX\ 格式将 \csterm active\par 定义为：
 %\count255=\catcode`\{
 %\end{verbatim}
 %it yields a number, which can be assigned.
-\cs{catcode} 命令也可用于查询分类码，例如：
+使用 \cs{catcode} 命令查询字符编码对应的分类码，可得到一个数字：
 \begin{verbatim}
 \count255=\catcode`\{
 \end{verbatim}
-所得分类码存储于第 255 号计数寄存器。
+在例中，\n{\{} 的分类码被保存在第 255 号 \cs{count} 寄存器中。
 
 %Category codes can be tested by
 %\begin{disp}\cs{ifcat}\gr{token$_1$}\gr{token$_2$}\end{disp}
@@ -381,13 +381,13 @@ Plain \TeX\ 格式将 \csterm active\par 定义为：
 %which makes them all equal to each other, and unequal to
 %all character tokens.
 %Conditionals are treated further in Chapter~\ref{if}.
-分类码可使用以下命令进行测试：
+下列语句可用于检测两个记号的分类码是否相等：
 \begin{disp}\cs{ifcat}\gr{token$_1$}\gr{token$_2$}\end{disp}
-无论 \cs{ifcat} 之后跟随的是一些什么东西，\TeX\ 都会将其展开，
-直至发现两个不可展开的记号为止，然后去比较这两个记号的分类码是否相等。
-控制序列的分类码被视为~16\index{category!16}，
-这样它们的分类码都是相等的，而控制序列与字符记号的分类码总不相等。
-条件语句在第~\ref{if}~章中将会仔细介绍.
+无论 \cs{ifcat} 后有什么，\TeX 都会将其展开，直至发现两个不可展开的记号；
+而后，\TeX 将比较这两个记号的分类码。
+控制序列的分类码被视为 16\index{category!16}；
+因此，所有控制序列的分类码都是相等的，而与所有字符记号的分类码都不相等。
+条件式的详细介绍见第~\ref{if}~章。
 
 %\section{From characters to tokens}
 \section{从字符到记号}
