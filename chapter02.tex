@@ -513,7 +513,7 @@ Plain \TeX 格式使用 \cs{chardef} 命令%
 %\section{Accessing the full character set}
 %\label{hathat}
 %\point[hathat] Accessing the full character set
-\section{所有字符皆可信手拈来}
+\section{访问整个字符集}
 \label{hathat}
 
 %Strictly speaking, \TeX's input processor
@@ -526,10 +526,9 @@ Plain \TeX 格式使用 \cs{chardef} 命令%
 %are replaced by a single character with a character
 %code in the range 0--127,
 %differing by 64 from that of the original character.
-严格地讲，\TeX\ 输入处理器并非有限状态自动机。这是因为在扫描输入行期间，
-两个{\sl 相同\/}上标字符（分类码为 7 \index{\char94\char94\ replacement}）%
-尾随一个编码小于 128 的字符（姑且称之为原字符）组成的三元组会被替换为字符编码在
- 0--127 之间的字符，新字符的编码与原字符的编码相差 64。
+大体上，\TeX 的输入处理器可以认为是一个有限状态自动机，但严格来说它并不是。
+输入处理器在扫描输入行期间，为了让用户能够输入一些特殊字符，而设计了这样的机制：
+两个{\slshape 相同}的上标符（分类码为 7\index{\char94\char94\ replacement}）以及一个字符编码小于 128 的字符（暂称原字符）组成的三元组会被替换为一个新的字符。该字符的编码位于 0 -- 127 之间，并且与原字符的编码相差 64。
 
 %This mechanism can be used, for instance, to access positions in a font
 %corresponding to character codes that cannot
@@ -540,10 +539,9 @@ Plain \TeX 格式使用 \cs{chardef} 命令%
 %accessible as \verb>^^M> and~\verb>^^?>.
 %However, since the category of \verb>^^?> is 15\index{category!15}, invalid,
 %that has to be changed before character 127 can be accessed.
-这种字符访问机制主要用于访问那些难以输入的字符，例如像 \ascii\ 码中的
-\gr{return} 和 \gr{delete} 字符。可分别使用 \verb>^^M> 和 \verb>^^?> 进行访问。
-不过，由于 \verb>^^?> 的分类码是 15 \index{category!15}，属于无效符，
-因此要访问编码为 127 的字符，必须先修改 \verb>^^?> 的分类码。
+这种机制可用于访问字体中难以输入的字符。
+例如 \ascii 中的控制符号 \gr{return}（\ascii 编码为 13）和 \gr{delete}（\ascii 编码为 127）可分别使用 \verb>^^M> 和 \verb>^^?> 进行访问。
+当然，由于 \verb>^^?> 是无效字符（分类码是 15\index{category!15}），故而在访问前需要先修改其分类码。
 
 %In \TeX3 this mechanism has been
 %modified and extended to access 256 characters:
@@ -556,11 +554,9 @@ Plain \TeX 格式使用 \cs{chardef} 命令%
 %of the earlier mechanism: if, for instance, \verb>^^a>
 %is typed to produce character~33, then a following
 %\n0--\n9, \n{a}--\n{f} will be misunderstood.
-\TeX3 修改和扩展了这个机制以访问 256 个字符：
-任何四元组 \verb-^^xy-，其中 \n x 和 \n y 为小写十六进制数字 \n0--\n9, \n a--\n f，
-被替换为一个在 0--255 之间的字符，即十六进制表示为~\n{xy}~的字符。
-这也稍微限制了前面机制的使用：设若键入了 \verb>^^a> 以生成字符 \verb>!>，
-接着再键入 \n0--\n9 或 \n{a}--\n{f} 将被错误理解。
+在 \TeX3 中，该机制被扩展为可以访问 256 个字符：
+四元组 \verb-^^xy- 会被替换为一个编码在 0 -- 255 之间的字符；其中 \n{x} 和 \n{y} 是小写十六进制数字 \n{0}--\n{9}, \n{a}--\n{f}，而 \n{xy} 正是该字符编码的十六进制表示。
+这一扩展也给先前的机制带来了一些限制：例如 \verb>^^7a> 会被输入处理器替换为 \verb>z>，而不是 \verb>wa>\liamfnote{\n{w} 和 \n{7} 的 \ascii 编码之差为 64。由于 \n{7a} 可被理解为是一个十六进制数，所以 \TeX 贪婪地将四元组看做一个整体替换为 \n{z}。}。
 
 %While this process makes \TeX's input processor
 %somewhat more powerful
@@ -574,12 +570,8 @@ Plain \TeX 格式使用 \cs{chardef} 命令%
 %input line may assign category code~7\index{category!7} to some
 %character other than the circumflex, thereby
 %influencing its further processing.
-这种字符访问机制使得 \TeX\ 的输入处理器比真正的有限状态自动机更强大，
-并且不会妨碍 \TeX\ 输入处理器的其余扫描过程。
-因而，为了更容易理解此概念，可以假装认为这种对 \verb>^^>
-引导的三元组或四元组的字符替换是提前进行的。
-实际上这是不可能的，因为输入行内有可能会将非上标符的分类码也设为 7
-\index{category!7}，这样便会影响后续的处理了。
+这种机制不仅使得 \TeX 的输入处理器在某种意义上比真正的有限状态自动机更为强大，并且也不会影响其余的扫描过程。因此，在概念上，可以简单地假装认为这种对 \verb>^^> 引导的三元组或四元组的替换是提前进行的。
+不过，在实践中这样做是不可能的。这是因为，在处理输入行的过程中，用户可能将其他字符分类为第 7 类\index{category!7}，从而影响后续处理\liamfnote{也就是说，如果没有其他字符被分类为第 7 类，则这个假设在实践中也是可行的。}。
 
 %%\point Transitions between internal states
 %\section{Transitions between internal states}
