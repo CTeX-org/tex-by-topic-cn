@@ -833,7 +833,8 @@ Plain \TeX 格式使用 \cs{chardef} 命令%
 此处，\verb>\escapechar=-1> 让 \cs{string} 忽略反斜线；因此 \verb>\string\file> 的结果会是 \n{f$_{12}$i$_{12}$l$_{12}$e$_{12}$} 四个字符。为了在宏定义是得到分类码为 12 的四个字符，我们使用 \cs{expandafter} 命令让 \verb>\string\file> 在宏定义之前先行展开；而由于 \cs{escapechar} 的设定被放在分组内部，所以我们需要使用 \cs{gdef} 进行宏定义。
 
 %\section{The \lowercase{\n{\char92par}} token}
-\section{\protect\cs{par} 记号}
+\def\cspar{\cs{par}}
+\section{\n{\protect\cspar} 记号}
 
 %\TeX\ inserts a \csterm par\par\ token into the input after
 %an \indextermbus{empty}{line}, that is, when
