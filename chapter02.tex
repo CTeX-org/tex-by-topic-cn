@@ -799,16 +799,13 @@ Plain \TeX 格式使用 \cs{chardef} 命令%
 %where the letters \n{file} in the parameter text of the
 %macro (see Section~\ref{param:text}) absorb that part of the
 %jobname, leaving the number as the sole parameter.
-举个更实用一些的例子，假设有一系列输入文件 \n{file1.tex}、
-\n{file2.tex}\label{ex:jobnumber}等。我们想写一个宏统计输入文件的序号，
-一种方法是：
+举个更加实用的例子。假设有一系列输入文件：\n{file1.tex}、\n{file2.tex}\label{ex:jobnumber}，而我们希望写一个宏来输出当前正在处理的文件的序号。第一种解法是：
 \begin{verbatim}
-\newcount\filenumber  \def\getfilenumber file#1.{\filenumber=#1 }
+\newcount\filenumber
+\def\getfilenumber file#1.{\filenumber=#1 }
 \expandafter\getfilenumber\jobname.
 \end{verbatim}
-宏参数中的字符 \n{file}（见第~\ref{param:text}~节）会吸走
-\cs{jobname} 中的 \n{file} 部分，
-从而留下文件编号作为唯一的参数。
+宏定义中，参数文本中的 \n{file}（见第~\ref{param:text}~节）会吸走 \cs{jobname} 中的 \n{file} 部分，从而留下文件编号作为宏的参数。
 
 %However, this is slightly incorrect: the letters \n{file} resulting
 %from the \cs{jobname} command have category code~12, instead of
@@ -826,19 +823,14 @@ Plain \TeX 格式使用 \cs{chardef} 命令%
 %the macro definition;
 %the backslash is omitted because we put\handbreak \verb>\escapechar=-1>.
 %Confining this value to a group makes it necessary to use~\cs{gdef}.
-但是上述代码有误，宏参数中的 \n{file} 字符串的分类码为 11，
-而 \cs{jobname} 中的 \n{file} 字符串的分类码为 12，
-所以需要对上述代码进行以下修正：
+但这段代码有些小问题。\cs{jobname} 输出的 \n{file} 四个字符，其分类码为 12。但在 \cs{getfilenumber} 的定义中，\n{file} 四个字符的分类码是 11。为此，需要对上述代码进行以下修正：
 \begin{verbatim}
 {\escapechar=-1
  \expandafter\gdef\expandafter\getfilenumber
        \string\file#1.{\filenumber=#1 }
 }
 \end{verbatim}
-注意 \verb>\string\file> 得到 \n{f$_{12}$i$_{12}$l$_{12}$e$_{12}$} 这 4 个字符，
-而 \cs{expandafter} 命令让 \verb>\string\file> 在宏定义之前先行展开，
-并且 \verb>\escapechar=-1> 让 \TeX\ 忽略反斜线。
-由于 \cs{escapechar} 设定被限制在编组内部，我们需要使用 \cs{gdef} 进行宏定义。
+此处，\verb>\escapechar=-1> 让 \cs{string} 忽略反斜线；因此 \verb>\string\file> 的结果会是 \n{f$_{12}$i$_{12}$l$_{12}$e$_{12}$} 四个字符。为了在宏定义是得到分类码为 12 的四个字符，我们使用 \cs{expandafter} 命令让 \verb>\string\file> 在宏定义之前先行展开；而由于 \cs{escapechar} 的设定被放在分组内部，所以我们需要使用 \cs{gdef} 进行宏定义。
 
 %\section{The \lowercase{\n{\char92par}} token}
 \section{\protect\cs{par} 记号}
