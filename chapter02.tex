@@ -724,7 +724,7 @@ Plain \TeX 格式使用 \cs{chardef} 命令%
 %\section{Letters and other characters}
 %\label{cat12}
 %\point[cat12] Letters and other characters
-\section{字母符与其他字符}
+\section{字母与其他字符}
 \label{cat12}
 
 %In most programming languages identifiers can consist
@@ -737,12 +737,9 @@ Plain \TeX 格式使用 \cs{chardef} 命令%
 %generates a string of characters, all of which have
 %category code~12, even if that is not their usual
 %category code.
-大部分编程语言的标识符可由字母与数字构成（也可能包含其他字符，例如下划线），
-但是 \TeX\ 的控制词只能由分类码为 11 的字符形成。默认情况下，
-数字与标点符号的分类码为 12（其他字符）。不过 \TeX\
-可以产生各字符的分类码均为 12 的字符串，
-尽管这些字符的原始分类码并非 12。
+大部分编程语言的标识符可由字母与数字构成（还可能包含其他诸如下划线之类的字符）。但是，在 \TeX 中，控制序列的名字只能由第 11 类字符（即字母）组成。
 
+通常，数字和标点的分类码是 12，即其他字符。不过，\TeX 可以产生一些由第 12 类字符组成的字符串，哪怕其中的字符原本并非都是第 12 类字符。
 %This happens when the operations
 %\cs{string},
 %\cs{number},
@@ -755,24 +752,14 @@ Plain \TeX 格式使用 \cs{chardef} 命令%
 %If any of the characters delivered by such a command
 %is a space character (that is, character code~32),
 %it receives category code~10, space.
-分类码为 12 的字符串可用
-\cs{string}、
-\cs{number}、
-\cs{romannumeral}、
-\cs{jobname}、
-\cs{fontname}、
-\cs{meaning}
-以及 \cs{the} 等命令生成。
-这些命令所产生的字符串中如果包含空格符，其分类码为 10。
+此类字符串可由 \cs{string}、\cs{number}、\cs{romannumeral}、\cs{jobname}、\cs{fontname}、\cs{meaning} 以及 \cs{the} 等命令生成。若这些命令产生的字符串包含空格符（\ascii 编码为 32），则在输出的字符串中，该字符的分类码为 10。
 
 %For the extremely rare case where a hexadecimal digit has been
 %hidden in a control sequence, \TeX\ allows \n A$_{12}$--\n F$_{12}$
 %to be hexadecimal digits, in addition to the ordinary
 %\n A$_{11}$--\n F$_{11}$ (here
 %the subscripts denote the category codes).
-在极个别情况下十六进制数字会隐藏在控制序列中，
-因而除了通常的 \n A$_{11}$--\n F$_{11}$ 之外，
-\TeX\ 还允许 \n A$_{12}$--\n F$_{12}$ 作为十六进制数字（这里的下标表示分类码）。
+在极个别情况下，控制序列的名字中可能会包含十六进制数字；因此，除了通常的 $ \text{\n{A}}_{11} $ -- $ \text{\n{F}}_{11} $ 之外，\TeX 中还有表示十六进制数字的 $ \text{\n{A}}_{12} $ -- $ \text{\n{F}}_{12} $。
 
 %For example,
 %\begin{disp}\verb>\string\end>\quad gives four character tokens\quad
@@ -783,13 +770,9 @@ Plain \TeX 格式使用 \cs{chardef} 命令%
 %backslash. Another value of \cs{escapechar} leads to another
 %character in the output of \cs{string}.
 %The \cs{string} command is treated further in Chapter~\ref{char}.
-看下面的示例：
-\begin{disp}\verb>\string\end>\quad 可以得到字符记号 \quad
-\n{\char92$_{12}$e$_{12}$n$_{12}$d$_{12}$} \end{disp}
-注意\emph{转义字符}\index{字符!转义字符} \texttt{\char`\\}$_{12}$\label{use:escape}
-出现在输出中是因为 \cs{escapechar} 的值等于反斜线的字符编码。
-将 \cs{escapechar} 改为另一个值将使得 \cs{string} 输出另一个字符.
-这个 \cs{string} 命令将在第~\ref{char}~章中进一步介绍。
+举例来说，
+\begin{disp}\verb>\string\end>\quad 得到四个字符记号 \quad\n{\char92$_{12}$e$_{12}$n$_{12}$d$_{12}$} \end{disp}
+注意，此处输出中有\emph{转义字符}\index{字符!转义字符}\texttt{\char`\\}$_{12}$\label{use:escape} 的原因是宏 \cs{escapechar} 的值是反斜线的字符编码。而若将 \cs{escapechar} 的值改为其它字符的编码，则 \cs{string} 将输出另一个字符。有关 \cs{string} 命令的详细内容参见第~\ref{char}~章。
 
 %Spaces can wind up in control sequences:
 %\begin{disp}\verb>\csname a b\endcsname>\end{disp} gives a control sequence
@@ -797,12 +780,12 @@ Plain \TeX 格式使用 \cs{chardef} 命令%
 %Turning this control sequence token into a string of characters
 %\begin{disp}\verb>\expandafter\string\csname a b\endcsname>\end{disp}
 %gives \n{\char92$_{12}$a$_{12}$\char32$_{10}$b$_{12}$}.
-空格是可以封到控制序列中的，例如
+通过一些特殊技巧，空格也是可以放在控制序列当中的：
 \begin{disp}\verb>\csname a b\endcsname>\end{disp}
-给出的是一个控制序列记号，其中三个字符有一个是空格符。
+是一个控制序列记号，其名称由三个字符组成，并且其中之一是空格符。
 将这个控制序列转化为字符串
 \begin{disp}\verb>\expandafter\string\csname a b\endcsname>\end{disp}
-可得 \n{\char92$_{12}$a$_{12}$\char32$_{10}$b$_{12}$}.
+可得 \n{\char92$_{12}$a$_{12}$\textvisiblespace$_{10}$b$_{12}$}。
 
 %As a more practical example, suppose there exists a sequence
 %of input files \n{file1.tex}, \n{file2.tex}\label{ex:jobnumber},
