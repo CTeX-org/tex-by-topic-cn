@@ -461,63 +461,44 @@ Plain \TeX 格式使用 \cs{chardef} 命令%
 这也就是说，在任意瞬间，\TeX 的输入处理器都处于并且只能处于三种状态的一种；
 并且在状态切换完成后，\TeX 的输入处理器对先前的状态没有任何记忆。
 
-%\subsection{State {\italic N}: new line}
-\subsection{状态 {\italic N}：新行}
+%\subsection{State {\itshape N}: new line}
+\subsection{状态 {\itshape N}：新行}
 
-%State {\italic N} is entered at the beginning of each new input line,
-%and that is the only time \TeX\ is in this state.  In state~{\italic
+%State {\itshape N} is entered at the beginning of each new input line,
+%and that is the only time \TeX\ is in this state.  In state~{\itshape
 %  N} all space tokens (that is, characters of
 %category~10\index{category!10}) are ignored; an end-of-line character
 %is converted into a \cs{par} token.  All other tokens bring \TeX\ into
-%state~{\italic M}.
-在每个输入行的开始处，\TeX\ 输入处理器便会进入状态 {\italic N}，
-这是它唯一可进入这一状态的时刻。在这一状态中，
-所有的空格记号（也就是分类码为 10 的字符\index{category!10}）会被忽略；
-行结束符会被转化为 \cs{par} 记号。如果遇到其他记号，
-那么输入处理器所处状态便会切换为状态 {\italic M}。
+%state~{\itshape M}.
+当且仅当 \TeX 遇到新的输入行时，其输入处理器会进入状态 {\itshape N}。
+在该状态下，所有空格记号（分类码为 10 的字符\index{category!10}）都会被忽略；
+此外，在该状态下，行终止符会被替换为 \cs{par} 记号。
+在该状态下，其它记号会使 \TeX 切换到状态 {\itshape M}。
 
-%\subsection{State {\italic S}: skipping spaces}
-\subsection{状态 {\italic S}：忽略空格}
+%\subsection{State {\itshape S}: skipping spaces}
+\subsection{状态 {\itshape S}：忽略空格}
 
-%State {\italic S} is entered in any mode after a control word or
+%State {\itshape S} is entered in any mode after a control word or
 %control space (but after no other control symbol),
-%or, when in state~{\italic M}, after a space.
+%or, when in state~{\itshape M}, after a space.
 %In this state all subsequent spaces or end-of-line characters
 %in this input line are discarded.
-在任何状态的控制词或控制空格（其他控制符不在这一范畴）之后，
-或者在状态 {\italic M} 的空格字符之后，输入处理器便会进入状态 {\italic S}。
-在这一状态中，所有的后续空格或行结束符会被丢弃。
+\TeX 于任意状态下，遇到控制词或控制空格之后（注意其他控制字符不在此列），
+或于状态 {\itshape M} 的空格记号之后，会进入状态 {\itshape S}。
+当 \TeX 处于该状态时，所有连续的空格及行终止符都会被忽略。
 
-%%\spoint State {\italic M}: middle of line
-%\subsection{State {\italic M}: middle of line}
-%\spoint State {\italic M}: middle of line
-\subsection{状态 {\italic M}：行内}
+%\subsection{State {\itshape M}: middle of line}
+\subsection{状态 {\itshape M}：行内}
 
-%By far the most common state is~{\italic M}, `middle of line'.
+%By far the most common state is~{\itshape M}, `middle of line'.
 %It is entered after characters of categories
 %1--4, 6--8, and 11--13, and after control symbols
 %other than control space.
 %An end-of-line character encountered in this state
 %results in a space token.
-显然状态 {\italic M} 是最寻常的状态。当 \TeX\ 的输入处理器遇到分类码为
-1--4，6--8 以及 11--13 的字符或者控制符（不包括控制空格），
-在其之后便进入状态 {\italic M}。在状态 {\italic M} 中，
-如果输入处理器遇到了行结束符，它会将其转化为一个空格记号。
-
-%%% \input figflow \message{left align flow diagram}
-%%% \vskip12pt plus 1pt minus 4pt\relax %before spoint skip
-%%% \begin{tdisp}%\PopIndentLevel
-%%% \leavevmode\relax
-%%% %\figmouth
-%%% \message{fig mouth missing}
-%%% \end{tdisp}
-%% \input figflow \message{left align flow diagram}
-%% \vskip12pt plus 1pt minus 4pt\relax %before spoint skip
-%% \begin{tdisp}%\PopIndentLevel
-%% \leavevmode\relax
-%% %\figmouth
-%% \message{fig mouth missing}
-%% \end{tdisp}
+显然状态 {\itshape M} 是输入处理器最常见的状态，它表示「处理到输入行的中间」（middle of line）。
+当输入处理器遇到分类码为 1--4、6--8 以及 11--13 的字符或者控制字符（不包括控制空格）之后，就会进入该状态。
+在改状态下，行终止符会被替换为空格记号。
 
 %\input figs1
 %\begin{quotation}
@@ -631,24 +612,24 @@ Plain \TeX 格式使用 \cs{chardef} 命令%
 %that character and all following
 %characters of category~11, into a control word.
 %After that \TeX\
-%goes into state~{\italic S}, skipping spaces.
+%goes into state~{\itshape S}, skipping spaces.
 %\item
 %With a character of category~10\index{category!10}, space, a control
 %symbol called control space results, and \TeX\ goes into
-%state~{\italic S}.
+%state~{\itshape S}.
 %\item
 %With a character of any other category code
-%a control symbol results, and \TeX\ goes into state~{\italic M},
+%a control symbol results, and \TeX\ goes into state~{\itshape M},
 %middle of line.
 %\end{itemize}
 \begin{itemize}
 \item 如果转义符之后的字符的分类码为 11\index{category!11}，即字母，
 那么 \TeX\ 便会将转义符、分类码为 11 的字符以及后续所有分类码为 11 的字符捆绑为一个控制词，
-然后进入状态 {\italic S}，即忽略空格状态。
+然后进入状态 {\itshape S}，即忽略空格状态。
 \item 如果转义符之后的字符的分类码为 10\index{category!10}，即空格，
-那么 \TeX\ 便会产生一个控制空格，然后进入状态 {\italic S}。
+那么 \TeX\ 便会产生一个控制空格，然后进入状态 {\itshape S}。
 \item 如果转义符之后的字符为其他分类码，那么 \TeX\ 便形成一个控制符，
-然后 \TeX\ 进入状态 {\italic M}，即行内状态。
+然后 \TeX\ 进入状态 {\itshape M}，即行内状态。
 \end{itemize}
 
 %The letters of a control sequence name have to be all on one line;
@@ -666,8 +647,8 @@ Plain \TeX 格式使用 \cs{chardef} 命令%
 \subsection{1–4, 7–8, 11–13：非空字符}
 
 %Characters of category codes 1--4, 7--8, and 11--13 are made
-%into tokens, and \TeX\ goes into state~{\italic M}.
-分类码属于 1-4、7-8、11-13 的字符会被转化为记号，然后 \TeX\ 进入状态 {\italic M}。
+%into tokens, and \TeX\ goes into state~{\itshape M}.
+分类码属于 1-4、7-8、11-13 的字符会被转化为记号，然后 \TeX\ 进入状态 {\itshape M}。
 
 %%\spoint 5: end of line
 %\subsection{5: end of line}
@@ -677,15 +658,15 @@ Plain \TeX 格式使用 \cs{chardef} 命令%
 %Upon encountering an end-of-line character,
 %\TeX\ discards the rest of the
 %line, and starts processing the next line,
-%in state~{\italic N}. If the current state was~{\italic N},
+%in state~{\itshape N}. If the current state was~{\itshape N},
 %that is, if the
 %line so far contained at most spaces, a~\cs{par} token
-%is inserted; if the state was~{\italic M}, a~space token is inserted,
-%and in state~{\italic S} nothing is inserted.
-遇到行结束符时，\TeX\ 会忽略当前行的剩余部分，然后进入状态 {\italic N} 开始处理下一行。
-如果当前状态是 {\italic N}，即当前行只有空格，\TeX\ 就插入 \cs{par} 记号；
-如果当前状态是 {\italic M}，那么就插入一个空格记号；
-如果当前状态是 {\italic S}，就不插入任何记号。
+%is inserted; if the state was~{\itshape M}, a~space token is inserted,
+%and in state~{\itshape S} nothing is inserted.
+遇到行结束符时，\TeX\ 会忽略当前行的剩余部分，然后进入状态 {\itshape N} 开始处理下一行。
+如果当前状态是 {\itshape N}，即当前行只有空格，\TeX\ 就插入 \cs{par} 记号；
+如果当前状态是 {\itshape M}，那么就插入一个空格记号；
+如果当前状态是 {\itshape S}，就不插入任何记号。
 
 %Note that by `end-of-line character' a character with category
 %code~5 is meant. This is not necessarily the \cs{endlinechar},
@@ -707,10 +688,10 @@ Plain \TeX 格式使用 \cs{chardef} 命令%
 %In the first case a `parameter token' results,
 %in the second case only a single parameter character
 %is passed on as a character token for further processing.
-%In either case \TeX\ goes into state~{\italic M}.
+%In either case \TeX\ goes into state~{\itshape M}.
 在宏定义中，{\em 参数符}\index{字符}{参数符}通常为 \verb=#=，
 其后可跟随数字 \n{1..9} 或者另一个参数符，前者产生的是“参数记号”，
-后者产生的是单个字符记号。这两种情况都会导致 \TeX\ 都会进入状态 {\italic M}。
+后者产生的是单个字符记号。这两种情况都会导致 \TeX\ 都会进入状态 {\itshape M}。
 
 %A parameter character can also appear on its own in an
 %alignment preamble (see Chapter~\ref{align}).
@@ -746,17 +727,17 @@ Plain \TeX 格式使用 \cs{chardef} 命令%
 
 %A token with category code 10 \ldash this is called a \gr{space token},
 %irrespective of the character code \rdash
-%is ignored in states {\italic N} and~{\italic S}
+%is ignored in states {\itshape N} and~{\itshape S}
 %(and the state does not change);
-%in state~{\italic M} \TeX\ goes into state~{\italic S}, inserting
+%in state~{\itshape M} \TeX\ goes into state~{\itshape S}, inserting
 %a token that has category~10 and character code~32
 %(\ascii{} space).
 %This implies that the character code of the space token may change
 %from the character that was actually input.
 分类码为 10 的记号称为 \gr{space token}（空格记号），不管其字符编码是什么。
-在状态 {\italic N} 和 {\italic S}  中，\TeX\ 会忽略空格记号（而且其状态不变）；
-在状态 {\italic M} 中 \TeX\ 会将它替换为分类码为 10 字符编码为 32 的字符（\ascii\ 空格符），
-并进入状态 {\italic S}。这意味着空格记号的字符编码可能与从输入字符的编码不同。
+在状态 {\itshape N} 和 {\itshape S}  中，\TeX\ 会忽略空格记号（而且其状态不变）；
+在状态 {\itshape M} 中 \TeX\ 会将它替换为分类码为 10 字符编码为 32 的字符（\ascii\ 空格符），
+并进入状态 {\itshape S}。这意味着空格记号的字符编码可能与从输入字符的编码不同。
 
 %%\spoint 14: comment
 %\subsection{14: comment}
@@ -766,11 +747,11 @@ Plain \TeX 格式使用 \cs{chardef} 命令%
 %A comment character causes \TeX\ to discard
 %the rest of the line, including the comment character.
 %In particular, the end-of-line character is not seen,
-%so even if the comment was encountered in state~{\italic M}, no space
+%so even if the comment was encountered in state~{\itshape M}, no space
 %token is inserted.
 注释符可使 \TeX\ 忽略输入行的后续文本，其中包含注释符本身。
 特别地，注释符将导致 \TeX\ 看不到输入行的行结束符，
-所以即使在状态 {\italic M} 中遇到注释符，\TeX\ 也不会插入空格记号。
+所以即使在状态 {\itshape M} 中遇到注释符，\TeX\ 也不会插入空格记号。
 
 %%\spoint 15: invalid
 %\subsection{15: invalid}
@@ -927,9 +908,9 @@ Plain \TeX 格式使用 \cs{chardef} 命令%
 %\TeX\ inserts a \csterm par\par\ token into the input after
 %an \indextermbus{empty}{line}, that is, when
 %encountering a character with category code~5,
-%end of line, in state~{\italic N}.
+%end of line, in state~{\itshape N}.
 %It is good to realize when exactly this happens:
-%since \TeX\ leaves state~{\italic N}
+%since \TeX\ leaves state~{\itshape N}
 %when it encounters any token but a space,
 %a~line giving a \cs{par} can only contain characters
 %of category~10. In particular, it cannot end with a comment
@@ -937,9 +918,9 @@ Plain \TeX 格式使用 \cs{chardef} 命令%
 %if an empty line is wanted for the layout of the input
 %one can put a comment sign on that line.
 \TeX\ 在遇到{\em 空白行}\index{行!空白行}之后，
-即在状态 {\italic N} 时遇到分类码为 5 的字符（行结束符）之后，
+即在状态 {\itshape N} 时遇到分类码为 5 的字符（行结束符）之后，
 就会向输入中插入一个 \csterm par\par 记号。最好是明白这是如何发生的：
-因为 \TeX\ 在遇到空格符之外的任何字符都会离开状态{\italic N}，
+因为 \TeX\ 在遇到空格符之外的任何字符都会离开状态{\itshape N}，
 所以能够形成 \cs{par} 的输入行所包含字符的分类码肯定皆为 10；
 特别地，该行不能包含注释符。
 此事实常常以另一种方式被用到：如果输入格式中需要保留空白行，
@@ -1015,10 +996,10 @@ Plain \TeX\ 提供了 \cs{par} 的“同义词” \cs{endgraf}。详见第~\ref{
 %output; in fact they never get past the input processor.
 %These are for instance the spaces at the beginning
 %of an input line, and the spaces following the one
-%that lets \TeX\ switch to state~{\italic S}.
+%that lets \TeX\ switch to state~{\itshape S}.
 从对 \TeX\ 输入处理器的内部状态的讨论中，
 容易知道有些空格是不可能被输出的；实际上它们甚至都无法通过输入处理器。
-例如输入行开头的空格，还有放在让 \TeX\ 进入状态 {\italic S} 的字符之后的空格。
+例如输入行开头的空格，还有放在让 \TeX\ 进入状态 {\itshape S} 的字符之后的空格。
 
 %On the other hand, line ends can generate spaces (which are not
 %in the input) that may wind up in the output.
@@ -1138,25 +1119,25 @@ yet another
 
 %After control words spaces are ignored. This is not an
 %instance of optional spaces, but it is due to the fact that
-%\TeX\ goes into state~{\italic S}, skipping spaces, after control
+%\TeX\ goes into state~{\itshape S}, skipping spaces, after control
 %words. Similarly an end-of-line character is skipped
 %after a control word.
 控制词之后的空格会被忽略。不过这个不是可选空格的例子，
-只是因为 \TeX\ 在控制词之后会进入状态 {\italic S} 而已。
+只是因为 \TeX\ 在控制词之后会进入状态 {\itshape S} 而已。
 同样，控制词之后的行结束符也会被忽略。
 
 %Numbers are delimited by only \gr{one optional space},
 %but still
 %\begin{disp}\n{a\char92 count0=3\char32\char32b}\quad gives\quad `ab',\end{disp}
-%because \TeX\ goes into state~{\italic S} after the first
+%because \TeX\ goes into state~{\itshape S} after the first
 %space token. The second space is therefore skipped
 %in the input processor of \TeX; it never becomes a space token.
 数值只能被 \gr{one optional space} 定界，但是
 \begin{disp}\n{a\char92 count0=3\char32\char32b}\quad 仍然给出 \quad `ab',\end{disp}
-这是因为 \TeX\ 在第一个空格记号之后会进入状态 {\italic S}，
+这是因为 \TeX\ 在第一个空格记号之后会进入状态 {\itshape S}，
 因此第二个空格永远也不可能变成空格记号。
 
-%Spaces are skipped furthermore when \TeX\ is in state~{\italic N},
+%Spaces are skipped furthermore when \TeX\ is in state~{\itshape N},
 %newline. When \TeX\ is processing in vertical mode
 %space tokens (that is, spaces that were not skipped)
 %are ignored. For example, the space inserted (because of the line end)
@@ -1167,7 +1148,7 @@ yet another
 %\hbox{b}
 %\end{verbatim}
 %has no effect.
-当 \TeX\ 在状态 {\italic N} 中时，空格会被忽略。
+当 \TeX\ 在状态 {\itshape N} 中时，空格会被忽略。
 当 \TeX\ 在竖直模式中时，空格记号（就是那些起初未被忽略的空格）会被忽略。
 例如下面第一个盒子之后（由行结束符生成的）的空格会被忽略：
 \begin{verbatim}
@@ -1251,7 +1232,7 @@ Plain \TeX\ 和 \LaTeX\ 都定义了一个 \cs{obeyspaces} 宏，
 %assigns category code~12\index{category!12} to all
 %characters except spaces; they receive category~10\index{category!10}.
 %Also, as was said above, \TeX's input processor converts (when in
-%state~{\italic M}) all tokens with category code~10 into real spaces:
+%state~{\itshape M}) all tokens with category code~10 into real spaces:
 %they get character code~32.
 %Any character token with category~10 is called
 %\gram{space token}\indexterm{space! token}.
@@ -1260,7 +1241,7 @@ Plain \TeX\ 和 \LaTeX\ 都定义了一个 \cs{obeyspaces} 宏，
 空格在 \TeX\ 中有些反常。
 例如，\cs{string} 操作会对所有的字符赋以分类码12 \index{category!12}，
 唯独对空格例外，它还是坚持自己的分类码为 10 \index{category!10}。
-还有在前文中提到过的，\TeX\ 的输入处理器（在状态 {\italic M} 中）%
+还有在前文中提到过的，\TeX\ 的输入处理器（在状态 {\itshape M} 中）%
 会将所有分类码为 10 的记号转化为真正的空格：它们的字符编码为 32。
 任何分类码为~10~的空格称为 \gram{space token}\index{空格!空格记号}。
 那些字符编码不是 32 的空格记号被称为{\em 滑稽空格}\index{空格!滑稽空格}。
@@ -1351,7 +1332,7 @@ macro:-> a b
 %\end{verbatim}
 %\TeX\ will then take a space as the instruction to
 %typeset character number~32. Moreover, subsequent spaces
-%are not skipped, but also typeset this way: state~{\italic S}
+%are not skipped, but also typeset this way: state~{\itshape S}
 %is only entered after a character with category code~10.
 %Similarly, spaces after a control sequence are made
 %visible by changing the category code of the space character.
@@ -1361,7 +1342,7 @@ macro:-> a b
 \end{verbatim}
 这样 \TeX\  便会将空格字符作为编码为 32 的字符排印出来，
 而且后续的空格也不再被忽略，同样会被排印出来：
-状态 {\italic S} 只是在分类码为 10 的字符之后才会出现。
+状态 {\itshape S} 只是在分类码为 10 的字符之后才会出现。
 类似地，控制序列之后的空格也因为分类码改变而被显现出来。
 
 %\section{More about line ends}
