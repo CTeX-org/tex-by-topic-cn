@@ -72,8 +72,7 @@
 %\item [\cs{obeylines}]
 %      Macro in plain \TeX\ to make line ends significant.
 \item [\cs{obeylines}]
-      该 plain \TeX 宏使得
-      用于保留行结束符的 Plain \TeX\ 宏。
+      该 plain \TeX 宏使得源文件中的每个行终止符都会体现在最终排版上。
 
 %\item [\cs{obeyspaces}]
 %      Macro in plain \TeX\ to make (most) spaces significant.
@@ -122,8 +121,8 @@
 %some systems with fixed record length (block) storage do not have
 %a line terminator at all. Therefore \TeX\ has its
 %own way of terminating an input line.
-不同计算机系统对
-\index{line!input}\index{line!end}\index{machine independence}
+不同计算机系统对%
+\index{line!input}\index{line!end}\index{machine independence}%
 输入行的具体定义有所不同。
 最常见的方式是用回车符紧跟换行符作为行终止符，
 有些系统单用换行符作为行终止符，
@@ -237,9 +236,9 @@
 %  \IniTeX\ assigns this code to the \gram{return}, that is, code~13.
 %  Not coincidentally, 13~is also the value that \IniTeX\ assigns to
 %  the \cs{endlinechar} parameter; see above.
-\item\index{category!5}\label{ini:eol}行结束符；
+\item\index{category!5}\label{ini:eol}行终止符；
         \TeX 用来表达输入行结束的字符。
-        \IniTeX 将回车符 \gram{return}（\ascii 编码为 13）作为默认的行结束符。
+        \IniTeX 将回车符 \gram{return}（\ascii 编码为 13）作为默认的行终止符。
         这就是为什么 \IniTeX 中，参量 \cs{endlinechar} 的值是 13（详见前文）。
 %\item\index{category!6} Parameter character; this indicates parameters
 %  for macros.  In plain \TeX\ this is the hash sign~\verb-#-.
@@ -409,7 +408,7 @@ Plain \TeX 格式使用 \cs{chardef} 命令%
 %\ldash that is,\message{ldash nobreak?}
 %a character of category~0\index{category!0} \rdash  followed
 %by a string of `letters' is
-%lumped together into a {\em control word}, which is a single token.
+%lumped together into a \emph{control word}, which is a single token.
 %An escape character followed by a single character that is not of
 %category~11\index{category!11}, letter, is made into a
 %\indextermsub{control}{symbol}.
@@ -425,7 +424,7 @@ Plain \TeX 格式使用 \cs{chardef} 命令%
 %\csterm \char32\par
 %by a space character is called
 %\indextermbus{control}{space}.
-由转义符与一个空格字符 \cstoidx \char32\par\cs{}\textvisiblespace 构成的控制序列，称为\emph{控制空格}\index{控制!控制空格}。
+由转义字符与一个空格字符 \cstoidx \char32\par\cs{}\textvisiblespace 构成的控制序列，称为\emph{控制空格}\index{控制!控制空格}。
 
 %\item Parameter tokens: a parameter character \ldash that is, a
 %  character of category~6\index{category!6}, by default~\verb=#=
@@ -573,55 +572,45 @@ Plain \TeX 格式使用 \cs{chardef} 命令%
 这种机制不仅使得 \TeX 的输入处理器在某种意义上比真正的有限状态自动机更为强大，并且也不会影响其余的扫描过程。因此，在概念上，可以简单地假装认为这种对 \verb>^^> 引导的三元组或四元组的替换是提前进行的。
 不过，在实践中这样做是不可能的。这是因为，在处理输入行的过程中，用户可能将其他字符分类为第 7 类\index{category!7}，从而影响后续处理\liamfnote{也就是说，如果没有其他字符被分类为第 7 类，则这个假设在实践中也是可行的。}。
 
-%%\point Transitions between internal states
 %\section{Transitions between internal states}
-%\point Transitions between internal states
 \section{内部状态切换}
 
 %Let us now discuss the effects on the internal state
 %of \TeX's input processor when
 %certain category codes are encountered in the input.
-现在我们来关注一下不同分类码的字符对 \TeX\ 的输入处理器内部状态的影响。
+现在我们来讨论特定分类码对 \TeX 的输入处理器内部状态的影响。
 
-%%\spoint 0: escape character
 %\subsection{0: escape character}
 %\index{escape!character|see{character, escape}}
-%\spoint 0: escape character
-\subsection{0：转义符}
-\index{escape!character|see{character, escape}}
+\subsection{0：转义字符}
+\index{转义!字符|see{字符, 转义}}
 
 %When an \indextermbus{escape}{character} is encountered,
 %\TeX\ starts forming a control sequence token.
 %Three different types of control sequence can result,
 %depending on the category code of the character that
 %follows the escape character.
-在遇到{\em 转义符}\index{字符!转义符}时，\TeX\ 便开始形成一个控制序列记号。
-控制序列记号有三种类型，依赖于转义符后面的字符的分类码。
+遇到\emph{转义字符}\index{字符!转义字符}后，\TeX 会开始构建控制序列记号。取决于转义字符后面的字符之分类码，所得的控制序列记号有三种类型。
 
-%\begin{itemize}\item
+\begin{itemize}
+%\item
 %If the character following the escape is of category~11\index{category!11},
 %letter, then \TeX\ combines the escape,
 %that character and all following
 %characters of category~11, into a control word.
 %After that \TeX\
 %goes into state~{\itshape S}, skipping spaces.
+\item 若转义字符后的字符之分类码为 11\index{category!11}，即字母，则 \TeX 将转义字符和之后连续的分类码为 11 的字符构建成一个控制词，而后进入状态 {\itshape S}。
 %\item
 %With a character of category~10\index{category!10}, space, a control
 %symbol called control space results, and \TeX\ goes into
 %state~{\itshape S}.
+\item 若转义字符后的字符只分类码为 10\index{category!10}，即空格，则 \TeX 将它们构建成名为控制空格的控制字符，而后进入状态 {\itshape S}。
 %\item
 %With a character of any other category code
 %a control symbol results, and \TeX\ goes into state~{\itshape M},
 %middle of line.
-%\end{itemize}
-\begin{itemize}
-\item 如果转义符之后的字符的分类码为 11\index{category!11}，即字母，
-那么 \TeX\ 便会将转义符、分类码为 11 的字符以及后续所有分类码为 11 的字符捆绑为一个控制词，
-然后进入状态 {\itshape S}，即忽略空格状态。
-\item 如果转义符之后的字符的分类码为 10\index{category!10}，即空格，
-那么 \TeX\ 便会产生一个控制空格，然后进入状态 {\itshape S}。
-\item 如果转义符之后的字符为其他分类码，那么 \TeX\ 便形成一个控制符，
-然后 \TeX\ 进入状态 {\itshape M}，即行内状态。
+\item 若转义字符后的字符之分类码不是 10 也不是 11，那么 \TeX 将它们构建成控制字符，而后进入状态 {\itshape M}。
 \end{itemize}
 
 %The letters of a control sequence name have to be all on one line;
@@ -629,23 +618,17 @@ Plain \TeX 格式使用 \cs{chardef} 命令%
 %if the current line ends with a comment sign, or if (by letting
 %\cs{endlinechar} be outside the range~0--255)
 %there is no terminating character.
-控制序列的名称所包含的字符必须居于同一行。即使当前行以注释符结束，
-或者当前行没有行结束符（通过将 \cs{endlinechar} 设定到 0--255 之外实现），
-控制序列字符也不能跨过两行。
+组成一个控制序列的所有字符在源文件中必须位于同一行；控制序列的名称不能跨行，即使当前行以注释符结尾或者没有行终止符（通过将 \cs{endlinechar} 设置为 0 -- 255 之外的值）。
 
-%%\spoint 1--4, 7--8, 11--13: non-blank characters
 %\subsection{1--4, 7--8, 11--13: non-blank characters}
-%\spoint 1--4, 7--8, 11--13: non-blank characters
 \subsection{1–4, 7–8, 11–13：非空字符}
 
 %Characters of category codes 1--4, 7--8, and 11--13 are made
 %into tokens, and \TeX\ goes into state~{\itshape M}.
-分类码属于 1-4、7-8、11-13 的字符会被转化为记号，然后 \TeX\ 进入状态 {\itshape M}。
+分类为 1--4、7--8 及 11--13 的字符会被转换为字符集好，而后 \TeX 进入状态 {\itshape M}。
 
-%%\spoint 5: end of line
 %\subsection{5: end of line}
-%\spoint 5: end of line
-\subsection{5：行结束符}
+\subsection{5：行终止符}
 
 %Upon encountering an end-of-line character,
 %\TeX\ discards the rest of the
@@ -655,21 +638,20 @@ Plain \TeX 格式使用 \cs{chardef} 命令%
 %line so far contained at most spaces, a~\cs{par} token
 %is inserted; if the state was~{\itshape M}, a~space token is inserted,
 %and in state~{\itshape S} nothing is inserted.
-遇到行结束符时，\TeX\ 会忽略当前行的剩余部分，然后进入状态 {\itshape N} 开始处理下一行。
-如果当前状态是 {\itshape N}，即当前行只有空格，\TeX\ 就插入 \cs{par} 记号；
-如果当前状态是 {\itshape M}，那么就插入一个空格记号；
-如果当前状态是 {\itshape S}，就不插入任何记号。
+遇到行终止符时，\TeX 的行为取决于输入处理器当前的状态。但不论处于何种状态，\TeX 会忽略当前行\liamfnote{指源文件中的当前行。}，而后进入状态 {\itshape N} 并开始处理下一行。
+\begin{itemize}
+  \item 当前状态是 {\itshape N}，即当前行只有空格，\TeX\ 就插入 \cs{par} 记号；
+  \item 当前状态是 {\itshape M}，那么就插入一个空格记号；
+  \item 当前状态是 {\itshape S}，就不插入任何记号。
+\end{itemize}
 
 %Note that by `end-of-line character' a character with category
 %code~5 is meant. This is not necessarily the \cs{endlinechar},
 %nor need it appear at the end of the line.
 %See below for further remarks on line ends.
-注意“行结束符”是分类码为 5 的字符，它可以不是\cs{endlinechar}，
-也不必出现在行尾。要明白它，请继续阅读下文。
+此处「行终止符」指得是分类码为 5 的字符。因此，它的字符编码不一定是 \cs{endlinechar}，也不一定非得出现在行尾。详见后文。
 
-%%\spoint 6: parameter
 %\subsection{6: parameter}
-%\spoint 6: parameter
 \subsection{6：参数符}
 
 %A \indextermbus{parameter}{character} \ldash usually~\verb=#= \rdash  can be
@@ -681,17 +663,13 @@ Plain \TeX 格式使用 \cs{chardef} 命令%
 %in the second case only a single parameter character
 %is passed on as a character token for further processing.
 %In either case \TeX\ goes into state~{\itshape M}.
-在宏定义中，{\em 参数符}\index{字符}{参数符}通常为 \verb=#=，
-其后可跟随数字 \n{1..9} 或者另一个参数符，前者产生的是“参数记号”，
-后者产生的是单个字符记号。这两种情况都会导致 \TeX\ 都会进入状态 {\itshape M}。
+在宏定义的上下文中，\emph{参数符} \ldash 通常为 \verb-#-\rdash 可跟 \n{1..9} 中的数字或另一个参数符。前者产生参数记号，而后者产生单个参数字符记号待后续处理。两种情况都会使 \TeX 进入状态 {\itshape M}。
 
 %A parameter character can also appear on its own in an
 %alignment preamble (see Chapter~\ref{align}).
-参数符在 Plain \TeX\ 中也被用于构建阵列的模板行（见第~\ref{align}~章）。
+单独出现的参数符也被用于阵列的模板行（见第~\ref{align}~章）。
 
-%%\spoint 7: superscript
 %\subsection{7: superscript}
-%\spoint 7: superscript
 \subsection{7：上标符}
 
 %A superscript character is handled like most non-blank
@@ -701,20 +679,15 @@ Plain \TeX 格式使用 \cs{chardef} 命令%
 %that replaces these two characters plus the following character
 %(possibly two characters in \TeX3) by another character
 %was described above.
-上标符会像非空字符那样被处理，除非其后尾随一个相同字符编码的上标符。
-两个上标符及其尾随字符构成的三元或四元组的字符替换功能在前文已有阐述。
+\TeX 对上标符的处理和大多数非空字符一样，仅在上述替换机制中有所不同：连续两个字符编码相同的上标符及其后字符组成的三元组或四元组会按规则被替换为其它字符。
 
-%%\spoint 9: ignored character
 %\subsection{9: ignored character}
-%\spoint 9: ignored character
-\subsection{9：可忽略符}
+\subsection{9：被忽略符}
 
 %Characters of category 9 are ignored; \TeX\ remains in the same state.
-分类码为 9 的字符会被忽略，并且 \TeX\ 会保持其状态不变。
+分类码为 9 的字符会被忽略，且不会影响 \TeX 的状态。
 
-%%\spoint 10: space
 %\subsection{10: space}
-%\spoint 10: space
 \subsection{10：空格符}
 
 %A token with category code 10 \ldash this is called a \gr{space token},
@@ -726,14 +699,9 @@ Plain \TeX 格式使用 \cs{chardef} 命令%
 %(\ascii{} space).
 %This implies that the character code of the space token may change
 %from the character that was actually input.
-分类码为 10 的记号称为 \gr{space token}（空格记号），不管其字符编码是什么。
-在状态 {\itshape N} 和 {\itshape S}  中，\TeX\ 会忽略空格记号（而且其状态不变）；
-在状态 {\itshape M} 中 \TeX\ 会将它替换为分类码为 10 字符编码为 32 的字符（\ascii\ 空格符），
-并进入状态 {\itshape S}。这意味着空格记号的字符编码可能与从输入字符的编码不同。
+在状态 {\itshape N} 和 {\itshape S} 中，空格记号\ldash 分类码为 10 的记号\rdash 会被忽略，而不管相关字符的编码是多少；同时 \TeX 的状态保持不变。在状态 {\itshape M} 中，\TeX 会向正在构建的记号序列中插入 $ \text{\textvisiblespace}_10 $（\ascii 编码中的空格，编码为 32），并进入状态 {\itshape S}。这意味着空格记号的字符编码可能与输入字符的编码不同。
 
-%%\spoint 14: comment
 %\subsection{14: comment}
-%\spoint 14: comment
 \subsection{14：注释符}
 
 %A comment character causes \TeX\ to discard
@@ -741,21 +709,16 @@ Plain \TeX 格式使用 \cs{chardef} 命令%
 %In particular, the end-of-line character is not seen,
 %so even if the comment was encountered in state~{\itshape M}, no space
 %token is inserted.
-注释符可使 \TeX\ 忽略输入行的后续文本，其中包含注释符本身。
-特别地，注释符将导致 \TeX\ 看不到输入行的行结束符，
-所以即使在状态 {\itshape M} 中遇到注释符，\TeX\ 也不会插入空格记号。
+注释符使 \TeX 忽略输入行中包括注释符在内的后续所有内容。特别地，行终止符也会被忽略。因此，即使 \TeX 在状态 {\itshape M} 中遇到注释符，也不会因遇到行终止符而插入空格记号。
 
-%%\spoint 15: invalid
 %\subsection{15: invalid}
-%\spoint 15: invalid
-\subsection{15：无效符}
+\subsection{15：无效字符}
 
 %Invalid characters cause an error message. \TeX\ remains in
 %the state it was in.
 %However, in the context of a control symbol an invalid character
 %is acceptable. Thus \verb>\^^?> does not cause any error messages.
-无效符会导致 \TeX\ 报错。\TeX\ 的状态会停留在无效字符之前的状态。
-不过，在控制符中的无效符是可以接受的，譬如 \verb>\^^?> 就不会导致 \TeX\ 报错。
+\TeX 遇到无效字符时会报错，而 \TeX 自身会停留在之前的状态。不过，在控制字符的上下文中，无效字符也是可以接受的。因此， \verb>\^^?> 不会触发报错。
 
 %%\point[cat12] Letters and other characters
 %\section{Letters and other characters}
@@ -823,7 +786,7 @@ Plain \TeX 格式使用 \cs{chardef} 命令%
 看下面的示例：
 \begin{disp}\verb>\string\end>\quad 可以得到字符记号 \quad
 \n{\char92$_{12}$e$_{12}$n$_{12}$d$_{12}$} \end{disp}
-注意{\em 转义符}\index{字符!转义符} \texttt{\char`\\}$_{12}$\label{use:escape}
+注意\emph{转义字符}\index{字符!转义字符} \texttt{\char`\\}$_{12}$\label{use:escape}
 出现在输出中是因为 \cs{escapechar} 的值等于反斜线的字符编码。
 将 \cs{escapechar} 改为另一个值将使得 \cs{string} 输出另一个字符.
 这个 \cs{string} 命令将在第~\ref{char}~章中进一步介绍。
@@ -909,8 +872,8 @@ Plain \TeX 格式使用 \cs{chardef} 命令%
 %character. Quite often this fact is used the other way around:
 %if an empty line is wanted for the layout of the input
 %one can put a comment sign on that line.
-\TeX\ 在遇到{\em 空白行}\index{行!空白行}之后，
-即在状态 {\itshape N} 时遇到分类码为 5 的字符（行结束符）之后，
+\TeX\ 在遇到\emph{空白行}\index{行!空白行}之后，
+即在状态 {\itshape N} 时遇到分类码为 5 的字符（行终止符）之后，
 就会向输入中插入一个 \csterm par\par 记号。最好是明白这是如何发生的：
 因为 \TeX\ 在遇到空格符之外的任何字符都会离开状态{\itshape N}，
 所以能够形成 \cs{par} 的输入行所包含字符的分类码肯定皆为 10；
@@ -1000,7 +963,7 @@ Plain \TeX\ 提供了 \cs{par} 的“同义词” \cs{endgraf}。详见第~\ref{
 %or are even generated there, but still do not wind up in the
 %output. These are the \gram{optional spaces} that the
 %syntax of \TeX\ allows in various places.
-另一方面，行结束符可以产生空格，并且可被输出。还有第三种空格：
+另一方面，行终止符可以产生空格，并且可被输出。还有第三种空格：
 它可以通过输入处理器，甚至可在输入处理器中生成，
 但是依然没有机会被输出，它们便是 \gram{optional spaces}（可选空格），
 \TeX\ 语法的多个地方都允许出现这种空格。
@@ -1023,7 +986,7 @@ Plain \TeX\ 提供了 \cs{par} 的“同义词” \cs{endgraf}。详见第~\ref{
 %or glue specification (for example, between \n{plus} and \n{1fil}).
 %Also, the definition of \gr{equals} allows \gr{optional spaces}
 %before the \n= sign.
-\TeX\ 的语法中有“{\em 可选空格}”\index{空格!可选空格}与“{\em 单个可选空格}”的概念：
+\TeX\ 的语法中有“\emph{可选空格}”\index{空格!可选空格}与“\emph{单个可选空格}”的概念：
 \begin{disp}\gr{one optional space} $\longrightarrow$
 \gr{space token} $|$ \gr{empty}\nl
 \gr{optional spaces} $\longrightarrow$
@@ -1052,7 +1015,7 @@ Plain \TeX\ 提供了 \cs{par} 的“同义词” \cs{endgraf}。详见第~\ref{
 \item 数值可被 \gr{one optional space} 分割。这样防止了偶然的失误（见第~\ref{number}~章）%
 并加速了处理过程，因为 \TeX\ 检测 \gram{number} 在何处终止更容易。不过，
 要注意并非每个“数值”都是 \gram{number}：例如 \cs{magstep2} 中的 {\tt 2} 并非数字，
-而是单个记号并且是 \cs{magstep} 宏的参量，因此在其之后的空格或行结束符是有效的。
+而是单个记号并且是 \cs{magstep} 宏的参量，因此在其之后的空格或行终止符是有效的。
 另一个例子是宏参数中的数字，例如 \n{\#1}：因为一个宏最多允许有 9 个参数，
 只需在参数字符之后扫描一位数字即可。
 
@@ -1116,7 +1079,7 @@ yet another
 %after a control word.
 控制词之后的空格会被忽略。不过这个不是可选空格的例子，
 只是因为 \TeX\ 在控制词之后会进入状态 {\itshape S} 而已。
-同样，控制词之后的行结束符也会被忽略。
+同样，控制词之后的行终止符也会被忽略。
 
 %Numbers are delimited by only \gr{one optional space},
 %but still
@@ -1142,7 +1105,7 @@ yet another
 %has no effect.
 当 \TeX\ 在状态 {\itshape N} 中时，空格会被忽略。
 当 \TeX\ 在竖直模式中时，空格记号（就是那些起初未被忽略的空格）会被忽略。
-例如下面第一个盒子之后（由行结束符生成的）的空格会被忽略：
+例如下面第一个盒子之后（由行终止符生成的）的空格会被忽略：
 \begin{verbatim}
 \par
 \hbox{a}
@@ -1183,7 +1146,7 @@ Plain \TeX\ 和 \LaTeX\ 都定义了一个 \cs{obeyspaces} 宏，
 %The active spaces in \LaTeX\ will immediately switch to horizontal
 %mode, so that each space is significant.
 在实现多行抄录环境时，还需要另一个 \cs{obeylines} 宏：
-它将每个行结束符定义为 \cs{par} 命令，使得下面各行都在竖直模式中开始。
+它将每个行终止符定义为 \cs{par} 命令，使得下面各行都在竖直模式中开始。
 此时活动空格展开的空格记号在竖直模式中将会被忽略，即空白行将会被删除。
 为此我们可以修改上述 \verb>\space> 宏的定义如下：
 \begin{verbatim}
@@ -1236,7 +1199,7 @@ Plain \TeX\ 和 \LaTeX\ 都定义了一个 \cs{obeyspaces} 宏，
 还有在前文中提到过的，\TeX\ 的输入处理器（在状态 {\itshape M} 中）%
 会将所有分类码为 10 的记号转化为真正的空格：它们的字符编码为 32。
 任何分类码为~10~的空格称为 \gram{space token}\index{空格!空格记号}。
-那些字符编码不是 32 的空格记号被称为{\em 滑稽空格}\index{空格!滑稽空格}。
+那些字符编码不是 32 的空格记号被称为\emph{滑稽空格}\index{空格!滑稽空格}。
 
 %\begin{example} After giving the character \n Q
 %the category code of a space character,
@@ -1338,7 +1301,7 @@ macro:-> a b
 类似地，控制序列之后的空格也因为分类码改变而被显现出来。
 
 %\section{More about line ends}
-\section{行结束符的更多知识}
+\section{行终止符的更多知识}
 
 %\TeX\ accepts lines from an input file, excluding any line
 %terminator that may be used.
@@ -1366,7 +1329,7 @@ macro:-> a b
 %need not have category code~5\index{category!5}, end of line.
 完成上述处理后，\TeX\ 会将 \cs{endlinechar} 所表示的字符置于行尾，
 除非 \cs{endlinechar} 的字符编码为负数或者大于 255。
-注意这个行结束符也可以不是分类码为 5 的字符\index{category!5}。
+注意这个行终止符也可以不是分类码为 5 的字符\index{category!5}。
 
 %\subsection{Obeylines}
 \subsection{保持各行}
@@ -1385,7 +1348,7 @@ macro:-> a b
 %The comment signs prevent \TeX\ from seeing the terminator of the
 %\alt
 %lines of this definition, and expanding it since it is active.
-有时候会期望会希望输入文本中的行结束符能够在排版输出后保持。
+有时候会期望会希望输入文本中的行终止符能够在排版输出后保持。
 \message{Check spurious space obeylines+1}%
 \cstoidx obeylines\par\howto Change the meaning of the line end\par
 下面的代码可以可以解决这一问题：
@@ -1463,7 +1426,7 @@ macro:-> a b
 %the argument is terminated by the line end.
 %See page~\pageref{pick:eol} for a worked-out example.
 有时，你可能想改变 \cs{endlinechar} 或者 \verb.^^M. 的分类码%
-以获得一些特殊效果，例如让宏的参量用行结束符定界。
+以获得一些特殊效果，例如让宏的参量用行终止符定界。
 参考第~\pageref{pick:eol}~页给出的例子。
 
 %There are  a couple of traps. Consider the following:
@@ -1505,7 +1468,7 @@ macro:-> a b
 %\endlinechar=-1
 %\end{verbatim}
 %which treats all lines as if they end with a comment.
-当然，在多数情况下没必要将行结束符替换为另一个字符；设置
+当然，在多数情况下没必要将行终止符替换为另一个字符；设置
 \begin{verbatim}
 \endlinechar=-1
 \end{verbatim}
@@ -1514,7 +1477,7 @@ macro:-> a b
 %%\spoint More remarks about the end-of-line character
 %\subsection{More remarks about the end-of-line character}
 %\spoint More remarks about the end-of-line character
-\subsection{行结束符的更多注记}
+\subsection{行终止符的更多注记}
 
 %The character that \TeX\ appends at the end of an input line
 %is treated like any other character. Usually one is not aware
@@ -1659,7 +1622,7 @@ macro:-> a b
 \begin{verbatim}
 \catcode`\^^M=13{}
 \end{verbatim}
-使得行结束符变成活动符，随后 \TeX\ 便会报错“未定义的控制序列”，
+使得行终止符变成活动符，随后 \TeX\ 便会报错“未定义的控制序列”，
 即对文本行中的命令的执行影响到 \TeX\ 输入处理器对该行文本的扫描过程。
 
 %By contrast,
@@ -1676,8 +1639,8 @@ macro:-> a b
 \begin{verbatim}
 \catcode`\^^M=13
 \end{verbatim}
-却不会出错。这是因为 \TeX\ 输入处理器是在扫描数值 13 时读到行结束符，
-也就是说在那时赋值还未完成，因此行结束符会被视为数值的定界符，即可选空格。
+却不会出错。这是因为 \TeX\ 输入处理器是在扫描数值 13 时读到行终止符，
+也就是说在那时赋值还未完成，因此行终止符会被视为数值的定界符，即可选空格。
 
 %%\spoint Recursive invocation of the input processor
 %\subsection{Recursive invocation of the input processor}
