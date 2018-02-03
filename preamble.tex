@@ -98,7 +98,8 @@
 % these are fine
 \def\handbreak{\\ \message{^^JManual break!!!!^^J}}
 \def\nl{\protect\\}\def\n#1{{\tt #1}}
-\def\cs#1{\texorpdfstring{{\tt\char`\\#1}}{\textbackslash#1}} %\def\cs#1{{\tt\char`\\#1}}
+\protected\def\cs#1{\texttt{\textbackslash#1}}
+\pdfstringdefDisableCommands{\def\cs#1{\textbackslash#1}}
 \let\csc\cs
 \def\lb{{\tt\char`\{}}\def\rb{{\tt\char`\}}}
 \def\gr#1{\texorpdfstring{$\langle$#1$\rangle$}{<#1>}} %\def\gr#1{$\langle$#1$\rangle$}
