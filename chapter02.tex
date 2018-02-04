@@ -848,14 +848,7 @@ Plain \TeX 格式使用 \cs{chardef} 命令%
 %character. Quite often this fact is used the other way around:
 %if an empty line is wanted for the layout of the input
 %one can put a comment sign on that line.
-\TeX\ 在遇到\emph{空白行}\index{行!空白行}之后，
-即在状态 {\itshape N} 时遇到分类码为 5 的字符（行终止符）之后，
-就会向输入中插入一个 \csterm par\par 记号。最好是明白这是如何发生的：
-因为 \TeX\ 在遇到空格符之外的任何字符都会离开状态{\itshape N}，
-所以能够形成 \cs{par} 的输入行所包含字符的分类码肯定皆为 10；
-特别地，该行不能包含注释符。
-此事实常常以另一种方式被用到：如果输入格式中需要保留空白行，
-我们可以给该行加上一个注释符。
+在遇到空行\index{行!空行}之后，也就是在状态 {\itshape N} 遇到行终止符（分类码为 5）之后，会向输入流中插入一个 \csterm par\par 记号。具体来说，由于 \TeX 遇到任何非空格字符，都会从状态 {\itshape N} 转移走，因此空行只能包含分类码为 10 的字符。特别地，空行不能以注释符结尾。因此，若输入文件中因格式美观需要保留空行，则可以在该行中放一个注释符。这算是 \TeX 这一特性的常见用法。
 
 %Two consecutive empty lines generate two \cs{par} tokens.
 %For all practical purposes this is equivalent to one \cs{par},
@@ -863,22 +856,18 @@ Plain \TeX 格式使用 \cs{chardef} 命令%
 %in vertical mode a \cs{par} only
 %exercises the page builder,
 %and clears the paragraph shape parameters.
-连续两个空行产生两个 \cs{par} 记号，实际上它们等同于一个 \cs{par} 记号，
-这是因为在第一个 \cs{par} 之后，\TeX\ 进入竖直模式，而在竖直模式中的
-\cs{par} 只会触发 \TeX\ 的页面构建器以及清除段落形状参数。
+两个连续的空行产生两个连续的 \cs{par} 记号，而实际上它们等同于一个 \cs{par} 记号：在遇见第一个 \cs{par} 记号之后，\TeX 会进入竖直模式，而在竖直模式中，\cs{par} 只起到触发 \TeX 页面构建器并清空段落形状参数的作用。
 
 %A \cs{par} is also inserted into the input when \TeX\ sees a
 %\gram{vertical command} in unrestricted horizontal mode.
 %After the \cs{par} has been read and expanded, the
 %vertical command is examined anew (see Chapters~\ref{hvmode}
 %and~\ref{par:end}).
-在非受限水平模式中遇到 \gram{vertical command}（竖直命令）时，
-\TeX\ 也会向输入中插入一个 \cs{par} 记号，并对其读取和展开，
-然后再重新处理竖直命令（见第~\ref{hvmode}~和~\ref{par:end}~章）。
+\TeX 于非受限水平模式（unrestricted horizontal mode）遇到竖直命令（\gram{vertical command}）时，也会向输入插入一个 \cs{par} 记号。当该 \cs{par} 被读取和展开时，上述竖直命令会被重新处理（详见第~\ref{hvmode}~章和~\ref{par:end}~章）。
 
 %The \cs{par} token may also be inserted by the \cs{end}
 %command that finishes off the run of \TeX; see Chapter~\ref{output}.
-\cs{end} 命令也会插入 \cs{par} 记号，然后结束 \TeX\ 的运行；见第~\ref{output}~章。
+\cs{end} 命令\liamfnote{注意这里说的不是 \LaTeX 中结束环境的 \cs{end}\marg{\meta{env-name}} 命令，而就是 \cs{end} 这个 Plain \TeX 命令。}也会向输入插入 \cs{par} 记号，而后结束 \TeX\ 的运行；见第~\ref{output}~章。
 
 %It is important to realize that \TeX\ does what it normally does
 %when encountering an empty line
@@ -890,10 +879,7 @@ Plain \TeX 格式使用 \cs{chardef} 命令%
 %In order to continue to be able  to cause the actions normally
 %associated with \cs{par}, the synonym \cs{endgraf} is
 %available in the plain format. See further Chapter~\ref{par:end}.
-要知道 \TeX\ 在遇到空白行时通常所作的事情（结束当前段落）取决于 \cs{par} 记号的默认定义。
-如果重定义 \cs{par}，那么空白行和竖直命令的行为可能就完全不同了，
-甚至可以藉此实现一些不同寻常的效果。为了能够得到与 \cs{par} 相同的行为，
-Plain \TeX\ 提供了 \cs{par} 的“同义词” \cs{endgraf}。详见第~\ref{par:end}~章。
+值得注意的是，遇到空行时 \TeX 通常的行为（结束当前自然段）完全取决于 \cs{par} 记号的默认定义。重定义 \cs{par} 后，空行和竖直命令的行为可能就完全两样了；因此，我们可以借此实现一些特别的效果。在这种情况下，为了使用正常的 \cs{par} 的功能，Plain \TeX 提供了其同义词 \cs{endgraf}。详见第~\ref{par:end}~章。
 
 %The \cs{par} token is not allowed to be part of a macro
 %argument, unless the macro has been declared to be \cs{long}.
@@ -901,10 +887,7 @@ Plain \TeX\ 提供了 \cs{par} 的“同义词” \cs{endgraf}。详见第~\ref{
 %prompts \TeX\ to give a `runaway argument' message.
 %Control sequences that have been \cs{let} to \cs{par}
 %(such as \cs{endgraf}) are allowed, however.
-\cs{par} 记号不可以出现在宏参量中，除非是使用 \cs{long} 定义的宏。
-对于非 \cs{long} 定义的宏，如果 \cs{par} 出现在参量中，
-\TeX\ 会给出“runaway argument”的错误信息。不过，使用 \cs{let}
-定义的指向 \cs{par} 记号的控制序列（例如 \cs{endgraf}）则可以出现。
+\cs{par} 记号不能出现在非 \cs{long} 声明的宏的参数之中。对于非 \cs{long} 声明的宏，若其参数中包含 \cs{par} 记号，则 \TeX 会给出「runaway argument」的报错。不过，使用 \cs{let} 定义的与 \cs{par} 同义的控制序列（例如 \cs{endgraf}）是允许出现在这些宏的参数之中的。
 
 %\section{Spaces}
 \section{空格}
