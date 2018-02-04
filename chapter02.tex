@@ -908,10 +908,8 @@ Plain \TeX 格式使用 \cs{chardef} 命令%
 %These are for instance the spaces at the beginning
 %of an input line, and the spaces following the one
 %that lets \TeX\ switch to state~{\itshape S}.
-从对 \TeX\ 输入处理器的内部状态的讨论中，
-容易知道有些空格是不可能被输出的；实际上它们甚至都无法通过输入处理器。
-例如输入行开头的空格，还有放在让 \TeX\ 进入状态 {\itshape S} 的字符之后的空格。
-
+在有关输入处理器内部状态的讨论中，我们不难发现，有些空格是永远不会输出的。事实上，在输入处理器这个步骤就已经被抛弃了。输入行开头的空格以及在让 \TeX 进入状态 {\itshape S} 的字符之后的空格。
+%
 %On the other hand, line ends can generate spaces (which are not
 %in the input) that may wind up in the output.
 %There is a third kind of space: the spaces that get past the
@@ -919,14 +917,11 @@ Plain \TeX 格式使用 \cs{chardef} 命令%
 %or are even generated there, but still do not wind up in the
 %output. These are the \gram{optional spaces} that the
 %syntax of \TeX\ allows in various places.
-另一方面，行终止符可以产生空格，并且可被输出。还有第三种空格：
-它可以通过输入处理器，甚至可在输入处理器中生成，
-但是依然没有机会被输出，它们便是 \gram{optional spaces}（可选空格），
-\TeX\ 语法的多个地方都允许出现这种空格。
+另一方面，行终止符尽管不在输入中，但能产生可输出的空格。
 
-%%\spoint Optional spaces
+除此之外，还有第三种空格：它们可以通过输入处理器，甚至干脆由输入处理器产生，但也不会被输出。那便是可选空格（\gram{optional spaces}）。在 \TeX 的语法中，很多地方都会出现此类空格。
+
 %\subsection{Optional spaces}
-%\spoint Optional spaces
 \subsection{可选空格}
 
 %The syntax of \TeX\ has the concepts of \indextermbus{optional}{spaces}
