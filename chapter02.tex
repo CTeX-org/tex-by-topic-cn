@@ -848,7 +848,7 @@ Plain \TeX 格式使用 \cs{chardef} 命令%
 %character. Quite often this fact is used the other way around:
 %if an empty line is wanted for the layout of the input
 %one can put a comment sign on that line.
-在遇到空行\index{行!空行}之后，也就是在状态 {\itshape N} 遇到行终止符（分类码为 5）之后，会向输入流中插入一个 \csterm par\par 记号。具体来说，由于 \TeX 遇到任何非空格字符，都会从状态 {\itshape N} 转移走，因此空行只能包含分类码为 10 的字符。特别地，空行不能以注释符结尾。因此，若输入文件中因格式美观需要保留空行，则可以在该行中放一个注释符。这算是 \TeX 这一特性的常见用法。
+在遇到空行\index{行!空行}之后，也就是在状态 {\itshape N} 遇到行终止符（分类码为 5）之后，会向输入中插入一个 \csterm par\par 记号。具体来说，由于 \TeX 遇到任何非空格字符，都会从状态 {\itshape N} 转移走，因此空行只能包含分类码为 10 的字符。特别地，空行不能以注释符结尾。因此，若输入文件中因格式美观需要保留空行，则可以在该行中放一个注释符。这算是 \TeX 这一特性的常见用法。
 
 %Two consecutive empty lines generate two \cs{par} tokens.
 %For all practical purposes this is equivalent to one \cs{par},
@@ -896,10 +896,7 @@ Plain \TeX 格式使用 \cs{chardef} 命令%
 %\indextermbus{space}{character} and \indextermbus{space}{token} in the
 %initial processing stages of \TeX. The topic of spacing in text
 %typesetting is treated in Chapter~\ref{space}.
-这一节讨论空格字符\index{字符!空格符}的一些表现，
-以及 \TeX\ 初始化进程中的空格记号\index{记号!空格记号}。
-至于文本排版的空格，将在第~\ref{space}~章中讨论。
-
+这一节讨论有关空格符\index{字符!空格符}和空格记号\index{记号!空格记号}在输入处理器的一些内容。有关文本排版中的空格，留待第~\ref{space}~章讨论。
 
 %\subsection{Skipped spaces}
 \subsection{被忽略的空格}
