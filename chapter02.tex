@@ -926,10 +926,11 @@ Plain \TeX 格式使用 \cs{chardef} 命令%
 
 %The syntax of \TeX\ has the concepts of \indextermbus{optional}{spaces}
 %and `one optional space':
-%\begin{disp}\gr{one optional space} $\longrightarrow$
-%\gr{space token} $|$ \gr{empty}\nl
-%\gr{optional spaces} $\longrightarrow$
-%\gr{empty} $|$ \gr{space token}\gr{optional spaces}\end{disp}
+\TeX 语法中有所谓\cindextermbus{可选}{空格}与\emph{单个可选空格}的概念：
+\begin{disp}\gr{one optional space} $\longrightarrow$
+\gr{space token} $|$ \gr{empty}\nl
+\gr{optional spaces} $\longrightarrow$
+\gr{empty} $|$ \gr{space token}\gr{optional spaces}\end{disp}
 %In general, \gr{one optional space} is allowed after
 %numbers and glue specifications, while \gr{optional spaces} are
 %allowed whenever a space can occur inside a number
@@ -937,11 +938,6 @@ Plain \TeX 格式使用 \cs{chardef} 命令%
 %or glue specification (for example, between \n{plus} and \n{1fil}).
 %Also, the definition of \gr{equals} allows \gr{optional spaces}
 %before the \n= sign.
-\TeX\ 的语法中有“\emph{可选空格}”\index{空格!可选空格}与“\emph{单个可选空格}”的概念：
-\begin{disp}\gr{one optional space} $\longrightarrow$
-\gr{space token} $|$ \gr{empty}\nl
-\gr{optional spaces} $\longrightarrow$
-\gr{empty} $|$ \gr{space token}\gr{optional spaces}\end{disp}
 通常，\gr{one optional space} 允许出现在数值以及粘连描述之后，
 而 \gr{optional spaces} 允许出现在数值内部（比如在负号和数字之间）%
 或者粘连描述内部（比如在 \n{plus} 和 \n{1fil} 之间）可以有空格的地方。
