@@ -1088,7 +1088,7 @@ Plain \TeX 和 \LaTeX 格式都定义了名为 \cs{obeyspaces} 的宏。该宏�
 \end{enumerate}
 
 %\subsection{\gr{space token}}
-\subsection{\gr{space token}}
+\subsection{空格记号：\gr{space token}}
 
 %Spaces are anomalous in \TeX.
 %For instance, the \cs{string} operation
@@ -1101,13 +1101,7 @@ Plain \TeX 和 \LaTeX 格式都定义了名为 \cs{obeyspaces} 的宏。该宏�
 %\gram{space token}\indexterm{space! token}.
 %Space tokens with character
 %code not equal to 32 are called \indextermbus{funny}{spaces}.
-空格在 \TeX\ 中有些反常。
-例如，\cs{string} 操作会对所有的字符赋以分类码12 \index{category!12}，
-唯独对空格例外，它还是坚持自己的分类码为 10 \index{category!10}。
-还有在前文中提到过的，\TeX\ 的输入处理器（在状态 {\itshape M} 中）%
-会将所有分类码为 10 的记号转化为真正的空格：它们的字符编码为 32。
-任何分类码为~10~的空格称为 \gram{space token}\index{空格!空格记号}。
-那些字符编码不是 32 的空格记号被称为\emph{滑稽空格}\index{空格!滑稽空格}。
+在 \TeX 中，空格总是表现得与众不同。举例来说，\cs{string} 会将所有字符的分类码设置为 12\index{category!12}，唯独空格的分类码是 10 \index{category!10}。此外，如前文所述，在状态 {\itshape M} 中，\TeX 的输入处理器会将所有分类码为 10 的字符转换为真正的空格：字符编码会被设置为 32。于是，任何分类码为 10 的字符记号称为\cindextermsub{空格}{记号}（\gram{space token}）。字符编码不是 32 的空格记号称为\cindextermbus{滑稽}{空格}。
 
 %\begin{example} After giving the character \n Q
 %the category code of a space character,
@@ -1125,11 +1119,11 @@ Plain \TeX 和 \LaTeX 格式都定义了名为 \cs{obeyspaces} 的宏。该宏�
 %in the definition.
 %\end{example}
 \begin{example}
-将空格字符的分类码赋予字符 \n{Q}，并在宏定义中使用它：
+将字符 \n{Q} 的分类码设置为空格字符之后，如下定义
 \begin{verbatim}
 \catcode`Q=10 \def\q{aQb}
 \end{verbatim}
-那么，我们可得到
+可得
 \begin{verbatim}
 \show\q
 macro:-> a b
@@ -1142,13 +1136,9 @@ macro:-> a b
 %However, `since the various forms of
 %space tokens are almost identical in behaviour, there's no
 %point dwelling on the details'; see~\cite{Knuth:TeXbook}~p.~377.
-字符编码不为 32 的空格记号可以用 \cs{uppercase} 等命令生成。
-然而，`由于各种不同的空格记号的表现几乎是一致的，
-纠缠于细节毫无意义'；见~\cite{Knuth:TeXbook} 第~377~页。
+字符编码不为 32 的空格记号可以用 \cs{uppercase} 等命令生成。不过，「由于字符编码不同的空格记号的行为是一致的，所以纠缠于这类细节是没有意义的」。详见~\cite{Knuth:TeXbook} 第~377~页。
 
-%%\spoint Control space
 %\subsection{Control space}
-%\spoint Control space
 \subsection{控制空格}
 
 %The `control space' command \verb-\-\n{\char32}
