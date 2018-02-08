@@ -1027,54 +1027,44 @@ yet another
 %\hbox{b}
 %\end{verbatim}
 %has no effect.
-当 \TeX 处于新行状态 {\itshape N} 时，空格也会被忽略。当 \TeX 处于竖直模式工作时，空格记号（也就是在一开始未被忽略的空格）会被忽略。例如说，下例第一个盒子之后由行终止符生成的空格记号会被忽略。
+当 \TeX 处于新行状态 {\itshape N} 时，空格也会被忽略。当 \TeX 处于竖直模式工作时，空格记号（也就是在一开始未被忽略的空格）会被忽略。例如说，下例第一个盒子之后由行终止符生成的空格记号会被忽略\liamfnote{此处 \cs{hbox}\marg{\meta{内容物}} 并不会使 \TeX 从由 \cs{par} 记号引入的竖直模式中切换回水平模式。}。
 \begin{verbatim}
 \par
 \hbox{a}
 \hbox{b}
 \end{verbatim}
 
-%Both plain \TeX\ and \LaTeX\ define a command \cs{obeyspaces}
-%\altt
-%that makes spaces significant: after one space other spaces are no
-%longer ignored. In both cases the basis is
-%\altt
-%\begin{verbatim}
-%\catcode`\ =13 \def {\space}
-%\end{verbatim}
-%However, there is a difference between the two cases:
-%in plain \TeX\ \begin{verbatim}
-%\def\space{ }
-%\end{verbatim}
-%while in \LaTeX\ \begin{verbatim}
-%\def\space{\leavevmode{} }
-%\end{verbatim}
-%although the macros bear other names there.
-Plain \TeX\ 和 \LaTeX\ 都定义了一个 \cs{obeyspaces} 宏，
-这使得空格都是有效的，比如控制词后的空格以及空格后的空格都不会被忽略。
-这个宏的基本实现方式为
-\footnote{译注：原文最后两个段落的描述有些错乱，已经稍作修订。}
+% Both plain \TeX\ and \LaTeX\ define a command \cs{obeyspaces}
+% \altt
+% that makes spaces significant: after one space other spaces are no
+% longer ignored. In both cases the basis is
+% \altt
+Plain \TeX 和 \LaTeX 格式都定义了名为 \cs{obeyspaces} 的宏。该宏能使每个空格都是有意义的：在一个空格之后，连续的空格不会被忽略。两种格式中，\cs{obeyspaces} 的基本形式是一致的。
 \begin{verbatim}
-\def\space{ }
 \catcode`\ =13 \def {\space}
 \end{verbatim}
-
-%The difference between the two macros becomes
-%apparent in the context of \cs{obeylines}:
-%each line end is then a \cs{par} command, implying that
-%each next line is started in vertical mode.
-%An active space is expanded by the plain macro to a space token,
-%which is ignored in vertical mode.
-%The active spaces in \LaTeX\ will immediately switch to horizontal
-%mode, so that each space is significant.
-在实现多行抄录环境时，还需要另一个 \cs{obeylines} 宏：
-它将每个行终止符定义为 \cs{par} 命令，使得下面各行都在竖直模式中开始。
-此时活动空格展开的空格记号在竖直模式中将会被忽略，即空白行将会被删除。
-为此我们可以修改上述 \verb>\space> 宏的定义如下：
+% However, there is a difference between the two cases:
+% in plain \TeX\
+不过，对于 \cs{space} 的定义，两种格式有所区别。在 Plain \TeX 中，\cs{space} 的定义如下
+\begin{verbatim}
+\def\space{ }
+\end{verbatim}
+在 \LaTeX 中，同名的宏则定义为
+% while in \LaTeX\
 \begin{verbatim}
 \def\space{\leavevmode{} }
 \end{verbatim}
-这样，活动空格将会让 \TeX\ 立即切换到水平模式，从而保留了每个空格。
+% although the macros bear other names there.
+
+% The difference between the two macros becomes
+% apparent in the context of \cs{obeylines}:
+% each line end is then a \cs{par} command, implying that
+% each next line is started in vertical mode.
+% An active space is expanded by the plain macro to a space token,
+% which is ignored in vertical mode.
+% The active spaces in \LaTeX\ will immediately switch to horizontal
+% mode, so that each space is significant.
+在 \cs{obeylines} 的上下文中，比较容易看出这两种定义的区别。使用 \cs{obeylines} 后，每个行终止符都是一个 \cs{par} 命令。因此 \TeX 开始处理每一行时，都处于竖直模式。在 Plain \TeX 中，活动空格被展开为空格记号，因此在垂直模式中会被忽略。但在 \LaTeX 中，首先会离开竖直模式并进入水平模式，因此每个空格就都是有意义的了。
 
 %\subsection{More ignored spaces}
 \subsection{空格被忽略的其他情形}
