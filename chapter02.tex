@@ -495,7 +495,7 @@ Plain \TeX 格式使用 \cs{chardef} 命令%
 %other than control space.
 %An end-of-line character encountered in this state
 %results in a space token.
-显然状态 {\itshape M} 是输入处理器最常见的状态，它表示「处理到输入行的中间」（middle of line）。
+显然，状态 {\itshape M} 是输入处理器最常见的状态，它表示「处理到输入行的中间」（middle of line）。
 当输入处理器遇到分类码为 1--4、6--8 以及 11--13 的字符或者控制字符（不包括控制空格）之后，就会进入该状态。
 在改状态下，行终止符会被替换为空格记号。
 
@@ -997,19 +997,15 @@ yet another
 此处，\cs{ignorespaces} 吃掉了第二、第三两次调用之后的空格，而这些空格是不希望被排版输出的。不过，在 \cs{ignorespaces} 之后的空行仍然会插入 \cs{par} 记号。
 \end{itemize}
 
-%%\spoint Ignored and obeyed spaces
 %\subsection{Ignored and obeyed spaces}
-%\spoint Ignored and obeyed spaces
-\subsection{被忽略的和被保留的空格}
+\subsection{被忽略和被保留的空格}
 
 %After control words spaces are ignored. This is not an
 %instance of optional spaces, but it is due to the fact that
 %\TeX\ goes into state~{\itshape S}, skipping spaces, after control
 %words. Similarly an end-of-line character is skipped
 %after a control word.
-控制词之后的空格会被忽略。不过这个不是可选空格的例子，
-只是因为 \TeX\ 在控制词之后会进入状态 {\itshape S} 而已。
-同样，控制词之后的行终止符也会被忽略。
+\TeX 会忽略控制词之后的空格。不过这不是因为控制词之后的空格是可选空格，而是因为 \TeX 在遇到控制词之后会进入状态 {\itshape S}，从而忽略空格。类似地，控制词之后的行终止符也会被忽略。
 
 %Numbers are delimited by only \gr{one optional space},
 %but still
@@ -1017,10 +1013,8 @@ yet another
 %because \TeX\ goes into state~{\itshape S} after the first
 %space token. The second space is therefore skipped
 %in the input processor of \TeX; it never becomes a space token.
-数值只能被 \gr{one optional space} 定界，但是
-\begin{disp}\n{a\char92 count0=3\char32\char32b}\quad 仍然给出 \quad `ab',\end{disp}
-这是因为 \TeX\ 在第一个空格记号之后会进入状态 {\itshape S}，
-因此第二个空格永远也不可能变成空格记号。
+数字由单个可选空格界定，但是
+\begin{disp}\n{a\char92 count0=3\char32\char32b}\quad 的输出是 \quad `ab'。\end{disp}这是因为 \TeX 在第一个空格记号之后会进入状态 {\itshape S}，从而第二个空格会被 \TeX 的输入处理器忽略，永远不会变成空格记号。
 
 %Spaces are skipped furthermore when \TeX\ is in state~{\itshape N},
 %newline. When \TeX\ is processing in vertical mode
@@ -1033,9 +1027,7 @@ yet another
 %\hbox{b}
 %\end{verbatim}
 %has no effect.
-当 \TeX\ 在状态 {\itshape N} 中时，空格会被忽略。
-当 \TeX\ 在竖直模式中时，空格记号（就是那些起初未被忽略的空格）会被忽略。
-例如下面第一个盒子之后（由行终止符生成的）的空格会被忽略：
+当 \TeX 处于新行状态 {\itshape N} 时，空格也会被忽略。当 \TeX 处于竖直模式工作时，空格记号（也就是在一开始未被忽略的空格）会被忽略。例如说，下例第一个盒子之后由行终止符生成的空格记号会被忽略。
 \begin{verbatim}
 \par
 \hbox{a}
