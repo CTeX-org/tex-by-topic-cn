@@ -1158,15 +1158,14 @@ macro:-> a b
 控制空格命令 \n{\cs{\textvisiblespace}}\cstoidx\char32\par 给出一个与 \verb=\spacefactor= 等于 1000 时空格记号宽度一样的空格。控制空格不能被当做是空格记号，也不能理解为会展开成一个空格记号的宏（例如 Plain \TeX 中的 \cs{space}）。举例来说，\TeX 会忽略所有输入行开头的空格，但是控制空格是一个水平命令（\gr{horizontal command}），故而 \TeX 在遇到它之后会从竖直模式切换到水平模式（并插入一个缩进盒子）。有关空白因子的介绍，详见第~\ref{space}~章；有关水平模式和竖直模式的介绍，详见第~\ref{hvmode}~。
 
 %\subsection{`\n{\char32}'}
-\subsection{可见空格}
+\subsection{可见空格：\textvisiblespace}
 
 %The explicit symbol `\n{\char32}' for a space
 %is character~32 in the Computer Modern typewriter typeface.
 %However, switching to \cs{tt} is not sufficient to get
 %spaces denoted this way, because spaces will still
 %receive special treatment in the input processor.
-显式的空格符号`\verb*- -'是计算机现代打字机字体中字符编码为 32 的字符，
-但仅使用 \cs{tt} 是无法将其显现出来的，因为空格在输入处理器中受到了特别处理。
+在 Computer Modern 的打字机字体中，字符编码为 32 的字符是显式空格符号 `\textvisiblespace'。不过，简单地使用 \cs{tt} 命令是无法将其打印出来的。这是因为空格在输入处理器中有特别的处理。
 
 %One way to
 %let spaces be typeset by \n{\char32}
@@ -1180,14 +1179,11 @@ macro:-> a b
 %is only entered after a character with category code~10.
 %Similarly, spaces after a control sequence are made
 %visible by changing the category code of the space character.
-使空格字符 \verb*- - 现形的一种方法是设置
+使空格字符 \textvisiblespace 显形的一种方法是将空格字符的分类码设置为 12：
 \begin{verbatim}
 \catcode`\ =12
 \end{verbatim}
-这样 \TeX\  便会将空格字符作为编码为 32 的字符排印出来，
-而且后续的空格也不再被忽略，同样会被排印出来：
-状态 {\itshape S} 只是在分类码为 10 的字符之后才会出现。
-类似地，控制序列之后的空格也因为分类码改变而被显现出来。
+此时，\TeX 会将空格字符作为编码为 32 的字符排版出来。此外，连续的空格不会被忽略。这是因为状态 {\itshape S} 只是在遇到分类码为 10 的字符后才会进入。类似地，控制序列之后的空格也会因分类码的改变而显形。
 
 %\section{More about line ends}
 \section{行终止符的更多知识}
