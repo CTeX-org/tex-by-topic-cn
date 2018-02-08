@@ -1199,12 +1199,7 @@ macro:-> a b
 %the block storage mode on \key{IBM} mainframe computers.
 %For some computer-specific problems with end-of-line
 %characters, see~\cite{B:ctrl-M}.
-\TeX\ 从输入文件中获得文本行，并从中消除行终止符。正是这一行为，
-使得 \TeX\ 不依赖于各个操作系统特定的\indextermsub{行}{终止符}%
-（\key{CR}-\key{LF}，\key{LF}，或者在块存储系统中根本不存在）。
-文本行末尾的空白字符也会被移除。这样处理是由于历史原因：
-它与 \key{IBM} 大型计算机的块存储模式有关。
-在 \cite{B:ctrl-M} 中介绍了行尾符造成的一些计算机问题。
+\TeX 从输入文件中获取文本行，但不包括输入行中的行终止符。因此，\TeX 的行为不依赖操作系统以及\cindextermsub{行}{终止符}究竟是什么（\key{CR}-\key{LF}、\key{LF}抑或是在块存储系统里根本就不存在行终止符）。而后，\TeX 会移除输入行末尾的空格。这样处理是有历史原因的：\TeX 必须能够在 \key{IBM} 的大型计算机的块存储模式有关。对于由计算机的不同而造成的有关行终止符的问题，详见~\cite{B:ctrl-M}。
 
 %A~terminator character is then appended
 %with a character code of \cs{endlinechar},
@@ -1212,9 +1207,7 @@ macro:-> a b
 %is negative or more than~255.
 %Note that this terminator character
 %need not have category code~5\index{category!5}, end of line.
-完成上述处理后，\TeX\ 会将 \cs{endlinechar} 所表示的字符置于行尾，
-除非 \cs{endlinechar} 的字符编码为负数或者大于 255。
-注意这个行终止符也可以不是分类码为 5 的字符\index{category!5}。
+此后，字符编码为 \cs{endlinechar} 的行终止符会被追加在文本行的末尾；除非 \cs{endlinechar} 中保存的数值为负数或大于 255。注意，该行终止符的分类码不一定非得是 5\index{category!5}。
 
 %\subsection{Obeylines}
 \subsection{保持各行}
