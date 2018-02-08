@@ -941,9 +941,9 @@ Plain \TeX 格式使用 \cs{chardef} 命令%
 通常单个可选空格（\gr{one optional space}）允许出现在数字和粘连说明之后；而可选空格（\gr{optional spaces}）允许出现在数字或粘连中任意允许出现空格的地方（比如负号与数字之间，又比如 \n{plus} 和 \n{1fil} 之间）。此外，根据 \gr{equals} 的定义，可选空格允许出现在 \n{=} 之前。
 
 %Here are some examples of optional spaces.
-下面是可选空格的一些例子：
+以下是有关可选空格的一些例子：
 
-%\begin{itemize}
+\begin{itemize}
 %\item A number can be delimited by \gr{one optional space}.
 %This prevents accidents (see Chapter~\ref{number}),
 %and it speeds up processing, as \TeX\ can
@@ -955,13 +955,8 @@ Plain \TeX 格式使用 \cs{chardef} 命令%
 %is significant. Another example is a parameter number,
 %for example~\n{\#1}: since at most nine parameters are allowed, scanning
 %one digit after the parameter character suffices.
-\begin{itemize}
-\item 数值可被 \gr{one optional space} 分割。这样防止了偶然的失误（见第~\ref{number}~章）%
-并加速了处理过程，因为 \TeX\ 检测 \gram{number} 在何处终止更容易。不过，
-要注意并非每个“数值”都是 \gram{number}：例如 \cs{magstep2} 中的 {\tt 2} 并非数字，
-而是单个记号并且是 \cs{magstep} 宏的参量，因此在其之后的空格或行终止符是有效的。
-另一个例子是宏参数中的数字，例如 \n{\#1}：因为一个宏最多允许有 9 个参数，
-只需在参数字符之后扫描一位数字即可。
+\item \gr{one optional space} 可用于界定数字的范围。这有助于避免一些意外情况（见第~\ref{number}~章），同时能加速 \TeX 的处理过程——这是因为 \TeX 可借助单个可选空格更容易地界定当前正在读入的 \gram{number} 于何时结束。
+注意，并非每个「数值」都是 \gram{number}。例如说，\cs{magstep2} 中的 {\ttfamily 2} 就不是数字，而是作为 \cs{magstep} 的参数的单独的字符记号。因此，在其后加上空格或行终止符是有意义的。此外，宏参数中的数字，例如 \n{\#1}：因为一个宏最多允许有 9 个参数，故而只需在参数符后扫描一位数字即可\liamfnote{因而不需要单个可选空格来辅助界定数字的范围。}。
 
 %\item From the grammar of \TeX\
 %it follows that the
@@ -974,12 +969,7 @@ Plain \TeX 格式使用 \cs{chardef} 命令%
 %This is a potential source of strange accidents.
 %In most cases, appending a \cs{relax} token prevents
 %such mishaps.
-\item 根据 \TeX\ 的语法，关键字 \n{fill} 和 \n{filll}
-是由 \n{fil} 关键字以及一两个单独的 {\tt l} 关键字构成的%
-（见第~\pageref{keywords}~页的更详细讨论），
-因此其中允许可选空格的存在；比如 \n{fil L l} 也是有效的关键字。
-不过这也许会导致 \TeX\ 误解你的本意，
-对于大多数情形，在这种关键字后添加一个 \cs{relax} 可以防止这种灾难。
+\item 根据 \TeX 的语法，关键字 \n{fill} 及 \n{filll} 由 \n{fil} 与若干单独的 {\ttfamily l} 字符记号组成（详见第~\pageref{keywords}~页）；因此此处允许可选空格。据此，例如 \hbox{\n{fil\textvisiblespace L\textvisiblespace l}} 是合法的关键字\liamfnote{\TeX 的关键字不区分大小写，并且在关键字前允许有可选空格。}。这是莫名其妙的意外情况的一个潜在来源；对于大多数情形，解决办法可以是在关键字后面加上一个 \cs{relax}。
 
 %\item The primitive command \csterm ignorespaces\par\
 %may come in handy as the final command in a macro definition.
@@ -997,18 +987,14 @@ Plain \TeX 格式使用 \cs{chardef} 命令%
 %spaces in the second and third item.
 %An empty line
 %after \cs{ignorespaces} will still insert a \cs{par}, however.
-%\end{itemize}
-\item 在宏定义末尾使用原始命令 \csterm ignorespaces\par\ 可能会比较方便。
-由于它可以吞噬可选空格，使用它可避免把参量的右花括号后的空格无意中带入输出中。
-例如下面这个例子：
+\item \TeX 原语 \csterm ignorespaces\par 会吃掉其后的可选空格；故此可将其插入宏定义的末尾，以避免将参量右花括号后的空格无意带入输出当中。例如说：
 \begin{verbatim}
 \def\item#1{\par\leavevmode
     \llap{#1\enspace}\ignorespaces}
 \item{a/}one line \item{b/} another line \item{c/}
 yet another
 \end{verbatim}
-其中 \cs{ignorespaces} 吞掉了第二、三项的那些不希望被输出的空格。
-不过 \cs{ignorespaces} 之后的空行仍然会插入 \cs{par} 记号。
+此处，\cs{ignorespaces} 吃掉了第二、第三两次调用之后的空格，而这些空格是不希望被排版输出的。不过，在 \cs{ignorespaces} 之后的空行仍然会插入 \cs{par} 记号。
 \end{itemize}
 
 %%\spoint Ignored and obeyed spaces
