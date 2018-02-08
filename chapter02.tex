@@ -1155,18 +1155,9 @@ macro:-> a b
 %(and insert an indentation box).
 %See  Chapter~\ref{space} for the space factor, and
 %chapter~\ref{hvmode} for horizontal and vertical modes.
-`控制空格'命令 \verb*-\ - 给出的空白的大小与
-\verb=\spacefactor= 等于 1000 时 \gr{space token} 给出的一样。
-控制空格不能当成空格记号来用，也不能像宏一样展开成为空格记号%
-（像 Plain \TeX\ 定义的 \cs{space} 那样）。
-例如，\TeX\ 会忽略输入行开头的空格，但是控制空格是一个 \gr{horizontal command}，
-因此它使得 \TeX\ 从竖直模式切换到水平模式（并插入缩进盒子）。
-见第~\ref{space}~章介绍的空白因子，
-以及第~\ref{hvmode}~章介绍的水平和竖直模式。
+控制空格命令 \n{\cs{\textvisiblespace}}\cstoidx\char32\par 给出一个与 \verb=\spacefactor= 等于 1000 时空格记号宽度一样的空格。控制空格不能被当做是空格记号，也不能理解为会展开成一个空格记号的宏（例如 Plain \TeX 中的 \cs{space}）。举例来说，\TeX 会忽略所有输入行开头的空格，但是控制空格是一个水平命令（\gr{horizontal command}），故而 \TeX 在遇到它之后会从竖直模式切换到水平模式（并插入一个缩进盒子）。有关空白因子的介绍，详见第~\ref{space}~章；有关水平模式和竖直模式的介绍，详见第~\ref{hvmode}~。
 
-%%\spoint `\n{\char32}'
 %\subsection{`\n{\char32}'}
-%\spoint `\n{\char32}'
 \subsection{可见空格}
 
 %The explicit symbol `\n{\char32}' for a space
