@@ -1070,24 +1070,20 @@ Plain \TeX 和 \LaTeX 格式都定义了名为 \cs{obeyspaces} 的宏。该宏�
 \subsection{空格被忽略的其他情形}
 
 %There are three further places where \TeX\ will ignore space tokens.
-%\alt
-%\begin{enumerate}
+还有三种情形下，\TeX 会忽略空格记号：
+\alt
+\begin{enumerate}
 %\item When \TeX\ is looking for
 %an undelimited macro argument it will accept the
 %first token (or group) that is not a space. This is treated
 %in Chapter~\ref{macro}.
-还有三种情况会导致 \TeX\ 忽略空格记号：
-\alt
-\begin{enumerate}
-\item 在寻找非定界的宏参量时，\TeX\ 会接受第一个非空格的记号（或编组）作为参量。
-这将在第~\ref{macro}~章中介绍。
+\item 在寻找未被花括号定界的宏参数时，\TeX 会忽略所有空格记号，而将第一个非空记号（或分组）作为参数。详见第~\ref{macro}~章。
 
 %\item In math mode space tokens are ignored (see Chapter~\ref{math}).
-\item 在数学模式中，空格记号会被忽略（见第~\ref{math}~章）。
+\item 在数学模式中，空格记号会被忽略（详见第~\ref{math}~章）。
 
 %\item After an alignment tab character spaces are ignored
 %(see Chapter~\ref{align}).
-%\end{enumerate}
 \item 在阵列制表符之后，空格记号会被忽略（见第~\ref{align}~章）。
 \end{enumerate}
 
