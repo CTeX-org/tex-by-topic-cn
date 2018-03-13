@@ -448,7 +448,7 @@ plain \TeX 格式使用 \cs{chardef} 命令%
 并且在状态切换完成后，\TeX 的输入处理器对先前的状态没有任何记忆。
 
 %\subsection{State {\itshape N}: new line}
-\subsection{状态 {\itshape N}：新行}
+\subsection{\cstate N：新行}
 
 %State {\itshape N} is entered at the beginning of each new input line,
 %and that is the only time \TeX\ is in this state.  In state~{\itshape
@@ -456,25 +456,23 @@ plain \TeX 格式使用 \cs{chardef} 命令%
 %category~10\index{category!10}) are ignored; an end-of-line character
 %is converted into a \cs{par} token.  All other tokens bring \TeX\ into
 %state~{\itshape M}.
-当且仅当 \TeX 遇到新的输入行时，其输入处理器会进入状态 {\itshape N}。
-在该状态下，所有空格记号（分类码为 10 的字符\index{category!10}）都会被忽略；
-此外，在该状态下，行终止符会被替换为 \cs{par} 记号。
+当且仅当遇到新的输入行时，\TeX 的输入处理器会进入状态 {\itshape N}。
+在该状态下，输入处理器会：忽略所有空格记号（分类码为 10 的字符\index{category!10}）；将行终止符会被替换为 \cs{par} 记号。
 在该状态下，其它记号会使 \TeX 切换到状态 {\itshape M}。
 
 %\subsection{State {\itshape S}: skipping spaces}
-\subsection{状态 {\itshape S}：忽略空格}
+\subsection{\cstate S：忽略空格}
 
 %State {\itshape S} is entered in any mode after a control word or
 %control space (but after no other control symbol),
 %or, when in state~{\itshape M}, after a space.
 %In this state all subsequent spaces or end-of-line characters
 %in this input line are discarded.
-\TeX 于任意状态下，遇到控制词或控制空格之后（注意其他控制字符不在此列），
-或于状态 {\itshape M} 的空格记号之后，会进入状态 {\itshape S}。
-当 \TeX 处于该状态时，所有连续的空格及行终止符都会被忽略。
+\TeX 在\cstate M 下遇到空格记号，或在任意状态下遇到控制词或控制空格之后（注意其他控制字符不在此列），会进入\cstate S。
+在该状态下，\TeX 会忽略所有连续的空格及行终止符。
 
 %\subsection{State {\itshape M}: middle of line}
-\subsection{状态 {\itshape M}：行内}
+\subsection{\cstate M：行内}
 
 %By far the most common state is~{\itshape M}, `middle of line'.
 %It is entered after characters of categories
@@ -482,9 +480,9 @@ plain \TeX 格式使用 \cs{chardef} 命令%
 %other than control space.
 %An end-of-line character encountered in this state
 %results in a space token.
-显然，状态 {\itshape M} 是输入处理器最常见的状态，它表示「处理到输入行的中间」（middle of line）。
+显然，\cstate M 是输入处理器最常见的状态，它表示「处理到输入行的中间」（middle of line）。
 当输入处理器遇到分类码为 1--4、6--8 以及 11--13 的字符或者控制字符（不包括控制空格）之后，就会进入该状态。
-在改状态下，行终止符会被替换为空格记号。
+在该状态下，\TeX 会将行终止符替换为空格记号。
 
 %\input figs1
 %\begin{quotation}
@@ -556,7 +554,7 @@ plain \TeX 格式使用 \cs{chardef} 命令%
 %input line may assign category code~7\index{category!7} to some
 %character other than the circumflex, thereby
 %influencing its further processing.
-这种机制不仅使得 \TeX 的输入处理器在某种意义上比真正的有限状态自动机更为强大，并且也不会影响其余的扫描过程。因此，在概念上，可以简单地假装认为这种对 \verb>^^> 引导的三元组或四元组的替换是提前进行的。
+这种机制一方面使得 \TeX 的输入处理器在某种意义上比真正的有限状态自动机更为强大，另一方面还不会影响其余的扫描过程。因此，在概念上，可以简单地假装认为这种对 \verb>^^> 引导的三元组或四元组的替换是提前进行的。
 不过，在实践中这样做是不可能的。这是因为，在处理输入行的过程中，用户可能将其他字符分类为第 7 类\index{category!7}，从而影响后续处理\liamfnote{也就是说，如果没有其他字符被分类为第 7 类，则这个假设在实践中也是可行的。}。
 
 %\section{Transitions between internal states}
