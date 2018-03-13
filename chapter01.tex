@@ -38,7 +38,7 @@
 %delivering the input for the next stage. The input of
 %the first stage is then the \n{.tex} input file; the output
 %of the last stage is a \n{.dvi} file.
-\TeX\ 处理输入的过程可分为 4 个层次。
+\TeX\ 处理输入的过程可分为 4 个阶段。
 你可以认为 \TeX\ 处理器（也称 \TeX\ 引擎）有 4 个独立的单元，
 每个单元接收前序步骤的输出，并将输出作为后续单元的输入。
 第一阶段的输入是 \n{.tex} 文件，最后一个阶段的输出是 \n{.dvi} 文件\footnote{译注（Liam0205）：此处讨论的 \TeX\ 是 Knuth \TeX。后续扩展的 pdf\TeX 等不一定输出 \n{.dvi} 文件。}。%
@@ -49,10 +49,10 @@
 %output of the previous level. In reality this is not true:
 %all levels are simultaneously
 %active, and there is interaction between them.
-通常而言，这样理解上述 4 个层次方便且直观：
-每个层次\emph{完整地}接收上一个层次的输出。
+通常而言，这样理解上述 4 个阶段方便且直观：
+每个阶段\emph{完整地}接收上一个阶段的输出。
 然而，这样并不完全正确：
-4 个层次的处理是同时进行的，层次之间也有交互\footnote{译注（Liam0205）：流式处理，上一层次处理完多少，下一个层次就接着继续处理这部分。}。
+4 个阶段的处理是同时进行的，阶段之间也有交互\footnote{译注（Liam0205）：流式处理，上一阶段处理完多少，下一个阶段就接着继续处理这部分。}。
 
 %The four levels are (corresponding roughly
 %to the `eyes', `mouth', `stomach', and `bowels' respectively
@@ -75,10 +75,10 @@
 %Control sequences that are not expandable are executable,
 %and this execution takes place on the third level of the
 %\TeX\ processor.
-4 个层次列举如下（按 Knuth 最初的叫法，分别是「眼睛」、「嘴巴」、「胃」和「肠道」）：
+4 个阶段列举如下（按 Knuth 最初的叫法，分别是「眼睛」、「嘴巴」、「胃」和「肠道」）：
 \begin{enumerate}
 \item 输入处理器（input processor）：负责为 \TeX\ 从文件系统中读入输入，并处理为记号。
-记号是两种 \TeX\ 内部对象的统称：构成排版文本的字符记号、待后续两个层次作为命令处理的控制序列记号。
+记号是两种 \TeX\ 内部对象的统称：构成排版文本的字符记号、待后续两个阶段作为命令处理的控制序列记号。
 \item 展开处理器（expansion processor）：
 负责展开输入处理器输出的部分记号：宏、条件式、以及部分 \TeX\ 原语。
 记号展开的过程会将一些（连续的）记号删除或替换为其它记号。
@@ -105,7 +105,7 @@
 赋值（包括宏定义）是其中典型。
 除此之外，执行处理器负责构造水平列表、垂直列表和数学列表。
 \item 可视化处理器（visual processor）：
-\TeX\ 的最后一个层次负责排版内容的可视化。
+\TeX\ 的最后一个阶段负责排版内容的可视化。
 可视化处理器将水平列表分行成段，将垂直列表分割成页，将数学列表构建成数学公式；
 最终输出 \n{.dvi} 文件%
 \footnote{译注（zoho）：对于现代 \TeX\ 处理器而言，还可以是 \n{pdf} 和 \n{xml} 等文件。}。
