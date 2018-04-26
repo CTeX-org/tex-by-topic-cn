@@ -93,9 +93,7 @@
 %most of the time) is handled one line at a time.
 %Here follows a discussion of what exactly is an input line
 %for \TeX.
-\TeX 对来自文件的输入（也可能是来自终端的输入，但实际甚少使用，故不再提及）
-是逐行处理的。
-此处讨论在 \TeX 语境下，到底什么是「输入行」。
+\TeX 逐行处理来自文件的输入（也可能是来自终端的输入，但实际甚少使用，故不再提及）。此处首先讨论在 \TeX 语境下，到底什么是「输入行」。
 
 %Computer systems differ with respect to
 %\index{line! input}\index{line! end}\index{machine independence}
@@ -111,11 +109,7 @@
 %own way of terminating an input line.
 不同计算机系统对%
 \index{line!input}\index{line!end}\index{machine independence}%
-输入行的具体定义有所不同。
-最常见的方式是用回车符（carriage return）紧跟换行符（line feed）作为行尾符，
-有些系统单用换行符作为行尾符，
-一些有定长存储（块存储）的系统则根本不使用行尾符。
-因此，\TeX 自己有一套终止输入行的方式。
+输入行的具体定义有所不同。最常见的方式是用回车符（carriage return）紧跟换行符（line feed）作为行尾符，有些系统单用换行符作为行尾符，一些有定长存储（块存储）的系统则根本不使用行尾符。因此，\TeX 在结束一行输入时有自己特定的处理方式。
 
 \begin{enumerate}
 %\item An input line is read from an input file  (minus the
@@ -134,11 +128,7 @@
 %no character is appended.
 %The effect then is the same as
 %if the line were to end with a comment character.
-\item 将编码为 \csterm endlinechar\par 的行终止符（默认是 \ascii 编码为 13 的 \gram{return}）
-      添加在行尾。
-      若 \cs{endlinechar} 的值为负\label{append:elc}%
-      或大于 255（在低于 \TeX 3 的版本中则是 127；\pageref{2vs3} 页介绍了更多差异），则不添加任何行终止符。
-      此时的效果与在行尾手工添加注释字符一样。
+\item 将编码为 \csterm endlinechar\par 的行终止符（默认是 \ascii 编码为 13 的 \gram{return}）添加在行尾。若 \cs{endlinechar} 的值为负\label{append:elc}或大于 255（在低于 \TeX 3 的版本中则是 127；\pageref{2vs3} 页介绍了更多差异），则输入处理器不会添加任何行终止符；在输入行尾添加注释字符也有相同的作用。
 \end{enumerate}
 
 
@@ -148,10 +138,7 @@
 %own character codes. These codes are then used exclusively,
 %so that \TeX\ will perform the same on any system.
 %For more on this, see Chapter~\ref{char}.
-不同计算机在字符编码方面也存在差异（最常见的是 \ascii 和 \ebcdic{}）。
-因此，\TeX 有必要将从文件读入的字符转换为其内部编码。
-这些编码仅在 \TeX 内适用，因此 \TeX 在任何操作系统上的行为都保持一致。
-更多内容详见第~\ref{char}~章。
+不同计算机在字符编码方面也存在差异（最常见的是 \ascii 和 \ebcdic{}）。因此，\TeX 有必要将从文件读入的字符转换为其内部编码。这些编码仅在 \TeX 内适用，因此 \TeX 在任何操作系统上的行为都保持一致。更多内容详见第~\ref{char}~章。
 
 %\section{Category codes}
 \section{分类码}
