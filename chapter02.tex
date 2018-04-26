@@ -244,7 +244,7 @@
 \item\index{category!11}\label{ini:let}字母；
         \IniTeX 默认只将 \n{a ... z} 和 \n{A ... Z} 分为此类。
         在宏包中，某些「隐秘」字符（例如 \n{@}）会被暂时分为此类%
-        \liamfnote{此类字符在普通用户文档中的分类码不同，在宏包中暂时分为此类，以起到「提示当前控制序列是内部的」这样的作用。}。
+        \liamfnote{此类字符的分类码在普通用户文档中和在宏包中会有不同。在宏包中暂时分为此类，以起到「提示当前控制序列是内部的」这样的作用。}。
 %\item\index{category!12}\label{ini:other} Other; \IniTeX\ puts
 %  everything that is not in the other categories into this
 %  category. Thus it includes, for instance, digits and punctuation.
@@ -354,8 +354,7 @@ plain \TeX 格式使用 \cs{chardef} 命令（将在第~\pageref{chardef}~页和
 %of \TeX\ scans input lines from a file or from the
 %user terminal, and converts the characters in the input
 %to tokens. There are three types of tokens.
-\TeX 的输入处理器自文件或用户终端扫描输入行，而后将输入的字符转换为记号。
-记号分为以下三类：
+从文件或用户终端扫描输入行后，\TeX 的输入处理器会将其中的字符转换为记号。记号共有三种。
 \begin{itemize}
 %\item Character tokens: any character that is
 %   passed on its own to \TeX's
@@ -374,10 +373,7 @@ plain \TeX 格式使用 \cs{chardef} 命令（将在第~\pageref{chardef}~页和
 %If the distinction between control word and control symbol is
 %irrelevant, both are called
 %\indextermsub{control}{sequence}.
-\item 控制序列记号：严格来说，控制序列记号分为两种。
-其一是\emph{控制词}\ldash 分类码为 0 的字符\index{category!0}后紧跟一串字母（分类码是 11\index{category!11}）。
-其二是\emph{控制字符}\index{控制!控制字符}\ldash 转义字符后紧跟单个非字母字符（分类码不是 11）。
-在无需区分控制词和控制字符的场合，它们统称为\cindextermsub{控制}{序列}。
+\item 控制序列记号：严格来说，控制序列记号分为两种。其一是\emph{控制词}\ldash 分类码为 0 的字符\index{category!0}后紧跟一串字母（分类码是 11\index{category!11}）。其二是\emph{控制字符}\index{控制!控制字符}\ldash 转义字符后紧跟单个非字母字符（分类码不是 11）。在无需区分控制词和控制字符的场合，它们统称为\cindextermsub{控制}{序列}。
 
 %The control symbol that results from an escape character followed
 %\csterm \char32\par
@@ -399,10 +395,7 @@ plain \TeX 格式使用 \cs{chardef} 命令（将在第~\pageref{chardef}~页和
 %The most common instance is of this is
 %replacing \n{\#\#} by~\n{\#$_6$}, where the subscript
 %denotes the category code.
-连续两个参数符（字符编码不一定相同）会被替换为单个字符记号。
-该字符记号的分类码是 6（参数符），字符编码则是上述连续两个参数符中后者的字符编码。
-最常见的情形是 \n{\#\#} 会被替换为 \n{$\text{\#}_6$}。
-此处下标表示分类码。
+连续两个参数符（字符编码不一定相同）会被替换为单个字符记号。该字符记号的分类码是 6（参数符），字符编码则与上述连续两个参数符中后者的字符编码相同。最常见的情形是 \n{\#\#} 会被替换为 \n{$\text{\#}_6$}。此处下标表示分类码。
 \end{itemize}
 
 %\section{The input processor as a finite state automaton}
