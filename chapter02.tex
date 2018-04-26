@@ -399,7 +399,7 @@ plain \TeX 格式使用 \cs{chardef} 命令（将在第~\pageref{chardef}~页和
 \end{itemize}
 
 %\section{The input processor as a finite state automaton}
-\section{输入处理器是个有限状态自动机}
+\section{输入处理器是有限状态自动机}
 \label{input:states}
 
 %\TeX's input processor can be considered to be a finite state
@@ -407,22 +407,18 @@ plain \TeX 格式使用 \cs{chardef} 命令（将在第~\pageref{chardef}~页和
 %that is, at any moment in time it is in one of three states,
 %and after transition to another state there is no memory of the
 %previous states.
-\TeX 的输入处理器有三种\indextermbus{内部}{状态}，可看做是一个有限状态自动机。
-这也就是说，在任意瞬间，\TeX 的输入处理器都处于并且只能处于三种状态的一种；
-并且在状态切换完成后，\TeX 的输入处理器对先前的状态没有任何记忆。
+\TeX 的输入处理器有三种\indextermbus{内部}{状态}，可看做是一个有限状态自动机。这也就是说，在任意瞬间，\TeX 的输入处理器都处于并且只能处于三种状态的一种；并且在状态切换完成后，\TeX 的输入处理器对先前的状态没有任何记忆。
 
 %\subsection{State {\itshape N}: new line}
 \subsection{\cstate N：新行}
 
 %State {\itshape N} is entered at the beginning of each new input line,
-%and that is the only time \TeX\ is in this state.  In state~{\itshape
-%  N} all space tokens (that is, characters of
+%and that is the only time \TeX\ is in this state. In state~{\itshape
+% N} all space tokens (that is, characters of
 %category~10\index{category!10}) are ignored; an end-of-line character
 %is converted into a \cs{par} token.  All other tokens bring \TeX\ into
 %state~{\itshape M}.
-当且仅当遇到新的输入行时，\TeX 的输入处理器会进入\cstate{N}。
-在该状态下，输入处理器会：忽略所有空格记号（分类码为 10 的字符\index{category!10}）；将行终止符会被替换为 \cs{par} 记号。
-在该状态下，其它记号会使 \TeX 切换到\cstate{M}。
+当且仅当遇到新的输入行时，\TeX 会进入\cstate{N}。在该状态下，\TeX 遇到空格记号（分类码为 10 的字符\index{category!10}）即会将之忽略；遇到行终止符则会将之替换为 \cs{par} 记号；遇到其它记号，则会切换到\cstate{M}。
 
 %\subsection{State {\itshape S}: skipping spaces}
 \subsection{\cstate S：忽略空格}
@@ -432,8 +428,7 @@ plain \TeX 格式使用 \cs{chardef} 命令（将在第~\pageref{chardef}~页和
 %or, when in state~{\itshape M}, after a space.
 %In this state all subsequent spaces or end-of-line characters
 %in this input line are discarded.
-\TeX 在\cstate M 下遇到空格记号，或在任意状态下遇到控制词或控制空格之后（注意其他控制字符不在此列），会进入\cstate S。
-在该状态下，\TeX 会忽略所有连续的空格及行终止符。
+在\cstate{M} 下遇到空格记号，或在任意状态下遇到控制词或控制空格之后（注意其他控制字符不在此列），\TeX 会进入\cstate S。在该状态下，\TeX 遇到空格记号或行终止符都会忽略。
 
 %\subsection{State {\itshape M}: middle of line}
 \subsection{\cstate M：行内}
@@ -445,13 +440,8 @@ plain \TeX 格式使用 \cs{chardef} 命令（将在第~\pageref{chardef}~页和
 %An end-of-line character encountered in this state
 %results in a space token.
 显然，\cstate M 是输入处理器最常见的状态，它表示「处理到输入行的中间」（middle of line）。
-当输入处理器遇到分类码为 1--4、6--8 以及 11--13 的字符或者控制字符（不包括控制空格）之后，就会进入该状态。
-在该状态下，\TeX 会将行终止符替换为空格记号。
+当输入处理器遇到分类码为 1--4、6--8 以及 11--13 的字符或者控制字符（不包括控制空格）之后，就会进入该状态。在该状态下，\TeX 会将行终止符替换为空格记号。
 
-%\input figs1
-%\begin{quotation}
-%  \figmouth
-%\end{quotation}
 \input figs1
 \begin{quotation}
   \figmouth
