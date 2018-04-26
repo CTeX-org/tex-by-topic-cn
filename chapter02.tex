@@ -152,26 +152,19 @@
 %character tokens, control sequence tokens, and parameter tokens.
 %These tokens are then passed to \TeX's expansion and execution
 %processes.
-256 个字符编码（0--255）中，每一个都有一个不尽相同的关联的\indexterm{分类码}。
-\TeX 的分类码编号从 0 到 15，共有 16 个类别。
-在扫描输入流的过程中，\TeX 会生成由字符编码和分类码组成的字符编码-分类码配对（character-code--category-code pairs）；
-而后，自上述配对而始，输入处理器生成字符记号、控制序列记号和参数记号。
-这些记号随后被传给 \TeX 的展开处理器和执行处理器。
+256 个字符编码（0--255）中的每一个都关联了一个不尽相同的\indexterm{分类码}。\TeX 的分类码共有 16 个，从 0 开始编号至 15。在扫描输入流的过程中，\TeX 会生成由字符编码和分类码组成的字符编码-分类码配对（character-code--category-code pairs）；而后，基于这些配对，输入处理器将它们处理成字符记号、控制序列记号和参数记号。这些记号随后被传给 \TeX 的展开处理器和执行处理器。
 
 %A~character token is a character-code--category-code
 %pair that is passed unchanged.
 %A~control sequence token consists of one or more characters
 %preceded by an escape character; see below.
 %Parameter tokens are also explained below.
-字符记号是简单的字符编码-分类码配对会直接传给展开处理器。
-控制序列记号则由转义字符引导，后接一个或多个字符。
-关于控制序列记号和参数记号的介绍详见下文。
+字符记号是简单的字符编码-分类码配对，它们会直接被传给展开处理器。控制序列记号则由转义字符引导，后接一个或多个字符组成。关于控制序列记号和参数记号的介绍详见下文。
 
 %This is the list of the categories, together with a brief
 %description. More elaborate explanations follow in this and
 %later chapters.
-下面是对类别的简明解释。
-详细解释则在本章及后续章节当中。
+以下就这些分类做简单说明，详细的阐述则散布在本章其他位置及后续章节当中。
 \begin{enumerate}
 \message{set counter}%\SetCounter:item=-1
 \setcounter{enumi}{-1}
@@ -290,8 +283,7 @@
 %\begin{disp}\verb>`>\gr{character}\quad or\quad \verb>`\>\gr{character}\end{disp}
 %both of which denote the character code of the character
 %(see pages \pageref{char:code} and~\pageref{int:denotation}).
-用户可使用 \csterm catcode\par 命令修改字符编码到分类码的映射%
-（见第~\ref{gramm}~章对诸如 \gr{equals} 等概念的解释）：
+用户可使用 \csterm catcode\par 命令修改字符编码到分类码的映射（见第~\ref{gramm}~章对诸如 \gr{equals} 等概念的解释）：
 \begin{disp}\cs{catcode}\gram{number}\gr{equals}\gram{number}.\end{disp}
 该语句中，第一个参数可用如下方式给出：
 \begin{disp}\verb>`>\gr{character}\quad 或\quad \verb>`\>\gr{character}\end{disp}
@@ -308,9 +300,7 @@
 %\end{verbatim}
 %The \cs{chardef} command is  treated
 %on pages \pageref{chardef} and~\pageref{num:chardef}.
-plain \TeX 格式使用 \cs{chardef} 命令%
-（将在第~\pageref{chardef}~页和~\pageref{num:chardef}~页介绍）%
-将 \csterm active\par 定义为：
+plain \TeX 格式使用 \cs{chardef} 命令（将在第~\pageref{chardef}~页和~\pageref{num:chardef}~页介绍）将 \csterm active\par 定义为：
 \begin{verbatim}
 \chardef\active=13
 \end{verbatim}
@@ -355,11 +345,7 @@ plain \TeX 格式使用 \cs{chardef} 命令%
 %Conditionals are treated further in Chapter~\ref{if}.
 下列语句可用于检测两个记号的分类码是否相等：
 \begin{disp}\cs{ifcat}\gr{token$_1$}\gr{token$_2$}\end{disp}
-无论 \cs{ifcat} 后有什么，\TeX 都会将其展开，直至发现两个不可展开的记号；
-而后，\TeX 将比较这两个记号的分类码。
-控制序列的分类码被视为 16\index{category!16}；
-因此，所有控制序列的分类码都是相等的，而与所有字符记号的分类码都不相等。
-条件式的详细介绍见第~\ref{if}~章。
+无论 \cs{ifcat} 后有什么，\TeX 都会将其展开，直至发现两个不可展开的记号；而后，\TeX 将比较这两个记号的分类码。控制序列的分类码被视为 16\index{category!16}；因此，所有控制序列的分类码都是相等的，而与所有字符记号的分类码都不相等。条件式的详细介绍见第~\ref{if}~章。
 
 %\section{From characters to tokens}
 \section{从字符到记号}
