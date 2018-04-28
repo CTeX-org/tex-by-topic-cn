@@ -663,7 +663,7 @@ plain \TeX 格式使用 \cs{chardef} 命令（将在第~\pageref{chardef}~页和
 %\section{Letters and other characters}
 %\label{cat12}
 %\point[cat12] Letters and other characters
-\section{字母与其他字符}
+\section{分类码中的字母与其他字符}
 \label{cat12}
 
 %In most programming languages identifiers can consist
@@ -676,9 +676,9 @@ plain \TeX 格式使用 \cs{chardef} 命令（将在第~\pageref{chardef}~页和
 %generates a string of characters, all of which have
 %category code~12, even if that is not their usual
 %category code.
-大部分编程语言的标识符可由字母与数字构成（还可能包含其他诸如下划线之类的字符）。但是，在 \TeX 中，控制序列的名字只能由第 11 类字符（即字母）组成。
+大部分编程语言的标识符可由字母与数字构成（还可能包含其他诸如下划线之类的字符）。但是，在 \TeX 中，控制序列的名字只能由第 11 类字符（即字母）组成。而通常，数字和标点的分类码是 12，即其他字符。
 
-通常，数字和标点的分类码是 12，即其他字符。不过，\TeX 可以产生一些由第 12 类字符组成的字符串，哪怕其中的字符原本并非都是第 12 类字符。
+此外，\TeX 可以产生一些由第 12 类字符组成的字符串，哪怕其中的字符原本并非都是第 12 类字符。
 %This happens when the operations
 %\cs{string},
 %\cs{number},
@@ -691,14 +691,14 @@ plain \TeX 格式使用 \cs{chardef} 命令（将在第~\pageref{chardef}~页和
 %If any of the characters delivered by such a command
 %is a space character (that is, character code~32),
 %it receives category code~10, space.
-此类字符串可由 \cs{string}、\cs{number}、\cs{romannumeral}、\cs{jobname}、\cs{fontname}、\cs{meaning} 以及 \cs{the} 等命令生成。若这些命令产生的字符串包含空格符（\ascii 编码为 32），则在输出的字符串中，该字符的分类码为 10。
+此类字符串可由 \cs{string}、\cs{number}、\cs{romannumeral}、\cs{jobname}、\cs{fontname}、\cs{meaning} 以及 \cs{the} 等命令生成。若这些命令产生的字符串包含空格符（\ascii 编码为 32）\liamfnote{注意，此处说的是空格字符，而非是 \TeX 的空格记号。前者讨论的是字符编码，而后者讨论的是分类码。}，则在输出的字符串中，该字符的分类码为 10。
 
 %For the extremely rare case where a hexadecimal digit has been
 %hidden in a control sequence, \TeX\ allows \n A$_{12}$--\n F$_{12}$
 %to be hexadecimal digits, in addition to the ordinary
 %\n A$_{11}$--\n F$_{11}$ (here
 %the subscripts denote the category codes).
-在极个别情况下，控制序列的名字中可能会包含十六进制数字；因此，除了通常的 $ \text{\n{A}}_{11} $ -- $ \text{\n{F}}_{11} $ 之外，\TeX 中还有表示十六进制数字的 $ \text{\n{A}}_{12} $ -- $ \text{\n{F}}_{12} $。
+在极个别情况下，控制序列的名字中可能会包含十六进制数字；因此，除了通常表示字母的 $ \text{\n{A}}_{11} $ -- $ \text{\n{F}}_{11} $ 之外，\TeX 中还有表示十六进制数字的 $ \text{\n{A}}_{12} $ -- $ \text{\n{F}}_{12} $。
 
 %For example,
 %\begin{disp}\verb>\string\end>\quad gives four character tokens\quad
