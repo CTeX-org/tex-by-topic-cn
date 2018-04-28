@@ -1501,9 +1501,7 @@ macro:-> a b
 %the \LaTeX\ format will have noticed that a lot of control sequences
 %contain an `at' sign:~\verb-@-. These are control sequences that
 %are meant to be inaccessible to the ordinary user.
-如果读过 Plain 或 \LaTeX\ 格式的源代码，
-就会注意到许多控制序列都包含`at'符号 \verb-@-，
-这意味着这些控制序列不可被普通用户直接使用。
+读过 plain TeX 或是 \LaTeX 格式的源码就会发现其中有很多包含符号 \verb-@- 的控制序列。这种包含 \n@ 的控制序列不能被普通用户直接使用。
 
 %Near the beginning of the format files the instruction
 %\begin{verbatim}
@@ -1515,16 +1513,15 @@ macro:-> a b
 %\begin{verbatim}
 %\catcode`@=12
 %\end{verbatim}
-在靠近格式文件的起始处有
+格式文件的起始处附近有命令
 \begin{verbatim}
 \catcode`@=11
 \end{verbatim}
-它将 \verb-@- 变为字母字符，从而可以用于组成控制序列。
-而在靠近格式文件的结尾处有
+它将 \verb-@- 的分类从「其他字符」变为「字母」，从而可以用于组成控制序列。而在格式文件的末尾处附近有命令
 \begin{verbatim}
 \catcode`@=12
 \end{verbatim}
-它将 \verb-@- 恢复为其他字符。
+它将 \verb-@- 的分类恢复为其他字符。
 
 %Now why is it that users cannot
 %call a control sequence with an at sign
@@ -1535,11 +1532,7 @@ macro:-> a b
 %Macro expansion then
 %just inserts such tokens, and at that time the category codes
 %of the constituent characters do not matter any more.
-为何我们可以调用那些由带有 \verb-@- 字符的控制序列所构成的宏，
-而不能直接调用带有 \verb-@- 字符的控制序列呢？
-原因是带有 \verb-@- 字符的控制序列在定义时已经被转换为记号，
-不再是字符串，而宏展开时直接将这些控制序列替换为那些记号即可，
-这个过程与控制序列字符的分类码无关。
+那么，为什么用户不能直接调用带有 \verb-@- 字符的控制序列，却能调用定义中包含此类控制序列的宏呢？原因在于，在宏定义时，带有 \n@ 的控制序列已被 \TeX 内部处理过了，此后，这些控制序列就变成了记号而不是字符串了。在宏展开的过程中，\TeX 只需要操作记号，因此，彼时记号内字符的分类码就不影响宏展开的过程了。
 
 %\endofchapter
 %%%%% end of input file [mouth]
