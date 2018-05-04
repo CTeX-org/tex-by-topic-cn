@@ -1319,127 +1319,100 @@ macro:-> a b
 %%\spoint The input processor as a separate process
 %\subsection{The input processor as a separate process}
 %\spoint The input processor as a separate process
-\subsection{输入处理器作为独立进程}
+\subsection{输入处理器作为独立过程}
 
 %\TeX's levels of processing are all working at the
 %same time and incrementally, but conceptually they can often be
 %considered to be separate processes that each accept the
 %completed output of the previous stage. The juggling with
 %spaces provides a nice illustration for this.
-\TeX\ 处理器的各个层面都是同时运行的，但是在概念上它们常被视为依次独立运行，
-前者的输出是后者的输入。空格的花招可以展示出这一规律。
+\TeX\ 处理器的各个阶段都是同时运行的，但是在概念上它们常被视为依次独立运行，前者的输出是后者的输入。关于空格的小戏法很好地展现了这一点。
 
 %Consider the definition
-%\begin{verbatim}
-%\def\DoAssign{\count42=800}
-%\end{verbatim}
+考虑以下宏定义：
+\begin{verbatim}
+\def\DoAssign{\count42=800}
+\end{verbatim}
 %and the call
-%\begin{verbatim}
-%\DoAssign 0
-%\end{verbatim}
+及其调用：
+\begin{verbatim}
+\DoAssign 0
+\end{verbatim}
 %The input processor, the part
 %of \TeX\ that builds tokens, in scanning this call
 %skips the space before the zero, so the expansion of this
 %call is
-%\begin{verbatim}
-%\count42=8000
-%\end{verbatim}
+作为构建记号的部分，\TeX 的输入处理器在扫描此次调用时，会忽略控制序列之后和零之前的所有空格。因此，此次调用的展开为：
+\begin{verbatim}
+\count42=8000
+\end{verbatim}
 %It would be incorrect to reason
 %`\cs{DoAssign} is read, then expanded, the space delimits the
 %number 800, so 800 is assigned and the zero is printed'.
 %Note that the same would happen if the zero appeared on the next line.
-例如定义一个宏：
-\begin{verbatim}
-\def\DoAssign{\count42=800}
-\end{verbatim}
-然后调用它：
-\begin{verbatim}
-\DoAssign 0
-\end{verbatim}
-输入处理器作为 \TeX\ 构建记号列表的层面会忽略 0 之前的所有空格，
-因此上述宏的展开的结果是：
-\begin{verbatim}
-\count42=8000
-\end{verbatim}
-不要认为 \cs{DoAssign} 被读取然后展开，接着寄存器被赋值为 800，
-因此 \cs{DoAssign} 之后的那个 0 会被排印出来。
-注意即使最后的 0 出现在下一行结果也一样。
+不要认为：「\cs{DoAssign} 首先被读入，而后展开，而后空格作为分隔符分割了 800，于是 800 被赋值给计数器，并打印出数字零。」不过，需要注意的是，如果数字零出现在下一行，情况就不一样了。
 
 %Another illustration shows that optional spaces appear in a different
 %stage of processing from that for skipped spaces:
-%\begin{disp}\verb>\def\c.{\relax}>\nl
-%     \verb>a\c.>{\tt\char32 b}\end{disp}
+再举一个让非强制空格出现在忽略空格阶段之后的例子：
+\begin{disp}\verb>\def\c.{\relax}>\nl
+    \verb>a\c.>{\tt\char32 b}\end{disp}
 %expands to
-%\begin{disp}\n{a\cs{relax}\char32 b}\end{disp}
-%which gives as output\begin{disp} `a b'\end{disp}
+会被展开为：
+\begin{disp}\n{a\cs{relax}\char32 b}\end{disp}
+%which gives as output
+其输出是：
+\begin{disp} `a b'\end{disp}
 %because spaces after the \cs{relax} control sequence are only
 %skipped when the line is first read, not when it is expanded.
+这是因为，「输入处理器忽略控制序列 \cs{relax} 之后的空格」这一现象仅出现在该行被首次读取之时，而非在其被展开之时。
 %The fragment
-%\begin{disp} \verb-\def\c.{\ignorespaces}-\nl \verb-a\c. b-\end{disp}
+另一方面，这个例子：
+\begin{disp} \verb-\def\c.{\ignorespaces}-\nl \verb-a\c. b-\end{disp}
 %on the other hand, expands to
-%\begin{disp}\n{a\cs{ignorespaces}\char32 b}\end{disp}
+则会被展开为：
+\begin{disp}\n{a\cs{ignorespaces}\textvisiblespace b}\end{disp}
 %Executing the \cs{ignorespaces} command removes the subsequent
-%space token, so the output is \begin{disp} `ab'.\end{disp}
+%space token, so the output is
+执行 \cs{ignorespaces} 时会删除所有接续其后的连续空格记号。因此，输出是：
+\begin{disp} `ab'.\end{disp}
 %In both definitions
 %the period after \cs{c} is a delimiting token; it is used here
 %to prevent spaces from being skipped.
-再来看下面这个让非强制空格字符在多个处理层面中出现的例子：
-\begin{disp}\verb>\def\c.{\relax}>\nl
-     \verb>a\c.>{\tt\char32 b}\end{disp}
-它的展开结果为
-\begin{disp}\n{a\cs{relax}\char32 b}\end{disp}
-输出结果为
-\begin{disp} `a b'\end{disp}
-这是因为 \cs{relax} 之后的空格仅仅在文本行被读取时可能会被忽略，
-在 \c. 展开为 \cs{relax} 之后不会被忽略。另一方面，下面例子：
-\begin{disp} \verb-\def\c.{\ignorespaces}-\nl \verb-a\c. b-\end{disp}
-会被展开为
-\begin{disp}\n{a\cs{ignorespaces}\char32 b}\end{disp}
-在执行处理器中 \cs{ignorespaces} 会移除它后面的空格，所以输出结果会是
-\begin{disp} `ab'.\end{disp}
-在上述两个例子中，\cs{c} 之后的西文句号是一个定界记号，
-用于保护控制序列之后的空格不被输入处理器吃掉。
+在上述两个例子中，\cs{c} 之后的西文句号均为定界符，用于保护控制序列之后的空格不被输入处理器吃掉。
 
 %%\spoint The input processor not as a separate process
 %\subsection{The input processor not as a separate process}
 %\spoint The input processor not as a separate process
-\subsection{输入处理器不作为单独进程}
+\subsection{输入处理器不作为独立过程}
 
 %Considering the tokenizing of \TeX\ to be a separate process
 %is a convenient view, but sometimes it leads to confusion.
+将 \TeX 的记号化的过程视作独立过程是一个便利的做法，但有时这种做法会引起困惑。
 %The line
-%\begin{verbatim}
-%\catcode`\^^M=13{}
-%\end{verbatim}
+例如
+\begin{verbatim}
+\catcode`\^^M=13{}
+\end{verbatim}
 %makes the line end active,
 %and subsequently gives an `undefined control sequence' error
 %for the line end of this line itself. Execution of the commands
 %on the line thus influences the scanning process of that
 %same line.
-将 \TeX\ 对输入文本的记号化过程视为一个独立进程是比较普遍的看法，
-但是有时会出现反常的现象。例如
-\begin{verbatim}
-\catcode`\^^M=13{}
-\end{verbatim}
-使得行终止符变成活动符，随后 \TeX\ 便会报错“未定义的控制序列”，
-即对文本行中的命令的执行影响到 \TeX\ 输入处理器对该行文本的扫描过程。
+将行终止符设为活动字符；因此，该行自身的行终止符将报错：「未定义的控制序列（undefined control sequence）」。这表明，执行行内的命令有时会影响对同一行的扫描过程。
 
 %By contrast,
-%\begin{verbatim}
-%\catcode`\^^M=13
-%\end{verbatim}
+另一方面，下面例子则不会报错：
+\begin{verbatim}
+\catcode`\^^M=13
+\end{verbatim}
 %does not give an error.
 %The reason for this is that \TeX\ reads the line end while it is still
 %scanning the number~13; that is, at a time when the assignment
 %has not been performed yet.
 %The line end is then converted to the optional space character
 %delimiting the number to be assigned.
-与此相反，
-\begin{verbatim}
-\catcode`\^^M=13
-\end{verbatim}
-却不会出错。这是因为 \TeX\ 输入处理器是在扫描数值 13 时读到行终止符，
-也就是说在那时赋值还未完成，因此行终止符会被视为数值的定界符，即非强制空格。
+这是因为，在 \TeX 扫描数字 13 时就读入了行终止符，此时，分类码的赋值过程尚未执行；而此时，行终止符被转换成了非强制空格，作为数字的定界符。
 
 %%\spoint Recursive invocation of the input processor
 %\subsection{Recursive invocation of the input processor}
@@ -1449,15 +1422,12 @@ macro:-> a b
 %Above, the activity of replacing a parameter
 %character plus a digit by a parameter token was described
 %as something similar to the lumping together of letters
-%into  a control sequence token. Reality is somewhat more
+%into a control sequence token. Reality is somewhat more
 %complicated than this. \TeX's token scanning mechanism
 %is invoked both for input from file and for input from
 %lists of tokens such as the macro definition. Only in the
 %first case is the terminology of internal states applicable.
-前文中谈到，参数符加数字会被替换为一个参数记号，
-这种替换行为类似于将一些字符捆绑为控制序列记号的行为。
-实际上情况比这复杂得多。从文件输入和从记号列（比如宏定义）输入都会调用
-\TeX\ 的记号扫描机制，但内部状态的变化只适用于前者。
+前文中，将参数符和数字替换为参数记号的过程被描述得与将字母捆绑成控制序列记号类似。但实际情况要复杂得多。\TeX 的记号扫描机制不仅在扫描文件输入时起作用，在扫描记号列表输入时同样会起作用：例如在处理宏定义时。前文提到的内部状态变化的机制，仅仅适用于前一种情况。
 
 %Macro parameter characters are treated the same in both
 %cases, however. If this were not the case it would
@@ -1467,8 +1437,7 @@ macro:-> a b
 %\end{verbatim}
 %See page \pageref{nest:def} for an explanation of such
 %nested definitions.
-但是，宏参数符在两种情况下会被以相同方式处理，
-否则 \TeX\ 便无法处理下面这样的宏定义
+在两种情况下，输入处理器对参数符的处理方式都是相同的。否则 \TeX 便无法处理下面这样的宏定义：
 \begin{verbatim}
 \def\a{\def\b{\def\c####1{####1}}}
 \end{verbatim}
