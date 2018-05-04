@@ -86,7 +86,7 @@
 \TeX 的输入处理器从文件或终端扫描输入行，而后将读取到的字符转换成记号。输入处理器可视作一简单的有限状态自动机，其具有三种内部状态；根据输入处理器所处内部状态的不同，其扫描行为有所不同。本章将分别从内部状态和控制内部状态转换的分类码两个角度来考察该自动机。
 
 %\section{Initial processing}
-\section{初始工作}
+\section{初始化处理}
 
 %Input from a file (or from the user terminal, but this
 %will not be mentioned specifically
@@ -786,7 +786,7 @@ plain \TeX 格式使用 \cs{chardef} 命令（将在第~\pageref{chardef}~页和
 %character. Quite often this fact is used the other way around:
 %if an empty line is wanted for the layout of the input
 %one can put a comment sign on that line.
-在遇到\cindextermbus{空}{行}之后，也就是在\cstate{N} 遇到行终止符（分类码为 5）之后\liamfnote{此处说的是 \TeX 添加的行终止符，而不是输入文件中的行尾符。输入文件中的行尾符已在初始工作中被移除并替换成了行终止符。}，\TeX 会向输入中插入一个 \csterm par\par 记号。具体来说，由于 \TeX 遇到任何非空格字符，都会从\cstate{N} 转移走，因此空行只能包含分类码为 10 的字符。特别地，空行不能以注释符结尾\liamfnote{此时，\TeX 添加的行终止符位于注释之后，故而该行终止符会被 \TeX 忽略。}。因此，若输入文件中因格式美观需要保留空行，则可以在该行中放一个注释符。这算是 \TeX 这一特性的常见用法。
+在遇到\cindextermbus{空}{行}之后，也就是在\cstate{N} 遇到行终止符（分类码为 5）之后\liamfnote{此处说的是 \TeX 添加的行终止符，而不是输入文件中的行尾符。输入文件中的行尾符已在初始化处理中被移除并替换成了行终止符。}，\TeX 会向输入中插入一个 \csterm par\par 记号。具体来说，由于 \TeX 遇到任何非空格字符，都会从\cstate{N} 转移走，因此空行只能包含分类码为 10 的字符。特别地，空行不能以注释符结尾\liamfnote{此时，\TeX 添加的行终止符位于注释之后，故而该行终止符会被 \TeX 忽略。}。因此，若输入文件中因格式美观需要保留空行，则可以在该行中放一个注释符。这算是 \TeX 这一特性的常见用法。
 
 %Two consecutive empty lines generate two \cs{par} tokens.
 %For all practical purposes this is equivalent to one \cs{par},
@@ -1251,7 +1251,7 @@ macro:-> a b
 ...
 ... }
 \end{verbatim}
-这段代码的输出不符合预期：由于第一行和最后一行的行终止符，\TeX 将输出字符码为 13（\verb-^^M-）和 10（\verb-^^J-）的字符。\liamfnote{在第一行执行之前，输入处理器的初始工作将会添加 \texttt{\textasciicircum\textasciicircum M} 作为行终止符，但由于其分类码被修改为 12，即其他字符，故而会被输出。最后一行执行之前，输入处理器的初始工作将会添加 \texttt{\textasciicircum\textasciicircum J} 作为行终止符，因为此时 \cs{endlinechar} 的值是它的字符码。但由于分组结束，\texttt{\textasciicircum\textasciicircum J} 的分类码已恢复，故此时添加在输入行尾的行终止符  \texttt{\textasciicircum\textasciicircum J} 也会输出。}
+这段代码的输出不符合预期：由于第一行和最后一行的行终止符，\TeX 将输出字符码为 13（\verb-^^M-）和 10（\verb-^^J-）的字符。\liamfnote{在第一行执行之前，输入处理器的初始化处理将会添加 \texttt{\textasciicircum\textasciicircum M} 作为行终止符，但由于其分类码被修改为 12，即其他字符，故而会被输出。最后一行执行之前，输入处理器的初始化处理将会添加 \texttt{\textasciicircum\textasciicircum J} 作为行终止符，因为此时 \cs{endlinechar} 的值是它的字符码。但由于分组结束，\texttt{\textasciicircum\textasciicircum J} 的分类码已恢复，故此时添加在输入行尾的行终止符  \texttt{\textasciicircum\textasciicircum J} 也会输出。}
 
 %Terminating the first and last line with a comment works,
 %but replacing the first line by the two lines
