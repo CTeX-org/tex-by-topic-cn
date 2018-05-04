@@ -1204,13 +1204,11 @@ macro:-> a b
 %remedies this:
 %now every line end forces \TeX\ to start a paragraph. For empty
 %lines this will then be an empty paragraph.
-然而，将上述代码嵌入宏定义时要小心，比如
+需要注意的是，在将上述代码嵌入宏的展开文本中需要特别小心。例如说下列代码会让 \TeX 误解：
 \begin{verbatim}
 \def\obeylines{\catcode`\^^M=13 \def^^M{\par}}
 \end{verbatim}
-是会被 \TeX\ 误解的：\TeX\ 将丢弃第二个 \verb>^^M> 之后的所有字符，
-因为此时 \verb>^^M> 分类码为 5，而非 13。
-也就是说，这一行实际上变成
+具体来说，\TeX\ 将丢弃第二个 \verb>^^M> 之后的所有字符。这是因为，在宏展开的过程中，\cs{catcode} 命令尚未执行，因而此时 \verb>^^M> 分类码为 5，而非 13。也就是说，这一行实际上变成了：
 \begin{verbatim}
 \def\obeylines{\catcode`\^^M=13 \def
 \end{verbatim}
@@ -1220,9 +1218,7 @@ macro:-> a b
  \gdef\obeylines{\catcode`\^^M=13 \def^^M{\par}}%
 }
 \end{verbatim}
-不过这个定义还是有缺陷，因为输入文本中的空行会被忽略。
-这是因为连续两个 \cs{par} 记号会被当成一个。
-对上述定义稍作改进即可解决这个问题，如下：
+这样解决了上面提到的问题，但仍有缺陷。这是因为，该 \cs{obeylines} 仍然不能保留输入文本中的空行——连续两个 \cs{par} 记号会被当成是一个。为此，我们需要对上述定义稍作改进：
 \begin{verbatim}
 \def^^M{\par\leavevmode}
 \end{verbatim}
