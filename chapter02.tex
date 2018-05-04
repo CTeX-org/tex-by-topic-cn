@@ -834,7 +834,7 @@ plain \TeX 格式使用 \cs{chardef} 命令（将在第~\pageref{chardef}~页和
 %\indextermbus{space}{character} and \indextermbus{space}{token} in the
 %initial processing stages of \TeX. The topic of spacing in text
 %typesetting is treated in Chapter~\ref{space}.
-这一节讨论有关空格符\index{字符!空格符}和空格记号\index{记号!空格记号}在输入处理器的一些内容。有关文本排版中的空格，留待第~\ref{space}~章讨论。
+这一节讨论输入处理器中有关\cindextermbus{空格}{字符}和\cindextermbus{空格}{记号}的一些内容。有关文本排版中的空格，留待第~\ref{space}~章讨论。
 
 %\subsection{Skipped spaces}
 \subsection{被忽略的空格}
@@ -846,7 +846,7 @@ plain \TeX 格式使用 \cs{chardef} 命令（将在第~\pageref{chardef}~页和
 %These are for instance the spaces at the beginning
 %of an input line, and the spaces following the one
 %that lets \TeX\ switch to state~{\itshape S}.
-在有关输入处理器内部状态的讨论中，我们不难发现，有些空格是永远不会输出的。事实上，在输入处理器这个步骤就已经被抛弃了。输入行开头的空格以及在让 \TeX 进入\cstate{S} 的字符之后的空格。
+在上述有关输入处理器内部状态的讨论中，我们不难发现，有些空格在输入处理器中就被抛弃了，因此永远不会被输出：输入行开头的空格以及在让 \TeX 进入\cstate{S} 的字符之后的空格。
 %
 %On the other hand, line ends can generate spaces (which are not
 %in the input) that may wind up in the output.
@@ -855,16 +855,14 @@ plain \TeX 格式使用 \cs{chardef} 命令（将在第~\pageref{chardef}~页和
 %or are even generated there, but still do not wind up in the
 %output. These are the \gram{optional spaces} that the
 %syntax of \TeX\ allows in various places.
-另一方面，行终止符尽管不在输入中，但能产生可输出的空格。
-
-除此之外，还有第三种空格：它们可以通过输入处理器，甚至干脆由输入处理器产生，但也不会被输出。那便是可选空格（\gram{optional spaces}）。在 \TeX 的语法中，很多地方都会出现此类空格。
+另一方面，行终止符尽管不在输入中（而是由 \TeX 添加的），但能产生可输出的空格。除此之外，还有第三种空格：它们可以通过输入处理器，甚至干脆由输入处理器产生，但也不会被输出。那便是非强制空格（\gram{optional spaces}）。在 \TeX 的语法中，很多地方都会出现此类空格。
 
 %\subsection{Optional spaces}
-\subsection{可选空格}
+\subsection{非强制空格}
 
 %The syntax of \TeX\ has the concepts of \indextermbus{optional}{spaces}
 %and `one optional space':
-\TeX 语法中有所谓\cindextermbus{可选}{空格}与\emph{单个可选空格}的概念：
+\TeX 语法中有所谓\cindextermbus{非强制}{空格}与\emph{单个非强制空格}的概念：
 \begin{disp}\gr{one optional space} $\longrightarrow$
 \gr{space token} $|$ \gr{empty}\nl
 \gr{optional spaces} $\longrightarrow$
@@ -876,10 +874,10 @@ plain \TeX 格式使用 \cs{chardef} 命令（将在第~\pageref{chardef}~页和
 %or glue specification (for example, between \n{plus} and \n{1fil}).
 %Also, the definition of \gr{equals} allows \gr{optional spaces}
 %before the \n= sign.
-通常单个可选空格（\gr{one optional space}）允许出现在数字和粘连说明之后；而可选空格（\gr{optional spaces}）允许出现在数字或粘连中任意允许出现空格的地方（比如负号与数字之间，又比如 \n{plus} 和 \n{1fil} 之间）。此外，根据 \gr{equals} 的定义，可选空格允许出现在 \n{=} 之前。
+通常单个非强制空格（\gr{one optional space}）允许出现在数字和粘连说明之后；而非强制空格（\gr{optional spaces}）允许出现在数字或粘连中任意允许出现空格的地方（比如负号与数字之间，又比如 \n{plus} 和 \n{1fil} 之间）。此外，根据 \gr{equals} 的定义，非强制空格允许出现在 \n{=} 之前。
 
 %Here are some examples of optional spaces.
-以下是有关可选空格的一些例子：
+以下是有关非强制空格的一些例子：
 
 \begin{itemize}
 %\item A number can be delimited by \gr{one optional space}.
@@ -893,8 +891,8 @@ plain \TeX 格式使用 \cs{chardef} 命令（将在第~\pageref{chardef}~页和
 %is significant. Another example is a parameter number,
 %for example~\n{\#1}: since at most nine parameters are allowed, scanning
 %one digit after the parameter character suffices.
-\item \gr{one optional space} 可用于界定数字的范围。这有助于避免一些意外情况（见第~\ref{number}~章），同时能加速 \TeX 的处理过程——这是因为 \TeX 可借助单个可选空格更容易地界定当前正在读入的 \gram{number} 于何时结束。
-注意，并非每个「数值」都是 \gram{number}。例如说，\cs{magstep2} 中的 {\ttfamily 2} 就不是数字，而是作为 \cs{magstep} 的参数的单独的字符记号。因此，在其后加上空格或行终止符是有意义的。此外，宏参数中的数字，例如 \n{\#1}：因为一个宏最多允许有 9 个参数，故而只需在参数符后扫描一位数字即可\liamfnote{因而不需要单个可选空格来辅助界定数字的范围。}。
+\item \gr{one optional space} 可用于界定数字的范围。这有助于避免一些意外情况（见第~\ref{number}~章），同时能加速 \TeX 的处理过程——这是因为借助单个非强制空格，\TeX 能更容易地界定当前正在读入的 \gram{number} 于何时结束。
+注意，并非每个「数值」都是 \gram{number}。例如说，\cs{magstep2} 中的 {\ttfamily 2} 就不是数字，而是作为 \cs{magstep} 的参数的单独的字符记号。因此，在其后加上空格或行终止符是有意义的。此外，宏参数中的数字，例如 \n{\#1}：因为一个宏最多允许有 9 个参数，故而只需在参数符后扫描一位数字即可\liamfnote{而不需要单个非强制空格来辅助界定数字的范围。}。
 
 %\item From the grammar of \TeX\
 %it follows that the
@@ -907,7 +905,7 @@ plain \TeX 格式使用 \cs{chardef} 命令（将在第~\pageref{chardef}~页和
 %This is a potential source of strange accidents.
 %In most cases, appending a \cs{relax} token prevents
 %such mishaps.
-\item 根据 \TeX 的语法，关键字 \n{fill} 及 \n{filll} 由 \n{fil} 与若干单独的 {\ttfamily l} 字符记号组成（详见第~\pageref{keywords}~页）；因此此处允许可选空格。据此，例如 \hbox{\n{fil\textvisiblespace L\textvisiblespace l}} 是合法的关键字\liamfnote{\TeX 的关键字不区分大小写，并且在关键字前允许有可选空格。}。这是莫名其妙的意外情况的一个潜在来源；对于大多数情形，解决办法可以是在关键字后面加上一个 \cs{relax}。
+\item 根据 \TeX 的语法，关键字 \n{fill} 及 \n{filll} 由 \n{fil} 与若干单独的 {\ttfamily l} 字符记号组成（详见第~\pageref{keywords}~页）；因此此处允许非强制空格。据此，例如 \hbox{\n{fil\textvisiblespace L\textvisiblespace l}} 是合法的关键字\liamfnote{\TeX 的关键字不区分大小写，并且在关键字前允许有非强制空格。}。这里有一些潜在的问题，可能导致莫名其妙的情况。大多数情况下，在关键字后面加上一个 \cs{relax} 即可避免此类问题。
 
 %\item The primitive command \csterm ignorespaces\par\
 %may come in handy as the final command in a macro definition.
@@ -925,7 +923,7 @@ plain \TeX 格式使用 \cs{chardef} 命令（将在第~\pageref{chardef}~页和
 %spaces in the second and third item.
 %An empty line
 %after \cs{ignorespaces} will still insert a \cs{par}, however.
-\item \TeX 原语 \csterm ignorespaces\par 会吃掉其后的可选空格；故此可将其插入宏定义的末尾，以避免将参量右花括号后的空格无意带入输出当中。例如说：
+\item \TeX 原语 \csterm ignorespaces\par 会吃掉其后的非强制空格；故此可将其插入宏定义的末尾，以避免将参量右花括号后的空格无意带入输出当中。例如说：
 \begin{verbatim}
 \def\item#1{\par\leavevmode
     \llap{#1\enspace}\ignorespaces}
@@ -943,7 +941,7 @@ yet another
 %\TeX\ goes into state~{\itshape S}, skipping spaces, after control
 %words. Similarly an end-of-line character is skipped
 %after a control word.
-\TeX 会忽略控制词之后的空格。不过这不是因为控制词之后的空格是可选空格，而是因为 \TeX 在遇到控制词之后会进入\cstate{S}，从而忽略空格。类似地，控制词之后的行终止符也会被忽略。
+\TeX 会忽略控制词之后的空格。不过这不是因为控制词之后的空格是非强制空格，而是因为 \TeX 在遇到控制词之后会进入\cstate{S}，从而忽略空格。类似地，控制词之后的行终止符也会被忽略。
 
 %Numbers are delimited by only \gr{one optional space},
 %but still
@@ -951,8 +949,9 @@ yet another
 %because \TeX\ goes into state~{\itshape S} after the first
 %space token. The second space is therefore skipped
 %in the input processor of \TeX; it never becomes a space token.
-数字由单个可选空格界定，但是
-\begin{disp}\n{a\char92 count0=3\char32\char32b}\quad 的输出是 \quad `ab'。\end{disp}这是因为 \TeX 在第一个空格记号之后会进入\cstate{S}，从而第二个空格会被 \TeX 的输入处理器忽略，永远不会变成空格记号。
+数字由单个非强制空格界定，但是
+\begin{disp}\n{a\char92 count0=3\char32\char32b}\end{disp}
+的输出是 `ab'。这是因为 \TeX 在第一个空格记号\liamfnote{第一个空格记号是单个非强制空格，界定了单个数字。}之后会进入\cstate{S}，从而第二个空格会被 \TeX 的输入处理器忽略，永远不会变成空格记号。
 
 %Spaces are skipped furthermore when \TeX\ is in state~{\itshape N},
 %newline. When \TeX\ is processing in vertical mode
@@ -965,7 +964,7 @@ yet another
 %\hbox{b}
 %\end{verbatim}
 %has no effect.
-当 \TeX 处于新行\cstate{N} 时，空格也会被忽略。当 \TeX 处于竖直模式工作时，空格记号（也就是在一开始未被忽略的空格）会被忽略。例如说，下例第一个盒子之后由行终止符生成的空格记号会被忽略\liamfnote{此处 \cs{hbox}\marg{\meta{内容物}} 并不会使 \TeX 从由 \cs{par} 记号引入的竖直模式中切换回水平模式。}。
+当 \TeX 处于新行\cstate{N} 时，空格也会被忽略。另一方面，当 \TeX 处于竖直模式工作时，空格记号（也就是在一开始未被忽略的空格）会被忽略。例如说，下例第一个盒子之后由行终止符生成的空格记号会被忽略\liamfnote{此处 \cs{hbox}\marg{\meta{内容物}} 并不会使 \TeX 从由 \cs{par} 记号引入的竖直模式中切换回水平模式。}。
 \begin{verbatim}
 \par
 \hbox{a}
@@ -977,7 +976,7 @@ yet another
 % that makes spaces significant: after one space other spaces are no
 % longer ignored. In both cases the basis is
 % \altt
-plain \TeX 和 \LaTeX 格式都定义了名为 \cs{obeyspaces} 的宏。该宏能使每个空格都是有意义的：在一个空格之后，连续的空格不会被忽略。两种格式中，\cs{obeyspaces} 的基本形式是一致的。
+plain \TeX 和 \LaTeX 格式都定义了名为 \cs{obeyspaces} 的宏。该宏能使每个空格都是有意义的：在一个空格之后，连续的空格会被保留。两种格式中，\cs{obeyspaces} 的基本形式是一致的。
 \begin{verbatim}
 \catcode`\ =13 \def {\space}
 \end{verbatim}
@@ -1002,14 +1001,14 @@ plain \TeX 和 \LaTeX 格式都定义了名为 \cs{obeyspaces} 的宏。该宏�
 % which is ignored in vertical mode.
 % The active spaces in \LaTeX\ will immediately switch to horizontal
 % mode, so that each space is significant.
-在 \cs{obeylines} 的上下文中，比较容易看出这两种定义的区别。使用 \cs{obeylines} 后，每个行终止符都是一个 \cs{par} 命令。因此 \TeX 开始处理每一行时，都处于竖直模式。在 plain \TeX 中，活动空格被展开为空格记号，因此在垂直模式中会被忽略。但在 \LaTeX 中，首先会离开竖直模式并进入水平模式，因此每个空格就都是有意义的了。
+在 \cs{obeylines} 的上下文中，比较容易看出这两种定义的区别。使用 \cs{obeylines} 后，每个行终止符都会被转换成一个 \cs{par} 命令。因此 \TeX 开始处理每一行时，都处于竖直模式。在 plain \TeX 中，活动空格被展开为空格记号，因此在垂直模式中会被忽略。但在 \LaTeX 中，首先会离开竖直模式并进入水平模式，因此每个空格就都是有意义的了。
 
 %\subsection{More ignored spaces}
 \subsection{空格被忽略的其他情形}
 
 %There are three further places where \TeX\ will ignore space tokens.
 还有三种情形下，\TeX 会忽略空格记号：
-\alt
+% \alt
 \begin{enumerate}
 %\item When \TeX\ is looking for
 %an undelimited macro argument it will accept the
@@ -1018,7 +1017,7 @@ plain \TeX 和 \LaTeX 格式都定义了名为 \cs{obeyspaces} 的宏。该宏�
 \item 在寻找未被花括号定界的宏参数时，\TeX 会忽略所有空格记号，而将第一个非空记号（或分组）作为参数。详见第~\ref{macro}~章。
 
 %\item In math mode space tokens are ignored (see Chapter~\ref{math}).
-\item 在数学模式中，空格记号会被忽略（详见第~\ref{math}~章）。
+\item 在数学模式中，所有的空格记号会被忽略（详见第~\ref{math}~章）。
 
 %\item After an alignment tab character spaces are ignored
 %(see Chapter~\ref{align}).
@@ -1093,7 +1092,7 @@ macro:-> a b
 %(and insert an indentation box).
 %See  Chapter~\ref{space} for the space factor, and
 %chapter~\ref{hvmode} for horizontal and vertical modes.
-控制空格命令 \n{\cs{\textvisiblespace}}\cstoidx\char32\par 给出一个与 \verb=\spacefactor= 等于 1000 时空格记号宽度一样的空格。控制空格不能被当做是空格记号，也不能理解为会展开成一个空格记号的宏（例如 plain \TeX 中的 \cs{space}）。举例来说，\TeX 会忽略所有输入行开头的空格，但是控制空格是一个水平命令（\gr{horizontal command}），故而 \TeX 在遇到它之后会从竖直模式切换到水平模式（并插入一个缩进盒子）。有关空白因子的介绍，详见第~\ref{space}~章；有关水平模式和竖直模式的介绍，详见第~\ref{hvmode}~。
+控制空格命令 \n{\cs{\textvisiblespace}} \cstoidx\char32\par 给出一个与 \verb=\spacefactor= 等于 1000 时空格记号宽度一样的空格。控制空格不能被当做是空格记号，也不能理解为会展开成一个空格记号的宏（例如 plain \TeX 中的 \cs{space}）。举例来说，\TeX 会忽略所有输入行开头的空格，但是控制空格是一个水平命令（\gr{horizontal command}），故而 \TeX 在遇到它之后会从竖直模式切换到水平模式（并插入一个缩进盒子）。有关 \verb=\spacefactor= 的介绍，详见第~\ref{space}~章；有关水平模式和竖直模式的介绍，详见第~\ref{hvmode}~章。
 
 %\subsection{`\n{\char32}'}
 \subsection{可见空格：\textvisiblespace}
@@ -1103,7 +1102,7 @@ macro:-> a b
 %However, switching to \cs{tt} is not sufficient to get
 %spaces denoted this way, because spaces will still
 %receive special treatment in the input processor.
-在 Computer Modern 的打字机字体中，字符编码为 32 的字符是显式空格符号 `\textvisiblespace'。不过，简单地使用 \cs{tt} 命令是无法将其打印出来的。这是因为空格在输入处理器中有特别的处理。
+在 Computer Modern 的打字机字体中，字符编码为 32 的字符是显式空格符号 `\textvisiblespace'。不过，简单地使用 \cs{tt} 命令\liamfnote{在 \LaTeX 中是 \cs{ttfamily} 命令。}是无法将其打印出来的。这是因为空格在输入处理器中有特别的处理。
 
 %One way to
 %let spaces be typeset by \n{\char32}
@@ -1400,7 +1399,7 @@ macro:-> a b
 %In both definitions
 %the period after \cs{c} is a delimiting token; it is used here
 %to prevent spaces from being skipped.
-再来看下面这个让可选空格字符在多个处理层面中出现的例子：
+再来看下面这个让非强制空格字符在多个处理层面中出现的例子：
 \begin{disp}\verb>\def\c.{\relax}>\nl
      \verb>a\c.>{\tt\char32 b}\end{disp}
 它的展开结果为
@@ -1456,7 +1455,7 @@ macro:-> a b
 \catcode`\^^M=13
 \end{verbatim}
 却不会出错。这是因为 \TeX\ 输入处理器是在扫描数值 13 时读到行终止符，
-也就是说在那时赋值还未完成，因此行终止符会被视为数值的定界符，即可选空格。
+也就是说在那时赋值还未完成，因此行终止符会被视为数值的定界符，即非强制空格。
 
 %%\spoint Recursive invocation of the input processor
 %\subsection{Recursive invocation of the input processor}
