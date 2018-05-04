@@ -691,14 +691,14 @@ plain \TeX 格式使用 \cs{chardef} 命令（将在第~\pageref{chardef}~页和
 %If any of the characters delivered by such a command
 %is a space character (that is, character code~32),
 %it receives category code~10, space.
-此类字符串可由 \cs{string}、\cs{number}、\cs{romannumeral}、\cs{jobname}、\cs{fontname}、\cs{meaning} 以及 \cs{the} 等命令生成。若这些命令产生的字符串包含空格符（\ascii 编码为 32）\liamfnote{注意，此处说的是空格字符，而非是 \TeX 的空格记号。前者讨论的是字符编码，而后者讨论的是分类码。}，则在输出的字符串中，该字符的分类码为 10。
+此类字符串可由 \cs{string}、\cs{number}、\cs{romannumeral}、\cs{jobname}、\cs{fontname}、\cs{meaning} 以及 \cs{the} 等命令生成。若这些命令产生的字符串包含空格字符（\ascii 编码为 32）\liamfnote{注意，此处说的是空格字符，而非是 \TeX 的空格记号。前者讨论的是字符编码，而后者讨论的是分类码。}，则在输出的字符串中，该字符的分类码为 10。
 
 %For the extremely rare case where a hexadecimal digit has been
 %hidden in a control sequence, \TeX\ allows \n A$_{12}$--\n F$_{12}$
 %to be hexadecimal digits, in addition to the ordinary
 %\n A$_{11}$--\n F$_{11}$ (here
 %the subscripts denote the category codes).
-在极个别情况下，控制序列的名字中可能会包含十六进制数字；因此，除了通常表示字母的 $ \text{\n{A}}_{11} $ -- $ \text{\n{F}}_{11} $ 之外，\TeX 中还有表示十六进制数字的 $ \text{\n{A}}_{12} $ -- $ \text{\n{F}}_{12} $。
+在极个别情况下，控制序列的展开中可能会包含十六进制数字；因此，除了通常表示字母的 $ \text{\n{A}}_{11} $ -- $ \text{\n{F}}_{11} $ 之外，\TeX 中还有表示十六进制数字的 $ \text{\n{A}}_{12} $ -- $ \text{\n{F}}_{12} $。
 
 %For example,
 %\begin{disp}\verb>\string\end>\quad gives four character tokens\quad
@@ -711,7 +711,7 @@ plain \TeX 格式使用 \cs{chardef} 命令（将在第~\pageref{chardef}~页和
 %The \cs{string} command is treated further in Chapter~\ref{char}.
 举例来说，
 \begin{disp}\verb>\string\end>\quad 得到四个字符记号 \quad\n{\char92$_{12}$e$_{12}$n$_{12}$d$_{12}$} \end{disp}
-注意，此处输出中有\emph{转义字符}\index{字符!转义字符}\texttt{\char`\\}$_{12}$\label{use:escape} 的原因是宏 \cs{escapechar} 的值是反斜线的字符编码。而若将 \cs{escapechar} 的值改为其它字符的编码，则 \cs{string} 将输出另一个字符。有关 \cs{string} 命令的详细内容参见第~\ref{char}~章。
+注意，此处输出中有\emph{转义字符}\index{字符!转义字符}~\texttt{\char`\\}$_{12}$\label{use:escape} 的原因是宏 \cs{escapechar} 的值是反斜线的字符编码。而若将 \cs{escapechar} 的值改为其它字符的编码，则 \cs{string} 将输出另一个字符。有关 \cs{string} 命令的详细内容参见第~\ref{char}~章。
 
 %Spaces can wind up in control sequences:
 %\begin{disp}\verb>\csname a b\endcsname>\end{disp} gives a control sequence
@@ -719,10 +719,9 @@ plain \TeX 格式使用 \cs{chardef} 命令（将在第~\pageref{chardef}~页和
 %Turning this control sequence token into a string of characters
 %\begin{disp}\verb>\expandafter\string\csname a b\endcsname>\end{disp}
 %gives \n{\char92$_{12}$a$_{12}$\char32$_{10}$b$_{12}$}.
-通过一些特殊技巧，空格也是可以放在控制序列当中的：
+通过一些特殊技巧，空格也可以出现在控制序列的名字当中：
 \begin{disp}\verb>\csname a b\endcsname>\end{disp}
-是一个控制序列记号，其名称由三个字符组成，并且其中之一是空格符。
-将这个控制序列转化为字符串
+是一个控制序列记号，其名称由三个字符组成，并且其中之一是空格符。将这个控制序列转化为字符串
 \begin{disp}\verb>\expandafter\string\csname a b\endcsname>\end{disp}
 可得 \n{\char92$_{12}$a$_{12}$\textvisiblespace$_{10}$b$_{12}$}。
 
