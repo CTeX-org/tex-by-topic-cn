@@ -1123,7 +1123,7 @@ macro:-> a b
 此时，\TeX 会将空格字符作为编码为 32 的字符排版出来。此外，连续的空格不会被忽略。这是因为\cstate{S} 只是在遇到分类码为 10 的字符后才会进入。类似地，控制序列之后的空格也会因分类码的改变而显形。
 
 %\section{More about line ends}
-\section{行终止符的更多知识}
+\section{有关行尾的更多知识}
 
 %\TeX\ accepts lines from an input file, excluding any line
 %terminator that may be used.
@@ -1136,7 +1136,7 @@ macro:-> a b
 %the block storage mode on \key{IBM} mainframe computers.
 %For some computer-specific problems with end-of-line
 %characters, see~\cite{B:ctrl-M}.
-\TeX 从输入文件中获取文本行，但不包括输入行中的行终止符。因此，\TeX 的行为不依赖操作系统以及\cindextermsub{行}{终止符}究竟是什么（\key{CR}-\key{LF}、\key{LF}抑或是在块存储系统里根本就不存在行终止符）。而后，\TeX 会移除输入行末尾的空格。这样处理是有历史原因的：\TeX 必须能够在 \key{IBM} 的大型计算机的块存储模式有关。对于由计算机的不同而造成的有关行终止符的问题，详见~\cite{B:ctrl-M}。
+\TeX 从输入文件中获取文本行，但不包括输入行中的行尾符。因此，\TeX 的行为不依赖操作系统以及\cindextermsub{行}{尾符}究竟是什么（\key{CR}-\key{LF}、\key{LF}抑或是在块存储系统里根本就不存在行尾符）。而后，\TeX 会移除输入行末尾的空格。这样处理是有历史原因的：\TeX 必须能够在 \key{IBM} 的大型计算机的块存储模式有关。对于由计算机的不同而造成的有关行尾符的问题，详见~\cite{B:ctrl-M}。
 
 %A~terminator character is then appended
 %with a character code of \cs{endlinechar},
@@ -1144,7 +1144,7 @@ macro:-> a b
 %is negative or more than~255.
 %Note that this terminator character
 %need not have category code~5\index{category!5}, end of line.
-此后，字符编码为 \cs{endlinechar} 的行终止符会被追加在文本行的末尾；除非 \cs{endlinechar} 中保存的数值为负数或大于 255。注意，这种行终止符的分类码不一定非得是 5\index{category!5}。
+此后，字符编码为 \cs{endlinechar} 的行终止符会被追加在文本行的末尾；除非 \cs{endlinechar} 中保存的数值为负数或大于 255。注意，改行终止符的分类码不一定非得是 5\index{category!5}。
 
 %\subsection{Obeylines}
 \subsection{保持各行}
@@ -1163,7 +1163,7 @@ macro:-> a b
 %The comment signs prevent \TeX\ from seeing the terminator of the
 %\alt
 %lines of this definition, and expanding it since it is active.
-有时候会期望会希望输入文本中的行终止符能够在排版输出后保持。
+有时候会期望会希望输入文本中的行尾符能与排版输出的行尾一一对应。
 \message{Check spurious space obeylines+1}%
 \cstoidx obeylines\par\howto Change the meaning of the line end\par
 下面的代码可以可以解决这一问题：
@@ -1171,9 +1171,7 @@ macro:-> a b
 \catcode`\^^M=13 %
 \def^^M{\par}%
 \end{verbatim}
-这里，\cs{endlinechar} 成为活动符，其含义变为 \cs{par}。
-上述代码中的注释符用于阻止 \TeX\ 看到代码末尾的行终止符，
-以防它将其作为活动字符而展开。
+这里，\cs{endlinechar} 成为活动符，其含义变为 \cs{par}。上述代码中的注释符用于阻止 \TeX\ 看到代码末尾的行终止符，以防它将其作为活动字符而展开。
 
 %However, it takes some care to embed this code in a macro.
 %The definition
@@ -1298,8 +1296,7 @@ macro:-> a b
 %is treated like any other character. Usually one is not aware
 %of this, as its category code is special, but there are a few
 %ways to let it be processed in an unusual way.
-\TeX\ 和其他字符一样对待添加到行尾的字符。通常我们不会注意到它，
-因为它的分类码比较特殊，但是有一些方法可以特殊地处理它。
+\TeX 对所有字符一视同仁，包括追加到输入行末尾的行终止符。考虑到它特别的分类码，通常大家都不会注意行终止符。但是有一些方法可以特别地处理行终止符。
 
 %\begin{example} Terminating an input line with \verb>^^> will
 %(ordinarily, when \cs{endlinechar} is~13) give `M' in the output,
@@ -1307,8 +1304,7 @@ macro:-> a b
 %\ascii{} character with code~13+64.
 %\end{example}
 \begin{example}
-把 \verb>^^> 置于文本行的末尾（假定 \cs{endlinechar} 保持默认值为 13），
-将输出字符 `M'，它是编码为~13+64~的 \ascii\ 字符。
+假定 \cs{endlinechar} 保持默认值为 13，那么，把 \verb>^^> 置于文本行的末尾，将输出字符 `M'。因为它是编码为~13+64~的 \ascii\ 字符。
 \end{example}
 
 %\begin{example} If \verb>\^^M> has been defined,
@@ -1319,12 +1315,12 @@ macro:-> a b
 %\end{verbatim}
 %which makes a `control return' equivalent to a control space.
 %\end{example}
-\begin{example} 如果已经定义了 \verb>\^^M>，在输入行中用反斜线结尾将执行此命令。
-在 Plain 格式中定义
+\begin{example}
+如果 \verb|\^^M| 有定义，此时可称为「控制换行」。则在输入行中用反斜线结尾将执行此控制换行命令。例如，在 plain TeX 中定义
 \begin{verbatim}
 \def\^^M{\ }
 \end{verbatim}
-这使得`控制换行'与控制空格等价。
+将使得控制换行与控制空格等价。
 \end{example}
 
 %%\point More about the input processor
