@@ -1234,11 +1234,9 @@ macro:-> a b
 %for instance to obtain special effects such as macros where
 %the argument is terminated by the line end.
 %See page~\pageref{pick:eol} for a worked-out example.
-有时，你可能想改变 \cs{endlinechar} 或者 \verb.^^M. 的分类码%
-以获得一些特殊效果，例如让宏的参量用行终止符定界。
-参考第~\pageref{pick:eol}~页给出的例子。
+某些情况下，你会希望改变 \cs{endlinechar} 的值或者 \verb.^^M. 的分类码，以达成一些特殊效果。例如说，可以用行终止符作为宏的参数的定界符。具体可参考第~\pageref{pick:eol}~页给出的例子。
 
-%There are  a couple of traps. Consider the following:
+%There are a couple of traps. Consider the following:
 %\begin{verbatim}
 %{\catcode`\^^M=12 \endlinechar=`\^^J \catcode`\^^J=5
 %...
@@ -1247,24 +1245,18 @@ macro:-> a b
 %This causes unintended output of both character~13 (\verb-^^M-)
 %and~10 (\verb-^^J-), caused by the line terminators of the
 %first and last line.
-这里有几个陷阱。首先考虑下面的写法：
+在这些常识中，通常会有一些陷阱。我们来看以下写法：
 \begin{verbatim}
 {\catcode`\^^M=12 \endlinechar=`\^^J \catcode`\^^J=5
 ...
 ... }
 \end{verbatim}
-这将导致无意中输出了第~13~号（\verb-^^M-）与第~10~号（\verb-^^J-）字符，
-由于第一行和最后一行的行终止符。
+这段代码的输出不符合预期：由于第一行和最后一行的行终止符，\TeX 将输出字符码为 13（\verb-^^M-）和 10（\verb-^^J-）的字符。\liamfnote{在第一行执行之前，输入处理器的初始工作将会添加 \texttt{\textasciicircum\textasciicircum M} 作为行终止符，但由于其分类码被修改为 12，即其他字符，故而会被输出。最后一行执行之前，输入处理器的初始工作将会添加 \texttt{\textasciicircum\textasciicircum J} 作为行终止符，因为此时 \cs{endlinechar} 的值是它的字符码。但由于分组结束，\texttt{\textasciicircum\textasciicircum J} 的分类码已恢复，故此时添加在输入行尾的行终止符  \texttt{\textasciicircum\textasciicircum J} 也会输出。}
 
-%Terminating the first and  last line with a comment works,
+%Terminating the first and last line with a comment works,
 %but replacing the first line by the two lines
-%\begin{verbatim}
-%{\endlinechar=`\^^J \catcode`\^^J=5
-%\catcode`\^^M=12
-%\end{verbatim}
 %is also a solution.
-在第一行和最后一行末尾加上注释符可以解决此问题，
-但还有另一种方法是将第一行拆成下面两行
+在第一行和最后一行末尾加上注释符可以解决此问题，但还有另一种方法是将第一行拆成下面两行\liamfnote{这样可以避免第一行的行终止符带来的问题，但无法避免最后一行的行终止符带来的问题。}：
 \begin{verbatim}
 {\endlinechar=`\^^J \catcode`\^^J=5
 \catcode`\^^M=12
