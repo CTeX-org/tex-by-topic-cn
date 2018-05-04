@@ -11,4 +11,7 @@ output
 *.out
 *.synctex.gz
 *.xdv
-
+*.bbl
+*.blg
+*.toc
+*.brf

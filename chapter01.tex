@@ -12,7 +12,7 @@
 \begin{document}
 
 %\chapter{The Structure of the \TeX\ Processor}
-\chapter{\TeX\ 处理器的结构}
+\chapter{\TeX 处理器的结构}
 
 %This book treats the various aspects of \TeX\ in chapters
 %that are concerned with relatively small, well-delineated,
@@ -23,13 +23,13 @@
 %the few examples given in this chapter will be repeated
 %in the appropriate places later on; they are included here
 %to make this chapter self-contained.
-本书涵盖了 \TeX\ 诸多方面的内容；其中每一章都讲述一个相对较小且易于描述的主题。
-本章将简介 \TeX\ 处理文档的基本流程。
+本书涵盖了 \TeX 诸多方面的内容；其中每一章都讲述一个相对较小且易于描述的主题。
+本章将简介 \TeX 处理文档的基本流程。
 当然，本章会忽略很多细节，留待后续章节继续讨论。
 相应的，为了说明问题，本章会给出一些例子；这些例子在后续的这些章节中会继续讨论。
 
 %\section{Four \TeX\protect\ processors}
-\section{\TeX\ 的 4 个处理器}
+\section{\TeX 的 4 个处理器}
 
 %The way \TeX\ processes its input can be viewed as
 %happening on four levels. One might  say that
@@ -38,10 +38,10 @@
 %delivering the input for the next stage. The input of
 %the first stage is then the \n{.tex} input file; the output
 %of the last stage is a \n{.dvi} file.
-\TeX\ 处理输入的过程可分为 4 个层次。
-你可以认为 \TeX\ 处理器（也成 \TeX\ 引擎）有 4 个独立的单元，
+\TeX 处理输入的过程可分为 4 个阶段。
+你可以认为 \TeX 处理器（也称 \TeX 引擎）有 4 个独立的单元，
 每个单元接收前序步骤的输出，并将输出作为后续单元的输入。
-第一阶段的输入是 \n{.tex} 文件，最后一个阶段的输出是 \n{.dvi} 文件\footnote{译注（Liam0205）：此处讨论的 \TeX\ 是 Knuth \TeX。后续扩展的 pdf\TeX 等不一定输出 \n{.dvi} 文件。}。%
+第一阶段的输入是 \n{.tex} 文件，最后一个阶段的输出是 \n{.dvi} 文件\footnote{译注（Liam0205）：此处讨论的 \TeX 是 Knuth \TeX。后续扩展的 pdf\TeX 等不一定输出 \n{.dvi} 文件。}。%
 
 %For many purposes it is most convenient, and most insightful,
 %to consider these four levels of processing as happening
@@ -49,15 +49,17 @@
 %output of the previous level. In reality this is not true:
 %all levels are simultaneously
 %active, and there is interaction between them.
-通常而言，这样理解上述 4 个层次方便且直观：
-每个层次\emph{完整地}接收上一个层次的输出。
+通常而言，这样理解上述 4 个阶段方便且直观：
+每个阶段\emph{完整地}接收上一个阶段的输出。
 然而，这样并不完全正确：
-4 个层次的处理是同时进行的，层次之间也有交互\footnote{译注（Liam0205）：流式处理，上一层次处理完多少，下一个层次就接着继续处理这部分。}。
+4 个阶段的处理是同时进行的，阶段之间也有交互\footnote{译注（Liam0205）：流式处理，上一阶段处理完多少，下一个阶段就接着继续处理这部分。}。
 
 %The four levels are (corresponding roughly
 %to the `eyes', `mouth', `stomach', and `bowels' respectively
 %in Knuth's original terminology) as follows.
-%\begin{enumerate}\item
+4 个阶段列举如下（按 Knuth 最初的叫法，分别是「眼睛」、「嘴巴」、「胃」和「肠道」）：
+\begin{enumerate}
+%\item
 %The input processor. This is the piece of \TeX\ that
 %accepts input lines from the file system of whatever computer
 %\TeX\ runs on, and turns them into tokens.
@@ -65,23 +67,21 @@
 %there are character tokens that constitute the typeset
 %text, and control sequence tokens that are commands
 %to be processed by the next two levels.
+\item 输入处理器（input processor）：负责从运行 \TeX 的计算机的文件系统中读入输入，并处理为记号。
+记号是两种 \TeX 内部对象的统称：构成排版文本的字符记号、待后续两个阶段作为命令处理的控制序列记号。
 %\item The expansion processor.
 %Some but not all of the tokens generated in the first level
 %\ldash macros, conditionals, and a number
 %of primitive \TeX\ commands \rdash  are subject to expansion.
 %Expansion is the process that replaces some (sequences of)
 %tokens by other (or no) tokens.
+\item 展开处理器（expansion processor）：
+负责展开输入处理器输出的部分记号：宏、条件式、以及部分 \TeX 原语。
+记号展开的过程会将一些（连续的）记号删除或替换为其它记号。
 %\item The execution processor.
 %Control sequences that are not expandable are executable,
 %and this execution takes place on the third level of the
 %\TeX\ processor.
-4 个层次列举如下（按 Knuth 最初的叫法，分别是「眼睛」、「嘴巴」、「胃」和「肠道」）：
-\begin{enumerate}
-\item 输入处理器（input processor）：负责为 \TeX\ 从文件系统中读入输入，并处理为记号。
-记号是两种 \TeX\ 内部对象的统称：构成排版文本的字符记号、待后续两个层次作为命令处理的控制序列记号。
-\item 展开处理器（expansion processor）：
-负责展开输入处理器输出的部分记号：宏、条件式、以及部分 \TeX\ 原语。
-记号展开的过程会将一些（连续的）记号删除或替换为其它记号。
 \item 执行处理器（execution processor）：
 不可展开的控制序列即是可执行的；执行处理器负责执行这些可执行的控制序列。
 
@@ -91,6 +91,9 @@
 %category. The other major thing happening on this level
 %is the construction of horizontal, vertical, and
 %mathematical lists.
+执行处理器的部分活动涉及到 \TeX 的内部状态之变化：
+赋值（包括宏定义）是其中典型。
+除此之外，执行处理器负责构造水平列表、垂直列表和数学列表。
 %\item The visual processor.
 %In the final level of processing
 %the visual part of \TeX\ processing is performed. Here
@@ -100,15 +103,11 @@
 %Also the output to the \n{dvi} file takes place on this level.
 %The algorithms working here are not accessible to the user,
 %but they can be influenced by a number of parameters.
-%\end{enumerate}
-执行处理器的部分活动涉及到 \TeX\ 的内部状态之变化：
-赋值（包括宏定义）是其中典型。
-除此之外，执行处理器负责构造水平列表、垂直列表和数学列表。
 \item 可视化处理器（visual processor）：
-\TeX\ 的最后一个层次负责排版内容的可视化。
+\TeX 的最后一个阶段负责排版内容的可视化。
 可视化处理器将水平列表分行成段，将垂直列表分割成页，将数学列表构建成数学公式；
 最终输出 \n{.dvi} 文件%
-\footnote{译注（zoho）：对于现代 \TeX\ 处理器而言，还可以是 \n{pdf} 和 \n{xml} 等文件。}。
+\footnote{译注（zoho）：对于现代 \TeX 处理器而言，还可以是 \n{pdf} 和 \n{xml} 等文件。}。
 可视化处理器的内部算法对于用户是不可见的；不过用户可以通过一系列参数来控制。
 \end{enumerate}
 
@@ -122,7 +121,7 @@
 %character tokens and control sequence tokens.
 %The remaining category is that of the parameter tokens;
 %these will not be treated in this chapter.
-输入处理器是 \TeX\ 的一部分，负责将 \TeX\ 从输入文件中读入的内容翻译成记号。
+输入处理器是 \TeX 的一部分，负责将 \TeX 从输入文件中读入的内容翻译成记号。
 它的输出是记号流（stream of tokens）：记号组成的列表。
 大部分记号属于以下两类：
 字符记号和控制序列记号。
@@ -138,8 +137,8 @@
 %to any character in the input, for instance the space token
 %at the end of the line, or the \cs{par} token after an empty line.
 对于简单的输入文本，其中的字符被输入处理器翻译为字符记号。
-在某些情况下，\TeX\ 会忽略一些输入字符；例如，连续空格通常等价于单个空格。
-此外，\TeX\ 也会向记号流中插入一些与输入字符无关的记号。
+在某些情况下，\TeX 会忽略一些输入字符；例如，连续空格通常等价于单个空格。
+此外，\TeX 也会向记号流中插入一些与输入字符无关的记号。
 例如在每一行的末尾插入一个空格，以及在每一个空行末尾插入一个 \cs{par} 记号。
 
 %Not all character tokens signify characters to be typeset.
@@ -157,13 +156,12 @@
 %character code.
 并非所有的字符记号都会被最终排版出来。
 事实上，在 \TeX 中，字符被分类为 16 类
-\ldash 每一类都有特定的功能\rdash
+\ldash 每一类都有特定的功能\rdash%
 而只有两类最终会被排版出来。
 其它字符类，像 \n{\char`\{}、\n{\char`\}}、\n\&
 和 \n\#，都不会被排版出来。
-因此，\TeX 的字符记号的含义由一对数字决定：
-字符编码\ldash 通常是 \ascii 编码\rdash 和分类码。
-具体某一编码的字符对应的分类码是可修改的\footnote{译注（Liam0205）：也就是说，字符在 \TeX 看来是何种含义不光取决于这个字符是什么（字符编码），还取决于它是什么类型（分类码）。对于某个具体的字符来说（字符编码确定），它的类型是可以改变的（分类码可以改变）。}。
+也就是说，在 \TeX 中，字符记号的含义由字符编码（通常是 \ascii 编码）和分类码这一对数字共同决定。
+而具体某一编码的字符对应的分类码是可以修改的。
 
 %When the escape character (by default~\cs{}$\,$) appears in the input,
 %\TeX's behaviour in forming tokens is more complicated.
@@ -178,9 +176,8 @@
 %$N$,~new line; $M$,~middle of line; $S$,~skipping spaces.
 %These states and the transitions between them are treated
 %in Chapter~\ref{mouth}.
-% FIXME (Liam0205): 这一段的翻译感觉有问题，但是等到后续再说吧。
-对于分类码的处理，\TeX\ 输入处理器的行为可想像为在三种内部状态（$N$，新行；$M$，
-行内；$S$，忽略空格）中切换的机器。在第~\ref{mouth}~章中我们会讨论这些状态及其切换。
+在分类码的影响下，\TeX 输入处理器的行为可视作是一个在三种内部状态（$N$，新行；$M$，
+行内；$S$，忽略空格）中切换的机器。第~\ref{mouth}~章将讨论这些状态及其切换。
 
 %\subsection{Two-level input processing}
 \subsection{输入处理器的两个阶段}
@@ -621,7 +618,7 @@
 %the sequence \begin{verbatim}
 %\a0
 %\end{verbatim}
-被忽略的空格可以反映数据在 \TeX\ 各层处理器之间的流动情况。例如：
+被忽略的空格可以反映数据在 \TeX 各处理器之间的流动情况。例如：
 \begin{verbatim}
 \def\a{\penalty200}
 \a 0
@@ -647,7 +644,7 @@
 %quantities have an external representation,
 %which is a string of characters, such as
 %\n{4711} or~\n{91.44cm}.
-\TeX 使用了多重内部量，比如说整数和尺寸。
+\TeX 使用了多种内部量，比如说整数和尺寸。
 这些内部量的外部表示是同一的：字符组成的字符串。
 例如 \n{4711} 和 \n{91.44cm}。
 

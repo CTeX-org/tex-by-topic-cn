@@ -1,19 +1,21 @@
 % -*- coding: utf-8 -*-
 
 \usepackage[b5paper,text={5in,8in},centering]{geometry}
-
-\usepackage[CJKchecksingle]{xeCJK}
+\usepackage{amsmath}
+\usepackage[heading = false, scheme = plain]{ctex}
+% \usepackage[CJKchecksingle]{xeCJK}
 \setmainfont[Mapping=tex-text]{TeX Gyre Schola}
 %\setsansfont{URW Gothic L Book}
 %\setmonofont{Nimbus Mono L}
-\setCJKmainfont[BoldFont=FandolHei,ItalicFont=FandolKai]{FandolSong}
-\setCJKsansfont{FandolHei}
-\setCJKmonofont{FandolFang}
+% \setCJKmainfont[BoldFont=FandolHei,ItalicFont=FandolKai]{FandolSong}
+% \setCJKsansfont{FandolHei}
+% \setCJKmonofont{FandolFang}
 \xeCJKsetup{PunctStyle = kaiming}
 
 \linespread{1.25}
 \setlength{\parindent}{2em}
 \setlength{\parskip}{0.5ex}
+\usepackage{indentfirst}
 
 \usepackage{xcolor}
 \definecolor{myblue}{rgb}{0,0.2,0.6}
@@ -97,7 +99,8 @@
 % these are fine
 \def\handbreak{\\ \message{^^JManual break!!!!^^J}}
 \def\nl{\protect\\}\def\n#1{{\tt #1}}
-\def\cs#1{\texorpdfstring{{\tt\char`\\#1}}{\textbackslash#1}} %\def\cs#1{{\tt\char`\\#1}}
+\protected\def\cs#1{\texttt{\textbackslash#1}}
+\pdfstringdefDisableCommands{\def\cs#1{\textbackslash#1}}
 \let\csc\cs
 \def\lb{{\tt\char`\{}}\def\rb{{\tt\char`\}}}
 \def\gr#1{\texorpdfstring{$\langle$#1$\rangle$}{<#1>}} %\def\gr#1{$\langle$#1$\rangle$}
@@ -126,12 +129,15 @@
 \newenvironment{inventory}{\begin{description}\raggedright}{\end{description}}
 \newenvironment{glossinventory}{\begin{description}}{\end{description}}
 \def\gram#1{\gr{#1}}%???
+\def\meta{\gr}% alias
 %
 % index
 %
 \def\indexterm#1{\emph{#1}\index{#1}}
 \def\indextermsub#1#2{\emph{#1 #2}\index{#1!#2}}
 \def\indextermbus#1#2{\emph{#1 #2}\index{#2!#1}}
+\def\cindextermsub#1#2{\emph{#1#2}\index{#1!#1#2}}
+\def\cindextermbus#1#2{\emph{#1#2}\index{#2!#1#2}}
 \def\term#1\par{\index{#1}}
 \def\howto#1\par{}
 \def\cstoidx#1\par{\index{#1@\cs{#1}@}}
@@ -205,3 +211,4 @@
 \def\endofchapter{\vfill\noindent}
 
 \newcommand{\liamfnote}[1]{\footnote{译注（Liam0205）：#1}}
+\newcommand{\cstate}[1]{状态 \textit{#1}}
