@@ -81,8 +81,7 @@
 %Conceptually it is easiest to think that \TeX\ works with
 %characters internally, but in fact
 %\TeX\ works with integers: the \indextermsub{character}{codes}.
-表面上看，\TeX\ 内部处理的是字符，但实际上 \TeX\ 处理的是整型数：
-\emph{字符编码}\index{字符!字符编码}。
+在概念上说，认为 \TeX 内部处理着字符最简单，但是实际上 \TeX 内部处理的是整数：\cindextermsub{字符}{编码}。
 
 %The way characters are encoded in a computer may differ
 %from system to system.
@@ -93,12 +92,7 @@
 %A~category code is then assigned based on this (see Chapter~\ref{mouth}).
 %The character code table is based on the 7-bit \ascii{} table
 %for numbers under~128 (see Section~\ref{sec:asciitable}).
-在计算机中，字符编码在各个系统中可能有差别。
-因而 \TeX\ 不得不使用它自己的字符编码方式。
-从文件中读取的任何字符都会根据 \TeX\ 的字符码表转换为字符编码，
-并赋以相应的类别码（见第~\ref{mouth}~章）。
-\TeX\ 的字符码表是基于 7 位的 \ascii{} 码表构建的，
-只有 128 个字符编码（见第~\ref{sec:asciitable}~节）。
+不同系统中，字符的编码方式可能不同。因此，\TeX 使用其自身定义的字符编码方案。任何从文件或用户终端读入的字符，都会依据编码表转换成字符编码。之后，\TeX 会根据这一字符编码为它们分配分类码（见第~\ref{mouth}~章）。编码表基于 7-位 \ascii 编码表，可编码 128 个字符（见第~\ref{sec:asciitable}~节）。
 
 %There is an explicit conversion between characters
 %(better:  character tokens)
@@ -110,32 +104,24 @@
 %a single-character control sequence.
 %Thus both \verb.\count`a. and \verb.\count`\a. are synonyms
 %for \verb.\count97.. See also Chapter~\ref{number}.
-利用左引号（或称为反引号）字符 \n{`{}}，可以将字符记号显式地转换为对应的字符编码：
-在 \TeX\ 要求 \gram{number} 的所有地方，
-你都可以用左引号加一个字符记号或一个单字符控制序列。
-因此 \verb.\count`a. 和 \verb.\count`\a. 都表示 \verb.\count97.。
-另见第~\ref{number}~章。
+利用反引号（\n{`{}}，或称左引号）可将字符（准确说是字符记号）转换为起字符编码。在所有 \TeX 希望得到 \gram{number} 的地方，都可以通过这种方式将一个字符记号的编码传给 \TeX：反引号加字符或是反引号加单字符控制序列。例如 \verb.\count`a. 和 \verb.\count`\a. 都表示 \verb.\count97.。详见第~\ref{number}~章。
 
 %The possibility of a single-character control
 %sequence is necessary in certain cases such as
-%\begin{disp}\verb>\catcode`\%=11>\quad or\quad \verb>\def\CommentSign{\char`\%}>\end{disp}
+第二种方式在某些情况下是有必要的，例如在下例中，若去掉 \cs{}，就会让 \TeX 产生误解。
+\begin{disp}\verb>\catcode`\%=11>\quad or\quad \verb>\def\CommentSign{\char`\%}>\end{disp}
 %which would be misunderstood if the backslash were left out.
 %For instance
-%\begin{verbatim}
-%\catcode`%=11
-%\end{verbatim}
+例如在下例中，\n{=11} 会被认为是注释。
+\begin{verbatim}
+\catcode`%=11
+\end{verbatim}
 %would consider
 %the \n{=11} to be a comment.
 %Single-character
 %control sequences can be formed from characters with any
 %category code.
-虽然上述两种写法是等价的，但有时必须使用后者的形式，例如：
-\begin{disp}\verb>\catcode`\%=11>\quad 或\quad \verb>\def\CommentSign{\char`\%}>\end{disp}
-此时如果去掉 \verb-\-，就会让 \TeX\ 误解。比如
-\begin{verbatim}
-\catcode`%=11
-\end{verbatim}
-中的 \n{=11} 将被当成注释。单字符控制序列可以由任意类别码的字符构成。
+单字符的控制序列可以由任何分类码的字符组成。\liamfnote{特别地，可以是无效字符。}
 
 %After the conversion to character codes any connection
 %with external representations has disappeared. Of course,
@@ -146,13 +132,9 @@
 %roman fonts there are no `less than' and `greater than'
 %\message{Check <>! Dammit!}%
 %signs, so the input `\verb.<>.' will give `<>' in the output.
-%%{\MathRMx<>}
-在转换为字符编码后，字符与其外部表示的联系都已经消失了。
-当然，对于大多数字符，见到的输出将`等同'于输入%
-（即 `\n{a}' 将输出 `a'）。然而即使对于常见符号也还是有例外。
-在计算机现代罗马字体中，没有`小于号'和`大于号'，
+当字符记号被转换为字符编码后，字符编码就与其外部形状没有关联了。当然，对于大多数字符来说，在视觉上，其排版输出与输入是一致的。例如输入 \n{a} 会排版输出字符「a」。不过，即使在常见的符号中，也有例外情况。在计算机现代罗马字体中，就没有小于号和大于号。
 \message{Check <>! Dammit!}%
-而输入 `\verb.<>.' 得到的输出是 `{\font\cmr=cmr10 \cmr<>}'。
+输入 `\verb.<>.' 得到的输出是 `{\font\cmr=cmr10 \cmr<>}'。
 %{\MathRMx<>}
 
 %In order to make \TeX\ machine independent at the output
@@ -160,9 +142,7 @@
 %opcodes $n=0\ldots127$ denote simply the instruction `take
 %character $n$ from the current font'. The complete definition
 %of the opcodes in a \n{dvi} file can be found in~\cite{Knuth:TeXprogram}.
-为了使 \TeX\ 输出不依赖于系统环境，在 \n{dvi} 文件中也是使用字符编码：
-操作码 $n=0\ldots127$ 用于表示指令 “从当前字体中取第 $n$ 个字符”。
-在~\cite{Knuth:TeXprogram}~中可以找到 \n{dvi} 文件的操作码的完整定义。
+为了使 \TeX 在输出端也不依赖具体的机器，\n{dvi} 文件格式也是用这种字符编码：操作码 $n=0\ldots127$ 表示：「从当前字体中取出第 $n$ 个字符。」在~\cite{Knuth:TeXprogram}~中可以找到 \n{dvi} 文件的操作码的完整定义。
 
 %%\point Control sequences for characters
 %\section{Control sequences for characters}
