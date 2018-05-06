@@ -196,8 +196,10 @@
 %There is a construction to let a control sequence stand
 %for some character code: the \csterm chardef\par\ command.
 %The syntax of this is \label{chardef}
-%\begin{disp}\cs{chardef}\gram{control sequence}\gr{equals}\gram{number},
-%\end{disp}
+\csterm chardef\par 命令可定义一个控制序列定义作为一个字符编码的代替品。\label{chardef}它的用法是
+\begin{disp}
+\cs{chardef}\gram{control sequence}\gr{equals}\gram{number},
+\end{disp}
 %where the number can be an explicit
 %representation or a counter value, but it can also be
 %a character code
@@ -206,45 +208,27 @@
 %In the plain format
 %the latter possibility is used in
 %definitions such as
-%\begin{verbatim}
-%\chardef\%=`\%
-%\end{verbatim}
-%which could have been given equivalently as
-%\begin{verbatim}
-%\chardef\%=37
-%\end{verbatim}
+此处的 \gram{number} 可以是显式给出的数字，也可以是计数器值，也可以是用反引号提取得到的字符编码（见上文；关于 \gr{number} 的完整定义，参见第~\ref{number}~章）。在 plain TeX 中，就有类似下面的用法：
+\begin{verbatim}
+\chardef\%=`\%
+\end{verbatim}
+它等价于下面的定义方式：
+\begin{verbatim}
+\chardef\%=37
+\end{verbatim}
 %After this command, the control symbol \verb>\%>
 %used on its own is a synonym for \verb>\char37>,
 %that is, the command to typeset character~37
 %(usually the per cent character).
-利用 \csterm chardef\par\ 命令可以定义一个控制序列来代替某个字符编码。
-这个命令的语法如下：\label{chardef}
-\begin{disp}
-\cs{chardef}\gram{control sequence}\gr{equals}\gram{number},
-\end{disp}
-其中的数值可以显式给出或者用计数器值表示，还可以用反引号命令给出的字符码表示%
-（如上所述；\gr{number} 的定义在第~\ref{number}~章给出）。
-在 Plain \TeX\ 中，类似下面的定义就使用后面这种写法：
-\begin{verbatim}
-\chardef\%=`\%
-\end{verbatim}
-当然，它可以用下面的等价方式定义：
-\begin{verbatim}
-\chardef\%=37
-\end{verbatim}
-在此定义之后，控制符 \verb>\%> 就可以作为 \verb>\char37> 同义词使用，
-也就是说，这个命令将排版第~37~个字符（通常是英文百分号）。
+如此定义之后，控制字符 \verb.\%. 就变成了 \verb.\char37. 的同义词。也就是说，它可以用于排版第 37 个字符（通常是百分号）。
 
 %A control sequence that has been defined with a \cs{chardef}
 %command can also be used as a \gr{number}.
-%This fact is used in  allocation commands such as
+%This fact is used in allocation commands such as
 %\cs{newbox} (see Chapters~\ref{number} and~\ref{alloc}).
 %Tokens defined with \cs{mathchardef} can also be used this
 %way.
-
-用 \cs{chardef} 命令定义的控制序列也可以作为 \gr{number} 使用。
-此事实在类似 \cs{newbox} 的寄存器分配命令中用到（见第 \ref{number} 和
-\ref{alloc} 章）。用 \cs{mathchardef} 定义的记号同样可以这样使用。
+用 \cs{chardef} 命令定义的控制序列可作为是 \gr{number} 使用。在诸如 \cs{newbox} 的分配类命令中，就用到了这一特性。（见第 \ref{number} 章和第 \ref{alloc} 章）用 \cs{mathchardef} 命令定义的记号同样可以这样使用。
 
 %\subsection{Implicit character tokens: \protect\cs{let}}
 \subsection{隐式字符记号：\protect\cs{let}}
