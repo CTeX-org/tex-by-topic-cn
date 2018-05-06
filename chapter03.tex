@@ -20,69 +20,55 @@
 %commands that have access to them.
 \TeX\ 在其内部使用字符编码来表示字符。这一章讨论字符编码及相关命令。
 
-%\label{cschap:char}\label{cschap:chardef}\label{cschap:accent}\label{cschap:uccode}\label{cschap:lccode}
-%\label{cschap:uppercase}\label{cschap:lowercase}\label{cschap:string}\label{cschap:escapechar}
-%\begin{inventory}
-%\item [\cs{char}]
-%      Explicit denotation of a character to be typeset.
 \label{cschap:char}\label{cschap:chardef}\label{cschap:accent}\label{cschap:uccode}\label{cschap:lccode}
 \label{cschap:uppercase}\label{cschap:lowercase}\label{cschap:string}\label{cschap:escapechar}
 \begin{inventory}
-\item [\cs{char}] 显式表示所要排印的字符。
-
+%\item [\cs{char}]
+%      Explicit denotation of a character to be typeset.
+\item [\cs{char}] 显式指定所要排印的字符。
 %\item [\cs{chardef}]
 %      Define a control sequence to be a synonym for
 %      a~character code.
-\item [\cs{chardef}] 定义一个控制序列用以表示一个字符编码。
-
+\item [\cs{chardef}] 将一个控制序列定义为一个字符编码的同义词。
 %\item [\cs{accent}]
 %      Command to place accent characters.
 \item [\cs{accent}] 放置重音符号的命令。
-
 %\item [\cs{if}]
 %      Test equality of character codes.
 \item [\cs{if}] 测试字符编码是否相等。
-
 %\item [\cs{ifx}]
 %      Test equality of both character and category codes.
 \item [\cs{ifx}] 测试字符编码与类别码是否都相等。
-
 %\item [\cs{let}]
 %      Define a control sequence to be a synonym of a token.
-\item [\cs{let}] 定义一个控制序列，使之成为一个记号的别名。
-
+\item [\cs{let}] 将一个控制序列定义为一个记号的同义词。
 %\item [\cs{uccode}]
 %      Query or set
 %      the character code that is the uppercase variant of a given code.
-\item [\cs{uccode}] 对于给定的字符编码，查询或设置其对应的大写字符编码。
-
+\item [\cs{uccode}] 对于给定的字符编码，查询或设置其对应的大写变体编码。
 %\item [\cs{lccode}]
 %      Query or set
 %      the character code that is the lowercase variant of a given code.
-\item [\cs{lccode}] 对于给定的字符编码，查询或设置其对应的小写字符编码。
-
+\item [\cs{lccode}] 对于给定的字符编码，查询或设置其对应的小写变体编码。
 %\item [\cs{uppercase}]
 %      Convert the \gr{general text} argument to its uppercase form.
 \item [\cs{uppercase}]
       将 \gr{general text} 转换为大写形式。
-
 %\item [\cs{lowercase}]
 %      Convert the \gr{general text} argument to its lowercase form.
 \item [\cs{lowercase}]
       将 \gr{general text} 转换为小写形式。
-
 %\item [\cs{string}]
 %      Convert a token to a string of one or more characters.
+\item [\cs{string}]
+      将一个记号转换为一个字符串。
 %\item [\cs{escapechar}]
 %      Number of the character that is to be used
 %      for the escape character
 %      when control sequences are being converted
 %      into character tokens. \IniTeX\ default:~92~(\cs{}).
 %\end{inventory}
-\item [\cs{string}]
-      将一个记号转换为一个字符串。
-\item [\cs{escapechar}] 在将控制序列转换为字符记号列时，
-      用于转义符的字符编码。\IniTeX\ 默认为~92（\cs{}）。
+\item [\cs{escapechar}] 将控制序列转换为一串字符记号时，用作转义字符的字符之编码。在 \IniTeX 中默认为 92（\cs{}）。
 \end{inventory}
 
 %%\point[char:code] Character codes
