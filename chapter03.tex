@@ -358,8 +358,10 @@
 %\emph{Accents}\index{accents} can be placed by the
 %\gr{horizontal command}~\csterm accent\par
 %\label{character}:
-%\begin{disp}\cs{accent}\gr{8-bit number}\gr{optional assignments}%
-%     \gr{character}\end{disp}
+\indexterm{重音}符号可用水平命令（\gr{horizontal command}）\csterm accent\par 给出。\label{character}
+\begin{disp}
+  \cs{accent}\gr{8-bit number}\gr{optional assignments}\gr{character}
+\end{disp}
 %where \gr{character} is a character of
 %category 11\index{category!11} or~12\index{category!12},
 %a~\cs{char}\gr{8-bit number} command, or a~\cs{chardef} token. If none
@@ -368,16 +370,7 @@
 %mid-air'. Otherwise the accent is placed on top of the following
 %character.  Font changes between the accent and the character can be
 %effected by the \gr{optional assignments}.
-\emph{重音}\index{accents}可以用
-\gr{horizontal command}~\csterm accent\par
-\label{character} 给出：
-\begin{disp}\cs{accent}\gr{8-bit number}\gr{optional assignments}%
-     \gr{character}\end{disp}
-其中 \gr{character} 或者是第 11 类\index{category!11} 或 12 类\index{category!12}
-的字符，或者是 \cs{char}\gr{8-bit number} 命令，或者是 \cs{chardef} 记号。
-如果 \gr{character} 不是这四种类型，\cs{accent} 命令就被视为 \cs{char} 命令；
-从而给出 `悬在半空中'的重音。否则重音被放置在后面跟随的字符的顶部。
-\gr{optional assignments} 可用于在重音和字符之间改变字体。
+其中，\gr{character} 是分类码为 11\index{category!11} 或 12\index{category!12} 的字符，或是形如 \cs{char}\gr{8-bit number} 的命令，抑或是一个由 \cs{chardef} 定义的记号。此时，重音符号会被放置在该字符的上方。若 \gr{character} 不是上述四种情况之中的任意一种，则重音符号会被 \cs{char} 命令直接处理，从而给出一个「悬在半空」的重音符号。可选的 \gr{optional assignments} 可用于改变重音和字符的字体。
 
 %An unpleasant implication of the fact that an \cs{accent} command
 %has to be followed by a \gr{character} is that it is not
@@ -387,10 +380,7 @@
 %such double accents do occur.
 %Positioning accents on top of each other is possible,
 %however, in math mode.
-\cs{accent} 命令后面跟随的必须是一个 \gr{character}，
-这意味着一个令人不悦的事实，即不可能将重音放置在连写上，
-或者将重音放在另一个重音上。在某些语言中，比如印地语或越南语，
-这种连写重音确实存在。将重音放在另一个重音是可能的，但只能用于数学模式。
+\cs{accent} 命令后必须紧跟 \gr{character} 避免了将重音符号置于连字之上或是置于另一个重音符号之上。在诸如印度语及越南语的少数语言中，确实存在双重音符号的情况。因此这种规定有时可能会令人不爽。不过，将重音符号置于另一个之上在数学模式中是可以实现的。
 
 %The width of a character with an accent is the same as that of
 %the unaccented character. \TeX\ assumes that the
@@ -398,7 +388,8 @@
 %is properly positioned for a character that is as high
 %as the x-height of the font; for characters with other heights
 %it correspondingly lowers or raises the accent.
-字符添加重音后宽度保持不变。对于字体中高度等于 x-height 的字符，
+添加重音符号不会改变字符的宽度。
+对于字体中高度等于 x-height 的字符，
 \TeX\ 假定按照字体文件中描述的位置可以正确放置重音；
 对于其他字符，它相应地升高或降低重音的位置。
 
