@@ -388,10 +388,7 @@
 %is properly positioned for a character that is as high
 %as the x-height of the font; for characters with other heights
 %it correspondingly lowers or raises the accent.
-添加重音符号不会改变字符的宽度。
-对于字体中高度等于 x-height 的字符，
-\TeX\ 假定按照字体文件中描述的位置可以正确放置重音；
-对于其他字符，它相应地升高或降低重音的位置。
+添加重音符号不会改变字符的宽度。对于重音符号摆放的位置，\TeX 假设字体文件中，重音符号摆放的高度与字母 x 的高度相适应；对于其他高度的字母，\TeX 则可以通过向上或向下移动恰当的高度来调整重音符号的位置。
 
 %No genuine under-accents exist in \TeX. They are
 %implemented as low placed over-accents. A~way of handling
@@ -401,10 +398,7 @@
 %The cedilla macro, \cs{c}\cstoidx c\par,
 %in plain \TeX\ does something along these lines. However,
 %it does not drop the accent for characters with descenders.
-在 \TeX 中没有真正的下重音。它们都是作为位置很低的上重音实现的。
-更好的解决方法是写一个宏测量后面跟随的字符，并相应地升高或降低重音。
-Plain \TeX\ 中的变音符 \cs{c}\cstoidx c\par\ 是用这种方式实现的。
-然而，对于包含降部的字符，它并不会降低重音的位置。
+在 \TeX 中没有真正的下重音，而是将它们视作位置较低的上重音实现的。更准确的做法是：编写一个宏，测量紧跟着的字符的尺寸，而后相应地升高或降低重音符号的位置。plain \TeX 中的变音宏 \cs{c}\cstoidx c\par 就是这样做的。不过，对于有下伸部分的字母，它不会降低重音符号的位置。\liamfnote{所谓下伸部分，指的是个别小写字母比其它小写字母更低的部分。比如「p」、「q」的「小尾巴」。}
 
 %The horizontal positioning of an accent is controlled by
 %\cs{fontdimen1}, \indextermsub{slant}{per point}. Kerns are used
@@ -412,35 +406,17 @@ Plain \TeX\ 中的变音符 \cs{c}\cstoidx c\par\ 是用这种方式实现的。
 %are inserted automatically, these kerns are classified
 %as {\italic explicit\/} kerns. Therefore they inhibit hyphenation
 %in the parts of the word before and after the kern.
-重音的水平位置由 \cs{fontdimen1}（\indextermsub{slant}{per point}）控制，
-其水平位移用紧排表示。注意，虽然这些紧排是被自动插入的，
-它们被划分为{\italic 显式\/}紧排。所以，它们会抑制在紧排前后连字。
+重音符号的水平位置由 \cs{fontdimen1}（\cindextermbus{每点}{倾斜}，\emph{slant per point}）控制。为此，\TeX 引入铅空以校正重音符号的水平位置。\liamfnote{铅空是活字印刷排版时代，排版工人用于调整字符水平位置而使用的空白铅块。}注意，尽管这些铅空是自动插入的，但这些铅空隶属\emph{显式}铅空。因此，它们会抑制铅空前后的连字符。
 
 %As an example of kerning for accents,
 %here follows the dump of a horizontal list.
+以下代码能将水平列表转储出来，作为铅空和重音符号的示例。
 %\message{maybe italic correction for extra line}
-%\begin{verbatim}
-%\setbox0=\hbox{\it \`l}
-%\showbox0
-%\end{verbatim}
-%gives
-%\begin{verbatim}
-%\hbox(9.58334+0.0)x2.55554
-%.\kern -0.61803 (for accent)
-%.\hbox(6.94444+0.0)x5.11108, shifted -2.6389
-%..\tenit ^^R
-%.\kern -4.49306 (for accent)
-%.\tenit l
-%\end{verbatim}
-%Note that the accent is placed first, so afterwards the italic
-%correction of the last character is still available.
-作为重音对应的紧排的例子，下面显示了一个水平列表：
-\message{maybe italic correction for extra line}
 \begin{verbatim}
 \setbox0=\hbox{\it \`l}
 \showbox0
 \end{verbatim}
-给出
+其结果是
 \begin{verbatim}
 \hbox(9.58334+0.0)x2.55554
 .\kern -0.61803 (for accent)
@@ -449,7 +425,9 @@ Plain \TeX\ 中的变音符 \cs{c}\cstoidx c\par\ 是用这种方式实现的。
 .\kern -4.49306 (for accent)
 .\tenit l
 \end{verbatim}
-注意 \TeX\ 先放置重音，这样最后一个字符的倾斜校正仍然有效。
+%Note that the accent is placed first, so afterwards the italic
+%correction of the last character is still available.
+注意，\TeX 首先放置重音符号，以保证最后一个字符的倾斜校正仍然有效。
 
 %\section{Testing characters}
 \section{字符测试}
