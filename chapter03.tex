@@ -430,19 +430,16 @@
 注意，\TeX 首先放置重音符号，以保证最后一个字符的倾斜校正仍然有效。
 
 %\section{Testing characters}
-\section{字符测试}
+\section{字符真值测试}
 
 %Equality of character codes is tested by \cs{if}:
-%\begin{disp}\cs{if}\gr{token$_1$}\gr{token$_2$}\end{disp}
+使用 \cs{if} 可检测两个字符编码是否相等：
+\begin{disp}\cs{if}\gr{token$_1$}\gr{token$_2$}\end{disp}
 %Tokens following this conditional are expanded until two
 %unexpandable tokens are left. The condition is then true
 %if those tokens are character tokens with the same character
 %code, regardless of category code.
-要测试字符编码是否相等，可使用 \cs{if} 命令：
-\begin{disp}\cs{if}\gr{token$_1$}\gr{token$_2$}\end{disp}
-注意 \cs{if} 后面的记号会被展开，直到得到两个不可展开的记号，
-然后 \cs{if} 如果它们是两个字符码相同的字符记号（不考虑它们的类别码），
-则结果为真。
+\TeX 遇到 \cs{if} 后，会对其后的记号持续展开，直至遇见两个不可展开的记号。而后，若这两个记号的字符编码相等，而不管分类码，则真值测试为真。
 
 %An unexpandable control
 %sequence is considered to have character code 256 and
@@ -452,42 +449,26 @@
 %where it had been \cs{let} to a non-active character token.
 %In that case it is considered to have the character code
 %and category code of that character. This was mentioned above.
-
-\TeX\ 将不可展开的控制序列的字符码和类别码分别视为 256 和 16\index{category!16}。%
-（因此它只能与另一个控制序列相等），除非用 \cs{let} 让它等同于一个非活动符。
-在那种情况下，该控制序列的字符码和类别码就与该字符的相同。这在之前提到过。
+对于 \TeX 来说，不可展开的控制序列的字符码是 256 而分类码为 16\index{category!16}（因此控制序列的字符编码只与控制序列的字符编码相等），除非控制序列被 \cs{let} 定义成一个非活动字符记号——如前所述，此时该控制序列的字符编码和分类码与相应的字符相同。
 
 %The test \cs{ifcat} for category codes was mentioned
 %in Chapter~\ref{mouth}; the test
-%\begin{disp}\cs{ifx}\gr{token$_1$}\gr{token$_2$}\end{disp}
+第~\ref{month}~章提到了用于检验分类码的 \cs{ifcat} 命令；真值测试
+\begin{disp}\cs{ifx}\gr{token$_1$}\gr{token$_2$}\end{disp}
 %can be used to test for category code and character code
 %simultaneously.
-%The tokens following this test are not expanded.
-%However, if they are macros, \TeX\
-%tests their expansions for equality.
-
-用于测试类别码是否相等的 \cs{ifcat} 在第~\ref{mouth}~章已经介绍。
-而要同时测试字符的字符码和类别码是否相等，可使用 \cs{ifx} 命令：
-\begin{disp}\cs{ifx}\gr{token$_1$}\gr{token$_2$}\end{disp}
-在执行此测试时 \cs{ifx} 后面的记号不会被展开。
-然若它们均为宏，\TeX\ 会比较它们的展开是否相等。
+则检验字符编码和分类码是否均相等。特别注意的是，\TeX 不会展开 \cs{ifx} 之后的记号。不过，若它们是宏，则 \TeX 会检验它们的展开是否相等。
 
 %Quantities defined by \cs{chardef} can be tested with
 %\cs{ifnum}:
-%\begin{verbatim}
-%\chardef\a=`x \chardef\b=`y \ifnum\a=\b % is false
-%\end{verbatim}
-%based on the fact (see Chapter~\ref{number}) that
-%\gr{chardef token}s can be used as numbers.
-使用 \cs{chardef} 定义的量值可使用 \cs{ifnum} 来测试：
+对于 \cs{chardef} 定义的数量，则可以用 \cs{ifnum} 来检验。
 \begin{verbatim}
 \chardef\a=`x \chardef\b=`y \ifnum\a=\b % is false
 \end{verbatim}
-此测试用到 \gr{chardef token} 可以作为数值使用的事实（见第~\ref{number}~章）。
+这是因为由 \cs{chardef} 定义的记号可被当做是数字来使用（见第~\ref{number}~章）。
 
 %See also section~\ref{sec:charactertests}
-另外可以参考第~\ref{sec:charactertests}~节。
-
+另见第~\ref{sec:charactertests}~节。
 
 %\section{Uppercase and lowercase}
 \section{大写和小写}
