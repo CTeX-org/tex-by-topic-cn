@@ -477,34 +477,31 @@
 %\subsection{Uppercase and lowercase codes}
 %\label{uc/lc}
 %\spoint[uc/lc] Uppercase and lowercase codes
-\subsection{大写码和小写码}
+\subsection{大写和小写的编码}
 \label{uc/lc}
 
 %To each of the character codes correspond\cstoidx lccode\par\cstoidx uccode\par
 %an \indextermsub{uppercase}{code}\index{code!uppercase|see{uppercase, code}}
 %and a \indextermsub{lowercase}{code}\index{code!lowercase|see{lowercase, code}}
 %(for still more codes see below).
+每个字符编码都有对应的\cstoidx uccode\par\cindextermsub{大写}{编码}和\cstoidx lccode\par\cindextermsub{小写}{编码}。（更多代码见下文）
+\index{编码!大写|see{大写, 编码}}\index{编码!小写|see{小写, 编码}}
 %These can be assigned
 %by
-%\begin{Disp}\cs{uccode}\gram{number}\gr{equals}\gram{number}\end{Disp}
+它们可分别用
+\begin{Disp}\cs{uccode}\gram{number}\gr{equals}\gram{number}\end{Disp}
 %and
-%\begin{Disp}\cs{lccode}\gram{number}\gr{equals}\gram{number}.\end{Disp}
+和
+\begin{Disp}\cs{lccode}\gram{number}\gr{equals}\gram{number}\end{Disp}
+来指定。
 %In \IniTeX\ codes \verb-`a..`z-, \verb-`A..`Z- have uppercase code
+在 \IniTeX 中，\verb-`a..`z- 及 \verb-`A..`Z- 的大写编码为%
 %\label{ini:uclc}
 %\verb-`A..`Z- and lowercase code \verb-`a..`z-.
+\verb-`A..`Z- 而小写编码为 \verb-`a..`z-。%
 %All other character codes have both uppercase and lowercase
 %code zero.
-每个字符码都对应一个\emph{大写码}和一个\emph{小写码}（下面列出了更多编码）。%
-\cstoidx lccode\par\cstoidx uccode\par
-\index{大写!大写码}\index{code!uppercase|see{uppercase, code}}%
-\index{小写!小写码}\index{code!lowercase|see{lowercase, code}}%
-它们可以分别用
-\begin{Disp}\cs{uccode}\gram{number}\gr{equals}\gram{number}\end{Disp}
-以及
-\begin{Disp}\cs{lccode}\gram{number}\gr{equals}\gram{number}.\end{Disp}
-指定。在 \IniTeX\ 中 \verb-`a..`z- 和 \verb-`A..`Z- 的大写码为
-\label{ini:uclc}
-\verb-`A..`Z-，小写码为 \verb-`a..`z-。其他字符码的大写码和小写码均为零。
+其余所有的字符的大写编码和小写编码均为零。
 
 %%\spoint[upcase] Uppercase and lowercase commands
 %\subsection{Uppercase and lowercase commands}
