@@ -236,51 +236,48 @@
 %Another construction defining a control sequence
 %to stand for (among other things)
 %a character is~\cs{let}\cstoidx let\par:
-%\begin{disp}\cs{let}\gr{control sequence}\gr{equals}\gr{token}\end{disp}
+另一种定义表示字符的控制序列的方式是使用 \cstoidx let\par 命令，并且将字符记号置于可选等号的右边：
+\begin{disp}\cs{let}\gr{control sequence}\gr{equals}\gr{token}\end{disp}
 %with a character token on the right hand side of the (optional)
 %equals sign. The result is called an \indextermbus{implicit}{character} token.
 %(See page~\pageref{let} for a further discussion of~\cs{let}.)
-再一种利用控制序列来表示字符的方式是使用 \cstoidx let\par\cs{let} 命令：
-\begin{disp}\cs{let}\gr{control sequence}\gr{equals}\gr{token}\end{disp}
-如果可选等号的右边是一个字符记号，得到的控制序列称为\emph{隐式字符}记号%
-\index{字符!隐式字符}（见第~\pageref{let}~页对~\cs{let}~的进一步讨论。）
+如此，得到的控制序列称为\cindextermbus{隐式}{字符}记号。
+（见第~\pageref{let}~页对~\cs{let}~的进一步讨论。）
 
 %In the
 %plain format there are for instance synonyms for
 %the open and close brace:
-%\begin{verbatim}
-%\let\bgroup={ \let\egroup=}
-%\end{verbatim}
-%The resulting control sequences are called `implicit braces'
-%(see Chapter~\ref{group}).
-比如在 Plain \TeX\ 中用下面方式定义左右花括号的同义词：
+在 plain \TeX 中有对左右花括号做的同义控制序列：
 \begin{verbatim}
 \let\bgroup={ \let\egroup=}
 \end{verbatim}
-这样得到的控制序列称为`隐式花括号'（见第~\ref{group}~章）。
+%The resulting control sequences are called `implicit braces'
+%(see Chapter~\ref{group}).
+如此，得到的控制序列被称为「隐式花括号」（见第~\ref{group}~章）。
 
 %Assigning characters by \cs{let}
 %is different from defining control sequences by \cs{chardef},
 %in the sense that \cs{let}
 %makes the control sequence stand for the combination
 %of a character code and category code.
-但是 \cs{let} 与 \cs{chardef} 是有区别的，
-因为 \cs{let} 是用控制序列来表示字符码与类别码的组合结构。
+通过 \cs{let} 和 \cs{chardef} 将字符赋值给控制序列是有区别的。被 \cs{let} 定义的控制序列表示字符编码与分类码的组合。
 
 %As an example
-%\begin{verbatim}
-%\catcode`|=2 % make the bar an end of group
-%\let\b=|  % make \b a bar character
-%{\def\m{...}\b \m
-%\end{verbatim}
+例如在下例中，由于 \cs{b} 关闭了 \cs{m} 定义所在的分组，因此 \TeX 会提示错误：「未定义的控制序列」。
+\begin{verbatim}
+\catcode`|=2 % make the bar an end of group
+\let\b=|  % make \b a bar character
+{\def\m{...}\b \m
+\end{verbatim}
 %gives an `undefined control sequence \cs{m}'
 %because the \cs{b} closed the group inside which \cs{m}
 %was defined. On the other hand,
-%\begin{verbatim}
-%\let\b=| % make \b a bar character
-%\catcode`|=2  % make the bar character end of group
-%{\def\m{...}\b \m
-%\end{verbatim}
+另一方面，由于 \cs{b} 的定义在分类码修改之前，因此它无法承担分组结束符的作用，只能表示一条竖线（或是其他任何在当前字体中编号为 124 的字符）。因此，这里构造的是一个不闭合的分组。
+\begin{verbatim}
+\let\b=| % make \b a bar character
+\catcode`|=2  % make the bar character end of group
+{\def\m{...}\b \m
+\end{verbatim}
 %leaves one group open, and it prints a vertical bar
 %(or whatever is in position 124 of the current font).
 %The first of these examples
@@ -289,73 +286,46 @@
 %format C code) the beginning-of-group and end-of-group
 %functionality is available through the control sequences
 %\cs{bgroup} and~\cs{egroup}.
-例如
-\begin{verbatim}
-\catcode`|=2 % make the bar an end of group
-\let\b=|  % make \b a bar character
-{\def\m{...}\b \m
-\end{verbatim}
-会得到“未定义的控制序列\cs{m}”的错误，这是因为 \cs{b} 关闭了 \cs{m}
-定义所在的编组。另一方面，
-\begin{verbatim}
-\let\b=| % make \b a bar character
-\catcode`|=2  % make the bar character end of group
-{\def\m{...}\b \m
-\end{verbatim}
-构造的只是一个不闭合的编组，因为这次 \cs{b} 无法作为组结束符来用，
-它只能表示一个竖线（或者是当前字体位于第 124 个位置的字符）。
-
-本小节的第一个例子实际上说明，即使花括号已经被重新定义%
-（比如在排版 C 语言代码的宏中将它们定义为活动符），
-编组开始和编组结束的功能还是可以通过 \cs{bgroup} 和 \cs{egroup} 使用。
+前一个例子表明，即是花括号本身被重定义了（例如在排版 C 语言代码时被定义成活动字符），分组开始和结束的功能依然可以由控制序列 \cs{bgroup} 和 \cs{egroup} 来承担。
 
 %Here is
 %another example to show
 %that implicit character tokens are hard to distinguish
 %from real character tokens. After the above sequence
-%\begin{verbatim}
-%\catcode`|=2 \let\b=|
-%\end{verbatim}
-%the tests
-%\begin{verbatim}
-%\if\b|
-%\end{verbatim}
-%and
-%\begin{verbatim}
-%\ifcat\b}
-%\end{verbatim}
-%are both true.
-这里还有另一个例子，说明隐式字符记号与真实字符记号难以区分。
-在下面的控制序列之后：
+隐式字符记号的行为与真实字符记号非常相似。举例来说，在如此定义之后，
 \begin{verbatim}
 \catcode`|=2 \let\b=|
 \end{verbatim}
-这个测试
+以下两个真值测试均为真。
 \begin{verbatim}
 \if\b|
 \end{verbatim}
-和这个测试
+%and
 \begin{verbatim}
 \ifcat\b}
 \end{verbatim}
-都给出真值。
+%are both true.
 
 %Yet another example can be found in the plain format:
 %the commands
-%\begin{verbatim}
-%\let\sp=^ \let\sb=_
-%\end{verbatim}
+再举一例。在 plain \TeX 中，有如下对上标和下标符号的定义：
+\begin{verbatim}
+\let\sp=^ \let\sb=_
+\end{verbatim}
 %allow people without an
 %underscore or circumflex on their keyboard to
 %make sub- and superscripts in mathematics.
 %For instance:
-%\begin{disp}\verb>x\sp2\sb{ij}>\quad gives\quad $x\sp2\sb{ij}$\end{disp}
+如此一来，即使键盘上没有这两个符号，也可以通过这两个控制序列得到数学环境的上标和下标。
+\begin{disp}\verb>x\sp2\sb{ij}>\quad gives\quad $x\sp2\sb{ij}$\end{disp}
 %If a person typing in the format itself does not have
 %these keys, some further tricks are needed:\label{spsb:truc}
-%\begin{verbatim}
-%{\lccode`,=94 \lccode`.=95 \catcode`,=7 \catcode`.=8
-%\lowercase{\global\let\sp=, \global\let\sb=.}}
-%\end{verbatim}
+若是编写格式的人的键盘上也没有这些键，那么就要用更深的技巧了：\label{spsb:truc}
+\begin{verbatim}
+{\lccode`,=94 \lccode`.=95 \catcode`,=7 \catcode`.=8
+\lowercase{\global\let\sp=, \global\let\sb=.}}
+\end{verbatim}
+至于它为什么能起作用，可详见后文关于 \cs{lowercode} 的介绍。
 %will do the job; see below for an explanation of lowercase codes.
 %The \verb>^^> method as it was in \TeX\ version~2
 %(see page~\pageref{hathat}) cannot be used here,
@@ -363,45 +333,22 @@
 %not be input.
 %With the extension in \TeX\ version~3 it would also be possible
 %to write
-%\begin{verbatim}
-%{\catcode`\,=7
-%\global\let\sp=,,5e \global\let\sb=,,5f}
-%\end{verbatim}
-%denoting the codes 94 and 95 hexadecimally.
-在 Plain \TeX\ 中还有下面的定义：
-\begin{verbatim}
-\let\sp=^ \let\sb=_
-\end{verbatim}
-它使得键盘上没有扬抑符和底线符的用户也能够在数学公式中写出上下标。比如
-\begin{disp}\verb>x\sp2\sb{ij}>\quad 给出\quad $x\sp2\sb{ij}$\end{disp}
-如果编写格式文件的人也无法键入这两个字符，则需要更多花招。
-比如下面的代码就可以完成此任务：\label{spsb:truc}
-\begin{verbatim}
-{\lccode`,=94 \lccode`.=95 \catcode`,=7 \catcode`.=8
-\lowercase{\global\let\sp=, \global\let\sb=.}}
-\end{verbatim}
-详见下面对 \cs{lowercase} 命令的解释。
-此时无法使用 \TeX\ 2 中的 \verb>^^> 表示法（见第~\pageref{hathat}~页），
-因为这需要键入两个无法输入的字符。用 \TeX\ 3 中扩展的表示法，下面的方法也是可行的：
+由于我们无法键入 \verb.^.，因此 \TeX2 中的 \verb.^^. 表示法无法在此解决问题。（见第~\pageref{hathat}~页）考虑到上标和小标以十六进制表示的字符编码分别是 \verb.5e. 和 \verb.5f.，利用 \TeX3 中扩展的表示法可以依照如下方式解决问题：
 \begin{verbatim}
 {\catcode`\,=7
 \global\let\sp=,,5e \global\let\sb=,,5f}
 \end{verbatim}
-其中用十六进制表示 \verb-^- 和 \verb-_- 的字符码 94 和 95。
+%denoting the codes 94 and 95 hexadecimally.
 
 %Finding out just what a control sequence has been defined to be with
 %\cs{let} can be done using \cs{meaning}:
 %the sequence
-%\begin{verbatim}
-%\let\x=3 \meaning\x
-%\end{verbatim}
-%gives
-%`\n{the character 3}'.
-要查看 \cs{let} 定义的控制序列代表的是哪个字符，可使用 \cs{meaning}，例如：
+使用 \cs{meaning} 命令可以查看使用 \cs{let} 定义的命令究竟代表哪个字符。例如下列代码将给出 `\n{the character 3}'。
 \begin{verbatim}
 \let\x=3 \meaning\x
 \end{verbatim}
-可给出`\n{the character 3}'。
+%gives
+%`\n{the character 3}'.
 
 %%\point Accents
 %\section{Accents}
