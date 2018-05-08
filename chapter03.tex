@@ -517,75 +517,54 @@
 %by their uppercase and lowercase code respectively
 %if these are non-zero,
 %without changing the category codes.
-命令 \verb-\uppercase{...}- 和 \verb-\lowercase{...}-
+\verb-\uppercase{...}- 和 \verb-\lowercase{...}- 命令会遍历参数记号列表，而后将所有对应大写编码或小写编码不为零的显式字符替换成相应的大写编码或小写编码，分类码则维持不变。
 \cstoidx uppercase\par\cstoidx lowercase\par
-遍历它们的参量记号列，将所有显式字符记号的字符码分别替换为它们的大写码和小写码，
-只要这两个编码非零，但不改动字符记号的类别码。
 
 %The argument of \cs{uppercase} and \cs{lowercase}
 %is a \gr{general text}, which is defined as
-%\begin{Disp} \gr{general text} $\longrightarrow$ \gr{filler}\lb
-%      \gr{balanced text}\gr{right brace}\end{Disp}
+\cs{uppercase} 和 \cs{lowercase} 命令的参数是普通文本（\gr{general text}），其定义如下（其中 \gr{filler} 的定义见第~\ref{gramm}~章）：
+\begin{Disp}
+\gr{general text} $\longrightarrow$ \gr{filler}\lb\gr{balanced text}\gr{right brace}
+\end{Disp}
 %(for the definition of \gr{filler} see Chapter~\ref{gramm})
 %meaning that the left brace can be implicit, but the closing
 %right brace must be an explicit character token with category
 %code~2. \TeX\ performs expansion to find the opening
 %brace.
-\cs{uppercase} 和 \cs{lowercase} 的参量是一个 \gr{general text}，
-它的定义如下：
-\begin{Disp} \gr{general text} $\longrightarrow$ \gr{filler}\lb
-      \gr{balanced text}\gr{right brace}\end{Disp}
-其中 \gr{filler} 的定义可以见第~\ref{gramm}~章。
-这个定义意味着左花括号可以是隐式的，但右花括号必须是类别码为 2 的显式字符记号。
-\TeX\ 展开表达式以找到左花括号。
+此处，左花括号可以是隐式字符记号，但右花括号必须是分类码为 2 的显式字符记号。在寻找左花括号时，\TeX 会进行宏展开。
 
 %Uppercasing and lowercasing are executed in the execution processor;
 %they are not `macro expansion' activities
 %like \cs{number} or \cs{string}.
 %The sequence (attempting to produce~\cs{A})
-%\begin{verbatim}
-%\expandafter\csname\uppercase{a}\endcsname
-%\end{verbatim}
-%gives an error (\TeX\ inserts an \cs{endcsname} before   the
-%\cs{uppercase} because \cs{uppercase} is unexpandable), but
-%\begin{verbatim}
-%\uppercase{\csname a\endcsname}
-%\end{verbatim}
-%works.
-大小写转换在执行处理器中执行；它们并非像\cs{number} 或 \cs{string}
-这样的`宏展开'活动。下面的语句（试图生成 \cs{A}）
+与 \cs{number} 和 \cs{string} 不同，大小写转换不是宏展开，而是在执行处理器中执行的。下列尝试得到 \cs{A} 的代码会因 \cs{uppercase} 不可展开而报错——\TeX 将在 \cs{uppercase} 之前插入 \cs{endcsname}。\liamfnote{这里的表述比较奇怪。事实上，\TeX 要求 \cs{csname} 和 \cs{endcsname} 之间的内容展开到底后不能有不可展开的原语；而 \cs{uppercase} 正式一个不可展开的原语，故而报错。这里提出 \TeX 在 \cs{uppercase} 之前插入 \cs{endcsname}，原因可能是 \TeX 在发现问题「尝试修复的过程中」，会做这样的操作。}
 \begin{verbatim}
 \expandafter\csname\uppercase{a}\endcsname
 \end{verbatim}
-将给出一个错误（由于 \cs{uppercase} 是不可展开的，
-\TeX\ 会在 \cs{uppercase} 前插入 \cs{endcsname}），然而
+%gives an error (\TeX\ inserts an \cs{endcsname} before the
+%\cs{uppercase} because \cs{uppercase} is unexpandable), but
+正确的写法如下：
 \begin{verbatim}
 \uppercase{\csname a\endcsname}
 \end{verbatim}
-就是正确的。
+%works.
 
 %As an example of the correct use of \cs{uppercase}, here
 %is a macro that tests if a character is uppercase:
-%\begin{verbatim}
-%\def\ifIsUppercase#1{\uppercase{\if#1}#1}
-%\end{verbatim}
-%The same test can be
-%performed by \verb>\ifnum`#1=\uccode`#1>.
-下面的例子正确地使用了 \cs{uppercase}，它是一个测试字符是否为大写的宏：
+下例对 \cs{uppercase} 的使用是正确的，它可用于检测一个字符是否为大写：
 \begin{verbatim}
 \def\ifIsUppercase#1{\uppercase{\if#1}#1}
 \end{verbatim}
-用 \verb>\ifnum`#1=\uccode`#1> 也可以执行相同的测试。
+%The same test can be
+%performed by \verb>\ifnum`#1=\uccode`#1>.
+大写检测也可以这样做：\verb>\ifnum`#1=\uccode`#1>。
 
 %Hyphenation of words starting with an uppercase character,
 %that is, a character not equal to its own \cs{lccode},
 %is subject to the \cs{uchyph} parameter: if this
 %is positive, hyphenation of capitalized words is allowed.
 %See also Chapter~\ref{line:break}.
-大写字符就是与其 \cs{lccode} 不同的字符。
-首字母大写的单词是否可以连字化取决于 \cs{uchyph} 参数：
-如果它大于零，就允许对这种单词连字化。
-这将在第~\ref{line:break}~章中介绍。
+首字母大写（首字母的字符编码与其 \cs{lccode} 不同）的单词是否允许截断连字取决于 \cs{uchyph} 参数。若改参数为正数，则允许对首字母大写的单词进行截断连字。另见第~\ref{line:break}~章。
 
 %%\spoint Uppercase and lowercase forms of keywords
 %\subsection{Uppercase and lowercase forms of keywords}
