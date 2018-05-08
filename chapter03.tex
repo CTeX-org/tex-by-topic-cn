@@ -569,7 +569,7 @@
 %%\spoint Uppercase and lowercase forms of keywords
 %\subsection{Uppercase and lowercase forms of keywords}
 %\spoint Uppercase and lowercase forms of keywords
-\subsection{关键词的大小写形式}
+\subsection{关键字的大写与小写形式}
 
 %Each character in \TeX\ keywords, such as \n{pt}, can be
 %given in uppercase or lowercase form.
@@ -582,12 +582,7 @@
 %characters \rdash to their character code. This has some implications
 %for implementations of \TeX\ for non-roman alphabets;
 %see page 370 of \TeXbook, \cite{Knuth:TeXbook}.
-对于 \TeX\ 关键词，比如 \n{pt}，其中每个字符都可以用大写或小写表示。
-例如  \n{pT}、\n{Pt}、\n{pt} 和 \n{PT} 都表示同一个关键词。
-这里 \TeX\ 并没有用 \cs{uccode} 和 \cs{lccode} 表确定小写形式，
-而是直接将大写字符加上 32（即两者编码之差）以转换为小写字符。
-这影响到在非罗马字母表上的 \TeX\ 实现；
-见 \TeXbook\ \cite{Knuth:TeXbook} 第 370 页。
+\TeX 关键字可以是大写形式也可以是小写形式。比如 \n{pt} 可以写作 \n{pT}、\n{Pt}、\n{pt} 以及 \n{PT}。此处，\TeX 不使用 \cs{uccode} 及 \cs{lccode} 表来确定小写形式；而是直接在大写字母的字符编码上加 32 来得到其小写形式——\ascii 编码中，同一字母大小写形式之差为 32。这种做法与 \TeX 在处理非罗马字符时的具体实现方式有所牵扯；详见 \TeXbook\ \cite{Knuth:TeXbook} 第 370 页。
 
 %\subsection{Creative use of \cs{uppercase} and \cs{lowercase}}
 \subsection{妙用 \cs{uppercase} 和 \cs{lowercase}}
