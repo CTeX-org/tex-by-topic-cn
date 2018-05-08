@@ -582,7 +582,7 @@
 %characters \rdash to their character code. This has some implications
 %for implementations of \TeX\ for non-roman alphabets;
 %see page 370 of \TeXbook, \cite{Knuth:TeXbook}.
-\TeX 关键字可以是大写形式也可以是小写形式。比如 \n{pt} 可以写作 \n{pT}、\n{Pt}、\n{pt} 以及 \n{PT}。此处，\TeX 不使用 \cs{uccode} 及 \cs{lccode} 表来确定小写形式；而是直接在大写字母的字符编码上加 32 来得到其小写形式——\ascii 编码中，同一字母大小写形式之差为 32。这种做法与 \TeX 在处理非罗马字符时的具体实现方式有所牵扯；详见 \TeXbook\ \cite{Knuth:TeXbook} 第 370 页。
+\TeX 关键字可以是大写形式也可以是小写形式。比如 \n{pt} 还可以写作 \n{pT}、\n{Pt} 以及 \n{PT}。此处，\TeX 不使用 \cs{uccode} 及 \cs{lccode} 表来确定小写形式；而是直接在大写字母的字符编码上加 32 来得到其小写形式——\ascii 编码中，同一字母大小写形式之差为 32。这种做法与 \TeX 在处理非罗马字符时的具体实现方式有所牵扯；详见 \TeXbook\ \cite{Knuth:TeXbook} 第 370 页。
 
 %\subsection{Creative use of \cs{uppercase} and \cs{lowercase}}
 \subsection{妙用 \cs{uppercase} 和 \cs{lowercase}}
@@ -593,44 +593,28 @@
 %otherwise be difficult to produce. See for instance the
 %explanation of the \cs{newif} macro in Chapter~\ref{if},
 %and another example on page~\pageref{spsb:truc}.
-前面已经说到 \cs{uppercase} 和 \cs{lowercase} 不改变类别码，
-这个事实有时可以用于制造用其他方式很难得到的(字符码,类别码)组合。
-比如可以参考第~\ref{if}~章的 \cs{newif} 宏，
-以及另一个在第~\pageref{spsb:truc}~页的例子。
+利用 \cs{uppercase} 和 \cs{lowercase} 不会改变分类码的特性，可以构造出一些其它方式难以构造的字符编码-分类码配对；比如第~\ref{if}~章中对宏 \cs{newif} 的讲解；又比如第~\pageref{spsb:truc}~页上的例子。
 
 %For a slightly different application, consider the
 %problem (solved by Rainer Sch\"opf) of,
 %given a counter \verb-\newcount\mycount-, writing character
 %number \verb-\mycount- to the terminal.
 %Here is a solution:
+再将一个稍有些不同的例子。考虑这一问题（已由 Rainer Sch\"opf 解决）：给定一个计数器 \verb-\newcount\mycount-，如何将其值作为字符编号输出到终端？解法如下。
 %%\begin{verbatim}
 %%\lccode`a=\mycount \chardef\terminal=16
 %%\lowercase{\write\terminal{a}}
 %%\end{verbatim}
-%\begin{verbatim}
-%\lccode`a=\mycount \chardef\terminal=16
-%\end{verbatim}
-%\begin{verbatim}
-%\lowercase{\write\terminal{a}}
-%\end{verbatim}
-%The \cs{lowercase} command effectively changes the
-%argument of the \cs{write} command from~`\n a'
-%into whatever it should be.
-这里给出一个稍微不同的应用。考虑 Rainer Sch\"opf 解决的问题：
-如何将寄存器 \verb-\newcount\mycount- 的编号 \verb-\mycount-
-输出到终端？下面是一种解法：
-%\begin{verbatim}
-%\lccode`a=\mycount \chardef\terminal=16
-%\lowercase{\write\terminal{a}}
-%\end{verbatim}
 \begin{verbatim}
 \lccode`a=\mycount \chardef\terminal=16
 \end{verbatim}
 \begin{verbatim}
 \lowercase{\write\terminal{a}}
 \end{verbatim}
-其中 \cs{lowercase} 命令成功地将 \cs{write} 命令的参量中的
-`\n a' 修改成所需要的编号。
+%The \cs{lowercase} command effectively changes the
+%argument of the \cs{write} command from~`\n a'
+%into whatever it should be.
+此处，\cs{lowercase} 命令有效地将 \cs{write} 命令的参数，从「\n{a}」转换成目标值。
 
 %%\point[codename] Codes of a character
 %\section{Codes of a character}
