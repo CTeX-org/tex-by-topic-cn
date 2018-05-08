@@ -625,48 +625,39 @@
 
 %Each character code has a number of \gr{codename}s
 %associated\indexterm{codenames}
-%with it. These are integers in various ranges that determine
+%with it.
+%These are integers in various ranges that determine
 %how the character is treated in various contexts, or
 %how the occurrence of that character changes the workings
 %of \TeX\ in certain contexts.
-每个字符都带有一系列 \gr{codename}\index{codenames}。
-这些整数的取值范围各不相同，它们决定在各个地方如何处理该字符，
-或者在某些地方 \TeX\ 的活动方式如何被该字符改变。
+每个字符编码都有一系列与之相关的 \gr{codename}\index{codenames}。这些整数的取值范围各不相同；它们决定了在不同场合下，\TeX 会如何处理该字符，或是决定了在不同场合下，该字符会如何影响 \TeX 自身。
 
 %The code names are as follows:
-%\begin{description}\item [\cs{catcode}]
+这些编码的名字罗列如下：
+\begin{description}
+%\item [\cs{catcode}]
 %\gr{4-bit number} (0--15); the category to which a character belongs.
 %This is treated in Chapter~\ref{mouth}.
+\item [\cs{catcode}] 4 位数字（\gr{4-bit number}，0--15）；字符的分类码。见第~\ref{mouth}~章。
 %\item [\cs{mathcode}]
 %\gr{15-bit number} (0--\verb-"7FFF-) or \verb-"8000-;
 %determines how a character is treated
 %in math mode. See Chapter~\ref{mathchar}.
-%\item [\cs{delcode}]
-%\gr{27-bit number} (0--\n{\hex7$\,$FFF$\,$FFF});
-%determines how a character is treated after
-%\cs{left} or \cs{right} in math mode.
-%See page~\pageref{delcodes}.
-%\item [\cs{sfcode}]
-%integer; determines how spacing is affected after this character.
-%See Chapter~\ref{space}.
-%\item [\cs{lccode}, \cs{uccode}]
-%\gr{8-bit number} (0-255); lowercase and
-%uppercase codes \rdash these were treated above.
-%\end{description}
-这些编码名称如下所列：
-\begin{description}\item [\cs{catcode}]
-\gr{4-bit number} (0--15)；字符所属的类别。在第~\ref{mouth}~章中介绍。
-\item [\cs{mathcode}]
-\gr{15-bit number} (0--\verb-"7FFF-) 或 \verb-"8000-；
-确定在数学模式中如何处理该字符。见第~\ref{mathchar}~章。
-\item [\cs{delcode}]
-\gr{27-bit number} (0--\n{\hex7$\,$FFF$\,$FFF})；
-确定在数学模式的 \cs{left} 或 \cs{right} 命令后如何处理该字符。
-见第~\pageref{delcodes}~页。
-\item [\cs{sfcode}]
-整数；确定该字符如何影响其后的空白。见第~\ref{space}~章。
-\item [\cs{lccode}, \cs{uccode}]
-\gr{8-bit number} (0-255)；小写码和大写码。上面刚介绍过。
+\item [\cs{mathcode}] 15 位数字（\gr{15-bit number}，0--\verb-"7FFF- 或 \verb-"8000-）；它决定 \TeX 在数学环境下如何处理该字符。见第~\ref{mathchar}~章。
+% \item [\cs{delcode}]
+% \gr{27-bit number} (0--\n{\hex7$\,$FFF$\,$FFF});
+% determines how a character is treated after
+% \cs{left} or \cs{right} in math mode.
+% See page~\pageref{delcodes}.
+\item [\cs{delcode}] 27 位数字（\gr{27-bit number}，0--\n{\hex7$\,$FFF$\,$FFF}）；它决定 \TeX 在数学环境下如何处理出现在 \cs{left} 和 \cs{right} 之后的该字符。见第~\pageref{delcodes}~页。
+% \item [\cs{sfcode}]
+% integer; determines how spacing is affected after this character.
+% See Chapter~\ref{space}.
+\item [\cs{sfcode}] 整数；它决定 \TeX 如何处理位于该字符之后的空距。见第~\ref{space}~章。
+% \item [\cs{lccode}, \cs{uccode}]
+% \gr{8-bit number} (0-255); lowercase and
+% uppercase codes \rdash these were treated above.
+\item [\cs{lccode}、\cs{uccode}] 8 位数字（\gr{8-bit number}，0--255）；如前所述，这是字符的小写及大写的编码。
 \end{description}
 
 %%\point Converting tokens into character strings
