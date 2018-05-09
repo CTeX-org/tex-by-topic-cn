@@ -408,7 +408,7 @@ plain \TeX 格式使用 \cs{chardef} 命令（将在第~\pageref{chardef}~页和
 %that is, at any moment in time it is in one of three states,
 %and after transition to another state there is no memory of the
 %previous states.
-\TeX 的输入处理器有三种\indextermbus{内部}{状态}，可看做是一个有限状态自动机。这也就是说，在任意瞬间，\TeX 的输入处理器都处于并且只能处于三种状态的一种；并且在状态切换完成后，\TeX 的输入处理器对先前的状态没有任何记忆。
+\TeX 的输入处理器有三种\cindextermbus{内部}{状态}，可看做是一个有限状态自动机。这也就是说，在任意瞬间，\TeX 的输入处理器都处于并且只能处于三种状态的一种；并且在状态切换完成后，\TeX 的输入处理器对先前的状态没有任何记忆。
 
 %\subsection{State {\itshape N}: new line}
 \subsection{\cstate N：新行}
@@ -1137,7 +1137,7 @@ macro:-> a b
 %the block storage mode on \key{IBM} mainframe computers.
 %For some computer-specific problems with end-of-line
 %characters, see~\cite{B:ctrl-M}.
-\TeX 从输入文件中获取文本行，但不包括输入行中的行尾符。因此，\TeX 的行为不依赖操作系统以及\cindextermsub{行}{尾符}究竟是什么（\key{CR}-\key{LF}、\key{LF}抑或是在块存储系统里根本就不存在行尾符）。而后，\TeX 会移除输入行末尾的空格。这样处理是有历史原因的：\TeX 必须能够在 \key{IBM} 的大型计算机的块存储模式有关。对于由计算机的不同而造成的有关行尾符的问题，详见~\cite{B:ctrl-M}。
+\TeX 从输入文件中获取文本行，但不包括输入行中的行尾符。因此，\TeX 的行为不依赖操作系统以及\cindextermsub{行}{尾符}究竟是什么（\key{CR}-\key{LF}、\key{LF}抑或是在块存储系统里根本就不存在行尾符）。而后，\TeX 会移除输入行末尾的空格。这样处理是有历史原因的：\TeX 必须能够适应 \key{IBM} 大型计算机的块存储模式有关。对于由计算机的不同而造成的有关行尾符的问题，详见~\cite{B:ctrl-M}。
 
 %A~terminator character is then appended
 %with a character code of \cs{endlinechar},
