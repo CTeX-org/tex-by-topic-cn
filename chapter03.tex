@@ -18,14 +18,14 @@
 %Internally, \TeX\ represents characters by their (integer)
 %character code. This chapter treats those codes, and the
 %commands that have access to them.
-\TeX\ 在其内部使用字符编码来表示字符。这一章讨论字符编码及相关命令。
+\TeX 在其内部使用字符编码来表示字符；本章讨论字符编码及相关命令。
 
 \label{cschap:char}\label{cschap:chardef}\label{cschap:accent}\label{cschap:uccode}\label{cschap:lccode}
 \label{cschap:uppercase}\label{cschap:lowercase}\label{cschap:string}\label{cschap:escapechar}
 \begin{inventory}
 %\item [\cs{char}]
 %      Explicit denotation of a character to be typeset.
-\item [\cs{char}] 显式指定所要排印的字符。
+\item [\cs{char}] 显式指定所要排版的字符。
 %\item [\cs{chardef}]
 %      Define a control sequence to be a synonym for
 %      a~character code.
@@ -45,19 +45,19 @@
 %\item [\cs{uccode}]
 %      Query or set
 %      the character code that is the uppercase variant of a given code.
-\item [\cs{uccode}] 对于给定的字符编码，查询或设置其对应的大写变体编码。
+\item [\cs{uccode}] 对于给定的字符编码，查询或设置其对应的大写变体的编码。
 %\item [\cs{lccode}]
 %      Query or set
 %      the character code that is the lowercase variant of a given code.
-\item [\cs{lccode}] 对于给定的字符编码，查询或设置其对应的小写变体编码。
+\item [\cs{lccode}] 对于给定的字符编码，查询或设置其对应的小写变体的编码。
 %\item [\cs{uppercase}]
 %      Convert the \gr{general text} argument to its uppercase form.
 \item [\cs{uppercase}]
-      将 \gr{general text} 转换为大写形式。
+      将普通文本（\gr{general text}）转换为大写形式。
 %\item [\cs{lowercase}]
 %      Convert the \gr{general text} argument to its lowercase form.
 \item [\cs{lowercase}]
-      将 \gr{general text} 转换为小写形式。
+      将普通文本（\gr{general text}）转换为小写形式。
 %\item [\cs{string}]
 %      Convert a token to a string of one or more characters.
 \item [\cs{string}]
@@ -81,7 +81,7 @@
 %Conceptually it is easiest to think that \TeX\ works with
 %characters internally, but in fact
 %\TeX\ works with integers: the \indextermsub{character}{codes}.
-在概念上说，认为 \TeX 内部处理着字符最简单，但是实际上 \TeX 内部处理的是整数：\cindextermsub{字符}{编码}。
+在概念上说，认为 \TeX 内部直接对字符进行处理是最简单的；但是实际上 \TeX 内部处理的是整数，即\cindextermsub{字符}{编码}。
 
 %The way characters are encoded in a computer may differ
 %from system to system.
@@ -104,7 +104,7 @@
 %a single-character control sequence.
 %Thus both \verb.\count`a. and \verb.\count`\a. are synonyms
 %for \verb.\count97.. See also Chapter~\ref{number}.
-利用反引号（\n{`{}}，或称左引号）可将字符（准确说是字符记号）转换为其字符编码。在所有 \TeX 希望得到 \gram{number} 的地方，都可以通过这种方式将一个字符记号的编码传给 \TeX：反引号加字符或是反引号加单字符控制序列。例如 \verb.\count`a. 和 \verb.\count`\a. 都表示 \verb.\count97.。详见第~\ref{number}~章。
+反引号（\n{`{}}，或称左引号）可将字符（准确说是字符记号）转换为其字符编码。在 \TeX 中，所有需要 \gram{number} 的地方，都可以通过这种方式将一个字符记号的编码传给 \TeX：反引号加字符或是反引号加单字符控制序列。例如 \verb.\count`a. 和 \verb.\count`\a. 都表示 \verb.\count97.。详见第~\ref{number}~章。
 
 %The possibility of a single-character control
 %sequence is necessary in certain cases such as
@@ -132,7 +132,7 @@
 %roman fonts there are no `less than' and `greater than'
 %\message{Check <>! Dammit!}%
 %signs, so the input `\verb.<>.' will give `<>' in the output.
-当字符记号被转换为字符编码后，字符编码就与其外部形状没有关联了。当然，对于大多数字符来说，在视觉上，其排版输出与输入是一致的。例如输入 \n{a} 会排版输出字符「a」。不过，即使在常见的符号中，也有例外情况。在计算机现代罗马字体中，就没有小于号和大于号。
+当字符记号被转换为字符编码后，字符编码就与字符的形状没有关联了。当然，对于大多数字符来说，在视觉上，其排版输出与输入是一致的。例如输入 \n{a} 会排版输出字符「a」。不过，即使在常见的符号中，也有例外情况。在计算机现代罗马字体中，就没有小于号和大于号。
 \message{Check <>! Dammit!}%
 输入 `\verb.<>.' 得到的输出是 `{\font\cmr=cmr10 \cmr<>}'。
 %{\MathRMx<>}
@@ -147,25 +147,25 @@
 %%\point Control sequences for characters
 %\section{Control sequences for characters}
 %\point Control sequences for characters
-\section{表示字符的控制序列}
+\section{字符相关的控制序列}
 
 %There are a number of ways in which a control sequence can denote
 %a character. The \cs{char} command specifies a character to be
 %typeset; the \cs{let} command introduces
 %a synonym for a character token, that is,
 %the combination of character code and category code.
-有许多种方式可以用控制序列来表示字符。例如说，\cs{char} 命令可以指定一个用于打印的字符；\cs{let} 命令可引入一个与置顶字符记号同义的控制序列——包括其字符编码和其分类码。
+有许多种方式可以用控制序列来表示字符。例如说，\cs{char} 命令可以指定一个用于打印的字符；\cs{let} 命令可引入一个与指定字符记号同义的控制序列——包括其字符编码和其分类码。
 
 %%\point Denoting characters to be typeset: \cs\char
 %\subsection{Denoting characters to be typeset: \protect\cs{char}}
 %\point Denoting characters to be typeset: \cs\char
-\subsection{表示要排印的字符：\protect\cs{char}}
+\subsection{表示要排版的字符：\protect\cs{char}}
 
 %Characters can be denoted numerically by, for example,
 %\verb.\char98.\cstoidx char\par.
 %This command tells \TeX\ to add character number~98 of the
 %current font to the horizontal list currently under construction.
-字符可以通过数值来表示，比如 \cstoidx char\par\verb-\char98-。该命令使得 \TeX\ 将当前字体中编码为 98 的字符添加到正在构建的水平列表中。
+字符可以通过数值来表示，比如 \cstoidx char\par\verb-\char98-。该命令会将当前字体中编码为 98 的字符添加到正在构建的水平列表中。
 
 %Instead of decimal notation, it is often more convenient to
 %use octal or hexadecimal notation. For octal the single quote is used:
@@ -191,12 +191,12 @@
 %comes in the final stages of processing.
 %In effect it says `typeset character number
 %so-and-so'.
-表面上看，\cs{char} 命令与 \verb.^^. 替换机制（第~\ref{mouth}~章）类似。两种机制都是通过间接的方式来访问字符。但是，\verb.^^. 替换机制发生的非常早——在 \TeX 的输入处理器为字符分配分类码之前；而 \cs{char} 命令则在可视化处理器中起作用。从效果上看，\cs{char} 是告诉 \TeX：「排版字体中第 $n$ 个字符。」
+表面上看，\cs{char} 命令与 \verb.^^. 替换机制（第~\ref{mouth}~章）类似：两种机制都是通过间接的方式来访问字符。但是，\verb.^^. 替换机制发生的非常早——在 \TeX 的输入处理器为字符分配分类码之前；而 \cs{char} 命令则在可视化处理器中起作用。从效果上看，\cs{char} 是告诉 \TeX：「排版字体中第 $n$ 个字符。」
 
 %There is a construction to let a control sequence stand
 %for some character code: the \csterm chardef\par\ command.
 %The syntax of this is \label{chardef}
-\csterm chardef\par 命令可定义一个控制序列定义作为一个字符编码的代替品。\label{chardef}它的用法是
+\csterm chardef\par 命令可定义一个控制序列定义作为一个\emph{字符编码}的代替品。\label{chardef}它的用法是
 \begin{disp}
 \cs{chardef}\gram{control sequence}\gr{equals}\gram{number},
 \end{disp}
@@ -228,7 +228,7 @@
 %\cs{newbox} (see Chapters~\ref{number} and~\ref{alloc}).
 %Tokens defined with \cs{mathchardef} can also be used this
 %way.
-用 \cs{chardef} 命令定义的控制序列可作为是 \gr{number} 使用。在诸如 \cs{newbox} 的分配类命令中，就用到了这一特性。（见第 \ref{number} 章和第 \ref{alloc} 章）用 \cs{mathchardef} 命令定义的记号同样可以这样使用。
+用 \cs{chardef} 命令定义的控制序列可作为 \gr{number} 使用。在诸如 \cs{newbox} 的分配类命令中，就用到了这一特性。（见第 \ref{number} 章和第 \ref{alloc} 章）用 \cs{mathchardef} 命令定义的记号同样可以这样使用。
 
 %\subsection{Implicit character tokens: \protect\cs{let}}
 \subsection{隐式字符记号：\protect\cs{let}}
@@ -236,18 +236,17 @@
 %Another construction defining a control sequence
 %to stand for (among other things)
 %a character is~\cs{let}\cstoidx let\par:
-另一种定义表示字符的控制序列的方式是使用 \cstoidx let\par 命令，并且将字符记号置于可选等号的右边：
+另一种定义表示字符的控制序列的方式是使用 \cs{let} \cstoidx let\par 命令，并且将字符记号置于可选等号的右边：
 \begin{disp}\cs{let}\gr{control sequence}\gr{equals}\gr{token}\end{disp}
 %with a character token on the right hand side of the (optional)
 %equals sign. The result is called an \indextermbus{implicit}{character} token.
 %(See page~\pageref{let} for a further discussion of~\cs{let}.)
-如此，得到的控制序列称为\cindextermbus{隐式}{字符}记号。
-（见第~\pageref{let}~页对~\cs{let}~的进一步讨论。）
+如此，得到的控制序列称为\cindextermbus{隐式}{字符}记号。（见第~\pageref{let}~页对~\cs{let}~的进一步讨论。）
 
 %In the
 %plain format there are for instance synonyms for
 %the open and close brace:
-在 plain \TeX 中有对左右花括号做的同义控制序列：
+在 plain \TeX 中有对左右花括号定义同义控制序列：
 \begin{verbatim}
 \let\bgroup={ \let\egroup=}
 \end{verbatim}
@@ -260,10 +259,10 @@
 %in the sense that \cs{let}
 %makes the control sequence stand for the combination
 %of a character code and category code.
-通过 \cs{let} 和 \cs{chardef} 将字符赋值给控制序列是有区别的。被 \cs{let} 定义的控制序列表示字符编码与分类码的组合。
+通过 \cs{let} 和 \cs{chardef} 将字符赋值给控制序列是有区别的。被 \cs{let} 定义的控制序列是字符编码与分类码这一组合的替代品。
 
 %As an example
-例如在下例中，由于 \cs{b} 关闭了 \cs{m} 定义所在的分组，因此 \TeX 会提示错误：「未定义的控制序列」。
+例如在下例中，\cs{b} 关闭了 \cs{m} 定义所在的分组，因此 \TeX 会提示错误：「未定义的控制序列」。
 \begin{verbatim}
 \catcode`|=2 % make the bar an end of group
 \let\b=|  % make \b a bar character
@@ -272,7 +271,7 @@
 %gives an `undefined control sequence \cs{m}'
 %because the \cs{b} closed the group inside which \cs{m}
 %was defined. On the other hand,
-另一方面，由于 \cs{b} 的定义在分类码修改之前，因此它无法承担分组结束符的作用，只能表示一条竖线（或是其他任何在当前字体中编号为 124 的字符）。因此，这里构造的是一个不闭合的分组。
+又例如在下例中，\cs{b} 的定义在分类码修改之前，因此它无法承担分组结束符的作用，只能表示一条竖线（或是其他任何在当前字体中编号为 124 的字符）。因此，这里构造的是一个不闭合的分组。
 \begin{verbatim}
 \let\b=| % make \b a bar character
 \catcode`|=2  % make the bar character end of group
@@ -325,7 +324,7 @@
 {\lccode`,=94 \lccode`.=95 \catcode`,=7 \catcode`.=8
 \lowercase{\global\let\sp=, \global\let\sb=.}}
 \end{verbatim}
-至于它为什么能起作用，可详见后文关于 \cs{lowercode} 的介绍。
+至于它为什么能起作用，可详见后文关于 \cs{lowercase} 的介绍。
 %will do the job; see below for an explanation of lowercase codes.
 %The \verb>^^> method as it was in \TeX\ version~2
 %(see page~\pageref{hathat}) cannot be used here,
@@ -333,7 +332,7 @@
 %not be input.
 %With the extension in \TeX\ version~3 it would also be possible
 %to write
-由于我们无法键入 \verb.^.，因此 \TeX2 中的 \verb.^^. 表示法无法在此解决问题。（见第~\pageref{hathat}~页）考虑到上标和小标以十六进制表示的字符编码分别是 \verb.5e. 和 \verb.5f.，利用 \TeX3 中扩展的表示法可以依照如下方式解决问题：
+由于我们无法键入 \verb.^.，因此 \TeX2 中的 \verb.^^. 表示法无法在此解决问题。（见第~\pageref{hathat}~页）考虑到上标和下标的字符编码以十六进制表示分别是 \verb.5e. 和 \verb.5f.，利用 \TeX3 中扩展的表示法可以依照如下方式解决问题：
 \begin{verbatim}
 {\catcode`\,=7
 \global\let\sp=,,5e \global\let\sb=,,5f}
@@ -380,7 +379,7 @@
 %such double accents do occur.
 %Positioning accents on top of each other is possible,
 %however, in math mode.
-\cs{accent} 命令后必须紧跟 \gr{character} 避免了将重音符号置于连字之上或是置于另一个重音符号之上。在诸如印度语及越南语的少数语言中，确实存在双重音符号的情况。因此这种规定有时可能会令人不爽。不过，将重音符号置于另一个之上在数学模式中是可以实现的。
+\cs{accent} 命令后必须紧跟 \gr{character}。这一规定避免了将重音符号置于连字之上或是置于另一个重音符号之上。在诸如印度语及越南语的少数语言中，确实存在双重音符号的情况；因此这种规定有时可能会令人不爽。不过，将重音符号置于另一个之上可以在数学模式中实现。
 
 %The width of a character with an accent is the same as that of
 %the unaccented character. \TeX\ assumes that the
@@ -406,7 +405,7 @@
 %are inserted automatically, these kerns are classified
 %as {\italic explicit\/} kerns. Therefore they inhibit hyphenation
 %in the parts of the word before and after the kern.
-重音符号的水平位置由 \cs{fontdimen1}（\cindextermbus{每点}{倾斜}，\emph{slant per point}）控制。为此，\TeX 引入铅空以校正重音符号的水平位置。\liamfnote{铅空是活字印刷排版时代，排版工人用于调整字符水平位置而使用的空白铅块。}注意，尽管这些铅空是自动插入的，但这些铅空隶属\emph{显式}铅空。因此，它们会抑制铅空前后的连字符。
+重音符号的水平位置由 \cs{fontdimen1}（\cindextermbus{每点}{倾斜}，\emph{slant per point}）控制。为此，\TeX 会引入铅空以校正重音符号的水平位置。\liamfnote{铅空是活字印刷排版时代，排版工人用于调整字符水平位置而使用的空白铅块。}注意，尽管这些铅空是自动插入的，但这些铅空隶属\emph{显式}铅空。因此，它们会抑制铅空前后的连字符。
 
 %As an example of kerning for accents,
 %here follows the dump of a horizontal list.
@@ -433,13 +432,13 @@
 \section{字符真值测试}
 
 %Equality of character codes is tested by \cs{if}:
-使用 \cs{if} 可检测两个字符编码是否相等：
+使用 \cs{if} 可检测两个字符记号的字符编码是否相等：
 \begin{disp}\cs{if}\gr{token$_1$}\gr{token$_2$}\end{disp}
 %Tokens following this conditional are expanded until two
 %unexpandable tokens are left. The condition is then true
 %if those tokens are character tokens with the same character
 %code, regardless of category code.
-\TeX 遇到 \cs{if} 后，会对其后的记号持续展开，直至遇见两个不可展开的记号。而后，若这两个记号的字符编码相等，而不管分类码，则真值测试为真。
+\TeX 遇到 \cs{if} 后，会对其后的记号持续展开，直至遇见两个不可展开的记号。而后，不管分类码如何，若这两个记号的字符编码相等，则真值测试为真。
 
 %An unexpandable control
 %sequence is considered to have character code 256 and
@@ -582,10 +581,10 @@
 %characters \rdash to their character code. This has some implications
 %for implementations of \TeX\ for non-roman alphabets;
 %see page 370 of \TeXbook, \cite{Knuth:TeXbook}.
-\TeX 关键字可以是大写形式也可以是小写形式。比如 \n{pt} 还可以写作 \n{pT}、\n{Pt} 以及 \n{PT}。此处，\TeX 不使用 \cs{uccode} 及 \cs{lccode} 表来确定小写形式；而是直接在大写字母的字符编码上加 32 来得到其小写形式——\ascii 编码中，同一字母大小写形式之差为 32。这种做法与 \TeX 在处理非罗马字符时的具体实现方式有所牵扯；详见 \TeXbook\ \cite{Knuth:TeXbook} 第 370 页。
+\TeX 关键字可以是大写形式也可以是小写形式。比如 \n{pt} 还可以写作 \n{pT}、\n{Pt} 以及 \n{PT}。此处，\TeX 不使用 \cs{uccode} 及 \cs{lccode} 表来确定小写形式；而是直接在大写字母的字符编码上加 32 来得到其小写形式——\ascii 编码中，同一字母大小写形式之差为 32。这种做法与 \TeX 在处理非罗马字符时的具体实现方式有些关联；详见 \TeXbook\ \cite{Knuth:TeXbook} 第 370 页。
 
 %\subsection{Creative use of \cs{uppercase} and \cs{lowercase}}
-\subsection{妙用 \cs{uppercase} 和 \cs{lowercase}}
+\subsection{巧用 \cs{uppercase} 和 \cs{lowercase}}
 
 %The fact that \cs{uppercase} and \cs{lowercase} do not change
 %category codes can sometimes be used to create certain
@@ -736,7 +735,7 @@
 %into character tokens with character code~32,
 %so the chances are pretty slim that
 %`funny spaces' wind up in control sequences.
-\cs{string} 命令输出字符串中，各个字符的分类码均为 12\index{category!12}，唯独被字符串化的控制序列中的空格，其分类码是 10\index{category!10}。由于控制序列内部不存在分类码的说法，\cs{strign} 输出的所有空格必定只是\emph{空格字符}，也就是说，它的字符编码是 32。由于 \TeX 的输入处理器会将所有空格记号的字符编码设置为 32，「滑稽空格」出现在控制序列中的机会相当渺茫。
+\cs{string} 命令输出的字符串中，各个字符的分类码均为 12\index{category!12}，唯独被字符串化的控制序列中的空格，其分类码是 10\index{category!10}。由于控制序列内部不存在分类码的说法，\cs{string} 输出的所有空格必定只是\emph{空格字符}，也就是说，它的字符编码是 32。由于 \TeX 的输入处理器会将所有空格记号的字符编码设置为 32，「滑稽空格」出现在控制序列中的机会相当渺茫。
 
 %Other commands with the same behaviour with respect to
 %category codes as \cs{string}, are
