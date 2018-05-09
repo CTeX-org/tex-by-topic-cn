@@ -1,4 +1,6 @@
 % -*- coding: utf-8 -*-
+% Translated by Liam0205@bbs.ctex.org
+% Date of translated: 2018-05-09
 \documentclass{book}
 
 \input{preamble}
@@ -53,20 +55,20 @@
 %During processing, \TeX\ decides from
 %what font a character should be taken. This decision is
 %taken separately for text mode and math mode.
-在 \TeX 语境下，术语字体（font）是保存在外部文件中的一系列字符的集合。\TeX 在运行时，会决定从哪一个字体中选取字符。而这种决定在文本模式和数学模式中是不同的。
+在 \TeX 语境下，字体（font）这一术语指得是保存在外部文件中的一系列字符的集合。\TeX 在运行时，会决定从哪一个字体中选取字符。而具体决策方式在文本模式和数学模式中是不同的。
 
 %When \TeX\ is processing ordinary text, characters are taken
 %from the `current font'.
 %External font file names are coupled to control sequences
 %by statements such as
-\TeX 处理普通文本时会从「当前字体」中选取字符。通过字体声明，\TeX 会将外部字体文件与字体选择命令联系起来。例如，下列声明会促使 \TeX 装载名为 \n{myfont10.tfm} 的字体文件。
+\TeX 处理普通文本时会从「当前字体」中选取字符。通过字体声明，\TeX 会将外部字体文件与字体选择命令联系起来。例如，下列声明会使 \TeX 装载名为 \n{myfont10.tfm} 的字体文件。
 \begin{verbatim}
 \font\MyFont=myfont10
 \end{verbatim}
 %which makes \TeX\ load the file \n{myfont10.tfm}.
 %Switching the current font to the font described in that file
 %is then done by
-此后，通过下列命令，我们就可以选择使用该文件中描述的字体了。
+此后，通过下列命令，我们就可以选择使用该文件定义的字体了。
 \begin{verbatim}
 \MyFont
 \end{verbatim}
@@ -79,29 +81,21 @@
 %produces the control sequence for the current font.
 
 %Math mode completely ignores the current font. Instead
-%it looks  at the `current family', which can contain
+%it looks at the `current family', which can contain
 %three fonts: one for text style, one for script style,
 %and one for scriptscript style. This is treated
 %in Chapter~\ref{mathchar}.
-Math mode completely ignores the current font. Instead
-it looks  at the `current family', which can contain
-three fonts: one for text style, one for script style,
-and one for scriptscript style. This is treated
-in Chapter~\ref{mathchar}.
+数学模式下，\TeX 会忽略当前字体；转而考察当前「字族」，其中有三个字体：其一是正文字体（text style），其二是角标字体（script style），其三是双重角标字体（scriptscript style）。详见第~\ref{mathchar}~章。
 
 %See \cite{S} for a consistent terminology of fonts and typefaces.
-See \cite{S} for a consistent terminology of fonts and typefaces.
+关于字体（font）与字形（typeface）的一贯术语，请参阅~\cite{S}。
 
 %With `virtual fonts' (see~\cite{K:virt}) it is possible that
 %what looks like one font to \TeX\ resides in more than
 %one physical font file.
 %\alt
 %See further page~\pageref{virtual:fonts}.
-With `virtual fonts' (see~\cite{K:virt}) it is possible that
-what looks like one font to \TeX\ resides in more than
-one physical font file.
-\alt
-See further page~\pageref{virtual:fonts}.
+从不同物理字体文件中分别选取部分字符，组成的「虚拟字体」（见~\cite{K:virt}），在 \TeX 看来就像是一个字体一样。更多相关内容详见第~\pageref{virtual:fonts}~页。
 
 %%\point Font declaration
 %\section{Font declaration}
