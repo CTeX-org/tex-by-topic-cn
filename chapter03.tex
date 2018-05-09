@@ -132,7 +132,7 @@
 %roman fonts there are no `less than' and `greater than'
 %\message{Check <>! Dammit!}%
 %signs, so the input `\verb.<>.' will give `<>' in the output.
-当字符记号被转换为字符编码后，字符编码就与字符的形状没有关联了。当然，对于大多数字符来说，在视觉上，其排版输出与输入是一致的。例如输入 \n{a} 会排版输出字符「a」。不过，即使在常见的符号中，也有例外情况。在计算机现代罗马字体中，就没有小于号和大于号。
+当字符记号被转换为字符编码后，字符编码就与字符的形状没有关联了。当然，对于大多数字符来说，在视觉上，其排版输出与输入是一致的。例如输入 \n{a} 会排版输出字符「a」。不过，即使在常见的符号中，也有例外情况。在 Computer Modern Roman 字体中，就没有小于号和大于号。
 \message{Check <>! Dammit!}%
 输入 `\verb.<>.' 得到的输出是 `{\font\cmr=cmr10 \cmr<>}'。
 %{\MathRMx<>}
@@ -710,7 +710,7 @@
 %the escape character is not
 %output; the default value (set in \IniTeX) is~92, the number
 %of the backslash character.
-上例使用了打字机字族\liamfnote{\cs{tt} 是 plain \TeX 风格的字体选择命令。在 \LaTeX 中，应当使用 \cs{ttfamily} 或者 \cs{texttt} 代替。}。这是因为，在计算机现代字体中，罗马字族里没有反斜线这一字符。\cstoidx escapechar\par 不过，\TeX 也可以使用其它字符来打印控制序列：具体来说，\TeX 使用 \cs{escapechar} 保存的字符编码对应的字符来打印控制序列。在使用下列命令时，也会用到 \cs{escapechar} 这个宏保存的值： \cs{write}、\cs{message}、\cs{errmessage}、\cs{show}、\cs{showthe} 以及 \cs{meaning}。若 \cs{escapechar} 的值为负或者大于 255，则转义字符不会显示出来；此外，在 \IniTeX 中 \cs{escapechar} 的默认值是 92，即反斜线的字符编码。
+上例使用了打字机字族\liamfnote{\cs{tt} 是 plain \TeX 风格的字体选择命令。在 \LaTeX 中，应当使用 \cs{ttfamily} 或者 \cs{texttt} 代替。}。这是因为，在 Computer Modern Roman 字体中没有反斜线这一字符。\cstoidx escapechar\par 不过，\TeX 也可以使用其它字符来打印控制序列：具体来说，\TeX 使用 \cs{escapechar} 保存的字符编码对应的字符来打印控制序列。在使用下列命令时，也会用到 \cs{escapechar} 这个宏保存的值： \cs{write}、\cs{message}、\cs{errmessage}、\cs{show}、\cs{showthe} 以及 \cs{meaning}。若 \cs{escapechar} 的值为负或者大于 255，则转义字符不会显示出来；此外，在 \IniTeX 中 \cs{escapechar} 的默认值是 92，即反斜线的字符编码。
 
 %For use in a  \cs{write} statement the \cs{string} can
 %in some circumstances be
