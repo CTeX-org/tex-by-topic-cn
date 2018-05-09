@@ -46,57 +46,37 @@
 %%\point Fonts
 %\section{Fonts}
 %\point Fonts
-\section{Fonts}
+\section{字体}
 
 %In  \TeX\ terminology a font is the set of characters that
 %is contained in one external font file.
 %During processing, \TeX\ decides from
 %what font a character should be taken. This decision is
 %taken separately for text mode and math mode.
-In  \TeX\ terminology a font is the set of characters that
-is contained in one external font file.
-During processing, \TeX\ decides from
-what font a character should be taken. This decision is
-taken separately for text mode and math mode.
+在 \TeX 语境下，术语字体（font）是保存在外部文件中的一系列字符的集合。\TeX 在运行时，会决定从哪一个字体中选取字符。而这种决定在文本模式和数学模式中是不同的。
 
 %When \TeX\ is processing ordinary text, characters are taken
 %from the `current font'.
-%External font file names are coupled to  control sequences
-%by   statements such as
-%\begin{verbatim}
-%\font\MyFont=myfont10
-%\end{verbatim}
-%which makes \TeX\ load the file \n{myfont10.tfm}.
-%Switching the current font to the font described in that file
-%is then done by
-%\begin{verbatim}
-%\MyFont
-%\end{verbatim}
-%The status of the current font
-%can be queried: the sequence
-%\begin{verbatim}
-%\the\font
-%\end{verbatim}
-%produces the control sequence for the current font.
-When \TeX\ is processing ordinary text, characters are taken
-from the `current font'.
-External font file names are coupled to  control sequences
-by   statements such as
+%External font file names are coupled to control sequences
+%by statements such as
+\TeX 处理普通文本时会从「当前字体」中选取字符。通过字体声明，\TeX 会将外部字体文件与字体选择命令联系起来。例如，下列声明会促使 \TeX 装载名为 \n{myfont10.tfm} 的字体文件。
 \begin{verbatim}
 \font\MyFont=myfont10
 \end{verbatim}
-which makes \TeX\ load the file \n{myfont10.tfm}.
-Switching the current font to the font described in that file
-is then done by
+%which makes \TeX\ load the file \n{myfont10.tfm}.
+%Switching the current font to the font described in that file
+%is then done by
+此后，通过下列命令，我们就可以选择使用该文件中描述的字体了。
 \begin{verbatim}
 \MyFont
 \end{verbatim}
-The status of the current font
-can be queried: the sequence
+%The status of the current font
+%can be queried: the sequence
+\TeX 使用的当前字体是可查的。下列命令会产生当前字体对应的控制序列。
 \begin{verbatim}
 \the\font
 \end{verbatim}
-produces the control sequence for the current font.
+%produces the control sequence for the current font.
 
 %Math mode completely ignores the current font. Instead
 %it looks  at the `current family', which can contain
