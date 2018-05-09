@@ -14,53 +14,33 @@
 %and what attributes a font can have.
 在文本模式下，\TeX 会从「当前字体」中取用字符。本章讨论 \TeX 是如何识别不同\emph{字体}的，以及字体都有哪些属性。
 
-%\label{cschap:font}\label{cschap:fontname}\label{cschap:nullfont}\label{cschap:hyphenchar}\label{cschap:defaulthyphenchar}\label{cschap:fontdimen}\label{cschap:char47}\label{cschap:noboundary}
-%\begin{inventory}
-%\item [\cs{font}]
-%      Declare the identifying control sequence of a font.
 \label{cschap:font}\label{cschap:fontname}\label{cschap:nullfont}\label{cschap:hyphenchar}\label{cschap:defaulthyphenchar}\label{cschap:fontdimen}\label{cschap:char47}\label{cschap:noboundary}
 \begin{inventory}
-\item [\cs{font}]
-      Declare the identifying control sequence of a font.
-
+%\item [\cs{font}]
+%      Declare the identifying control sequence of a font.
+\item [\cs{font}] 该命令可声明一个用于指定字体的控制序列。
 %\item [\cs{fontname}]
 %      The external name of a font.
-\item [\cs{fontname}]
-      The external name of a font.
-
+\item [\cs{fontname}] 字体的外部名字。
 %\item [\cs{nullfont}]
 %      Name of an empty font that \TeX\ uses in emergencies.
-\item [\cs{nullfont}]
-      Name of an empty font that \TeX\ uses in emergencies.
-
-
+\item [\cs{nullfont}] 在紧急情况下，\TeX 会使用空字体。这是空字体的名字。
 %\item [\cs{hyphenchar}]
 %      Number of the hyphen character of a font.
-\item [\cs{hyphenchar}]
-      Number of the hyphen character of a font.
-
+\item [\cs{hyphenchar}] 字体中连字符的编号。
 %\item [\cs{defaulthyphenchar}]
 %      Value of \cs{hyphenchar} when a font is loaded.
 %      Plain \TeX\ default:~\verb>`\->.
-\item [\cs{defaulthyphenchar}]
-      Value of \cs{hyphenchar} when a font is loaded.
-      Plain \TeX\ default:~\verb>`\->.
-
+\item [\cs{defaulthyphenchar}] 字体装载时 \cs{hyphenchar} 的默认值。在 plain \TeX 中，默认是 \verb.`\-.。
 %\item [\cs{fontdimen}]
 %      Access various parameters of fonts.
-\item [\cs{fontdimen}]
-      Access various parameters of fonts.
-
+\item [\cs{fontdimen}] 该命令可访问多种字体参数。
 %\item [\cs{char47}]
 %      Italic correction.
-\item [\cs{char47}]
-      Italic correction.
-
+\item [\cs{char47}] 倾斜校正。
 %\item [\cs{noboundary}]
 %      Omit implicit boundary character.
-%\end{inventory}
-\item [\cs{noboundary}]
-      Omit implicit boundary character.
+\item [\cs{noboundary}] 忽略隐式边界字符。
 \end{inventory}
 
 %%\point Fonts
