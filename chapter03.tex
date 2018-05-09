@@ -38,7 +38,7 @@
 \item [\cs{if}] 测试字符编码是否相等。
 %\item [\cs{ifx}]
 %      Test equality of both character and category codes.
-\item [\cs{ifx}] 测试字符编码与类别码是否都相等。
+\item [\cs{ifx}] 测试字符编码与分类码是否都相等。
 %\item [\cs{let}]
 %      Define a control sequence to be a synonym of a token.
 \item [\cs{let}] 将一个控制序列定义为一个记号的同义词。
@@ -668,44 +668,30 @@
 %The command \cs{string} takes the next token and expands it
 %\cstoidx string\par
 %into a string of separate characters. Thus
-%\begin{verbatim}
-%\tt\string\control
-%\end{verbatim}
+\cs{string} \cstoidx string\par 命令能将其下一个记号展开为由若干字符组成的字符串。例如，下例将输出 \cs{control}。
+\begin{verbatim}
+\tt\string\control
+\end{verbatim}
 %will give \cs{control} in the
 %output, and
-%\begin{verbatim}
-%\tt\string$
-%\end{verbatim}
+又例如下例将输出 \verb-$-。
+\begin{verbatim}
+\tt\string$
+\end{verbatim}
 %will give~\verb-$-, but, noting that the string
 %operation comes after the tokenizing,
-%\begin{verbatim}
-%\tt\string%
-%\end{verbatim}
+注意，字符串操作位于记号化之后。因此下例\emph{不能}输出注释符号 \verb.%.，因为早在输入处理器中，注释符号就被删除了。于是，下例中的 \cs{string} 会将下一行的第一个记号转换为字符串。
+\begin{verbatim}
+\tt\string%
+\end{verbatim}
 %will {\em not\/} give~\verb$%$,
 %because the comment
 %sign is removed by \TeX's input processor.
 %Therefore, this command will `string' the first token on the next line.
-\cs{string} 命令可将其后尾随的记号转为字串。例如：
-\cstoidx string\par
-\begin{verbatim}
-\tt\string\control
-\end{verbatim}
-的排版结果为 \cs{control}。再例如：
-\begin{verbatim}
-\tt\string$
-\end{verbatim}
-的排版结果为 \verb-$-。要注意的是，
-\cs{string} 是在输入处理器产生记号这个过程之后运作的，所以
-\begin{verbatim}
-\tt\string%
-\end{verbatim}
-就\emph{没法}排出 \verb-%-，因为注释符在 \TeX\ 输入处理器中会被移除。
-因此，这个命令将会给出下一行第一个记号转换为字符串。
 
 %The \cs{string} command is executed by the expansion processor, thus
 %it is expanded unless explicitly inhibited (see Chapter~\ref{expand}).
-\cs{string} 命令是在展开处理器中运行的，因此除非显式抑制才能阻止它被展开；
-这是第 \ref{expand} 章的话题。
+\cs{string} 命令由展开处理器执行。因此，除非显式地禁止，它必然会被展开。详见第~\ref{expand}~章。
 
 %%\spoint Output of control sequences
 %\subsection{Output of control sequences}
@@ -725,24 +711,17 @@
 %the escape character is not
 %output; the default value (set in \IniTeX) is~92, the number
 %of the backslash character.
-前面例子选用了打字机字体，这是因计算机现代罗马字体不包含反斜线字符。
-\cstoidx escapechar\par
-然而，\TeX\ 显示控制序列时未必得用反斜线：它使用 \cs{escapechar} 字符码。
-在用 \cs{write}、\cs{message}、\cs{errmessage}、\cs{show}、
-\cs{showthe} 或 \cs{meaning} 输出控制序列时，也使用这个编码。
-如果 \cs{escapechar} 大于零或者大于 255，转义符将不会被显式；
-在 \IniTeX\ 中它的默认值为 92，也就是反斜线字符的编码。
+上例使用了打字机字族\liamfnote{\cs{tt} 是 plain \TeX 风格的字体选择命令。在 \LaTeX 中，应当使用 \cs{ttfamily} 或者 \cs{texttt} 代替。}。这是因为，在计算机现代字体中，罗马字族里没有反斜线这一字符。\cstoidx escapechar\par 不过，\TeX 也可以使用其它字符来打印控制序列：具体来说，\TeX 使用 \cs{escapechar} 保存的字符编码对应的字符来打印控制序列。在使用下列命令时，也会用到 \cs{escapechar} 这个宏保存的值： \cs{write}、\cs{message}、\cs{errmessage}、\cs{show}、\cs{showthe} 以及 \cs{meaning}。若 \cs{escapechar} 的值为负或者大于 255，则转义字符不会显示出来；此外，在 \IniTeX 中 \cs{escapechar} 的默认值是 92，即反斜线的字符编码。
 
 %For use in a  \cs{write} statement the \cs{string} can
 %in some circumstances be
-%replaced  by \cs{noexpand} (see page~\pageref{expand:write}).
-在 \cs{write} 语句中的 \cs{string} 有时可以用 \cs{noexpand} 代替，
-见第~\pageref{expand:write}~页。
+%replaced by \cs{noexpand} (see page~\pageref{expand:write}).
+在 \cs{write} 语句中，有时可用 \cs{noexpand} 代替 \cs{string}。详见第~\pageref{expand:write}~页。
 
 %%\spoint Category codes of a \cs{string}
 %\subsection{Category codes of a \cs{string}}
 %\spoint Category codes of a \cs{string}
-\subsection{\cs{string} 的类别码}
+\subsection{\cs{string} 输出输出字符串的分类码}
 
 %The characters that are the result of a \cs{string} command have
 %category code~12\index{category!12}, except for any spaces in
@@ -757,19 +736,14 @@
 %into character tokens with character code~32,
 %so the chances are pretty slim that
 %`funny spaces' wind up in control sequences.
-在 \cs{string} 命令给出的字符串中，各个字符的类别码都是~12\index{category!12}，
-但空格字符除外，它们的类别码是~10\index{category!10}。
-由于在控制序列中没有类别码，从 \cs{string} 得到的空格必定只有空格{\em 字符}，
-即编码为 32 的字符。然而，\TeX\ 的输入处理器将任何字符码不为 32
-的空格记号转换为字符码为 32 的字符记号，因此`滑稽空格'有可能出现在控制序列中。
+\cs{string} 命令输出字符串中，各个字符的分类码均为 12\index{category!12}，唯独被字符串化的控制序列中的空格，其分类码是 10\index{category!10}。由于控制序列内部不存在分类码的说法，\cs{strign} 输出的所有空格必定只是\emph{空格字符}，也就是说，它的字符编码是 32。由于 \TeX 的输入处理器会将所有空格记号的字符编码设置为 32，「滑稽空格」出现在控制序列中的机会相当渺茫。
 
 %Other commands with the same behaviour with respect to
 %category codes as \cs{string}, are
 %\cs{number},
 %\cs{romannumeral}, \cs{jobname}, \cs{fontname}, \cs{meaning},
 %and \cs{the}.
-在所给出的类别码这方面，这些命令的表现与 \cs{string} 是一致的：\cs{number}、
-\cs{romannumeral}、\cs{jobname}、\cs{fontname}、\cs{meaning} 和 \cs{the}。
+在分类码方面，其他命令的行为与 \cs{string} 表现一致：\cs{number}、\cs{romannumeral}、\cs{jobname}、\cs{fontname}、\cs{meaning} 以及 \cs{the}。
 
 
 %\endofchapter
