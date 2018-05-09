@@ -100,30 +100,23 @@
 %%\point Font declaration
 %\section{Font declaration}
 %\point Font declaration
-\section{Font declaration}
+\section{字体声明}
 
 %Somewhere during a run of \TeX\ or \IniTeX\
 %\cstoidx font\par
 %the coupling between an internal identifying control sequence
 %and the external file name of a font has to be made.
 %The syntax of the command for this is
-%\begin{disp}\cs{font}\gr{control sequence}\gr{equals}%
-%\gr{file name}\gr{at clause}\end{disp}
-%where
-%\begin{disp}\gr{at clause} $\longrightarrow$ \n{at} \gr{dimen}
-%$|$ \n{scaled} \gr{number} $|$ \gr{optional spaces}\end{disp}
+\TeX 或 \IniTeX 在执行时，必然在某处会建立内部字体选择命令与外部字体文件名的联系。\cstoidx font\par 字体声明的语法如下：
+\begin{disp}
+\cs{font}\gr{control sequence}\gr{equals}\gr{file name}\gr{at clause}
+\end{disp}
+这里，\gr{at clause} 的语法是：
+\begin{disp}
+\gr{at clause} $\longrightarrow$ \n{at} \gr{dimen} $|$ \n{scaled} \gr{number} $|$ \gr{optional spaces}
+\end{disp}
 %Font declarations are local to a group.
-Somewhere during a run of \TeX\ or \IniTeX\
-\cstoidx font\par
-the coupling between an internal identifying control sequence
-and the external file name of a font has to be made.
-The syntax of the command for this is
-\begin{disp}\cs{font}\gr{control sequence}\gr{equals}%
-\gr{file name}\gr{at clause}\end{disp}
-where
-\begin{disp}\gr{at clause} $\longrightarrow$ \n{at} \gr{dimen}
-$|$ \n{scaled} \gr{number} $|$ \gr{optional spaces}\end{disp}
-Font declarations are local to a group.
+字体声明仅在当前分组内生效。
 
 %By the \gr{at clause} the user specifies that some
 %magnified version of the font is wanted. The \gr{at clause} comes
