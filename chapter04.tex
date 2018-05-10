@@ -130,26 +130,12 @@
 %the external font file (the \n{.tfm} file)
 %that \TeX\ reads for the font; it just multiplies
 %the font dimensions by a constant.
-By the \gr{at clause} the user specifies that some
-magnified version of the font is wanted. The \gr{at clause} comes
-in two forms: if the font is given \n{scaled}~{\italic f\/} \TeX\
-multiplies all its font dimensions for that font by~$f/1000$;
-if the font
-has a design size~{\italic d\/}\n{pt} and
-the \gr{at clause} is \n{at}~{\italic p\/}\n{pt}
-\TeX\ multiplies all font data by~$p/d$.
-The presence of an \gr{at clause} makes no difference for
-the external font file (the \n{.tfm} file)
-that \TeX\ reads for the font; it just multiplies
-the font dimensions by a constant.
-
+用户通过 \gr{at clause} 指定字体的放大版本。\gr{at clause} 有两种形式：如果指定缩放比例 \n{scaled}~{\itshape f\/}，则 \TeX 会将该字体中的所有字符尺寸倍乘 $f/1000$；如果指定目标大小 \n{at}~{\itshape f\/}\n{pt}，而字体本身的设计大小是 {\itshape d\/}\n{pt}，则 \TeX 会将该字体中的所有字符尺寸倍乘 $f/d$。使用 \gr{at clause} 不影响 \TeX 从外部字体文件（\n{.tfm} 文件）中读入字体的过程；它只是在尺寸上倍乘了一个常数。
 
 %After such a font declaration, using the defined control sequence
 %will set the current font to the font of the
 %control sequence.
-After such a font declaration, using the defined control sequence
-will set the current font to the font of the
-control sequence.
+这样声明字体后，使用定义得到的控制序列会将当前字体设置为控制序列相应的字体。
 
 %%\spoint Fonts and \n{tfm} files
 %\subsection{Fonts and \n{tfm} files}
