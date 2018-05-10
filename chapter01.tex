@@ -176,8 +176,8 @@
 %$N$,~new line; $M$,~middle of line; $S$,~skipping spaces.
 %These states and the transitions between them are treated
 %in Chapter~\ref{mouth}.
-在分类码的影响下，\TeX 输入处理器的行为可视作是一个在三种内部状态（$N$，新行；$M$，
-行内；$S$，忽略空格）中切换的机器。第~\ref{mouth}~章将讨论这些状态及其切换。
+在分类码的影响下，\TeX 输入处理器可视作一个在不同内部状态间切换的机器。
+它有三种内部状态：$N$，新行；$M$，行内；$S$，忽略空格。第~\ref{mouth}~章将讨论这些状态及其切换。
 
 %\subsection{Two-level input processing}
 \subsection{输入处理器的两个阶段}
@@ -295,9 +295,9 @@
 %these, but tokens such as \cs{vskip} and character tokens,
 %including characters such as dollars and braces, are passed untouched.
 宏的可展开性之判断很简单：
-所有的宏、活动字符、条件式以及部分 \TeX 原语（见第~\pageref{expand:lijst}~页的列表）
+所有的宏、活动字符、条件语句以及部分 \TeX 原语（见第~\pageref{expand:lijst}~页的列表）
 是可展开的，其他记号都不可展开。
-因此，展开处理器会负责诸如将宏替换为其展开、对条件是求值而后忽略条件为假的部分的任务；
+因此，展开处理器会将宏替换为其展开，并对条件语句求值，而后忽略条件为假的部分；
 诸如 \cs{vskip}、字符记号（包括美元符号和花括号）则原封不动地传到输出流。
 
 %\subsection{Special cases: \cs{expandafter}, \cs{noexpand}, and \cs{the}}
@@ -571,7 +571,7 @@
 %of these parts of \TeX.
 \TeX 的可视化处理器使用了若干用户不可直接控制的算法：
 断行、切齐、分页、数学排版以及 \n{dvi} 文件生成算法。
-尽管用户不可直接控制这些算法，但可通过一些参数，间接控制它们。
+尽管用户不可直接控制这些算法，但可通过一些参数间接地控制它们。
 
 %Some of these algorithms return their results in a form that
 %can be handled by the execution processor. For instance,
