@@ -240,7 +240,7 @@
 \item 字符的尺寸以及倾斜校正（italic corrections）
 %\altt
 %\item ligature and kerning programs for characters.
-\item 字符的连字（ligature）及突出（kerning）指令 % TODO(Liam0205): 这里的翻译不太好，需要后续修正
+\item 字符的连字（ligature）及铅空（kerning）指令 % TODO(Liam0205): 这里的翻译不太好，需要后续修正
 \end{itemize}
 %Also, the design size of a font is specified in the \n{tfm} file;
 %see above. The definition of the \n{tfm} format can be found
@@ -251,7 +251,7 @@
 %\subsection{Font dimensions}
 %\label{font:dims}
 %\spoint[font:dims] Font dimensions
-\subsection{Font dimensions}
+\subsection{字体尺寸}
 \label{font:dims}
 
 %Text fonts need to have at least seven \csidx{fontdimen} parameters
@@ -260,8 +260,11 @@
 %math symbol and math extension fonts have more
 %(see page~\pageref{fam23:fontdims}).
 %For text fonts the minimal set of seven comprises the following:
-%\begin{enumerate} \item the slant per point; this dimension is used
+文本字体至少得有 7 个 \cs{fontdimen} 参数来描述\cindextermsub{字体}{尺寸}（对于未指定的参数，\TeX 会以零作为默认值）；数学符号以及数学扩展字体还有更多的参数（详见第~\pageref{fam23:fontdims}~页）。对于文本字体来书哦对 7 个参数描述如下：
+\begin{enumerate}
+% \item the slant per point; this dimension is used
 %    for the proper horizontal positioning of accents;
+\item 每点倾斜（slant per point）；该参数用于确定重音符号正确的水平位置
 %\item the interword space: this is used unless the user
 %    specifies an explicit \cs{spaceskip};
 %    see Chapter~\ref{space};
@@ -278,31 +281,6 @@
 %\item the extra space: the space added to the interword space
 %at the end of sentences (that is, when \cs{spacefactor}${}\geq2000$)
 %unless the user specifies an explicit \cs{x\-space\-skip}.
-%\end{enumerate}
-Text fonts need to have at least seven \csidx{fontdimen} parameters
-to describe \indextermsub{font}{dimensions}
-(but \TeX\ will take zero for unspecified parameters);
-math symbol and math extension fonts have more
-(see page~\pageref{fam23:fontdims}).
-For text fonts the minimal set of seven comprises the following:
-\begin{enumerate} \item the slant per point; this dimension is used
-    for the proper horizontal positioning of accents;
-\item the interword space: this is used unless the user
-    specifies an explicit \cs{spaceskip};
-    see Chapter~\ref{space};
-\item interword stretch: the stretch component of the interword
-    space;
-\item interword shrink: the shrink component of
-    the interword space;
-\item the x-height: the value of
-    the \gr{internal unit} \n{ex}, which is usually about the
-    height of the lowercase letter~`x';
-\item the quad width:
-    the value of the \gr{internal unit} \n{em}, which is
-    approximately the width of the capital letter~`M'; and
-\item the extra space: the space added to the interword space
-at the end of sentences (that is, when \cs{spacefactor}${}\geq2000$)
-unless the user specifies an explicit \cs{x\-space\-skip}.
 \end{enumerate}
 
 %Parameters 1 and~5 are purely information about the font
