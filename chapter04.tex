@@ -163,67 +163,47 @@
 %%\spoint Querying the current font and font names
 %\subsection{Querying the current font and font names}
 %\spoint Querying the current font and font names
-\subsection{Querying the current font and font names}
+\subsection{查询当前字体及字体名}
 
 %It was already mentioned above that the control sequence
 %which set the current font can be retrieved by the
 %command \verb>\the\font>. This is a special case of
-%\begin{Disp}\cs{the}\gr{font}\end{Disp} where
-%\begin{disp}\gr{font} $\longrightarrow$
-%\cs{font} $|$ \gr{fontdef token} $|$ \gr{family member}\nl
-%\gr{family member} $\longrightarrow$
-%\gr{font range}\gr{4-bit number}\nl
-%\gr{font range} $\longrightarrow$
-%\cs{textfont} $|$ \cs{scriptfont} $|$ \cs{scriptscriptfont}\end{disp}
+前文提到过，当前字体的字体选择命令可通过 \verb.\the\font. 得到。这是下列语法的一个特例。
+\begin{Disp}\cs{the}\gr{font}\end{Disp}
+%where
+此处，\gr{font} 表示：
+\begin{disp}
+\gr{font} $\longrightarrow$ \cs{font} $|$ \gr{fontdef token} $|$ \gr{family member}\nl
+\gr{family member} $\longrightarrow$ \gr{font range}\gr{4-bit number}\nl
+\gr{font range} $\longrightarrow$ \cs{textfont} $|$ \cs{scriptfont} $|$ \cs{scriptscriptfont}
+\end{disp}
 %A \gr{fontdef token} is a control sequence defined by \cs{font},
 %or the predefined control sequence \cs{nullfont}.
 %The concept of \gr{family member} is only
 %relevant in math mode.
-It was already mentioned above that the control sequence
-which set the current font can be retrieved by the
-command \verb>\the\font>. This is a special case of
-\begin{Disp}\cs{the}\gr{font}\end{Disp} where
-\begin{disp}\gr{font} $\longrightarrow$
-\cs{font} $|$ \gr{fontdef token} $|$ \gr{family member}\nl
-\gr{family member} $\longrightarrow$
-\gr{font range}\gr{4-bit number}\nl
-\gr{font range} $\longrightarrow$
-\cs{textfont} $|$ \cs{scriptfont} $|$ \cs{scriptscriptfont}\end{disp}
-A \gr{fontdef token} is a control sequence defined by \cs{font},
-or the predefined control sequence \cs{nullfont}.
-The concept of \gr{family member} is only
-relevant in math mode.
+\gr{fontdef token} 是由 \cs{font} 定义的控制序列，或是预定义的 \cs{nullfont}。至于 \gr{family member} 的概念，则只与数学模式有关。
 
 %Also, the
 %\cstoidx fontname\par
 %external name of fonts can be retrieved:
-%\begin{Disp}\cs{fontname}\gr{font}\end{Disp}
+此外，外部字体文件名可用以下方式取得：
+\cstoidx fontname\par
+\begin{Disp}\cs{fontname}\gr{font}\end{Disp}
 %gives a sequence of character tokens of category~12\index{category!12}
 %(but space characters get category~10\index{category!10}) that spells the font file
 %name, plus an \gr{at clause} if applicable.
-Also, the
-\cstoidx fontname\par
-external name of fonts can be retrieved:
-\begin{Disp}\cs{fontname}\gr{font}\end{Disp}
-gives a sequence of character tokens of category~12\index{category!12}
-(but space characters get category~10\index{category!10}) that spells the font file
-name, plus an \gr{at clause} if applicable.
+该命令以字符串的形式（其中的字符记号分类码均为 12\index{category!12}，而空格记号的分类码为 10\index{category!10}）给出当前字体的文件名；若有相应的 \gr{at clause} 则也一并给出。
 
-%\begin{example} After
-%\begin{verbatim}
-%\font\tenroman=cmr10 \tenroman
-%\end{verbatim}
-%the calls
-%\verb>\the\font> and \verb>\the\tenroman> both give \cs{tenroman}.
-%The call \verb>\fontname\tenroman> gives \n{cmr10}.
-%\end{example}
-\begin{example} After
+\begin{example}
+%After
+在如下声明之后，
 \begin{verbatim}
 \font\tenroman=cmr10 \tenroman
 \end{verbatim}
-the calls
-\verb>\the\font> and \verb>\the\tenroman> both give \cs{tenroman}.
-The call \verb>\fontname\tenroman> gives \n{cmr10}.
+%the calls
+%\verb>\the\font> and \verb>\the\tenroman> both give \cs{tenroman}.
+%The call \verb>\fontname\tenroman> gives \n{cmr10}.
+\verb.\the\font. 和 \verb.\the\tenroman. 会给出 \cs{tenroman}；\verb.\fontname\tenroman. 则给出 \n{cmr10}。
 \end{example}
 
 %%\spoint \cs{nullfont}
@@ -238,53 +218,40 @@ The call \verb>\fontname\tenroman> gives \n{cmr10}.
 %This control sequence qualifies as a \gr{fontdef token}:
 %it acts like any other control sequence that stands for a font;
 %it just does not have an associated \n{tfm} file.
-\TeX\ always knows a font that has no characters: the \csidx{nullfont}.
-If no font has been specified, or if in math mode a family member
-is needed that has not been specified,
-\TeX\ will take its characters from the nullfont.
-This control sequence qualifies as a \gr{fontdef token}:
-it acts like any other control sequence that stands for a font;
-it just does not have an associated \n{tfm} file.
+\TeX 将没有任何字符的字体与定义为 \csidx{nullfont}。如果没有指定任何字体，或是在数学模式中某一所需的字族成员未定义，则 \TeX 会从空字体中取用字符。该控制序列属于 \gr{fontdef token}：它与其它字体选择命令的行为类似；但不与任何外部 \n{tfm} 文件相关联。
 
 %%\point Font information
 %\section{Font information}
 %\point Font information
-\section{Font information}
+\section{字体信息}
 
 %During a run of \TeX\ the main information needed about the
 %\index{\n{tfm} files}%
 %font consists of the dimensions of the characters.
 %\TeX\ finds these in the font metrics files, which usually have
 %extension \n{.tfm}. Such files
-%contain \begin{itemize} \item global information: the \cs{fontdimen}
+%contain
+\TeX 执行时所需的主要字体信息包括尺寸与字符。\index{\n{tfm} files}\TeX 会在字体尺寸文件中寻找这些信息，这些文件的扩展名通常是 \n{.tfm}。此类文件包含
+\begin{itemize}
+% \item global information: the \cs{fontdimen}
 %parameters, and some other information,
+\item 全局信息：主要是 \cs{fontdiem} 参数，还有其他一些信息
 %\item dimensions and the italic corrections of characters, and
+\item 字符的尺寸以及倾斜校正（italic corrections）
 %\altt
 %\item ligature and kerning programs for characters.
-%	\end{itemize}
+\item 字符的连字（ligature）及铅空（kerning）指令 % TODO(Liam0205): 这里的翻译不太好，需要后续修正
+\end{itemize}
 %Also, the design size of a font is specified in the \n{tfm} file;
 %see above. The definition of the \n{tfm} format can be found
 %in~\cite{Knuth:TeXprogram}.
-During a run of \TeX\ the main information needed about the
-\index{\n{tfm} files}%
-font consists of the dimensions of the characters.
-\TeX\ finds these in the font metrics files, which usually have
-extension \n{.tfm}. Such files
-contain \begin{itemize} \item global information: the \cs{fontdimen}
-parameters, and some other information,
-\item dimensions and the italic corrections of characters, and
-\altt
-\item ligature and kerning programs for characters.
-	\end{itemize}
-Also, the design size of a font is specified in the \n{tfm} file;
-see above. The definition of the \n{tfm} format can be found
-in~\cite{Knuth:TeXprogram}.
+字体的设计大小也由 \n{tfm} 文件指定。\n{tfm} 文件格式的定义，参见~\cite{Knuth:TeXprogram}。
 
 %%\spoint[font:dims] Font dimensions
 %\subsection{Font dimensions}
 %\label{font:dims}
 %\spoint[font:dims] Font dimensions
-\subsection{Font dimensions}
+\subsection{字体尺寸}
 \label{font:dims}
 
 %Text fonts need to have at least seven \csidx{fontdimen} parameters
@@ -293,8 +260,11 @@ in~\cite{Knuth:TeXprogram}.
 %math symbol and math extension fonts have more
 %(see page~\pageref{fam23:fontdims}).
 %For text fonts the minimal set of seven comprises the following:
-%\begin{enumerate} \item the slant per point; this dimension is used
+文本字体至少得有 7 个 \cs{fontdimen} 参数来描述\cindextermsub{字体}{尺寸}（对于未指定的参数，\TeX 会以零作为默认值）；数学符号以及数学扩展字体还有更多的参数（详见第~\pageref{fam23:fontdims}~页）。对于文本字体来书哦对 7 个参数描述如下：
+\begin{enumerate}
+% \item the slant per point; this dimension is used
 %    for the proper horizontal positioning of accents;
+\item 每点倾斜（slant per point）；该参数用于确定重音符号正确的水平位置
 %\item the interword space: this is used unless the user
 %    specifies an explicit \cs{spaceskip};
 %    see Chapter~\ref{space};
@@ -311,31 +281,6 @@ in~\cite{Knuth:TeXprogram}.
 %\item the extra space: the space added to the interword space
 %at the end of sentences (that is, when \cs{spacefactor}${}\geq2000$)
 %unless the user specifies an explicit \cs{x\-space\-skip}.
-%\end{enumerate}
-Text fonts need to have at least seven \csidx{fontdimen} parameters
-to describe \indextermsub{font}{dimensions}
-(but \TeX\ will take zero for unspecified parameters);
-math symbol and math extension fonts have more
-(see page~\pageref{fam23:fontdims}).
-For text fonts the minimal set of seven comprises the following:
-\begin{enumerate} \item the slant per point; this dimension is used
-    for the proper horizontal positioning of accents;
-\item the interword space: this is used unless the user
-    specifies an explicit \cs{spaceskip};
-    see Chapter~\ref{space};
-\item interword stretch: the stretch component of the interword
-    space;
-\item interword shrink: the shrink component of
-    the interword space;
-\item the x-height: the value of
-    the \gr{internal unit} \n{ex}, which is usually about the
-    height of the lowercase letter~`x';
-\item the quad width:
-    the value of the \gr{internal unit} \n{em}, which is
-    approximately the width of the capital letter~`M'; and
-\item the extra space: the space added to the interword space
-at the end of sentences (that is, when \cs{spacefactor}${}\geq2000$)
-unless the user specifies an explicit \cs{x\-space\-skip}.
 \end{enumerate}
 
 %Parameters 1 and~5 are purely information about the font
