@@ -163,67 +163,47 @@
 %%\spoint Querying the current font and font names
 %\subsection{Querying the current font and font names}
 %\spoint Querying the current font and font names
-\subsection{Querying the current font and font names}
+\subsection{查询当前字体及字体名}
 
 %It was already mentioned above that the control sequence
 %which set the current font can be retrieved by the
 %command \verb>\the\font>. This is a special case of
-%\begin{Disp}\cs{the}\gr{font}\end{Disp} where
-%\begin{disp}\gr{font} $\longrightarrow$
-%\cs{font} $|$ \gr{fontdef token} $|$ \gr{family member}\nl
-%\gr{family member} $\longrightarrow$
-%\gr{font range}\gr{4-bit number}\nl
-%\gr{font range} $\longrightarrow$
-%\cs{textfont} $|$ \cs{scriptfont} $|$ \cs{scriptscriptfont}\end{disp}
+前文提到过，当前字体的字体选择命令可通过 \verb.\the\font. 得到。这是下列语法的一个特例。
+\begin{Disp}\cs{the}\gr{font}\end{Disp}
+%where
+此处，\gr{font} 表示：
+\begin{disp}
+\gr{font} $\longrightarrow$ \cs{font} $|$ \gr{fontdef token} $|$ \gr{family member}\nl
+\gr{family member} $\longrightarrow$ \gr{font range}\gr{4-bit number}\nl
+\gr{font range} $\longrightarrow$ \cs{textfont} $|$ \cs{scriptfont} $|$ \cs{scriptscriptfont}
+\end{disp}
 %A \gr{fontdef token} is a control sequence defined by \cs{font},
 %or the predefined control sequence \cs{nullfont}.
 %The concept of \gr{family member} is only
 %relevant in math mode.
-It was already mentioned above that the control sequence
-which set the current font can be retrieved by the
-command \verb>\the\font>. This is a special case of
-\begin{Disp}\cs{the}\gr{font}\end{Disp} where
-\begin{disp}\gr{font} $\longrightarrow$
-\cs{font} $|$ \gr{fontdef token} $|$ \gr{family member}\nl
-\gr{family member} $\longrightarrow$
-\gr{font range}\gr{4-bit number}\nl
-\gr{font range} $\longrightarrow$
-\cs{textfont} $|$ \cs{scriptfont} $|$ \cs{scriptscriptfont}\end{disp}
-A \gr{fontdef token} is a control sequence defined by \cs{font},
-or the predefined control sequence \cs{nullfont}.
-The concept of \gr{family member} is only
-relevant in math mode.
+\gr{fontdef token} 是由 \cs{font} 定义的控制序列，或是预定义的 \cs{nullfont}。至于 \gr{family member} 的概念，则只与数学模式有关。
 
 %Also, the
 %\cstoidx fontname\par
 %external name of fonts can be retrieved:
-%\begin{Disp}\cs{fontname}\gr{font}\end{Disp}
+此外，外部字体文件名可用以下方式取得：
+\cstoidx fontname\par
+\begin{Disp}\cs{fontname}\gr{font}\end{Disp}
 %gives a sequence of character tokens of category~12\index{category!12}
 %(but space characters get category~10\index{category!10}) that spells the font file
 %name, plus an \gr{at clause} if applicable.
-Also, the
-\cstoidx fontname\par
-external name of fonts can be retrieved:
-\begin{Disp}\cs{fontname}\gr{font}\end{Disp}
-gives a sequence of character tokens of category~12\index{category!12}
-(but space characters get category~10\index{category!10}) that spells the font file
-name, plus an \gr{at clause} if applicable.
+该命令以字符串的形式（其中的字符记号分类码均为 12\index{category!12}，而空格记号的分类码为 10\index{category!10}）给出当前字体的文件名；若有相应的 \gr{at clause} 则也一并给出。
 
-%\begin{example} After
-%\begin{verbatim}
-%\font\tenroman=cmr10 \tenroman
-%\end{verbatim}
-%the calls
-%\verb>\the\font> and \verb>\the\tenroman> both give \cs{tenroman}.
-%The call \verb>\fontname\tenroman> gives \n{cmr10}.
-%\end{example}
-\begin{example} After
+\begin{example}
+%After
+在如下声明之后，
 \begin{verbatim}
 \font\tenroman=cmr10 \tenroman
 \end{verbatim}
-the calls
-\verb>\the\font> and \verb>\the\tenroman> both give \cs{tenroman}.
-The call \verb>\fontname\tenroman> gives \n{cmr10}.
+%the calls
+%\verb>\the\font> and \verb>\the\tenroman> both give \cs{tenroman}.
+%The call \verb>\fontname\tenroman> gives \n{cmr10}.
+\verb.\the\font. 和 \verb.\the\tenroman. 会给出 \cs{tenroman}；\verb.\fontname\tenroman. 则给出 \n{cmr10}。
 \end{example}
 
 %%\spoint \cs{nullfont}
