@@ -7,12 +7,11 @@
 \begin{document}
 
 %\chapter{Page Shape}\label{page:shape}
-\chapter{Page Shape}\label{page:shape}
+\chapter{页面形状}\label{page:shape}
 
 %This chapter treats some of the parameters that 
 %determine the size of the page and how it appears on paper.
-This chapter treats some of the parameters that 
-determine the size of the page and how it appears on paper.
+本章讨论一些决定页面大小及其在纸面上显示的参数。
 
 %\label{cschap:topskip}\label{cschap:hoffset}\label{cschap:voffset}\label{cschap:vsize2}\label{cschap:maxdepth}\label{cschap:splitmaxdepth2}
 %\begin{inventory}
@@ -23,9 +22,8 @@ determine the size of the page and how it appears on paper.
 \label{cschap:topskip}\label{cschap:hoffset}\label{cschap:voffset}\label{cschap:vsize2}\label{cschap:maxdepth}\label{cschap:splitmaxdepth2}
 \begin{inventory}
 \item [\cs{topskip}] 
-      Minimum distance between the top of the page box
-      and the baseline of the first box on the page. 
-      Plain \TeX\ default:~\n{10pt}
+      页面盒子的顶部到本页第一个盒子基线的最小距离。
+      Plain \TeX\ 默认值:~\n{10pt}
 
 %\item [\cs{hoffset \cs{voffset}}]
 %\mdqon
@@ -34,30 +32,29 @@ determine the size of the page and how it appears on paper.
 %      with respect to the reference point.
 \item [\cs{hoffset \cs{voffset}}]
 \mdqon
-      Distance by which the page is shifted right/""down 
+      页面相对参考点向左/""向下移动的距离。
 \mdqoff
-      with respect to the reference point.
 
 %\item [\cs{vsize}] 
 %      Height of the page box.
 %      Plain \TeX\ default:~\n{8.9in}
 \item [\cs{vsize}] 
-      Height of the page box.
-      Plain \TeX\ default:~\n{8.9in}
+      页面盒子的高度。
+      Plain \TeX\ 默认值:~\n{8.9in}
 
 %\item [\cs{maxdepth}] 
 %      Maximum depth of the page box.
 %      Plain \TeX\ default:~\n{4pt}
 \item [\cs{maxdepth}] 
-      Maximum depth of the page box.
-      Plain \TeX\ default:~\n{4pt}
+      页面盒子的最大深度。
+      Plain \TeX\ 默认值:~\n{4pt}
 
 %\item [\cs{splitmaxdepth}] 
 %      Maximum depth of a box split off by a \cs{vsplit} operation. 
 %      Plain \TeX\ default: \cs{maxdimen}
 \item [\cs{splitmaxdepth}] 
-      Maximum depth of a box split off by a \cs{vsplit} operation. 
-      Plain \TeX\ default: \cs{maxdimen}
+      一个盒子能被一个 \cs{vsplit} 操作分割的最大深度。
+      Plain \TeX\ 默认值: \cs{maxdimen}
 
 %\end{inventory}
 \end{inventory}
@@ -65,7 +62,7 @@ determine the size of the page and how it appears on paper.
 %%\point The reference point for global positioning
 %\section{The reference point for global positioning}
 %\point The reference point for global positioning
-\section{The reference point for global positioning}
+\section{全局定位基准点}
 
 %The \indexterm{page positioning} on the paper is governed by
 %a \TeX\ convention, to which output device drivers
@@ -76,22 +73,13 @@ determine the size of the page and how it appears on paper.
 %takes, say, the {\em lower\/} left corner as the
 %reference point, and is factory set to US paper sizes,
 %but is used with European standard A4 paper.
-The \indexterm{page positioning} on the paper is governed by
-a \TeX\ convention, to which output device drivers
-must adhere, that the top left point of the page is
-one inch from the page edges. Unfortunately this
-may lead to lots of trouble, for instance if a printer
-(or the page description language it uses)
-takes, say, the {\em lower\/} left corner as the
-reference point, and is factory set to US paper sizes,
-but is used with European standard A4 paper.
+纸张上的页面定位(\indexterm{page positioning})由 \TeX\ 的惯例决定：即页面的左上角距离页边1英寸，这也是输出设备必须如实反映的。
+不幸的是，这可能会导致许多麻烦，考虑以下情形：一台打印机，或打印机使用的页面描述语言把\emph{左下角}当作基准点，并且打印机出厂默认设为美国纸张大小，但打印机用了欧洲的标准A4纸。
 
 %The page is shifted on the paper if one assigns non-zero
 %values to \csidx{hoffset} or \csidx{voffset}: positive values
 %shift to the right and down respectively.
-The page is shifted on the paper if one assigns non-zero
-values to \csidx{hoffset} or \csidx{voffset}: positive values
-shift to the right and down respectively.
+如果指定 \csidx{hoffset} 或 \csidx{voffset} 为一个非零的值，页面会在纸面上移动：正值代表向右下移动，水平和竖直方向的移动是独立的。
 
 %%\point \cs{topskip}
 %\section{\protect\cs{topskip}}
@@ -104,23 +92,15 @@ shift to the right and down respectively.
 %even if font sizes
 %are switched between pages or if the first line has
 %no ascenders.
-The \csidx{topskip} ensures to a certain point
-that the first baseline of a page
-will be at the same location from page to page,
-even if font sizes
-are switched between pages or if the first line has
-no ascenders.
+\csidx{topskip} 确保了一点：每一页的第一条基线都处于同一位置，即使页面之间的字号不相同或者第一行不含有升部\footnote{译注(woclass)：升部指的是某字母比字母x还要高的部分}的字母。
 
 %Before the first box on each page some glue is inserted.
 %This glue has the same stretch and shrink as \cs{topskip}, but
 %the natural size is the natural size of \cs{topskip}
 %minus the height of the first box, or zero if this
 %would be negative.
-Before the first box on each page some glue is inserted.
-This glue has the same stretch and shrink as \cs{topskip}, but
-the natural size is the natural size of \cs{topskip}
-minus the height of the first box, or zero if this
-would be negative.
+每页第一个盒子之前都嵌入了铅空。
+铅空可以和 \cs{topskip} 一起伸缩，通常它的大小是 \cs{topskip} 减去第一个盒子的高度，当结果为负数时，其值为零。
 
 %Plain \TeX\ sets \cs{topskip} to {\tt 10pt}.
 %Thus the top lines of pages will have their baselines
@@ -130,14 +110,8 @@ would be negative.
 %if the font size is less than (about) 13~points; 
 %for larger fonts
 %the baseline of the top line will drop.
-Plain \TeX\ sets \cs{topskip} to {\tt 10pt}.
-Thus the top lines of pages will have their baselines
-at the same place if
-the top portion of the characters is ten point or less.
-For the Computer Modern fonts this condition is satisfied
-if the font size is less than (about) 13~points; 
-for larger fonts
-the baseline of the top line will drop.
+Plain \TeX\ 将 \cs{topskip} 设为 {\tt 10pt}。因此，如果最上面一行的字母的顶部小于等于10点，每一页顶行的基线就处于相同的位置。
+对于现代计算机字体来说，字号小于大约13点就能满足这个条件；对于大号字体来说，顶行的基线会下沉。
 
 %The height of the page box for a page containing only
 %text (and assuming a zero \cs{parskip})
@@ -155,12 +129,8 @@ the baseline of the top line will drop.
 %\end{verbatim}
 %Calculating the \cs{vsize} this way will prevent
 %underfull boxes for text-only pages.
-The height of the page box for a page containing only
-text (and assuming a zero \cs{parskip})
-will be the \cs{topskip} plus a number of times
-the \cs{baselineskip}. Thus one can define a macro
-to compute the \cs{vsize} from the number of lines
-on a page:
+假设 \cs{parskip} 为零，对于一个只含有文字的页面来说，页面盒子的高度等于 \cs{topskip} 加上 \cs{baselineskip} 的倍数。
+因此我们可以定义一个宏，通过页面的行数来计算 \cs{vsize}：
 \howto Specify page height in lines\par
 \begin{verbatim}
 \def\HeightInLines#1{\count@=#1\relax
@@ -169,8 +139,7 @@ on a page:
     \multiply\vsize by \count@
     \advance\vsize by \topskip}
 \end{verbatim}
-Calculating the \cs{vsize} this way will prevent
-underfull boxes for text-only pages.
+对于纯文本页面，像这样计算 \cs{vsize} 可以避免未充满的盒子。
 
 %In cases where the page does not start with a line of text
 %(for instance a rule), the topskip may give unwanted effects.
@@ -179,25 +148,21 @@ underfull boxes for text-only pages.
 %\hbox{}\kern-\topskip
 %\end{verbatim}
 %followed by what you wanted on top. 
-In cases where the page does not start with a line of text
-(for instance a rule), the topskip may give unwanted effects.
-To prevent these, start the page with
+当页面的首行不是文字时(例如有奇怪的规定要求这样做)，topskip可能造成非预期的影响。为了避免这个问题，我们可以以
 \begin{verbatim}
 \hbox{}\kern-\topskip
 \end{verbatim}
-followed by what you wanted on top. 
+作为一页的开头，后面再写你想在页面顶部出现的东西。
 
 %Analogous to the \cs{topskip}, there is a \cs{splittopskip}
 %for pages generated by a \cs{vsplit} operation; see
 %the next chapter.
-Analogous to the \cs{topskip}, there is a \cs{splittopskip}
-for pages generated by a \cs{vsplit} operation; see
-the next chapter.
+类似 \cs{topskip}，还有一个 \cs{splittopskip}，它适用于由 \cs{vsplit} 操作产生的页面，详见下一章。
 
 %%\point Page height and depth
 %\section{Page height and depth}
 %\point Page height and depth
-\section{Page height and depth}
+\section{页面高度与深度}
 
 %\index{page!height|(}
 %\index{page!depth|(}
@@ -207,9 +172,7 @@ the next chapter.
 %\TeX\ tries to build pages as a \cs{vbox} of height \csidx{vsize};
 %\alt
 %see also \cs{pagegoal} in the next chapter.
-\TeX\ tries to build pages as a \cs{vbox} of height \csidx{vsize};
-\alt
-see also \cs{pagegoal} in the next chapter.
+\TeX\ 会尝试将页面构建为一个高 \csidx{vsize}的 \cs{vbox} ；参见下下一章的 \cs{pagegoal}。
 
 %If the last item on a page has an excessive depth,
 %that page would be noticeably longer than other pages.
@@ -218,13 +181,9 @@ see also \cs{pagegoal} in the next chapter.
 %page would make the depth exceed this quantity, then the
 %reference point of the page is moved down to make the depth
 %exactly \cs{maxdepth}.
-If the last item on a page has an excessive depth,
-that page would be noticeably longer than other pages.
-To prevent this phenomenon \TeX\ uses \csidx{maxdepth} as
-the maximum depth of the page box. If adding an item to the
-page would make the depth exceed this quantity, then the
-reference point of the page is moved down to make the depth
-exactly \cs{maxdepth}.
+如果某页的最后一项深度过长，这一页会明显比其他页更长。
+为了避免这种现象 \TeX\ 使用 \csidx{maxdepth} 限制页面盒子的最大深度。
+如果继续添加一项会导致页面深度超限，这时参考点会下移，直至页面深度恰好等于 \cs{maxdepth}。
 
 %The `raggedbottom' effect is obtained in plain \TeX\
 %\cstoidx raggedbottom\par
@@ -240,34 +199,24 @@ exactly \cs{maxdepth}.
 %The \cs{vfil} causes the topskip to be set at natural
 %width, so the effect is one of a fixed top line  and a
 %variable bottom line of the page.
-The `raggedbottom' effect is obtained in plain \TeX\
-\cstoidx raggedbottom\par
-by giving the \cs{topskip} some finite stretchability:
-\hbox{\n{10pt plus 60pt}}.
-Thus the natural height of box~255 can vary when it reaches
-the output routine.
-Pages are then shipped out (more or less) as
+通过赋给 \cs{topskip} 无限的弹性：\hbox{\n{10pt plus 60pt}}，我们可以在plain \TeX\ 中观察到“辣鸡页底”的效应。
+因此当 box~255 到达输出程序时，它的自然高度通常有变化。
+随后，页面以差不多如下形式送出：
 \begin{verbatim}
 \dimen0=\dp255 \unvbox255
 \ifraggedbottom \kern-\dimen0 \vfil \fi 
 \end{verbatim}
-The \cs{vfil} causes the topskip to be set at natural
-width, so the effect is one of a fixed top line  and a
-variable bottom line of the page.
+\cs{vfil} 使 \cs{topskip} 设置为自然宽度，这样做会产生以下两种效果之一：页面有固定顶部线或可变底部线。
 
 %Before \cs{box255} is unboxed in the plain \TeX\ output routine,
 %\cs{boxmaxdepth} is set to \cs{maxdepth}
 %so that this box will made under the same assumptions
 %that the page builder used when putting together \cs{box255}.
-Before \cs{box255} is unboxed in the plain \TeX\ output routine,
-\cs{boxmaxdepth} is set to \cs{maxdepth}
-so that this box will made under the same assumptions
-that the page builder used when putting together \cs{box255}.
+在 \cs{box255} 于 plain \TeX\ 的输出程序中被解包之前，\cs{boxmaxdepth} 被设成 \cs{maxdepth}，这样创建这个盒子时，页面生成器使用的假设会和把 \cs{box255} 放在一起时相同。
 
 %The depth of box split off by a \cs{vsplit} operation
 %is controlled by the \cs{splitmaxdepth} parameter.
-The depth of box split off by a \cs{vsplit} operation
-is controlled by the \cs{splitmaxdepth} parameter.
+\cs{vsplit} 操作分割盒子的深度由 \cs{splitmaxdepth} 参数控制。
 
 %\index{page!height|)}
 %\index{page!depth|)}

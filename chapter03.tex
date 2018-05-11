@@ -536,7 +536,7 @@
 %they are not `macro expansion' activities
 %like \cs{number} or \cs{string}.
 %The sequence (attempting to produce~\cs{A})
-与 \cs{number} 和 \cs{string} 不同，大小写转换不是宏展开，而是在执行处理器中执行的。下列尝试得到 \cs{A} 的代码会因 \cs{uppercase} 不可展开而报错——\TeX 将在 \cs{uppercase} 之前插入 \cs{endcsname}。\liamfnote{这里的表述比较奇怪。事实上，\TeX 要求 \cs{csname} 和 \cs{endcsname} 之间的内容展开到底后不能有不可展开的原语；而 \cs{uppercase} 正式一个不可展开的原语，故而报错。这里提出 \TeX 在 \cs{uppercase} 之前插入 \cs{endcsname}，原因可能是 \TeX 在发现问题「尝试修复的过程中」，会做这样的操作。}
+与 \cs{number} 和 \cs{string} 不同，大小写转换不是宏展开，而是在执行处理器中执行的。下列尝试得到 \cs{A} 的代码会因 \cs{uppercase} 不可展开而报错——\TeX 将在 \cs{uppercase} 之前插入 \cs{endcsname}。\liamfnote{这里的表述比较奇怪。事实上，\TeX 要求 \cs{csname} 和 \cs{endcsname} 之间的内容展开到底后不能有不可展开的原语；而 \cs{uppercase} 正是一个不可展开的原语，故而报错。这里原作者提出：「\TeX 在 \cs{uppercase} 之前插入 \cs{endcsname}」，原因可能是 \TeX 在发现问题「尝试修复的过程中」，会做这样的操作。}
 \begin{verbatim}
 \expandafter\csname\uppercase{a}\endcsname
 \end{verbatim}

@@ -10,6 +10,7 @@ output
 *.log
 *.out
 *.synctex.gz
+*.synctex(buzy)
 *.xdv
 *.bbl
 *.blg
