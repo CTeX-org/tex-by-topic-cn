@@ -223,36 +223,29 @@
 %%\point Font information
 %\section{Font information}
 %\point Font information
-\section{Font information}
+\section{字体信息}
 
 %During a run of \TeX\ the main information needed about the
 %\index{\n{tfm} files}%
 %font consists of the dimensions of the characters.
 %\TeX\ finds these in the font metrics files, which usually have
 %extension \n{.tfm}. Such files
-%contain \begin{itemize} \item global information: the \cs{fontdimen}
+%contain
+\TeX 执行时所需的主要字体信息包括尺寸与字符。\index{\n{tfm} files}\TeX 会在字体尺寸文件中寻找这些信息，这些文件的扩展名通常是 \n{.tfm}。此类文件包含
+\begin{itemize}
+% \item global information: the \cs{fontdimen}
 %parameters, and some other information,
+\item 全局信息：主要是 \cs{fontdiem} 参数，还有其他一些信息
 %\item dimensions and the italic corrections of characters, and
+\item 字符的尺寸以及倾斜校正（italic corrections）
 %\altt
 %\item ligature and kerning programs for characters.
-%	\end{itemize}
+\item 字符的连字（ligature）及突出（kerning）指令 % TODO(Liam0205): 这里的翻译不太好，需要后续修正
+\end{itemize}
 %Also, the design size of a font is specified in the \n{tfm} file;
 %see above. The definition of the \n{tfm} format can be found
 %in~\cite{Knuth:TeXprogram}.
-During a run of \TeX\ the main information needed about the
-\index{\n{tfm} files}%
-font consists of the dimensions of the characters.
-\TeX\ finds these in the font metrics files, which usually have
-extension \n{.tfm}. Such files
-contain \begin{itemize} \item global information: the \cs{fontdimen}
-parameters, and some other information,
-\item dimensions and the italic corrections of characters, and
-\altt
-\item ligature and kerning programs for characters.
-	\end{itemize}
-Also, the design size of a font is specified in the \n{tfm} file;
-see above. The definition of the \n{tfm} format can be found
-in~\cite{Knuth:TeXprogram}.
+字体的设计大小也由 \n{tfm} 文件指定。\n{tfm} 文件格式的定义，参见~\cite{Knuth:TeXprogram}。
 
 %%\spoint[font:dims] Font dimensions
 %\subsection{Font dimensions}
