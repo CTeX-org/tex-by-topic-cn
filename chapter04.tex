@@ -1,6 +1,6 @@
 % -*- coding: utf-8 -*-
 % Translated by Liam0205@bbs.ctex.org
-% Date of translated: 2018-05-09
+% Date of translated: 2018-05-11
 \documentclass{book}
 
 \input{preamble}
@@ -26,20 +26,20 @@
 \item [\cs{fontname}] 字体的外部名字。
 %\item [\cs{nullfont}]
 %      Name of an empty font that \TeX\ uses in emergencies.
-\item [\cs{nullfont}] 在紧急情况下，\TeX 会使用空字体。这是空字体的名字。
+\item [\cs{nullfont}] 在特殊情况下，\TeX 会使用空字体。这是空字体的名字。% （Liam0205）意译：紧急情况 -> 特殊情况
 %\item [\cs{hyphenchar}]
 %      Number of the hyphen character of a font.
-\item [\cs{hyphenchar}] 字体中连字符的编号。
+\item [\cs{hyphenchar}] 字体中连字符的序号。
 %\item [\cs{defaulthyphenchar}]
 %      Value of \cs{hyphenchar} when a font is loaded.
 %      Plain \TeX\ default:~\verb>`\->.
-\item [\cs{defaulthyphenchar}] 字体装载时 \cs{hyphenchar} 的默认值。在 plain \TeX 中，默认是 \verb.`\-.。
+\item [\cs{defaulthyphenchar}] 字体装载时 \cs{hyphenchar} 的默认值。在 plain \TeX 中，默认是 \verb.`\-.（即 \n{-} 的字符编码）。
 %\item [\cs{fontdimen}]
 %      Access various parameters of fonts.
 \item [\cs{fontdimen}] 该命令可访问多种字体参数。
 %\item [\cs{char47}]
 %      Italic correction.
-\item [\cs{char47}] 倾斜校正。
+\item [\cs{/}] 倾斜校正原语。
 %\item [\cs{noboundary}]
 %      Omit implicit boundary character.
 \item [\cs{noboundary}] 忽略隐式边界字符。
@@ -55,7 +55,7 @@
 %During processing, \TeX\ decides from
 %what font a character should be taken. This decision is
 %taken separately for text mode and math mode.
-在 \TeX 语境下，字体（font）这一术语指得是保存在外部文件中的一系列字符的集合。\TeX 在运行时，会决定从哪一个字体中选取字符。而具体决策方式在文本模式和数学模式中是不同的。
+在 \TeX 语境下，字体（font）这一术语指的是保存在外部文件中的一系列字符的集合。\TeX 在运行时，会决定从哪一个字体中选取字符。而具体决策方式在文本模式和数学模式中又是不同的。
 
 %When \TeX\ is processing ordinary text, characters are taken
 %from the `current font'.
@@ -74,7 +74,7 @@
 \end{verbatim}
 %The status of the current font
 %can be queried: the sequence
-\TeX 使用的当前字体是可查的。下列命令会产生当前字体对应的控制序列。
+当前字体的状态是可查的：下列命令会产生当前字体对应的控制序列。
 \begin{verbatim}
 \the\font
 \end{verbatim}
@@ -85,7 +85,7 @@
 %three fonts: one for text style, one for script style,
 %and one for scriptscript style. This is treated
 %in Chapter~\ref{mathchar}.
-数学模式下，\TeX 会忽略当前字体；转而考察当前「字族」，其中有三个字体：其一是正文字体（text style），其二是角标字体（script style），其三是双重角标字体（scriptscript style）。详见第~\ref{mathchar}~章。
+数学模式下，\TeX 会忽略当前字体；转而考察当前「字族」，其中有三个字体：正文字体（text style），角标字体（script style），双重角标字体（scriptscript style）。详见第~\ref{mathchar}~章。
 
 %See \cite{S} for a consistent terminology of fonts and typefaces.
 关于字体（font）与字形（typeface）的一贯术语，请参阅~\cite{S}。
@@ -95,7 +95,7 @@
 %one physical font file.
 %\alt
 %See further page~\pageref{virtual:fonts}.
-从不同物理字体文件中分别选取部分字符，组成的「虚拟字体」（见~\cite{K:virt}），在 \TeX 看来就像是一个字体一样。更多相关内容详见第~\pageref{virtual:fonts}~页。
+从不同物理字体文件中分别选取部分字符，可以组成的「虚拟字体」（见~\cite{K:virt}）。在 \TeX 看来，这种虚拟字体就像是真实字体一样。更多相关内容详见第~\pageref{virtual:fonts}~页。
 
 %%\point Font declaration
 %\section{Font declaration}
@@ -111,12 +111,12 @@
 \begin{disp}
 \cs{font}\gr{control sequence}\gr{equals}\gr{file name}\gr{at clause}
 \end{disp}
-这里，\gr{at clause} 的语法是：
+这里，\gr{at clause} 指的是：
 \begin{disp}
 \gr{at clause} $\longrightarrow$ \n{at} \gr{dimen} $|$ \n{scaled} \gr{number} $|$ \gr{optional spaces}
 \end{disp}
 %Font declarations are local to a group.
-字体声明仅在当前分组内生效。
+注意，字体声明仅在当前分组内生效。
 
 %By the \gr{at clause} the user specifies that some
 %magnified version of the font is wanted. The \gr{at clause} comes
@@ -130,7 +130,7 @@
 %the external font file (the \n{.tfm} file)
 %that \TeX\ reads for the font; it just multiplies
 %the font dimensions by a constant.
-用户通过 \gr{at clause} 指定字体的放大版本。\gr{at clause} 有两种形式：如果指定缩放比例 \n{scaled}~{\itshape f\/}，则 \TeX 会将该字体中的所有字符尺寸倍乘 $f/1000$；如果指定目标大小 \n{at}~{\itshape f\/}\n{pt}，而字体本身的设计大小是 {\itshape d\/}\n{pt}，则 \TeX 会将该字体中的所有字符尺寸倍乘 $f/d$。使用 \gr{at clause} 不影响 \TeX 从外部字体文件（\n{.tfm} 文件）中读入字体的过程；它只是在尺寸上倍乘了一个常数。
+用户可以通过 \gr{at clause} 指定字体的放大版本。\gr{at clause} 有两种形式：如果指定缩放比例 \n{scaled}~{\itshape f\/}，则 \TeX 会将该字体中的所有字符尺寸倍乘 $f/1000$；如果指定目标大小 \n{at}~{\itshape f\/}\n{pt}，而字体本身的设计大小是 {\itshape d\/}\n{pt}，则 \TeX 会将该字体中的所有字符尺寸倍乘 $f/d$。注意，\gr{at clause} 不会影响 \TeX 从外部字体文件（\n{.tfm} 文件）中读入字体的过程；它只是在尺寸上乘了一个固定的倍数。
 
 %After such a font declaration, using the defined control sequence
 %will set the current font to the font of the
@@ -260,7 +260,7 @@
 %math symbol and math extension fonts have more
 %(see page~\pageref{fam23:fontdims}).
 %For text fonts the minimal set of seven comprises the following:
-文本字体至少得有 7 个 \cs{fontdimen} 参数来描述\cindextermsub{字体}{尺寸}（对于未指定的参数，\TeX 会以零作为默认值）；数学符号以及数学扩展字体还有更多的参数（详见第~\pageref{fam23:fontdims}~页）。对于文本字体来书哦对 7 个参数描述如下：
+文本字体至少得有 7 个 \cs{fontdimen} 参数来描述\cindextermsub{字体}{尺寸}（对于未指定的参数，\TeX 会以零作为默认值）；数学符号以及数学扩展字体还有更多的参数（详见第~\pageref{fam23:fontdims}~页）。文本字体的 7 个参数描述如下：
 \begin{enumerate}
 % \item the slant per point; this dimension is used
 %    for the proper horizontal positioning of accents;
@@ -282,7 +282,7 @@
 %\item the quad width:
 %    the value of the \gr{internal unit} \n{em}, which is
 %    approximately the width of the capital letter~`M'; and
-\item 方块铅空\liamfnote{英文单词「quad」是传统铅印术中的术语，它来自意大利语单词「quadratone」，意思是「大方块」。}（quad width）：该参数是 \TeX 内部单位 \n{em} 的值，它大约是大写字母「M」的宽度。
+\item 方块铅空\liamfnote{英文单词「quad」是传统铅印术中的术语，它来自意大利语单词「quadratone」，意思是「大方块」。}宽度（quad width）：该参数是 \TeX 内部单位 \n{em} 的值，它大约是大写字母「M」的宽度。
 %\item the extra space: the space added to the interword space
 %at the end of sentences (that is, when \cs{spacefactor}${}\geq2000$)
 %unless the user specifies an explicit \cs{x\-space\-skip}.
@@ -294,20 +294,20 @@
 %The values of other parameters can be changed in order to
 %adjust spacing; see Chapter~\ref{space} for examples
 %of changing parameters 2, 3, 4, and~7.
-第 1 个和第 5 个参数纯粹是字体的信息，因此改变它们没什么意义。其余参数则可以用来校正相关空距；第~\ref{space}~章有关于第 2, 3, 4, 7 个参数的相关示例。
+第 1 个和第 5 个参数纯粹是字体的信息，因此改变它们没什么意义。其余参数则可以用来调整相关空距；第~\ref{space}~章有关于第 2, 3, 4, 7 个参数的相关示例。
 
 %Font dimensions can be altered in a \gr{font
 %  assignment}\index{assignment!font}, which is a \gr{global
 %  assignment}\index{assignment!global} (see
 %page~\pageref{global:assign}):
-字体尺寸参数可被字体赋值语句（\gr{font assignment}\index{assignment!font}）修改，这种赋值语句属于全局赋值语句（\gr{global assignment}\index{assignment!global}，参见第~\pageref{global:assign}~页）：
+字体尺寸参数可用字体赋值语句（\gr{font assignment}\index{assignment!font}）来修改，这种赋值语句属于全局赋值语句（\gr{global assignment}\index{assignment!global}，参见第~\pageref{global:assign}~页）：
 \begin{Disp}\cs{fontdimen}\gr{number}\gr{font}\gr{equals}\gr{dimen}\end{Disp}
 \gr{font} 的定义可见上文。
 
 %%\spoint Kerning
 %\subsection{Kerning}
 %\spoint Kerning
-\subsection{Kerning}
+\subsection{字符挤压}
 
 %Some combinations of characters should be moved closer
 %together than would be the case if their bounding boxes
@@ -346,15 +346,15 @@
 %bounding boxes. The italic correction is then needed if
 %such an overhanging character is followed by a
 %character from a non-slanting typeface.
-\TeX 原语 \cs{/} 会向前一个字符或连字后面插入\indexterm{倾斜校正}（\emph{italic correction}）\cstoidx /\par。考虑到\cindextermbus{边界}{盒子}（\emph{bounding box}）的定义，这种修正是很有必要的。边界盒子总是有竖直的边，并且 \TeX 将两条竖直边之间的距离当做是字符的宽度。然而，为了在斜体或意大利体中得到恰当的空距，字符会显著突出其边界盒子。当这种向外突出的字符后边紧跟着一个非倾斜的字符时，就需要插入倾斜校正。
+\TeX 原语 \cs{/} 会向前一个字符或连字后面插入\indexterm{倾斜校正}（\emph{italic correction}）\cstoidx /\par。考虑到\cindextermbus{边界}{盒子}（\emph{bounding box}）的定义，这种修正是很有必要的：边界盒子总是有竖直的边，并且 \TeX 将两条竖直边之间的距离当做是字符的宽度。然而，为了在斜体或意大利体中得到恰当的空距，字符会显著突出其边界盒子。当这种向外突出的字符后边紧跟着一个非倾斜的字符时，就需要插入倾斜校正。
 
 %Compare for instance\message{Visible italic correction!}
-对比以下两例
+对比以下两例：
 \begin{Disp}
 无倾斜校正：{\italic\TeX} has\quad 有倾斜校正：{\italic\TeX\/} has
 \end{Disp}
 %where the second version was typed as
-有倾斜校正的版本的代码如下。
+这里，有倾斜校正的版本的代码如下。
 \begin{verbatim}
 {\italic\TeX\/} has
 \end{verbatim}
@@ -367,14 +367,14 @@
 %Italic correction is not the same as \cs{fontdimen1}, slant
 %per point. That font dimension is used only for positioning
 %accents on top of characters.
-对各个字符倾斜校正的具体值由字体尺寸文件中的字体信息决定；对于 Computer Modern 字体来说，该值大约是字符向外突出边界盒子距离的一半（详见~\cite{K:partE}）。倾斜校正与每点倾斜（\cs{fontdimen1}）是不一样的；后者仅用于放置重音符号。
+各个字符倾斜校正的具体值由字体尺寸文件中的字体信息决定；对于 Computer Modern 字体来说，该值大约是字符向外突出边界盒子距离的一半（详见~\cite{K:partE}）。倾斜校正与每点倾斜（\cs{fontdimen1}）是不一样的；后者仅用于放置重音符号。
 
 %An italic correction can only be inserted if the previous item
 %processed
 %by \TeX\ was a character or ligature. Thus the
 %following solution for roman text inside an italic passage
 %does not work:
-倾斜校正仅在 \TeX 刚处理完一个字符或者连字时才会插入其后。因此，由于在下例中，倾斜校正原语之前，\TeX 刚处理完行间胶水，下面对罗马字族文本做的倾斜校正是不会生效的。
+倾斜校正仅在 \TeX 刚处理完一个字符或者连字时才会插入其后。因此，由于在下例中，在遇到倾斜校正原语之前 \TeX 刚处理完行间胶水（而不是字符或者连字），下面对罗马字族文本做的倾斜校正是不会生效的。
 \begin{verbatim}
 {\italic Some text {\/\roman not} emphasized}
 \end{verbatim}
@@ -384,58 +384,42 @@
 %%\spoint Ligatures
 %\subsection{Ligatures}
 %\spoint Ligatures
-\subsection{Ligatures}
+\subsection{连字}
 
 %Replacement of character sequences by \indexterm{ligatures} is controlled
 %by information in the \n{tfm} file of a font.
 %Ligatures are formed from \gr{character} commands:
 %sequences such as \n{fi} are replaced by `fi' in some fonts.
-Replacement of character sequences by \indexterm{ligatures} is controlled
-by information in the \n{tfm} file of a font.
-Ligatures are formed from \gr{character} commands:
-sequences such as \n{fi} are replaced by `fi' in some fonts.
+将字符序列替换为\indexterm{连字}（\emph{ligatures}）的过程是由字体 \n{tfm} 文件中的信息控制的。连字由字符（\gr{character}）命令组成：在某些字体里，诸如 \n{fi} 的字符序列会替换为「fi」。
 
 %Other ligatures traditionally in use are
 %between \n{ff}, \n{ffi}, \n{fl}, and \n{ffl};
 %in some older works \n{ft} and \n{st} can be found,
 %and similarly to the \n{fl} ligature \n{fk} and \n{fb}
 %can also occur.
-Other ligatures traditionally in use are
-between \n{ff}, \n{ffi}, \n{fl}, and \n{ffl};
-in some older works \n{ft} and \n{st} can be found,
-and similarly to the \n{fl} ligature \n{fk} and \n{fb}
-can also occur.
+传统上，还有其它的连字，比如 \n{ff}, \n{ffi}, \n{fl} 以及 \n{ffl}；在更古老的字体里，可能还有 \n{ft} 以及 \n{st}，以及类似 \n{fl} 的连字：\n{fk} 和 \n{fb}。
 
 %Ligatures in \TeX\ can be formed between explicit character
 %tokens, \cs{char} commands, and \gr{chardef token}s.
 %For example,
 %the sequence \verb-\char`f\char`i- is replaced by the
 %`fi' ligature, if such a ligature is part of the font.
-Ligatures in \TeX\ can be formed between explicit character
-tokens, \cs{char} commands, and \gr{chardef token}s.
-For example,
-the sequence \verb-\char`f\char`i- is replaced by the
-`fi' ligature, if such a ligature is part of the font.
+在 \TeX 中，连字可由显式字符记号、\cs{char} 命令以及 \gr{chardef token} 组成。例如，如果字体里有这样的连字定义，\verb-\char`f\char`i- 会被替换成连字「\char`f\char`i」。
 
 %Unwanted ligatures can be suppressed in a number of ways:
 %the unwanted ligature `\hbox{halflife}' can
 %for instance be prevented by
-%\begin{disp} \verb>half{}life>, \verb>half{l}ife>, \verb>half\/life>,
-%      or \verb>half\hbox{}life>\end{disp}
+我们有多种方式来限制不希望出现的连字。例如 \hbox{halflife} 中不希望出现的连字可以这样避免：
+\begin{disp}
+\verb>half{}life>, \verb>half{l}ife>, \verb>half\/life>, 以及 \verb>half\hbox{}life>\end{disp}
 %but the solution using italic correction is not equivalent
 %to the others.
-Unwanted ligatures can be suppressed in a number of ways:
-the unwanted ligature `\hbox{halflife}' can
-for instance be prevented by
-\begin{disp} \verb>half{}life>, \verb>half{l}ife>, \verb>half\/life>,
-      or \verb>half\hbox{}life>\end{disp}
-but the solution using italic correction is not equivalent
-to the others.
+注意，使用倾斜校正原语避免不希望出现的连字的方案与其它方案的机理不完全一样。
 
 %%\spoint Boundary ligatures
 %\subsection{Boundary ligatures}
 %\spoint Boundary ligatures
-\subsection{Boundary ligatures}
+\subsection{边界连字（Boundary ligatures）}
 
 %Each word is surrounded by a left and a right
 %boundary character (\TeX3 only).
@@ -446,24 +430,14 @@ to the others.
 %boundary character. A~\csidx{noboundary} command immediately
 %before or after a word suppresses the boundary character
 %at that place.
-Each word is surrounded by a left and a right
-boundary character (\TeX3 only).
-This makes phenomena possible
-such as the two different sigmas in Greek:
-one at the end of a word, and one for every other position.
-This can be realized through a ligature with the
-boundary character. A~\csidx{noboundary} command immediately
-before or after a word suppresses the boundary character
-at that place.
+在 \TeX3 中还有单词边界的概念：每个单词都由左右两个边界字符界定。这样的设定使 \TeX 能够实现一些语言中特殊的现象\liamfnote{这里指的是通过边界连字来实现一些语言中特殊的现象。}，例如在希腊语中位于词尾的西格玛（$\sigma$）和位于其他位置的西格玛是不一样的。在单词的前后添加 \csidx{noboundary} 命令，可以抑制相应的边界连字机制。
 
 %In general, the ligature mechanism has become more complicated
 %with the transition to \TeX\ version~3; see~\cite{K:TeX23}.
-In general, the ligature mechanism has become more complicated
-with the transition to \TeX\ version~3; see~\cite{K:TeX23}.
+大致上，\TeX 3 的连字机制比 \TeX 2 要复杂得多；参见~\cite{K:TeX23}。
 
 %\endofchapter
 %%%%% end of input file [fontfam]
 \endofchapter
 %%%% end of input file [fontfam]
-
 \end{document}
