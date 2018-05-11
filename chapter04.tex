@@ -140,7 +140,7 @@
 %%\spoint Fonts and \n{tfm} files
 %\subsection{Fonts and \n{tfm} files}
 %\spoint Fonts and \n{tfm} files
-\subsection{Fonts and \n{tfm} files}
+\subsection{字体与 \n{tfm} 文件}
 
 %The external file needed for the font is a \n{tfm}
 %(\TeX\ font metrics) file,
@@ -150,14 +150,7 @@
 %when it constructed the format),
 %an assignment of that font file can be reexecuted
 %without needing recourse to the \n{tfm} file.
-The external file needed for the font is a \n{tfm}
-(\TeX\ font metrics) file,
-which is taken independent of any  \gr{at clause}
-in the \cs{font} declaration. If the \n{tfm}
-file has been loaded already (for instance by \IniTeX\
-when it constructed the format),
-an assignment of that font file can be reexecuted
-without needing recourse to the \n{tfm} file.
+\TeX 所需的外部字体文件是 \n{tfm} 文件（\TeX 字体尺寸文件，\TeX\ Font Metrics File），这些文件不受 \cs{font} 声明中 \gr{at clause} 的影响。如果 \n{tfm} 事先已装载好（比如在构造格式文件时由 \IniTeX 装载），则再次声明同一字体时，不依赖且无需重复载入 \n{tfm} 文件。
 
 %Font design sizes are given in the font metrics files.
 %The \n{cmr10} font, for instance, has a design size
@@ -165,12 +158,7 @@ without needing recourse to the \n{tfm} file.
 %that actually has a size of 10~points: the opening and closing
 %parentheses are two examples, but capital
 %letters are considerably smaller.
-Font design sizes are given in the font metrics files.
-The \n{cmr10} font, for instance, has a design size
-of 10~point. However, there is not much in the font
-that actually has a size of 10~points: the opening and closing
-parentheses are two examples, but capital
-letters are considerably smaller.
+字体本身的设计大小由字体尺寸文件给出。例如，字体 \n{cmr10} 的设计大小是 10 点（point）。但实际上，字体中没有多少字符大小是 10 点：左右圆括号恰好是 10 点，但大写字母明显会小一点。
 
 %%\spoint Querying the current font and font names
 %\subsection{Querying the current font and font names}
