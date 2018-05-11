@@ -251,7 +251,7 @@
 %\subsection{Font dimensions}
 %\label{font:dims}
 %\spoint[font:dims] Font dimensions
-\subsection{字体尺寸}
+\subsection{字体尺寸参数}
 \label{font:dims}
 
 %Text fonts need to have at least seven \csidx{fontdimen} parameters
@@ -264,23 +264,29 @@
 \begin{enumerate}
 % \item the slant per point; this dimension is used
 %    for the proper horizontal positioning of accents;
-\item 每点倾斜（slant per point）；该参数用于确定重音符号正确的水平位置
+\item 每点倾斜（slant per point）；该参数用于确定重音符号正确的水平位置。
 %\item the interword space: this is used unless the user
 %    specifies an explicit \cs{spaceskip};
 %    see Chapter~\ref{space};
+\item 词间空距（interword space）：如果用户没有显式设定 \cs{spaceskip}，则该参数会被当做词间空距的默认值；参见第~\ref{space}~章。
 %\item interword stretch: the stretch component of the interword
 %    space;
+\item 词间拉伸（interword stretch）：该参数是词间距离的拉伸值部分。
 %\item interword shrink: the shrink component of
 %    the interword space;
+\item 词间收缩（interword shrink）：该参数是词间距离的收缩值部分。
 %\item the x-height: the value of
 %    the \gr{internal unit} \n{ex}, which is usually about the
 %    height of the lowercase letter~`x';
+\item x-高度（x-height）：该参数是 \TeX 内部单位（\gr{internal unit}）\n{ex} 的值，通常是小写字母「x」的高度。
 %\item the quad width:
 %    the value of the \gr{internal unit} \n{em}, which is
 %    approximately the width of the capital letter~`M'; and
+\item 方块铅空\liamfnote{英文单词「quad」是传统铅印术中的术语，它来自意大利语单词「quadratone」，意思是「大方块」。}（quad width）：该参数是 \TeX 内部单位 \n{em} 的值，它大约是大写字母「M」的宽度。
 %\item the extra space: the space added to the interword space
 %at the end of sentences (that is, when \cs{spacefactor}${}\geq2000$)
 %unless the user specifies an explicit \cs{x\-space\-skip}.
+\item 额外空距（extra space）：如果用户没有显式设定 \cs{x\-space\-skip}，则该参数是在句子末尾处加在词间空距之上的额外空距（当 \cs{spacefactor}${}\geqslant2000$）。
 \end{enumerate}
 
 %Parameters 1 and~5 are purely information about the font
@@ -288,24 +294,15 @@
 %The values of other parameters can be changed in order to
 %adjust spacing; see Chapter~\ref{space} for examples
 %of changing parameters 2, 3, 4, and~7.
-Parameters 1 and~5 are purely information about the font
-and there is no point in varying them.
-The values of other parameters can be changed in order to
-adjust spacing; see Chapter~\ref{space} for examples
-of changing parameters 2, 3, 4, and~7.
+第 1 个和第 5 个参数纯粹是字体的信息，因此改变它们没什么意义。其余参数则可以用来校正相关空距；第~\ref{space}~章有关于第 2, 3, 4, 7 个参数的相关示例。
 
 %Font dimensions can be altered in a \gr{font
 %  assignment}\index{assignment!font}, which is a \gr{global
 %  assignment}\index{assignment!global} (see
 %page~\pageref{global:assign}):
-%\begin{Disp}\cs{fontdimen}\gr{number}\gr{font}\gr{equals}\gr{dimen}
-%\end{Disp} See above for the definition of \gr{font}.
-Font dimensions can be altered in a \gr{font
-  assignment}\index{assignment!font}, which is a \gr{global
-  assignment}\index{assignment!global} (see
-page~\pageref{global:assign}):
-\begin{Disp}\cs{fontdimen}\gr{number}\gr{font}\gr{equals}\gr{dimen}
-\end{Disp} See above for the definition of \gr{font}.
+字体尺寸参数可被字体赋值语句（\gr{font assignment}\index{assignment!font}）修改，这种赋值语句属于全局赋值语句（\gr{global assignment}\index{assignment!global}，参见第~\pageref{global:assign}~页）：
+\begin{Disp}\cs{fontdimen}\gr{number}\gr{font}\gr{equals}\gr{dimen}\end{Disp}
+\gr{font} 的定义可见上文。
 
 %%\spoint Kerning
 %\subsection{Kerning}
