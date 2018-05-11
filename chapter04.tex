@@ -419,7 +419,7 @@
 %%\spoint Boundary ligatures
 %\subsection{Boundary ligatures}
 %\spoint Boundary ligatures
-\subsection{Boundary ligatures}
+\subsection{边界连字（Boundary ligatures）}
 
 %Each word is surrounded by a left and a right
 %boundary character (\TeX3 only).
@@ -430,24 +430,14 @@
 %boundary character. A~\csidx{noboundary} command immediately
 %before or after a word suppresses the boundary character
 %at that place.
-Each word is surrounded by a left and a right
-boundary character (\TeX3 only).
-This makes phenomena possible
-such as the two different sigmas in Greek:
-one at the end of a word, and one for every other position.
-This can be realized through a ligature with the
-boundary character. A~\csidx{noboundary} command immediately
-before or after a word suppresses the boundary character
-at that place.
+在 \TeX3 中还有单词边界的概念：每个单词都由左右两个边界字符界定。这样的设定使 \TeX 能够实现一些语言中的特殊现象\liamfnote{这里指的是通过边界连字来实现一些特殊现象。}，例如在希腊语中位于词尾的西格玛（$\sigma$）和位于其他位置的西格玛是不一样的。在单词的前后添加 \csidx{noboundary} 命令，可以抑制相应的边界连字机制。
 
 %In general, the ligature mechanism has become more complicated
 %with the transition to \TeX\ version~3; see~\cite{K:TeX23}.
-In general, the ligature mechanism has become more complicated
-with the transition to \TeX\ version~3; see~\cite{K:TeX23}.
+大致上，\TeX 3 的连字机制比 \TeX 2 要复杂得多；参见~\cite{K:TeX23}。
 
 %\endofchapter
 %%%%% end of input file [fontfam]
 \endofchapter
 %%%% end of input file [fontfam]
-
 \end{document}
