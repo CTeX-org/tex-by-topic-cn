@@ -384,53 +384,37 @@
 %%\spoint Ligatures
 %\subsection{Ligatures}
 %\spoint Ligatures
-\subsection{Ligatures}
+\subsection{连字}
 
 %Replacement of character sequences by \indexterm{ligatures} is controlled
 %by information in the \n{tfm} file of a font.
 %Ligatures are formed from \gr{character} commands:
 %sequences such as \n{fi} are replaced by `fi' in some fonts.
-Replacement of character sequences by \indexterm{ligatures} is controlled
-by information in the \n{tfm} file of a font.
-Ligatures are formed from \gr{character} commands:
-sequences such as \n{fi} are replaced by `fi' in some fonts.
+将字符序列替换为\indexterm{连字}（\emph{ligatures}）的过程由字体 \n{tfm} 文件中的信息来控制。连字由字符（\gr{character}）命令组成：在某些字体里，诸如 \n{fi} 的字符序列会替换为「fi」。
 
 %Other ligatures traditionally in use are
 %between \n{ff}, \n{ffi}, \n{fl}, and \n{ffl};
 %in some older works \n{ft} and \n{st} can be found,
 %and similarly to the \n{fl} ligature \n{fk} and \n{fb}
 %can also occur.
-Other ligatures traditionally in use are
-between \n{ff}, \n{ffi}, \n{fl}, and \n{ffl};
-in some older works \n{ft} and \n{st} can be found,
-and similarly to the \n{fl} ligature \n{fk} and \n{fb}
-can also occur.
+传统上，还有其它的连字，比如 \n{ff}, \n{ffi}, \n{fl} 以及 \n{ffl}；在更古老的字体里，可能还有 \n{ft} 以及 \n{st}，以及类似 \n{fl} 的连字：\n{fk} 和 \n{fb}。
 
 %Ligatures in \TeX\ can be formed between explicit character
 %tokens, \cs{char} commands, and \gr{chardef token}s.
 %For example,
 %the sequence \verb-\char`f\char`i- is replaced by the
 %`fi' ligature, if such a ligature is part of the font.
-Ligatures in \TeX\ can be formed between explicit character
-tokens, \cs{char} commands, and \gr{chardef token}s.
-For example,
-the sequence \verb-\char`f\char`i- is replaced by the
-`fi' ligature, if such a ligature is part of the font.
+在 \TeX 中，连字可由显式字符记号、\cs{char} 命令以及 \gr{chardef token} 组成。例如，如果字体里有这样的连字定义，\verb-\char`f\char`i- 会被替换成连字「\char`f\char`i」。
 
 %Unwanted ligatures can be suppressed in a number of ways:
 %the unwanted ligature `\hbox{halflife}' can
 %for instance be prevented by
-%\begin{disp} \verb>half{}life>, \verb>half{l}ife>, \verb>half\/life>,
-%      or \verb>half\hbox{}life>\end{disp}
+我们有多种方式来限制非预期的连字例如 \hbox{halflife} 中非预期的连字可以这样避免：
+\begin{disp}
+\verb>half{}life>, \verb>half{l}ife>, \verb>half\/life>, 以及 \verb>half\hbox{}life>\end{disp}
 %but the solution using italic correction is not equivalent
 %to the others.
-Unwanted ligatures can be suppressed in a number of ways:
-the unwanted ligature `\hbox{halflife}' can
-for instance be prevented by
-\begin{disp} \verb>half{}life>, \verb>half{l}ife>, \verb>half\/life>,
-      or \verb>half\hbox{}life>\end{disp}
-but the solution using italic correction is not equivalent
-to the others.
+注意，使用倾斜校正原语避免非预期的连字的方案与其它方案的机理不完全一样。
 
 %%\spoint Boundary ligatures
 %\subsection{Boundary ligatures}
