@@ -240,7 +240,7 @@
 \item 字符的尺寸以及倾斜校正（italic corrections）
 %\altt
 %\item ligature and kerning programs for characters.
-\item 字符的连字（ligature）及铅空（kerning）指令 % TODO(Liam0205): 这里的翻译不太好，需要后续修正
+\item 字符的连字（ligature）及挤压（kerning）指令
 \end{itemize}
 %Also, the design size of a font is specified in the \n{tfm} file;
 %see above. The definition of the \n{tfm} format can be found
@@ -314,28 +314,20 @@
 %were to be just abutted. This fine spacing is called \indexterm{kerning},
 %and a proper kerning is as essential to a font as the
 %design of the letter shapes.
-Some combinations of characters should be moved closer
-together than would be the case if their bounding boxes
-were to be just abutted. This fine spacing is called \indexterm{kerning},
-and a proper kerning is as essential to a font as the
-design of the letter shapes.
+通常，每个字符的边界盒子（bounding box）彼此邻接。但对于部分字符组合来说，它们之间的距离应该比边界盒子邻接的情况更近一些。这种情况称为\indexterm{字符挤压}（\emph{kerning}）。对于字体来说，字符挤压的设计与字符形状的设计同等重要。
 
 %Consider as an example\message{Kerning!}
-%\begin{Disp} `Vo' versus the unkerned variant `V\hbox{}o'\end{Disp}
-Consider as an example\message{Kerning!}
-\begin{Disp} `Vo' versus the unkerned variant `V\hbox{}o'\end{Disp}
+举个例子：
+\begin{Disp} 有字符挤压的效果：Vo \quad 没有字符挤压的效果：V\hbox{}o\end{Disp}
 
 %Kerning in \TeX\ is controlled by information in the
 %\n{tfm} file, and is therefore outside the influence of the
 %user. The \n{tfm} file can be edited, however (see Chapter~\ref{TeXcomm}).
-Kerning in \TeX\ is controlled by information in the
-\n{tfm} file, and is therefore outside the influence of the
-user. The \n{tfm} file can be edited, however (see Chapter~\ref{TeXcomm}).
+在 \TeX 中，字符挤压由 \n{tfm} 文件中的字体信息控制，因此不受用户的影响。不过，\n{tfm} 文件是可以修改的，详情参见第~\ref{TeXcomm}~章。
 
 %The \cs{kern} command has (almost) nothing to do with the
 %phenomenon of kerning; it is explained in Chapter~\ref{glue}.
-The \cs{kern} command has (almost) nothing to do with the
-phenomenon of kerning; it is explained in Chapter~\ref{glue}.
+\cs{kern} 命令与字符挤压现象没什么关系；它将在第~\ref{glue}~章中介绍。
 
 %%\spoint Italic correction
 %\subsection{Italic correction}
