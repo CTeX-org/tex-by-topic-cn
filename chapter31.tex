@@ -69,11 +69,11 @@
 \item [\cs{toksdef}] 
       定义了一个 \cs{toks} 寄存器的别名。
 \item [\cs{newbox}]
-      分配了一个未使用的 \cs{box} 分寄存器。
+      分配了一个未使用的 \cs{box} 寄存器。
 \item [\cs{newcount}]
-      分配了一个未使用的 \cs{count} 分寄存器。
+      分配了一个未使用的 \cs{count} 寄存器。
 \item [\cs{newdimen}]
-      分配了一个未使用的 \cs{dimen} 分寄存器。
+      分配了一个未使用的 \cs{dimen} 寄存器。
 \item [\cs{newfam}]
       分配了一个未使用的数学字体族。
 \item [\cs{newinsert}]
@@ -82,11 +82,11 @@
       (仅 \TeX3)
       分配了一个新的语言编号。
 \item [\cs{newmuskip}]
-      分配了一个未使用的 \cs{muskip} 分寄存器。
+      分配了一个未使用的 \cs{muskip} 寄存器。
 \item [\cs{newskip}]
-      分配了一个未使用的 \cs{skip} 分寄存器。
+      分配了一个未使用的 \cs{skip} 寄存器。
 \item [\cs{newtoks}]
-      分配了一个未使用的 \cs{toks} 分寄存器。
+      分配了一个未使用的 \cs{toks} 寄存器。
 \item [\cs{newread}]
       分配了一个未使用的输入流。
 \item [\cs{newwrite}]
@@ -205,15 +205,15 @@ plain \TeX\ 的 \cs{new...} 宏被定义为 \cs{outer}
 %in the current font with number
 %\cs{MyBox} is typeset. The \cs{chardef} command
 %is treated further in Chapter~\ref{char}.
-使用 \cs{chardef} 意味着定义控制序列不代表寄存器本身，而仅代表它的编号。因此在定义了
+使用 \cs{chardef} 意味着定义的控制序列不代表寄存器本身，而仅代表它的编号。因此在定义了
 \begin{verbatim}
 \newbox\MyBox
 \end{verbatim}
 后，有必要继续写
 \begin{verbatim}
 \box\MyBox
-\end{verbatim} 
-离开 \cs{box} 意味着当前字体编号为\cs{MyBox} 的字符正在被排字。
+\end{verbatim}
+省略 \cs{box} 意味着当前字体编号为 \cs{MyBox} 的字符正在被排版。
 \cs{chardef} 在第\ref{char}章中会详细叙述。
 
 %\index{registers!allocation of|)}
@@ -269,7 +269,7 @@ plain \TeX\ 的 \cs{new...} 宏被设计为用来构建宏包的基础，
 %should be \cs{global} (with the exception of the \cs{count}
 %registers). This guideline prevents `save
 %stack build-up' (see Chapter~\ref{error}).
-\item 给 0, 2, 4, 6, 8, 和 255 号临时寄存器的复制应当是局部的。
+\item 给 0, 2, 4, 6, 8, 和 255 号临时寄存器的赋值应当是局部的。
 给 1, 3, 5, 7, 9号寄存器的赋值应当是全局的。(除\cs{count}寄存器外)。
 这条准则避免了‘保存栈的建立’(见~\ref{error}章)。
 
