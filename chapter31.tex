@@ -7,7 +7,7 @@
 \begin{document}
 
 %\chapter{Allocation}\label{alloc}
-\chapter{Allocation}\label{alloc}
+\chapter{寄存器分配}\label{alloc}
 
 %\TeX\ has registers of a number of types. For some of these,
 %explicit commands exist to define a synonym for a certain register;
@@ -15,12 +15,12 @@
 %to allocate an unused register. This chapter treats
 %the synonym and allocation commands, and discusses
 %some guidelines for macro writers regarding allocation.
-\TeX\ has registers of a number of types. For some of these,
-explicit commands exist to define a synonym for a certain register;
-for all of them macros exist in the plain format
-to allocate an unused register. This chapter treats
-the synonym and allocation commands, and discusses
-some guidelines for macro writers regarding allocation.
+\TeX\ 的寄存器是数字类型的。对于其中的一些寄存器，
+我们可以使用显式的命令定义某个特定寄存器的别名;
+在 plain \TeX\ 中，
+所有类型的寄存器都可以通过对应的宏来分配一个未使用的寄存器。
+本章主要关注别名定义和寄存器分配命令。
+对于宏编写者，我们讨论了一些关于寄存器分配的准则。
 
 %\begin{inventory}
 %\item [\cs{countdef}] 
@@ -59,77 +59,72 @@ some guidelines for macro writers regarding allocation.
 %\end{inventory}
 \begin{inventory}
 \item [\cs{countdef}] 
-      Define a synonym for a \cs{count} register.
+      定义了一个 \cs{count} 寄存器的别名。
 \item [\cs{dimendef}]
-      Define a synonym for a \cs{dimen} register.
+      定义了一个 \cs{dimen} 寄存器的别名。
 \item [\cs{muskipdef}]
-      Define a synonym for a \cs{muskip} register.
+      定义了一个 \cs{muskip} 寄存器的别名。
 \item [\cs{skipdef}] 
-      Define a synonym for a \cs{skip} register.
+      定义了一个 \cs{skip} 寄存器的别名。
 \item [\cs{toksdef}] 
-      Define a synonym for a \cs{toks} register.
+      定义了一个 \cs{toks} 寄存器的别名。
 \item [\cs{newbox}]
-      Allocate an unused \cs{box} register.
+      分配了一个未使用的 \cs{box} 分寄存器。
 \item [\cs{newcount}]
-      Allocate an unused \cs{count} register.
+      分配了一个未使用的 \cs{count} 分寄存器。
 \item [\cs{newdimen}]
-      Allocate an unused \cs{dimen} register.
+      分配了一个未使用的 \cs{dimen} 分寄存器。
 \item [\cs{newfam}]
-      Allocate an unused math family.
+      分配了一个未使用的数学字体族。
 \item [\cs{newinsert}]
-      Allocate an unused insertion class.
+      分配了一个未使用的插入类。
 \item [\cs{newlanguage}]
-      (\TeX3 only)
-      Allocate a new language number.
+      (仅 \TeX3)
+      分配了一个新的语言编号。
 \item [\cs{newmuskip}]
-      Allocate an unused \cs{muskip} register.
+      分配了一个未使用的 \cs{muskip} 分寄存器。
 \item [\cs{newskip}]
-      Allocate an unused \cs{skip} register.
+      分配了一个未使用的 \cs{skip} 分寄存器。
 \item [\cs{newtoks}]
-      Allocate an unused \cs{toks} register.
+      分配了一个未使用的 \cs{toks} 分寄存器。
 \item [\cs{newread}]
-      Allocate an unused input stream.
+      分配了一个未使用的输入流。
 \item [\cs{newwrite}]
-      Allocate an unused output stream.
+      分配了一个未使用的输出流。
 \end{inventory}
 
 %%\point Allocation commands
 %\section{Allocation commands}
 %\index{registers!allocation of|(}
 %\point Allocation commands
-\section{Allocation commands}
+\section{寄存器分配命令}
 \index{registers!allocation of|(}
 
 %In plain \TeX, \cs{new...} macros are defined for
 %allocation of registers.
 %The registers of \TeX\ fall into two classes that are 
 %allocated in different ways. This is treated below.
-In plain \TeX, \cs{new...} macros are defined for
-allocation of registers.
-The registers of \TeX\ fall into two classes that are 
-allocated in different ways. This is treated below.
+在 plain \TeX 中, 定义了宏 \cs{new...} 用于分配寄存器。
+\TeX\ 的寄存器可以根据分配方式的不同而分为两类。这一点将会在下面谈到。
 
 %The \csidx{newlanguage} macro of plain \TeX\ 
 %does not allocate any register. Instead it merely assigns
 %a number, starting from~0.
 %\TeX\ (version~3) can have at most 256 different
 %sets of hyphenation patterns.
-The \csidx{newlanguage} macro of plain \TeX\ 
-does not allocate any register. Instead it merely assigns
-a number, starting from~0.
-\TeX\ (version~3) can have at most 256 different
-sets of hyphenation patterns.
+plain \TeX\ 的 \csidx{newlanguage} 宏并不会分配任何的寄存器。
+相反的，它只是从0开始，分配了一个数字。
+\TeX3 最多有256种断字组合模式。
 
 %The \cs{new...} macros of plain \TeX\ are defined to be
 %\cs{outer} (see Chapter~\ref{macro} for a precise explanation),
 %which precludes use of the allocation macros in other macros.
 %Therefore the \LaTeX\ format redefines these macros
 %without the \cs{outer} prefix.
-The \cs{new...} macros of plain \TeX\ are defined to be
-\cs{outer} (see Chapter~\ref{macro} for a precise explanation),
-which precludes use of the allocation macros in other macros.
-Therefore the \LaTeX\ format redefines these macros
-without the \cs{outer} prefix.
+plain \TeX\ 的 \cs{new...} 宏被定义为 \cs{outer}
+(精确定义详见 \ref{macro} 章),
+\cs{outer} 避免了在其他宏中使用分配宏。
+因此，\LaTeX\ 在重定义这些宏时没有带上 \cs{outer} 前缀。
 
 %%\spoint \cs{count}, \cs{dimen}, \cs{skip}, \cs{muskip}, \cs{toks}
 %\subsection{\cs{count}, \cs{dimen}, \cs{skip}, \cs{muskip}, \cs{toks}}
@@ -141,9 +136,8 @@ without the \cs{outer} prefix.
 %to a control sequence:
 %\begin{Disp}\gr{registerdef}\gr{control 
 %    sequence}\gr{equals}\gr{8-bit number}\end{Disp}
-For these registers there exists a \gr{registerdef} command,
-for instance \cs{countdef}, to couple a specific register
-to a control sequence:
+对于这些寄存器，存在一个 \gr{registerdef} 命令。
+举个例子：\cs{countdef}, 将寄存器与特定的控制序列组合在一起：
 \begin{Disp}\gr{registerdef}\gr{control 
     sequence}\gr{equals}\gr{8-bit number}\end{Disp}
 
@@ -159,15 +153,15 @@ to a control sequence:
 %\begin{verbatim}
 %\vskip\MyCount\baselineskip
 %\end{verbatim}
-After the definition
+在定义之后
 \begin{verbatim}
 \countdef\MyCount=42
 \end{verbatim}
-the allocated register can be used as
+分配的寄存器可以这样使用：
 \begin{verbatim}
 \MyCount=314
 \end{verbatim}
-or
+或者
 \begin{verbatim}
 \vskip\MyCount\baselineskip
 \end{verbatim}
@@ -180,14 +174,12 @@ or
 %\end{verbatim}
 %\cs{MyCount} can be used
 %exactly as in the above two examples.
-The \gr{registerdef} commands are used in plain \TeX\ macros
-\cs{newcount} et cetera that allocate an unused register;
-after
+\gr{registerdef} 命令用在 \cs{newcount} 等 plain \TeX\ 宏中，
+它能分配一个未使用的寄存器；在以下命令之后
 \begin{verbatim}
 \newcount\MyCount
 \end{verbatim}
-\cs{MyCount} can be used
-exactly as in the above two examples.
+\cs{MyCount} 就可以完全按照上述两个例子那样使用。
 
 %%\spoint \cs{box}, \cs{fam}, \cs{write}, \cs{read}, \cs{insert}
 %\subsection{\cs{box}, \cs{fam}, \cs{write}, \cs{read}, \cs{insert}}
@@ -197,9 +189,7 @@ exactly as in the above two examples.
 %For these registers there exists no  \gr{registerdef} command in \TeX,
 %so \cs{chardef} is used to allocate box registers
 %in the corresponding plain \TeX\ macros \cs{newbox}, for instance.
-For these registers there exists no  \gr{registerdef} command in \TeX,
-so \cs{chardef} is used to allocate box registers
-in the corresponding plain \TeX\ macros \cs{newbox}, for instance.
+对于 \TeX 中的这些寄存器，不存在 \gr{registerdef} 命令，所以 \cs{chardef} 命令用于在对应的 \TeX 宏 \cs{newbox} 中分配盒子寄存器，举个例子。
 
 %The fact that \cs{chardef} is used implies that the
 %defined control sequence does not stand for the register itself,
@@ -215,26 +205,22 @@ in the corresponding plain \TeX\ macros \cs{newbox}, for instance.
 %in the current font with number
 %\cs{MyBox} is typeset. The \cs{chardef} command
 %is treated further in Chapter~\ref{char}.
-The fact that \cs{chardef} is used implies that the
-defined control sequence does not stand for the register itself,
-but only for its number. Thus after
+使用 \cs{chardef} 意味着定义控制序列不代表寄存器本身，而仅代表它的编号。因此在定义了
 \begin{verbatim}
 \newbox\MyBox
 \end{verbatim}
-it is necessary to write
+后，有必要继续写
 \begin{verbatim}
 \box\MyBox
 \end{verbatim} 
-Leaving out the \cs{box} means that the character
-in the current font with number
-\cs{MyBox} is typeset. The \cs{chardef} command
-is treated further in Chapter~\ref{char}.
+离开 \cs{box} 意味着当前字体编号为\cs{MyBox} 的字符正在被排字。
+\cs{chardef} 在第\ref{char}章中会详细叙述。
 
 %\index{registers!allocation of|)}
 \index{registers!allocation of|)}
 
 %\section{Ground rules for macro writers}
-\section{Ground rules for macro writers}
+\section{给宏编写者的基本准则}
 
 %The \cs{new...} macros of plain \TeX\ have been designed
 %to form a foundation for macro packages, such that
@@ -249,26 +235,20 @@ is treated further in Chapter~\ref{char}.
 %no assumption can be made about the permanency of their
 %contents. Results that are to be passed from one call to
 %another should reside in specifically allocated registers.
-The \cs{new...} macros of plain \TeX\ have been designed
-to form a foundation for macro packages, such that
-several of such packages can operate without collisions
-in the same run of \TeX. In appendix~B of \TeXbook\
-Knuth formulates some ground rules that macro writers should
-adhere to.
+plain \TeX\ 的 \cs{new...} 宏被设计为用来构建宏包的基础，
+这样在同一个 \TeX\ 实例中，不同的宏包之间也不会冲突。
+在Knuth的\TeXbook\ 附录~B 中规定了一些宏编写者应当遵守的基本准则。
 \begin{enumerate}
-\item The \cs{new...} macros do not allocate registers
-with numbers~0--9. These can therefore be used as `scratch'
-registers. However, as any macro family can use them,
-no assumption can be made about the permanency of their
-contents. Results that are to be passed from one call to
-another should reside in specifically allocated registers.
+\item 不要使用 \cs{new...} 宏分配编号~0--9的寄存器。
+这些寄存器会被用作临时寄存器。
+任意一个宏族都可以使用它们，因此无法保证它们的值是永久不变的。
+需要从一个调用传递到另一个调用的结果应放在特定的寄存器中。
 
 %Note that count registers 0--9 are used for page identification
 %in the \n{dvi} file (see Chapter~\ref{TeXcomm}), so no global assignments
 %to these should be made.
-Note that count registers 0--9 are used for page identification
-in the \n{dvi} file (see Chapter~\ref{TeXcomm}), so no global assignments
-to these should be made.
+注意到计数用(count) 0--9号寄存器用于 \n{dvi} 文件的页面标记
+(见~\ref{TeXcomm}章)，因此对这些寄存器不应有全局的赋值。
 
 %\item \cs{count255}, \cs{dimen255}, and \cs{skip255} are
 %also available. This is because inserts are
@@ -278,25 +258,20 @@ to these should be made.
 %Since \cs{box255} is used by the output routine 
 %(see Chapter~\ref{output}),
 %the count, dimen, and skip with number~255 are freely available.
-\item \cs{count255}, \cs{dimen255}, and \cs{skip255} are
-also available. This is because inserts are
-allocated from 254 downward  and, together with an insertion box,
-a count, dimen, and skip register, 
-all with the same number, are allocated.
-Since \cs{box255} is used by the output routine 
-(see Chapter~\ref{output}),
-the count, dimen, and skip with number~255 are freely available.
+\item \cs{count255}, \cs{dimen255}, 和 \cs{skip255} 是可用的寄存器。
+这是因为插入盒子用的寄存器从254开始向下分配，
+每一个插入盒子都会分配一组同编号的 count, dimen, 和 skip 寄存器。
+另外box255由输出程序使用(见~\ref{output}章)，
+故剩下的编号为255的 count, dimen, 和 skip寄存器可以自由使用。
 
 %\item Assignments to scratch registers~0, 2, 4, 6, 8, and~255
 %should be local; assignments to registers~1, 3, 5, 7,~9
 %should be \cs{global} (with the exception of the \cs{count}
 %registers). This guideline prevents `save
 %stack build-up' (see Chapter~\ref{error}).
-\item Assignments to scratch registers~0, 2, 4, 6, 8, and~255
-should be local; assignments to registers~1, 3, 5, 7,~9
-should be \cs{global} (with the exception of the \cs{count}
-registers). This guideline prevents `save
-stack build-up' (see Chapter~\ref{error}).
+\item 给 0, 2, 4, 6, 8, 和 255 号临时寄存器的复制应当是局部的。
+给 1, 3, 5, 7, 9号寄存器的赋值应当是全局的。(除\cs{count}寄存器外)。
+这条准则避免了‘保存栈的建立’(见~\ref{error}章)。
 
 %\item Any register can be used inside a group, as \TeX's
 %grouping mechanism will restore its value outside
@@ -306,22 +281,15 @@ stack build-up' (see Chapter~\ref{error}).
 %it must not be possible that other macros may be
 %activated in that group that perform global assignments
 %to that register.
-\item Any register can be used inside a group, as \TeX's
-grouping mechanism will restore its value outside
-the group. There are two conditions on this use of
-a register:
-no global assignments should be made to it, and 
-it must not be possible that other macros may be
-activated in that group that perform global assignments
-to that register.
+\item 任何寄存器都应在组内使用，\TeX\ 的分组机制会在组外保存它的值。
+使用这种寄存器有两个条件：
+没有对它进行全局赋值，并且组内没有执行全局分配该寄存器的其他宏。
 
 %\item Registers that are used over longer periods of time,
 %or that have to survive in between calls of different
 %macros, should be allocated by \cs{new...}.
 %\end{enumerate}
-\item Registers that are used over longer periods of time,
-or that have to survive in between calls of different
-macros, should be allocated by \cs{new...}.
+\item 长期使用的寄存器，或在不同宏的调用中需要保留的寄存器应使用 \cs{new...} 来分配。
 \end{enumerate}
 
 %\endofchapter
