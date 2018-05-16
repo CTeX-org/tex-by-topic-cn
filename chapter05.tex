@@ -9,7 +9,7 @@
 \begin{document}
 
 %\chapter{Boxes}\label{boxes}\index{boxes|(}
-\chapter{Boxes}\label{boxes}\index{boxes|(}
+\chapter{盒子}\label{boxes}\index{盒子|(}
 
 %The horizontal and vertical boxes of \TeX\ are containers for
 %pieces of horizontal and vertical lists.
@@ -17,114 +17,68 @@
 %This chapter treats box registers and such
 %aspects of boxes as their dimensions, and the way their components
 %are placed relative to each other.
-The horizontal and vertical boxes of \TeX\ are containers for
-pieces of horizontal and vertical lists.
-Boxes can be stored in box registers.
-This chapter treats box registers and such
-aspects of boxes as their dimensions, and the way their components
-are placed relative to each other.
+\TeX 中的水平与竖直盒子分别是水平与竖直列表内容的容器。盒子可保存在盒子寄存器当中。本章讨论盒子寄存器，以及关于盒子尺寸、盒子内容相互位置的问题。
 
-%\label{cschap:hbox}\label{cschap:vbox}\label{cschap:vtop}\label{cschap:vsplit}\label{cschap:box}\label{cschap:setbox}\label{cschap:copy}\label{cschap:ifhbox}\label{cschap:ifvbox}\label{cschap:ifvoid2}\label{cschap:newbox}\label{cschap:unhbox}\label{cschap:unvbox}\label{cschap:unhcopy}\label{cschap:unvcopy}\label{cschap:ht}\label{cschap:dp}\label{cschap:wd}\label{cschap:boxmaxdepth}\label{cschap:splitmaxdepth}\label{cschap:badness}\label{cschap:hfuzz}\label{cschap:vfuzz}\label{cschap:hbadness}\label{cschap:vbadness}\label{cschap:overfullrule}\label{cschap:hsize}\label{cschap:vsize}\label{cschap:lastbox}\label{cschap:raise}\label{cschap:lower}\label{cschap:moveleft}\label{cschap:moveright}\label{cschap:everyhbox}\label{cschap:everyvbox}
-%\begin{inventory}
+\label{cschap:hbox}\label{cschap:vbox}\label{cschap:vtop}\label{cschap:vsplit}\label{cschap:box}\label{cschap:setbox}\label{cschap:copy}\label{cschap:ifhbox}\label{cschap:ifvbox}\label{cschap:ifvoid2}\label{cschap:newbox}\label{cschap:unhbox}\label{cschap:unvbox}\label{cschap:unhcopy}\label{cschap:unvcopy}\label{cschap:ht}\label{cschap:dp}\label{cschap:wd}\label{cschap:boxmaxdepth}\label{cschap:splitmaxdepth}\label{cschap:badness}\label{cschap:hfuzz}\label{cschap:vfuzz}\label{cschap:hbadness}\label{cschap:vbadness}\label{cschap:overfullrule}\label{cschap:hsize}\label{cschap:vsize}\label{cschap:lastbox}\label{cschap:raise}\label{cschap:lower}\label{cschap:moveleft}\label{cschap:moveright}\label{cschap:everyhbox}\label{cschap:everyvbox}
+\begin{inventory}
 %\item [\cs{hbox}]
 %      Construct a horizontal box.
+\item [\cs{hbox}] 构造一个水平盒子。
 %\item [\cs{vbox}]
 %      Construct a vertical box with reference point of the last item.
+\item [\cs{vbox}] 构造一个竖直盒子，其参考点是最后一个元素。
 %\item [\cs{vtop}]
 %      Construct a vertical box with reference point of the first item.
+\item [\cs{vtop}] 构造一个竖直盒子，其参考点是第一个元素。
 %\item [\cs{vcenter}]
 %      Construct a vertical box vertically centred
 %      on the math axis; this command can only be used in math mode.
-\label{cschap:hbox}\label{cschap:vbox}\label{cschap:vtop}\label{cschap:vsplit}\label{cschap:box}\label{cschap:setbox}\label{cschap:copy}\label{cschap:ifhbox}\label{cschap:ifvbox}\label{cschap:ifvoid2}\label{cschap:newbox}\label{cschap:unhbox}\label{cschap:unvbox}\label{cschap:unhcopy}\label{cschap:unvcopy}\label{cschap:ht}\label{cschap:dp}\label{cschap:wd}\label{cschap:boxmaxdepth}\label{cschap:splitmaxdepth}\label{cschap:badness}\label{cschap:hfuzz}\label{cschap:vfuzz}\label{cschap:hbadness}\label{cschap:vbadness}\label{cschap:overfullrule}\label{cschap:hsize}\label{cschap:vsize}\label{cschap:lastbox}\label{cschap:raise}\label{cschap:lower}\label{cschap:moveleft}\label{cschap:moveright}\label{cschap:everyhbox}\label{cschap:everyvbox}
-\begin{inventory}
-\item [\cs{hbox}]
-      Construct a horizontal box.
-\item [\cs{vbox}]
-      Construct a vertical box with reference point of the last item.
-\item [\cs{vtop}]
-      Construct a vertical box with reference point of the first item.
-\item [\cs{vcenter}]
-      Construct a vertical box vertically centred
-      on the math axis; this command can only be used in math mode.
-
+\item [\cs{vcenter}] 构造一个在竖直方向于数学轴（math axis）居中的竖直盒子；该命令仅在数学模式下使用。
 %\item [\cs{vsplit}]
 %      Split off the top part of a vertical box.
-\item [\cs{vsplit}]
-      Split off the top part of a vertical box.
-
+\item [\cs{vsplit}] 将竖直盒子顶部部分分离。% TODO(Liam0205): 这里翻译需校正。
 %\item [\cs{box}]
 %      Use a box register, emptying it.
-\item [\cs{box}]
-      Use a box register, emptying it.
-
+\item [\cs{box}] 使用盒子寄存器，而后清空它。
 %\item [\cs{setbox}]
 %      Assign a box to a box register.
-\item [\cs{setbox}]
-      Assign a box to a box register.
-
+\item [\cs{setbox}] 将盒子赋值给一个盒子寄存器。
 %\item [\cs{copy}]
 %      Use a box register, but retain the contents.
-\item [\cs{copy}]
-      Use a box register, but retain the contents.
-
+\item [\cs{copy}] 使用盒子寄存器，但保留其中内容而不清空。
 %\item [\cs{ifhbox \cs{ifvbox}}]
 %\mdqon
 %      Test whether a box register contains a horizontal/""vertical box.
 %\mdqoff
-\item [\cs{ifhbox \cs{ifvbox}}]
-\mdqon
-      Test whether a box register contains a horizontal/""vertical box.
-\mdqoff
-
+\item [\cs{ifhbox \cs{ifvbox}}] 判断盒子寄存器中保存的是水平盒子还是竖直盒子。
 %\item [\cs{ifvoid}]
 %      Test whether a box register is empty.
-\item [\cs{ifvoid}]
-      Test whether a box register is empty.
-
-
+\item [\cs{ifvoid}] 判断盒子寄存器是否为空。
 %\item [\cs{newbox}]
 %      Allocate a new box register.
-\item [\cs{newbox}]
-      Allocate a new box register.
-
+\item [\cs{newbox}] 分配新的盒子寄存器。
 %\item [\cs{unhbox \cs{unvbox}}]
 %      Unpack a box register containing a horizontal/vertical box,
 %      adding the contents to the current horizontal/vertical list,
 %      and emptying the register.
-\item [\cs{unhbox \cs{unvbox}}]
-      Unpack a box register containing a horizontal/vertical box,
-      adding the contents to the current horizontal/vertical list,
-      and emptying the register.
-
+\item [\cs{unhbox \cs{unvbox}}] 将保存有水平盒子或竖直盒子的寄存器解包，并将其中内容追加到当前的水平列表或竖直列表中，而后清空寄存器。
 %\item [\cs{unhcopy \cs{unvcopy}}]
 %      The same as \cs{unhbox}$\,$/$\,$\cs{unvbox},
 %      but do not empty the register.
-\item [\cs{unhcopy \cs{unvcopy}}]
-      The same as \cs{unhbox}$\,$/$\,$\cs{unvbox},
-      but do not empty the register.
-
+\item [\cs{unhcopy \cs{unvcopy}}] 与 \cs{unhbox}$\,$/$\,$\cs{unvbox} 的行为相同，但不清空寄存器。
 %\item [\cs{ht \cs{dp} \cs{wd}}]
 %      Height/depth/width of the box in a box register.
-\item [\cs{ht \cs{dp} \cs{wd}}]
-      Height/depth/width of the box in a box register.
-
+\item [\cs{ht \cs{dp} \cs{wd}}] 返回盒子寄存器中盒子的高度、深度、宽度。
 %\item [\cs{boxmaxdepth}]
 %      Maximum allowed depth of boxes.
 %      Plain \TeX\ default:~\cs{maxdimen}.
-\item [\cs{boxmaxdepth}]
-      Maximum allowed depth of boxes.
-      Plain \TeX\ default:~\cs{maxdimen}.
-
+\item [\cs{boxmaxdepth}] 该命令表示 \TeX 所允许的盒子的最大深度。在 plain \TeX 中，它的默认值是~\cs{maxdimen}。
 %\item [\cs{splitmaxdepth}]
 %      Maximum allowed depth of boxes generated by \cs{vsplit}.
-\item [\cs{splitmaxdepth}]
-      Maximum allowed depth of boxes generated by \cs{vsplit}.
-
+\item [\cs{splitmaxdepth}] 该命令表示 \TeX 所允许的由 \cs{vsplit} 生成盒子的最大深度。
 %\item [\cs{badness}]
 %      Badness of the most recently constructed box.
-\item [\cs{badness}]
-      Badness of the most recently constructed box.
-
+\item [\cs{badness}] 刚刚构造的盒子的劣度。
 %\item [\cs{hfuzz \cs{vfuzz}}]
 %      Excess size that \TeX\ tolerates before it considers
 %\mdqon
