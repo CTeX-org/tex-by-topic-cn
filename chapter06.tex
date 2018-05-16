@@ -8,7 +8,7 @@
 
 %\chapter{Horizontal and Vertical Mode}\label{hvmode}
 %\label{chap:hvmode}
-\chapter{Horizontal and Vertical Mode}\label{hvmode}
+\chapter{水平模式和竖直模式}\label{hvmode}
 \label{chap:hvmode}
 
 %At any point in its processing \TeX\ is in some \indexterm{mode}.
@@ -23,18 +23,16 @@
 %at the horizontal and vertical modes, the kinds of objects
 %that can occur in the corresponding lists, and the
 %commands that are exclusive for one mode or the other. 
-At any point in its processing \TeX\ is in some \indexterm{mode}.
-There are six modes, divided in three categories:
+在处理文件时，\TeX\ 总处于某种模式(\indexterm{mode})。
+一共有六种模式，可划分为三类：
 \begin{enumerate}
-\item horizontal mode and restricted horizontal mode,
-\item vertical mode and internal vertical mode, and
-\item math mode and display math mode.
+\item 水平模式和受限水平模式，
+\item 竖直模式和内部竖直模式，
+\item 数学模式和数学显示模式。
 \end{enumerate}
-The math modes will be treated elsewhere (see page~\pageref{math:modes}).
-Here we shall look
-at the horizontal and vertical modes, the kinds of objects
-that can occur in the corresponding lists, and the
-commands that are exclusive for one mode or the other. 
+数学模式将会在其他章节详细介绍(见 \pageref{math:modes} 页)。
+这里我们首先关注水平和竖直模式，对象的类型会在相应的列表中出现，
+并且每个模式的命令都是专用的。
 
 %\label{cschap:vadjust}\label{cschap:showlists}
 %\begin{inventory}
@@ -43,38 +41,36 @@ commands that are exclusive for one mode or the other.
 \label{cschap:vadjust}\label{cschap:showlists}
 \begin{inventory}
 \item [\cs{ifhmode}] 
-      Test whether the current mode is (possibly restricted) horizontal mode.
+      用于测试当前模式是否为(受限)水平模式。
 
 %\item [\cs{ifvmode}] 
 %      Test whether the current mode is (possibly internal) vertical mode.
 \item [\cs{ifvmode}] 
-      Test whether the current mode is (possibly internal) vertical mode.
+      用于测试当前模式是否为(内部)竖直模式。
 
 %\item [\cs{ifinner}] 
 %      Test whether the current mode is an internal mode.
 \item [\cs{ifinner}] 
-      Test whether the current mode is an internal mode.
+      用于测试当前模式是否为内部模式。
 
 %\item [\cs{vadjust}] 
 %      Specify vertical material for the enclosing vertical list
 %      while in horizontal mode.
 \item [\cs{vadjust}] 
-      Specify vertical material for the enclosing vertical list
-      while in horizontal mode.
+      指定用于在水平模式中闭合竖直列表的指定竖直符号。
 
 %\item [\cs{showlists}] 
 %      Write to the log file the contents of the partial lists 
 %      currently being built in all modes.
 %\end{inventory}
 \item [\cs{showlists}] 
-      Write to the log file the contents of the partial lists 
-      currently being built in all modes.
+      将目前所有模式正在构建的部分列表的内容写入日志。
 \end{inventory}
 
 %%\point Horizontal and vertical mode
 %\section{Horizontal and vertical mode}
 %\point Horizontal and vertical mode
-\section{Horizontal and vertical mode}
+\section{水平模式和竖直模式}
 
 %When not typesetting mathematics, \TeX\ is in horizontal
 %or vertical mode, building horizontal or vertical lists
@@ -85,20 +81,17 @@ commands that are exclusive for one mode or the other.
 %these modes
 %are different from the internal states of \TeX's input processor
 %(see page~\pageref{input:states}).
-When not typesetting mathematics, \TeX\ is in horizontal
-or vertical mode, building horizontal or vertical lists
-respectively. Horizontal mode is typically used to
-make lines of text; vertical mode is typically used
-to stack the lines of a paragraph on top of each other.
-Note that
-these modes
-are different from the internal states of \TeX's input processor
-(see page~\pageref{input:states}).
+当不需要处理数学排版时，\TeX\ 处于水平模式或竖直模式中，
+分别构建水平列表或竖直列表。
+水平模式一般用来生成一行行的文字；
+竖直模式则用来将一行行文字组成的段落堆到其他段落上。
+注意！这些模式和 \TeX\ 输入处理器的内部状态
+(见 \pageref{input:states} 页)并不相同。
 
 %%\spoint Horizontal mode
 %\subsection{Horizontal mode}
 %\spoint Horizontal mode
-\subsection{Horizontal mode}
+\subsection{水平模式}
 
 %The main activity in \indextermbus{horizontal}{mode} is building lines of text.
 %Text on the page and text in a \cs{vbox} or \cs{vtop} is built in
@@ -106,19 +99,17 @@ are different from the internal states of \TeX's input processor
 %if the text is in an \cs{hbox} there is only one line
 %of text, and the corresponding mode is the restricted
 %horizontal mode.
-The main activity in \indextermbus{horizontal}{mode} is building lines of text.
-Text on the page and text in a \cs{vbox} or \cs{vtop} is built in
-horizontal mode (this might be called `paragraph mode');
-if the text is in an \cs{hbox} there is only one line
-of text, and the corresponding mode is the restricted
-horizontal mode.
+水平模式(\indextermbus{horizontal}{mode})的主要用来构建一行行的文字。
+页面上的文字和 \cs{vbox} 或 \cs{vtop} 中的文字在水平模式中构建
+(这也许叫做“段落模式”)；
+如果 \cs{hbox} 中仅仅有一行文字，则对应的模式为受限水平模式。
 
 %In horizontal mode all material is added to a horizontal list.
 %If this list is built in unrestricted horizontal mode, it
 %will later be broken into lines and added to the surrounding vertical list.
-In horizontal mode all material is added to a horizontal list.
-If this list is built in unrestricted horizontal mode, it
-will later be broken into lines and added to the surrounding vertical list.
+在水平模式中，所有的材料都添加进了水平列表。
+如果列表在非受限水平模式下构建，稍后它会被分解成行，
+然后添加进周围的竖直列表中。
 
 %Each element of a \indextermbus{horizontal}{list} is one of the following:
 %\begin{itemize} \item a box (a character, ligature, \cs{vrule},
@@ -137,35 +128,33 @@ will later be broken into lines and added to the surrounding vertical list.
 %are called that, because they disappear in
 %a break. Breaking of horizontal
 %lists is discussed in Chapter~\ref{line:break}.
-Each element of a \indextermbus{horizontal}{list} is one of the following:
-\begin{itemize} \item a box (a character, ligature, \cs{vrule},
-or a \gr{box}),
-\item a discretionary break,
-\item a whatsit (see Chapter~\ref{io}),
-\item vertical material enclosed in \cs{mark},
-\cs{vadjust}, or \cs{insert},
-\item 
+水平列表(\indextermbus{horizontal}{list})的每一个元素都是以下各项之一：
+\begin{itemize}
+  \item 一个盒子(一个字符、合字、\cs{vrule} 或一个 \gr{box})，
+  \item 一个软换行
+  \item 一个延迟操作(见第 \ref{io} 章)
+  \item 由 \cs{mark}, \cs{vadjust} 或 \cs{insert} 闭合的竖直材料，
+  \item 
 \mdqon
-glue or leaders, a kern, a penalty, or a math-on/""off item.
+活动铅空或目录连接符、铅空、断行惩罚或数学模式开/""关符号
 \mdqoff
 \end{itemize}
-The items in the last point are all discardable.
-\emph{Discardable items}\index{discardable items}
-are called that, because they disappear in
-a break. Breaking of horizontal
-lists is discussed in Chapter~\ref{line:break}.
+最后一点的项目都是可丢弃的。
+之所以称之为可丢弃项目
+(\emph{Discardable items}\index{discardable items})，
+是因为在列表分解之后它们就消失了。
+水平列表的分解会在 \ref{line:break} 章讨论。
 
 %\subsection{Vertical mode}
-\subsection{Vertical mode}
+\subsection{竖直模式}
 
 %\emph{Vertical mode}\index{mode!vertical}
 %can be used to stack items on top of one another.
 %Most of the time, these items are boxes 
 %containing the lines of paragraphs.
-\emph{Vertical mode}\index{mode!vertical}
-can be used to stack items on top of one another.
-Most of the time, these items are boxes 
-containing the lines of paragraphs.
+竖直模式(\emph{Vertical mode}\index{mode!vertical})
+用于将一个项目堆到另一个上。
+大多数时候，这些项目是包含段落行的盒子。
 
 %Stacking material can take place inside a 
 %vertical box, but the
@@ -173,19 +162,15 @@ containing the lines of paragraphs.
 %appear by themselves on the page. In the latter case
 %\TeX\ is in vertical mode; in the former case, inside a
 %vertical box, \TeX\ operates in internal vertical mode.
-Stacking material can take place inside a 
-vertical box, but the
-items that are stacked can also 
-appear by themselves on the page. In the latter case
-\TeX\ is in vertical mode; in the former case, inside a
-vertical box, \TeX\ operates in internal vertical mode.
+堆叠材料可以在竖直盒子内部进行，但这些堆起来的项目也可以在页面上单独出现。
+前一种情况位于一个竖直盒子内部，
+\TeX\ 会在内部竖直模式下操作；而后一种情况下 \TeX\ 将处于竖直模式中。
 
 %In vertical mode all material is added to a vertical list.
 %If this list is built in external vertical mode, it
 %will later be broken when pages are formed.
-In vertical mode all material is added to a vertical list.
-If this list is built in external vertical mode, it
-will later be broken when pages are formed.
+在竖直模式中所有的材料都会加进竖直列表里。
+如果这个列表在内部竖直模式中构建，在页面生成时，它会被分解。
 
 %Each element of a \indextermbus{vertical}{list} is one of the following:
 %\begin{itemize}
@@ -197,16 +182,15 @@ will later be broken when pages are formed.
 %The items in the last point are all discardable.
 %Breaking of vertical lists
 %is discussed in Chapter~\ref{page:break}.
-Each element of a \indextermbus{vertical}{list} is one of the following:
+竖直列表(\indextermbus{vertical}{list})的每一个元素都是以下各项之一：
 \begin{itemize}
-\item a box (a horizontal or vertical box or an \cs{hrule}),
-\item a whatsit,
-\item a mark,
-\item glue or leaders, a kern, or a penalty.
+  \item 一个盒子(水平或竖直盒子或一个 \cs{hrule})
+  \item 一个延迟操作，
+  \item 一个标记，
+  \item 活动铅空或目录连接符、铅空或断行惩罚。
 \end{itemize}
-The items in the last point are all discardable.
-Breaking of vertical lists
-is discussed in Chapter~\ref{page:break}.
+列表最后一点中的项目都是可丢弃的。
+竖直列表的断行将在第 \ref{page:break} 章讨论。
 
 %There are a few exceptional conditions at the beginning
 %of  a vertical list: the value of \cs{prevdepth} is set
@@ -217,15 +201,12 @@ is discussed in Chapter~\ref{page:break}.
 %are added, and \cs{topskip} glue is added when the
 %first box is placed on this list
 %(see Chapters \ref{page:shape} and~\ref{page:break}).
-There are a few exceptional conditions at the beginning
-of  a vertical list: the value of \cs{prevdepth} is set
-to \n{-1000pt}. Furthermore, no \cs{parskip} glue is added
-at the top of an internal vertical list; 
-at the top of the main vertical list (the top of the
-`current page') no glue or other discardable items
-are added, and \cs{topskip} glue is added when the
-first box is placed on this list
-(see Chapters \ref{page:shape} and~\ref{page:break}).
+在竖直列表的开始处有一些特殊条件需要注意：
+\cs{prevdepth} 的值被设为 \n{-1000pt}。
+此外，在内部竖直列表的顶端没有附加 \cs{parskip} 的可变铅空。
+在主竖直列表的顶端(即“当前页”的顶端)没有附加可变铅空或其他可丢弃的项目，
+\cs{topskip} 的可变铅空会在第一个盒子加入列表时加入
+(见第 \ref{page:shape} 和 \ref{page:break} 章)。
 
 %%\point Horizontal and vertical commands
 %\section{Horizontal and vertical commands}
