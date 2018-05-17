@@ -26,7 +26,7 @@
 \item [\cs{hbox}] 构造一个水平盒子。
 %\item [\cs{vbox}]
 %      Construct a vertical box with reference point of the last item.
-\item [\cs{vbox}] 构造一个竖直盒子，其参考点是最后一个元素。
+\item [\cs{vbox}] 构造一个竖直盒子，其参考点（reference point）是最后一个元素。
 %\item [\cs{vtop}]
 %      Construct a vertical box with reference point of the first item.
 \item [\cs{vtop}] 构造一个竖直盒子，其参考点是第一个元素。
@@ -65,7 +65,7 @@
 %\item [\cs{unhcopy \cs{unvcopy}}]
 %      The same as \cs{unhbox}$\,$/$\,$\cs{unvbox},
 %      but do not empty the register.
-\item [\cs{unhcopy \cs{unvcopy}}] 与 \cs{unhbox}$\,$/$\,$\cs{unvbox} 的行为相同，但不清空寄存器。
+\item [\cs{unhcopy \cs{unvcopy}}] 与 \cs{unhbox}、\cs{unvbox} 的行为相同，但不清空寄存器。
 %\item [\cs{ht \cs{dp} \cs{wd}}]
 %      Height/depth/width of the box in a box register.
 \item [\cs{ht \cs{dp} \cs{wd}}] 返回盒子寄存器中盒子的高度、深度、宽度。
@@ -84,70 +84,38 @@
 %\mdqon
 %      a horizontal/""vertical box overfull.
 %\mdqoff
-\item [\cs{hfuzz \cs{vfuzz}}]
-      Excess size that \TeX\ tolerates before it considers
-\mdqon
-      a horizontal/""vertical box overfull.
-\mdqoff
-
+\item [\cs{hfuzz \cs{vfuzz}}] 该命令表示一个水平盒子或竖直盒子超出外层盒子尺寸的阈值；当超过该阈值时，\TeX 会考虑将其认定为溢出的（overfull）盒子。
 %\item [\cs{hbadness \cs{vbadness}}]
 %      Amount of tolerance before \TeX\ reports an underfull
 %\mdqon
 %      or overfull  horizontal/""vertical box.
 %\mdqoff
-\item [\cs{hbadness \cs{vbadness}}]
-      Amount of tolerance before \TeX\ reports an underfull
-\mdqon
-      or overfull  horizontal/""vertical box.
-\mdqoff
-
+\item [\cs{hbadness \cs{vbadness}}] 该命令表示一个阈值；当超过该阈值时，\TeX 会将相应盒子认定为欠满的（underfull）或者溢出的。
 %\item [\cs{overfullrule}]
 %      Width of the rule that is printed to indicate
 %      overfull horizontal boxes.
-\item [\cs{overfullrule}]
-      Width of the rule that is printed to indicate
-      overfull horizontal boxes.
-
-%
+\item [\cs{overfullrule}] 当水平盒子溢出时，\TeX 会打印一条标尺，以表明有溢出的水平盒子；该命令表示上述标尺的宽度。
 %\item [\cs{hsize}]
 %      Line width used for text typesetting inside a vertical box.
-
-\item [\cs{hsize}]
-      Line width used for text typesetting inside a vertical box.
-
+\item [\cs{hsize}] 该命令表示在水平盒子内文本排版可用的行宽。
 %\item [\cs{vsize}]
 %      Height of the page box.
-\item [\cs{vsize}]
-      Height of the page box.
-
-
+\item [\cs{vsize}] 该命令表示页盒子（page box）的高度。
 %\item [\cs{lastbox}]
 %      Register containing the last item added to the current list,
 %      if this was a box.
-\item [\cs{lastbox}]
-      Register containing the last item added to the current list,
-      if this was a box.
-
+\item [\cs{lastbox}] 若最后追加进当前列表的内容是一个盒子，则该寄存器会保存上述盒子。
 %\item [\cs{raise \cs{lower}}]
 %      Adjust vertical positioning of a box in horizontal mode.
-\item [\cs{raise \cs{lower}}]
-      Adjust vertical positioning of a box in horizontal mode.
-
+\item [\cs{raise \cs{lower}}] 这两个命令用于在水平模式中调整盒子的垂直位置。
 %\item [\cs{moveleft \cs{moveright}}]
 %      Adjust horizontal positioning of a box in vertical mode.
-\item [\cs{moveleft \cs{moveright}}]
-      Adjust horizontal positioning of a box in vertical mode.
-
+\item [\cs{moveleft \cs{moveright}}] 这两个命令用于在竖直模式中调整盒子的水平位置。
 %\item [\cs{everyhbox \cs{everyvbox}}]
 %\mdqon
 %      Token list inserted at the start of a horizontal/""vertical box.
 %\mdqoff
-\item [\cs{everyhbox \cs{everyvbox}}]
-\mdqon
-      Token list inserted at the start of a horizontal/""vertical box.
-\mdqoff
-
-%\end{inventory}
+\item [\cs{everyhbox \cs{everyvbox}}] 这两个命令分别用于在每个水平盒子或竖直盒子开头处插入的记号列表。
 \end{inventory}
 
 %\section{Boxes}
