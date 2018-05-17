@@ -46,29 +46,29 @@
 %\item [\cs{copy}]
 %      Use a box register, but retain the contents.
 \item [\cs{copy}] 使用盒子寄存器，但保留其中内容而不清空。
-%\item [\cs{ifhbox \cs{ifvbox}}]
+%\item [\cs{ifhbox} \cs{ifvbox}]
 %\mdqon
 %      Test whether a box register contains a horizontal/""vertical box.
 %\mdqoff
-\item [\cs{ifhbox \cs{ifvbox}}] 判断盒子寄存器中保存的是水平盒子还是竖直盒子。
+\item [\cs{ifhbox} \cs{ifvbox}] 判断盒子寄存器中保存的是水平盒子还是竖直盒子。
 %\item [\cs{ifvoid}]
 %      Test whether a box register is empty.
 \item [\cs{ifvoid}] 判断盒子寄存器是否为空。
 %\item [\cs{newbox}]
 %      Allocate a new box register.
 \item [\cs{newbox}] 分配新的盒子寄存器。
-%\item [\cs{unhbox \cs{unvbox}}]
+%\item [\cs{unhbox} \cs{unvbox}]
 %      Unpack a box register containing a horizontal/vertical box,
 %      adding the contents to the current horizontal/vertical list,
 %      and emptying the register.
-\item [\cs{unhbox \cs{unvbox}}] 将保存有水平盒子或竖直盒子的寄存器解包，并将其中内容追加到当前的水平列表或竖直列表中，而后清空寄存器。
-%\item [\cs{unhcopy \cs{unvcopy}}]
+\item [\cs{unhbox} \cs{unvbox}] 将保存有水平盒子或竖直盒子的寄存器解包，并将其中内容追加到当前的水平列表或竖直列表中，而后清空寄存器。
+%\item [\cs{unhcopy} \cs{unvcopy}]
 %      The same as \cs{unhbox}$\,$/$\,$\cs{unvbox},
 %      but do not empty the register.
-\item [\cs{unhcopy \cs{unvcopy}}] 与 \cs{unhbox}、\cs{unvbox} 的行为相同，但不清空寄存器。
-%\item [\cs{ht \cs{dp} \cs{wd}}]
+\item [\cs{unhcopy} \cs{unvcopy}] 与 \cs{unhbox}、\cs{unvbox} 的行为相同，但不清空寄存器。
+%\item [\cs{ht} \cs{dp} \cs{wd}]
 %      Height/depth/width of the box in a box register.
-\item [\cs{ht \cs{dp} \cs{wd}}] 返回盒子寄存器中盒子的高度、深度、宽度。
+\item [\cs{ht} \cs{dp} \cs{wd}] 返回盒子寄存器中盒子的高度、深度、宽度。
 %\item [\cs{boxmaxdepth}]
 %      Maximum allowed depth of boxes.
 %      Plain \TeX\ default:~\cs{maxdimen}.
@@ -79,18 +79,18 @@
 %\item [\cs{badness}]
 %      Badness of the most recently constructed box.
 \item [\cs{badness}] 刚刚构造的盒子的劣度。
-%\item [\cs{hfuzz \cs{vfuzz}}]
+%\item [\cs{hfuzz} \cs{vfuzz}]
 %      Excess size that \TeX\ tolerates before it considers
 %\mdqon
 %      a horizontal/""vertical box overfull.
 %\mdqoff
-\item [\cs{hfuzz \cs{vfuzz}}] 该命令表示一个水平盒子或竖直盒子超出外层盒子尺寸的阈值；当超过该阈值时，\TeX 会考虑将其认定为溢出的（overfull）盒子。
-%\item [\cs{hbadness \cs{vbadness}}]
+\item [\cs{hfuzz} \cs{vfuzz}] 该命令表示一个水平盒子或竖直盒子超出外层盒子尺寸的阈值；当超过该阈值时，\TeX 会考虑将其认定为溢出的（overfull）盒子。
+%\item [\cs{hbadness} \cs{vbadness}]
 %      Amount of tolerance before \TeX\ reports an underfull
 %\mdqon
 %      or overfull  horizontal/""vertical box.
 %\mdqoff
-\item [\cs{hbadness \cs{vbadness}}] 该命令表示一个阈值；当超过该阈值时，\TeX 会将相应盒子认定为欠满的（underfull）或者溢出的。
+\item [\cs{hbadness} \cs{vbadness}] 该命令表示一个阈值；当超过该阈值时，\TeX 会将相应盒子认定为欠满的（underfull）或者溢出的。
 %\item [\cs{overfullrule}]
 %      Width of the rule that is printed to indicate
 %      overfull horizontal boxes.
@@ -105,17 +105,17 @@
 %      Register containing the last item added to the current list,
 %      if this was a box.
 \item [\cs{lastbox}] 若最后追加进当前列表的内容是一个盒子，则该寄存器会保存上述盒子。
-%\item [\cs{raise \cs{lower}}]
+%\item [\cs{raise} \cs{lower}]
 %      Adjust vertical positioning of a box in horizontal mode.
-\item [\cs{raise \cs{lower}}] 这两个命令用于在水平模式中调整盒子的垂直位置。
-%\item [\cs{moveleft \cs{moveright}}]
+\item [\cs{raise} \cs{lower}] 这两个命令用于在水平模式中调整盒子的垂直位置。
+%\item [\cs{moveleft} \cs{moveright}]
 %      Adjust horizontal positioning of a box in vertical mode.
-\item [\cs{moveleft \cs{moveright}}] 这两个命令用于在竖直模式中调整盒子的水平位置。
-%\item [\cs{everyhbox \cs{everyvbox}}]
+\item [\cs{moveleft} \cs{moveright}] 这两个命令用于在竖直模式中调整盒子的水平位置。
+%\item [\cs{everyhbox} \cs{everyvbox}]
 %\mdqon
 %      Token list inserted at the start of a horizontal/""vertical box.
 %\mdqoff
-\item [\cs{everyhbox \cs{everyvbox}}] 这两个命令分别用于在每个水平盒子或竖直盒子开头处插入的记号列表。
+\item [\cs{everyhbox} \cs{everyvbox}] 这两个命令分别用于在每个水平盒子或竖直盒子开头处插入的记号列表。
 \end{inventory}
 
 %\section{Boxes}
