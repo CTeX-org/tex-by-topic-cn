@@ -25,7 +25,7 @@
 %at the horizontal and vertical modes, the kinds of objects
 %that can occur in the corresponding lists, and the
 %commands that are exclusive for one mode or the other. 
-在处理文件时，\TeX\ 总处于某种模式(\indexterm{mode})。
+在处理文件时，\TeX\ 总处于某种\indexterm{模式}。
 一共有六种模式，可划分为三类：
 \begin{enumerate}
 \item 水平模式和受限水平模式，
@@ -101,7 +101,7 @@
 %if the text is in an \cs{hbox} there is only one line
 %of text, and the corresponding mode is the restricted
 %horizontal mode.
-水平模式(\indextermbus{horizontal}{mode})的主要用来构建一行行的文字。
+\cindextermbus{水平}{模式}的主要用来构建一行行的文字。
 页面上的文字和 \cs{vbox} 或 \cs{vtop} 中的文字在水平模式中构建
 (这也许叫做“段落模式”)；
 如果 \cs{hbox} 中仅仅有一行文字，则对应的模式为受限水平模式。
@@ -130,7 +130,7 @@
 %are called that, because they disappear in
 %a break. Breaking of horizontal
 %lists is discussed in Chapter~\ref{line:break}.
-水平列表(\indextermbus{horizontal}{list})的每一个元素都是以下各项之一：
+\cindextermbus{水平}{列表}的每一个元素都是以下各项之一：
 \begin{itemize}
   \item 一个盒子(一个字符、合字、\cs{vrule} 或一个 \gr{box})，
   \item 一个软换行
@@ -143,7 +143,7 @@
 \end{itemize}
 最后一点的项目都是可丢弃的。
 之所以称之为可丢弃项目
-(\emph{Discardable items}\index{discardable items})，
+(\emph{Discardable items}\index{discardable items/可丢弃项目})，
 是因为在列表分解之后它们就消失了。
 水平列表的分解会在 \ref{line:break} 章讨论。
 
@@ -154,7 +154,7 @@
 %can be used to stack items on top of one another.
 %Most of the time, these items are boxes 
 %containing the lines of paragraphs.
-竖直模式(\emph{Vertical mode}\index{mode!vertical})
+\cindextermbus{竖直}{模式}(\emph{Vertical mode})
 用于将一个项目堆到另一个上。
 大多数时候，这些项目是包含段落行的盒子。
 
@@ -184,7 +184,7 @@
 %The items in the last point are all discardable.
 %Breaking of vertical lists
 %is discussed in Chapter~\ref{page:break}.
-竖直列表(\indextermbus{vertical}{list})的每一个元素都是以下各项之一：
+\cindextermbus{竖直}{列表}的每一个元素都是以下各项之一：
 \begin{itemize}
   \item 一个盒子(水平或竖直盒子或一个 \cs{hrule})
   \item 一个延迟操作，
@@ -213,7 +213,7 @@
 %%\point Horizontal and vertical commands
 %\section{Horizontal and vertical commands}
 %\point Horizontal and vertical commands
-\section{Horizontal and vertical commands}
+\section{水平和竖直命令}
 
 %Some commands are so intrinsically horizontal or vertical
 %in nature that they force \TeX\ to go into that mode, if
@@ -221,12 +221,9 @@
 %is called a \gr{horizontal command}; similarly a command that
 %forces \TeX\ into vertical mode is called a
 %\gr{vertical command}.
-Some commands are so intrinsically horizontal or vertical
-in nature that they force \TeX\ to go into that mode, if
-possible. A~command that forces \TeX\ into horizontal mode
-is called a \gr{horizontal command}; similarly a command that
-forces \TeX\ into vertical mode is called a
-\gr{vertical command}.
+有些命令本质上是“内在”水平或竖直的，如果有可能，它们会强制 \TeX\ 进入该模式。
+能强制 \TeX\ 进入水平模式的命令称为水平命令 \gr{horizontal command}；
+类似的能强制 \TeX\ 进入竖直模式的命令称作竖直命令 \gr{vertical command}。
 
 %However, not all transitions are possible:
 %\TeX\ can switch from both vertical modes to 
@@ -238,16 +235,11 @@ forces \TeX\ into vertical mode is called a
 %A~vertical command in restricted horizontal mode thus gives
 %an error; the \cs{par} command in restricted horizontal mode
 %has no effect.
-However, not all transitions are possible:
-\TeX\ can switch from both vertical modes to 
-(unrestricted) horizontal mode and back
-through horizontal and vertical commands, but no transitions
-to or from restricted horizontal mode are possible
-(other than by enclosing horizontal boxes in vertical boxes or
-the other way around).
-A~vertical command in restricted horizontal mode thus gives
-an error; the \cs{par} command in restricted horizontal mode
-has no effect.
+但是，并非所有的模式转换都是可行的：
+\TeX\ 能从两种竖直模式切换到(无限制的)水平模式，并可以通过水平和竖直命令切换回去。
+但转入或转出受限水平模式的转换均是不可行的(除了在竖直盒子内闭合水平盒子或使用其他的方式)。
+在受限水平模式内使用竖直命令会导致错误；
+受限水平模式内，\cs{par} 命令没有效果。
 
 %The \indextermbus{horizontal}{commands} are the following:
 %\label{h:com:list}
@@ -263,19 +255,18 @@ has no effect.
 %\item \cs{valign};
 %\item math shift (\n\$).
 %\end{itemize}
-The \indextermbus{horizontal}{commands} are the following:
+以下是\cindextermbus{水平}{命令}(\emph{horizontal commands}):
 \label{h:com:list}
 \begin{itemize}
-\item any \gr{letter}, \gr{otherchar}, \cs{char}, 
-a control sequence defined by \cs{chardef}, or \cs{noboundary};
-\item \cs{accent}, \cs{discretionary}, the discretionary
-hyphen~\verb|\-| and control space~\verb|\|\n{\char32};
-\item \cs{unhbox} and \cs{unhcopy};
-\item \cs{vrule} and the
-\gr{horizontal skip} commands
-\cs{hskip}, \cs{hfil}, \cs{hfill}, \cs{hss}, and \cs{hfilneg};
+\item 任何 \gr{letter}, \gr{otherchar}, \cs{char}，
+由 \cs{chardef} 或 \cs{noboundary} 定义的控制序列；
+\item \cs{accent}, \cs{discretionary}, 
+软连词符 \verb|\-| 和 控制空格 \verb|\|\n{\char32}；
+\item \cs{unhbox} 和 \cs{unhcopy};
+\item \cs{vrule} 和 \gr{horizontal skip} 命令
+\cs{hskip}, \cs{hfil}, \cs{hfill}, \cs{hss}, 和 \cs{hfilneg};
 \item \cs{valign};
-\item math shift (\n\$).
+\item 数学转换 (\n\$)。
 \end{itemize}
 
 %The \indextermbus{vertical}{commands} are the following:
@@ -289,27 +280,26 @@ hyphen~\verb|\-| and control space~\verb|\|\n{\char32};
 %\end{itemize}
 %Note that the vertical commands do not include \cs{par};
 %nor are \cs{indent} and \cs{noindent} horizontal commands.
-The \indextermbus{vertical}{commands} are the following:
+以下是\cindextermbus{竖直}{命令}(\emph{vertical commands}):
 \label{v:com:list}
 \begin{itemize}
-\item \cs{unvbox} and \cs{unvcopy};
-\item \cs{hrule} and the \gr{vertical skip} commands
- \cs{vskip}, \cs{vfil}, \cs{vfill}, \cs{vss}, and \cs{vfilneg};
+\item \cs{unvbox} 和 \cs{unvcopy};
+\item \cs{hrule} 和 \gr{vertical skip} 命令
+ \cs{vskip}, \cs{vfil}, \cs{vfill}, \cs{vss} 和 \cs{vfilneg};
 \item \cs{halign};
-\item \cs{end} and \cs{dump}.
+\item \cs{end} 和 \cs{dump}.
 \end{itemize}
-Note that the vertical commands do not include \cs{par};
-nor are \cs{indent} and \cs{noindent} horizontal commands.
+注意！竖直命令不包含 \cs{par}；
+\cs{indent} 和 \cs{noindent} 也不是水平命令。
 
 %The connection between boxes and modes is explored below;
 %see Chapter~\ref{rules} for more on the connection between
 %rules and modes.
-The connection between boxes and modes is explored below;
-see Chapter~\ref{rules} for more on the connection between
-rules and modes.
+下方探讨了盒子和模式的联系；
+关于规则和模式的联系，详见第 \ref{rules} 章。
 
 %\section{The internal modes}
-\section{The internal modes}
+\section{内部模式}
 
 %The \indextermbus{restricted horizontal}{mode} and 
 %\indextermbus{internal vertical}{mode}
@@ -320,20 +310,15 @@ rules and modes.
 %restricted in nature than internal vertical mode.
 %The third internal mode is non-display math mode
 %(see Chapter~\ref{math}).
-The \indextermbus{restricted horizontal}{mode} and 
-\indextermbus{internal vertical}{mode}
-are those variants of horizontal mode and vertical mode
-that hold inside an \cs{hbox} and \cs{vbox} (or \cs{vtop}
-or \cs{vcenter}) respectively.
-However, restricted horizontal mode is rather more
-restricted in nature than internal vertical mode.
-The third internal mode is non-display math mode
-(see Chapter~\ref{math}).
+\cindextermbus{受限水平}{模式}是 \cs{hbox} 中的水平模式的变种；
+而\cindextermbus{内部竖直}{模式}是 \cs{vbox} (或 \cs{vtop}, \cs{vcenter}) 中竖直模式的变种。
+本质上说，受限水平模式相对于内部竖直模式限制更多。
+第三种内部模式是非显示的数学模式(见 \ref{math} 章)
 
 %%\spoint Restricted horizontal mode
 %\subsection{Restricted horizontal mode}
 %\spoint Restricted horizontal mode
-\subsection{Restricted horizontal mode}
+\subsection{受限水平模式}
 
 %The main difference between restricted horizontal mode,
 %the mode in an \cs{hbox}, and unrestricted horizontal mode,
@@ -346,22 +331,14 @@ The third internal mode is non-display math mode
 %In unrestricted horizontal mode it would cause a
 %\cs{par} token to be inserted and vertical mode to be entered
 %(see also Chapter~\ref{par:end}).
-The main difference between restricted horizontal mode,
-the mode in an \cs{hbox}, and unrestricted horizontal mode,
-the mode in which paragraphs in vertical boxes
-and on the page are built,
-is that you cannot break out of restricted horizontal mode: 
-\cs{par}~does nothing in this mode. 
-Furthermore, a~\gram{vertical command} in restricted horizontal
-mode gives an error. 
-In unrestricted horizontal mode it would cause a
-\cs{par} token to be inserted and vertical mode to be entered
-(see also Chapter~\ref{par:end}).
+对于水平模式，受限(\cs{hbox}的模式)与不受限(正在构建页面和竖直盒子中段落的模式)的最大区别是：你不能退出受限水平模式，而且 \cs{par} 在受限模式中不起作用。
+此外，受限水平模式中的 \gram{vertical command} 会导致错误。
+再非受限水平模式中，这样做会插入一个 \cs{par} 记号，并进入竖直模式(详见第 \ref{par:end} 章)。
 
 %%\spoint Internal vertical mode
 %\subsection{Internal vertical mode}
 %\spoint Internal vertical mode
-\subsection{Internal vertical mode}
+\subsection{内部竖直模式}
 
 %Internal vertical mode, the vertical mode inside
 %a~\cs{vbox}, is a lot like external vertical
@@ -370,24 +347,16 @@ In unrestricted horizontal mode it would cause a
 %for instance, is perfectly valid:
 %\TeX\ then starts building a paragraph in
 %unrestricted horizontal mode.
-Internal vertical mode, the vertical mode inside
-a~\cs{vbox}, is a lot like external vertical
-mode, the mode in which pages are built.
-A~\gram{horizontal command} in internal vertical mode,
-for instance, is perfectly valid:
-\TeX\ then starts building a paragraph in
-unrestricted horizontal mode.
+内部竖直模式即 \cs{vbox} 内的竖直模式，很像构建页面时使用的外部竖直模式。
+内部竖直模式内的 \gram{horizontal command} 是完全有效的，例如：\TeX\ 开始以非受限水平模式构建段落。
 
 %One difference is that the commands
 %\cs{unskip} and \cs{unkern} have no effect
 %in external vertical mode, and
 %\cs{lastbox} is always empty in external vertical mode.
 %See further pages \pageref{lastbox} and~\pageref{unskip}.
-One difference is that the commands
-\cs{unskip} and \cs{unkern} have no effect
-in external vertical mode, and
-\cs{lastbox} is always empty in external vertical mode.
-See further pages \pageref{lastbox} and~\pageref{unskip}.
+内部和外部竖直模式的一个区别是：在内部竖直模式中，\cs{unskip} 和 \cs{unkern} 命令没有效果，并且 \cs{lastbox}s 总是空的。
+详见第 \pageref{lastbox} 和 \pageref{unskip}。·
 
 %The entries of alignments (see Chapter~\ref{align}) are 
 %processed in internal modes: restricted horizontal mode
@@ -396,23 +365,16 @@ See further pages \pageref{lastbox} and~\pageref{unskip}.
 %The material in \cs{vadjust}   and \cs{insert} items
 %is also processed in internal vertical mode; furthermore,
 %\TeX\ enters this mode when processing the \cs{output} token list.
-The entries of alignments (see Chapter~\ref{align}) are 
-processed in internal modes: restricted horizontal mode
-for the entries of an \cs{halign}, and internal vertical
-mode for the entries of a~\cs{valign}.
-The material in \cs{vadjust}   and \cs{insert} items
-is also processed in internal vertical mode; furthermore,
-\TeX\ enters this mode when processing the \cs{output} token list.
+输入的对齐在内部模式中处理(见第 \ref{align} 章)。
+\cs{halign} 的项使用受限水平模式，而 \cs{valign} 的项使用内部竖直模式。
+\cs{vadjust} 的材料和 \cs{insert} 的项也在内部竖直模式内处理；此外，\TeX\ 在处理 \cs{output} 记号序列时也会进入这个模式。
 
 %The commands \cs{end} and \cs{dump} (the latter exists only in \IniTeX)
 %are not allowed in
 %internal vertical mode; furthermore, \cs{dump} is not allowed
 %inside a group (see Chapter~\ref{TeXcomm}).
-The commands \cs{end} and \cs{dump} (the latter exists only in \IniTeX)
-are not allowed in
-internal vertical mode; furthermore, \cs{dump} is not allowed
-inside a group (see Chapter~\ref{TeXcomm}).
-
+\cs{end} 和 \cs{dump} 命令不允许出现在内部竖直模式中(后者仅存在于 \IniTeX 中)；
+此外 \cs{dump} 不允许在组内使用(见底 \ref{TeXcomm} 章)。
 
 %%\point[hvbox]  Boxes and modes
 %\section{Boxes and modes}
