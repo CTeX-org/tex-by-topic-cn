@@ -436,16 +436,7 @@ plain \TeX 中的 \csidx{newbox} 宏可用于分配一个未被使用的盒子�
 %In general, the depth (height) of a \cs{vbox} (\cs{vtop})
 %\alt
 %can be non-zero if the last (first) item is a box or rule.
-The calculation of height and depth is different
-for vertical boxes constructed by \cs{vbox} and \cs{vtop}.
-The ground rule is that
-a \cs{vbox} has a reference point that lies on
-the baseline of its last component,
-and a \cs{vtop} has its reference point on the baseline of the
-first component.
-In general, the depth (height) of a \cs{vbox} (\cs{vtop})
-\alt
-can be non-zero if the last (first) item is a box or rule.
+由 \cs{vbox} 和 \cs{vtop} 生成的竖直盒子在计算高度和深度时会有所不同。基本原则是，\cs{vbox} 的参考点位于最后一个元素的基线之上，而 \cs{vtop} 的参考点位于第一个元素的基线之上。一般来说，只要最后一个（第一个）元素是盒子或者标尺（rule），则 \cs{vbox}（\cs{vtop}）的深度（高度）非零。
 
 %The height of a \cs{vbox} is then the sum of the heights and
 %depths of all components except the last, plus the height
