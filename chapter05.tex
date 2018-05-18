@@ -299,7 +299,7 @@ plain \TeX 中的 \csidx{newbox} 宏可用于分配一个未被使用的盒子�
 %\subsection{The \cs{lastbox}}
 %\label{lastbox}
 %\spoint[lastbox] The \cs{lastbox}
-\subsection{The \cs{lastbox}}
+\subsection{\cs{lastbox}}
 \label{lastbox}
 
 %When \TeX\ has built a partial list, the last box in this
@@ -311,20 +311,13 @@ plain \TeX 中的 \csidx{newbox} 宏可用于分配一个未被使用的盒子�
 %It is not possible to get hold of the last box
 %in the case of the main vertical list.
 %The \cs{lastbox} is then always void.
-When \TeX\ has built a partial list, the last box in this
-list is accessible as the \csidx{lastbox}. This behaves
-like a box register, so you can remove the last box from  the
-list by assigning the \cs{lastbox} to some  box register.
-If the last item on the current list is not a box,
-the \cs{lastbox} acts like a void box register.
-It is not possible to get hold of the last box
-in the case of the main vertical list.
-The \cs{lastbox} is then always void.
+当 \TeX 构建完成一个部分列表（partial list）后，此列表中的最后一个盒子可通过 \csidx{lastbox} 来访问。该命令的行为与盒子寄存器相似；因此，你可以将 \cs{lastbox} 赋值给其他盒子寄存器，以将其从列表中删除。如果列表中最后一个元素不是盒子，则 \cs{lastbox} 的行为与空寄存器相似。你无法通过 \cs{lastbox} 访问主竖直列表中的最后一个元素；在这种情况下，\cs{lastbox} 总是空寄存器。
 
 %As an example, the statement
-%\begin{verbatim}
-%{\setbox0=\lastbox}
-%\end{verbatim}
+举例来说，下面的语句将当前列表中的最后一个盒子赋值给编号为 0 的盒子寄存器，并将其从当前列表中删除：
+\begin{verbatim}
+{\setbox0=\lastbox}
+\end{verbatim}
 %removes
 %the last box from the current list, assigning it to box
 %register~0. Since this assignment occurs inside a group,
@@ -332,34 +325,17 @@ The \cs{lastbox} is then always void.
 %At the start of a paragraph this can be used to remove the
 %indentation box (see Chapter~\ref{par:start}).
 %Another example of \cs{lastbox} can be found on page~\pageref{varioset}.
-As an example, the statement
-\begin{verbatim}
-{\setbox0=\lastbox}
-\end{verbatim}
-removes
-the last box from the current list, assigning it to box
-register~0. Since this assignment occurs inside a group,
-the register is cleared at the end of the group.
-At the start of a paragraph this can be used to remove the
-indentation box (see Chapter~\ref{par:start}).
-Another example of \cs{lastbox} can be found on page~\pageref{varioset}.
+由于赋值过程位于分组之内，在分组结束后，寄存器会被清空。因此，在一个自然段开始之时使用这一语句，可以删除缩进盒子（见第~\ref{par:start}~章）。在第~\pageref{varioset}~页也有关于 \cs{lastbox} 的例子。
 
 %Because the \verb-\lastbox- is always empty in external vertical mode,
 %it is not possible to get hold of boxes that have been
 %added to the page. However, it is possible to dissect
 %the page once it is in \cs{box255}, for instance doing
-%\begin{verbatim}
-%\vbox{\unvbox255{\setbox0=\lastbox}}
-%\end{verbatim}
-%inside the output routine.
-Because the \verb-\lastbox- is always empty in external vertical mode,
-it is not possible to get hold of boxes that have been
-added to the page. However, it is possible to dissect
-the page once it is in \cs{box255}, for instance doing
+由于 \cs{lastbox} 在外部竖直模式中总是为空，它不能访问追加到输出页上的盒子。但当页面保存在 \cs{box255} 中时，我们可以在输出阶段解包这个盒子，而后取得 \cs{lastbox}\liamfnote{关于这一技巧，这里有一个完整的示例：\url{https://gist.github.com/91fd658069b0d3dfb7dbd2cba69b856a}}：
 \begin{verbatim}
 \vbox{\unvbox255{\setbox0=\lastbox}}
 \end{verbatim}
-inside the output routine.
+%inside the output routine.
 
 %If boxes in vertical mode have been shifted by \cs{moveright}
 %or \cs{moveleft}, or if boxes in horizontal mode  have
@@ -367,12 +343,7 @@ inside the output routine.
 %any information about this
 %displacement due to such a command is lost when
 %the \cs{lastbox} is taken from the list.
-If boxes in vertical mode have been shifted by \cs{moveright}
-or \cs{moveleft}, or if boxes in horizontal mode  have
-been raised by \cs{raise} or lowered by \cs{lower},
-any information about this
-displacement due to such a command is lost when
-the \cs{lastbox} is taken from the list.
+值得一提的是，如果竖直模式中的盒子被 \cs{moveright} 或 \cs{moveleft} 调整过位置，或是水平模式中的盒子被 \cs{raise} 或 \cs{lower} 调整过位置，则使用 \cs{lastbox} 访问列表中最后一个元素时，这些位置调整信息都会丢失。
 
 %%\point Natural dimensions of boxes
 %\section{Natural dimensions of boxes}
