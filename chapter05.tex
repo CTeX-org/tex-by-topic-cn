@@ -348,7 +348,7 @@ plain \TeX 中的 \csidx{newbox} 宏可用于分配一个未被使用的盒子�
 %%\point Natural dimensions of boxes
 %\section{Natural dimensions of boxes}
 %\point Natural dimensions of boxes
-\section{盒子的天然尺寸}
+\section{盒子自身的尺寸}
 
 %%\spoint Dimensions of created horizontal boxes
 %\subsection{Dimensions of created horizontal boxes}
@@ -446,14 +446,9 @@ plain \TeX 中的 \csidx{newbox} 宏可用于分配一个未被使用的盒子�
 %is the sum of the depth of the first component and the heights
 %and depths of all subsequent material; its height is the
 %height of the first component.
-The height of a \cs{vbox} is then the sum of the heights and
-depths of all components except the last, plus the height
-of that last component; the depth of the \cs{vbox} is the
-depth of its last component.
-The depth of a \cs{vtop}
-is the sum of the depth of the first component and the heights
-and depths of all subsequent material; its height is the
-height of the first component.
+\cs{vbox} 的高度是除最后一个元素之外所有元素高度与深度之和，再加上最后一个元素的高度；\cs{vbox} 的深度则是最后一个元素的深度。\cs{vtop} 的高度是第一个元素的高度；\cs{vtop} 的深度则是除第一个元素之外所有元素高度与深度之和，再加上第一个元素的深度。%
+% Liam0205：这里将下一段的最后一句话挪到此处
+也就是说，对于 \cs{vtop} 来说，其深度是所包含所有元素的高度与深度之和，再减去第一个元素的高度。
 
 %However, the actual rules are a bit
 %more complicated when the first component of a \cs{vtop}
@@ -468,19 +463,8 @@ height of the first component.
 %The depth of a \cs{vtop}, then, is equal to the total
 %height plus depth of all enclosed material minus
 %the height of the \cs{vtop}.
-However, the actual rules are a bit
-more complicated when the first component of a \cs{vtop}
-or the last component of a \cs{vbox} is not a box or rule.
-If the last component of a \cs{vbox} is a kern or a glue,
-the depth of that box is zero; a \cs{vtop}'s
-height is zero
-unless its first component is a box or rule.
-\altt
-(Note the asymmetry in these definitions; see below for
-an example illustrating this.)
-The depth of a \cs{vtop}, then, is equal to the total
-height plus depth of all enclosed material minus
-the height of the \cs{vtop}.
+如果 \cs{vtop}（\cs{vbox}）的第一个元素（最后一个元素）不是盒子或标尺，那么实际规则还要更复杂一点。如果 \cs{vbox} 的最后一个元素是铅空（kern）或伸缩胶（glue），则盒子的深度为零；而若 \cs{vtop} 的第一个元素是铅空或伸缩胶，则盒子的高度为零。（注意这些定义中的不对称性；可参考后续示例）
+% 此处最后一句话挪到上一段末尾处。
 
 %There is a limit on the depth of vertical boxes:
 %if the depth of a \cs{vbox} or \cs{vtop}
@@ -492,27 +476,14 @@ the height of the \cs{vtop}.
 %natural height of the box. If the box had a \n{to} or
 %\n{spread} specification, any glue is set anew to take
 %the new height into account.
-There is a limit on the depth of vertical boxes:
-if the depth of a \cs{vbox} or \cs{vtop}
-calculated by the above rules would exceed
-\cstoidx boxmaxdepth\par,
-the reference point of the box
-is moved down by the excess amount.
-More precisely, the excess depth is added to the
-natural height of the box. If the box had a \n{to} or
-\n{spread} specification, any glue is set anew to take
-the new height into account.
+关于竖直盒子，还有一个限制：如果 \cs{vbox} 或者 \cs{vtop} 的深度超出 \csidx{boxmaxdepth}，则盒子的参考点会下移这一超出的数值。具体来说，超出限制的深度，会被加在盒子自身的高度之上。如果盒子有 \n{to} 或者 \n{spread} 声明符，则相关的伸缩胶都会被重新设置，以将追加的高度考虑在内。
 
 %Ordinarily,
 %\cs{boxmaxdepth} is set to the maximum dimension
 %possible in \TeX. It is for instance reduced during some of
 %the calculations  in the plain \TeX\ output routine;
 %see Chapter~\ref{output}.
-Ordinarily,
-\cs{boxmaxdepth} is set to the maximum dimension
-possible in \TeX. It is for instance reduced during some of
-the calculations  in the plain \TeX\ output routine;
-see Chapter~\ref{output}.
+通常，\cs{boxmaxdepth} 的值是 \TeX 能表示的最大尺寸。但在一些情况下，例如，在 plain \TeX 的输出阶段的一些计算中，它的值会被修改得小很多。详见第~\ref{output}~章。
 
 %\subsection{Examples}
 \subsection{Examples}
