@@ -119,34 +119,16 @@
 \end{inventory}
 
 %\section{Boxes}
-\section{Boxes}
+\section{盒子}
 
 %In this chapter we shall look at boxes. Boxes are containers
 %for pieces of horizontal or vertical lists.
 %Boxes that are needed more than once can be stored in box registers.
-In this chapter we shall look at boxes. Boxes are containers
-for pieces of horizontal or vertical lists.
-Boxes that are needed more than once can be stored in box registers.
+本章我们讨论盒子。\TeX 中的水平盒子与竖直盒子分别是盒子是水平与竖直列表内容的容器。需要多次使用的盒子可以保存在盒子寄存器当中。
 
 %When \TeX\ expects a \gr{box}, any of the following forms
 %is admissible:
-%\begin{itemize}
-%\item \cs{hbox}\gr{box specification}\lb\gr{horizontal material}\rb
-%\item \cs{vbox}\gr{box specification}\lb\gr{vertical material}\rb
-%\item \cs{vtop}\gr{box specification}\lb\gr{vertical material}\rb
-%\item \cs{box}\gr{8-bit number}
-%\item \cs{copy}\gr{8-bit number}
-%\item \cs{vsplit}\gr{8-bit number}\n{to}\gr{dimen}
-%\item \cs{lastbox}
-%\end{itemize}
-%A \gr{box specification} is defined as\label{box:spec}
-%\begin{disp}\gr{box specification} $\longrightarrow$ \gr{filler}
-%\nl\indent$|$ \n{to} \gr{dimen}\gr{filler}
-%          $|$ \n{spread} \gr{dimen}\gr{filler}
-%\end{disp}
-%An \gr{8-bit number} is a number in the range~0--255.
-When \TeX\ expects a \gr{box}, any of the following forms
-is admissible:
+当 \TeX 需要接受一个盒子（\gr{box}）时，\TeX 可接受以下形式：
 \begin{itemize}
 \item \cs{hbox}\gr{box specification}\lb\gr{horizontal material}\rb
 \item \cs{vbox}\gr{box specification}\lb\gr{vertical material}\rb
@@ -156,45 +138,36 @@ is admissible:
 \item \cs{vsplit}\gr{8-bit number}\n{to}\gr{dimen}
 \item \cs{lastbox}
 \end{itemize}
-A \gr{box specification} is defined as\label{box:spec}
+%A \gr{box specification} is defined as\label{box:spec}
+其中 \gr{box specification} 的定义如下\label{box:spec}
 \begin{disp}\gr{box specification} $\longrightarrow$ \gr{filler}
 \nl\indent$|$ \n{to} \gr{dimen}\gr{filler}
-          $|$ \n{spread} \gr{dimen}\gr{filler}
+         $|$ \n{spread} \gr{dimen}\gr{filler}
 \end{disp}
-An \gr{8-bit number} is a number in the range~0--255.
+%An \gr{8-bit number} is a number in the range~0--255.
+而 \gr{8-bit number} 则是 0--255 范围内的数字。
 
 %The braces surrounding box material define a group;
 %they can be explicit characters
 %of categories 1 and~2 respectively,
 %or control sequences \cs{let} to such characters;
 %see also below.
-The braces surrounding box material define a group;
-they can be explicit characters
-of categories 1 and~2 respectively,
-or control sequences \cs{let} to such characters;
-see also below.
-
+包围盒子内容的花括号定义了一个分组；它们可以是分类码为 1 和 2 的显式字符，也可以是通过 \cs{let} 定义的控制序列（隐式字符）；见下文。
 
 %A \gr{box} can in general be used in horizontal, vertical,
 %and math mode, but see below for the \cs{lastbox}.
 %The connection between
 %boxes and modes is explored further in Chapter~\ref{hvmode}.
-A \gr{box} can in general be used in horizontal, vertical,
-and math mode, but see below for the \cs{lastbox}.
-The connection between
-boxes and modes is explored further in Chapter~\ref{hvmode}.
+除下文提到的 \cs{lastbox} 之外，盒子通常可以用在水平、竖直和数学模式。盒子与模式之间的关系将在第~\ref{hvmode}~中讨论。
 
 %The box produced by \cs{vcenter} \ldash a command that is allowed only in
 %math mode \rdash  is not a \gr{box}. For instance,
 %it can not be assigned with \verb=\setbox=; see further
 %Chapter~\ref{math}.
-The box produced by \cs{vcenter} \ldash a command that is allowed only in
-math mode \rdash  is not a \gr{box}. For instance,
-it can not be assigned with \verb=\setbox=; see further
-Chapter~\ref{math}.
+由 \cs{vcenter} 命令（仅可在数学模式下使用）产生的盒子不是通常意义的盒子（\gr{box}）。特别地，它不能赋值给 \verb=\setbox=；详见第~\ref{math}~章。
 
 %The \cs{vsplit} operation is treated in Chapter~\ref{page:break}.
-The \cs{vsplit} operation is treated in Chapter~\ref{page:break}.
+\cs{vsplit} 命令将在第~\ref{page:break}~章详细讨论。
 
 %\section{Box registers}
 \section{Box registers}
