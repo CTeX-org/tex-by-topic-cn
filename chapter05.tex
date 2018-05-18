@@ -170,7 +170,7 @@
 \cs{vsplit} 命令将在第~\ref{page:break}~章详细讨论。
 
 %\section{Box registers}
-\section{Box registers}
+\section{盒子寄存器}
 
 %There are 256 box registers, numbered 0--255.
 %Either a box register is  empty (`void'), or it contains a horizontal
@@ -178,52 +178,35 @@
 %This section discusses specifically box {\em registers};
 %the sizes of boxes, and the way material is arranged inside them,
 %is treated below.
-There are 256 box registers, numbered 0--255.
-Either a box register is  empty (`void'), or it contains a horizontal
-or vertical box.
-This section discusses specifically box {\em registers};
-the sizes of boxes, and the way material is arranged inside them,
-is treated below.
+共有 256 个盒子寄存器，它们从 0 开始编号至 255。盒子寄存器要不然是空的（void），要不然包含了一个水平盒子或一个竖直盒子。本节只讨论盒子\emph{寄存器}；盒子的尺寸、内部内容的排列方式则在后续小节中讨论。
 
 %%\spoint Allocation: \cs{newbox}
 %\subsection{Allocation: \cs{newbox}}
 %\spoint Allocation: \cs{newbox}
-\subsection{Allocation: \cs{newbox}}
+\subsection{使用 \cs{newbox} 分配盒子寄存器}
 
 %The plain \TeX\ \csidx{newbox} macro allocates an unused
 %box register:
-%\begin{verbatim}
-%\newbox\MyBox
-%\end{verbatim}
+plain \TeX 中的 \csidx{newbox} 宏可用于分配一个未被使用的盒子寄存器：
+\begin{verbatim}
+\newbox\MyBox
+\end{verbatim}
 %after which one can say
-%\begin{verbatim}
-%\setbox\MyBox=...
-%\end{verbatim}
+此后，我们可以这样给盒子寄存器赋值：
+\begin{verbatim}
+\setbox\MyBox=...
+\end{verbatim}
 %or
-%\begin{verbatim}
-%\box\MyBox
-%\end{verbatim}
+或者这样使用盒子寄存器里的内容：
+\begin{verbatim}
+\box\MyBox
+\end{verbatim}
 %and so on.
 %Subsequent calls to this macro give subsequent box numbers;
 %this way macro collections can allocate their own boxes
 %without fear of collision with other macros.
-The plain \TeX\ \csidx{newbox} macro allocates an unused
-box register:
-\begin{verbatim}
-\newbox\MyBox
-\end{verbatim}
-after which one can say
-\begin{verbatim}
-\setbox\MyBox=...
-\end{verbatim}
-or
-\begin{verbatim}
-\box\MyBox
-\end{verbatim}
-and so on.
-Subsequent calls to this macro give subsequent box numbers;
-this way macro collections can allocate their own boxes
-without fear of collision with other macros.
+连续调用该命令会生成的盒子寄存器的编号也是连续的；这样，宏集合（macro collections）% TODO(Liam0205): 这里翻译可能需要调整
+可以各自分配盒子寄存器，而无需担心与其它宏中分配的寄存器冲突。
 
 %The number of the box is assigned by \cs{chardef}
 %(see Chapter~\ref{alloc}).
@@ -233,52 +216,38 @@ without fear of collision with other macros.
 %\altt
 %\cs{newbox} is an \cs{outer} macro.
 %Newly allocated box registers are initially empty.
-The number of the box is assigned by \cs{chardef}
-(see Chapter~\ref{alloc}).
-This implies that \cs{MyBox} is equivalent to,
-and can be used as, a~\gr{number}.
-The control sequence
-\altt
-\cs{newbox} is an \cs{outer} macro.
-Newly allocated box registers are initially empty.
+盒子寄存器的编号是通过 \cs{chardef} 赋值的（见第~\ref{alloc}~章）。这说明，\cs{MyBox} 等价于一个数字（\gr{number}），并且能被当做是数字使用。控制序列 \cs{newbox} 是一个外部（\cs{outer}）宏。新分配的盒子寄存器初始时是空的。
 
 
 %\subsection{Usage: \cs{setbox}, \cs{box}, \cs{copy}}
-\subsection{Usage: \cs{setbox}, \cs{box}, \cs{copy}}
+\subsection{\cs{setbox}、\cs{box} 和 \cs{copy} 的用法}
 
 %A~register is filled by assigning a \gr{box}
 %\cstoidx setbox\par
 %to it:
-%\begin{Disp}\verb>\setbox>\gr{number}\gr{equals}\gr{box}\end{Disp}
-%For example, the \gr{box} can be explicit
-%\begin{Disp}\verb>\setbox37=\hbox{...}>\quad or\quad \verb>\setbox37=\vbox{...}>
-%\end{Disp}
-%or it can be a box register:
-%\begin{verbatim}
-%\setbox37=\box38
-%\end{verbatim}
-%Usually, box numbers will have been assigned by a \cs{newbox}
-%command.
-A~register is filled by assigning a \gr{box}
-\cstoidx setbox\par
-to it:
+我们可以将一个盒子（\gr{box}）赋值给盒子寄存器\cstoidx setbox\par ：
 \begin{Disp}\verb>\setbox>\gr{number}\gr{equals}\gr{box}\end{Disp}
-For example, the \gr{box} can be explicit
-\begin{Disp}\verb>\setbox37=\hbox{...}>\quad or\quad \verb>\setbox37=\vbox{...}>
+%For example, the \gr{box} can be explicit
+此处的 \gr{box} 可以是显式的盒子，比如
+\begin{Disp}
+\verb>\setbox37=\hbox{...}>\quad or\quad \verb>\setbox37=\vbox{...}>
 \end{Disp}
-or it can be a box register:
+%or it can be a box register:
+也可以是另一个盒子寄存器:
 \begin{verbatim}
 \setbox37=\box38
 \end{verbatim}
-Usually, box numbers will have been assigned by a \cs{newbox}
-command.
+%Usually, box numbers will have been assigned by a \cs{newbox}
+%command.
+一般来说，盒子寄存器的编号由 \cs{newbox} 命令分配。
 
 %The box in a box register is appended
 %by the commands \cs{box} and~\cs{copy}
 %to whatever list \TeX\ is building: the call
-%\begin{verbatim}
-%\box38
-%\end{verbatim}
+通过 \cs{box} 和 \cs{copy}，我们可以将盒子寄存器中保存的盒子追加在 \TeX 正在构建的列表当中。例如，下列命令会将编号为 38 的盒子追加到当前列表中：
+\begin{verbatim}
+\box38
+\end{verbatim}
 %appends box~38.
 %To save memory space, box registers become empty by using them:
 %\TeX\ assumes that after you have inserted a box by
@@ -289,22 +258,7 @@ command.
 %you can \csidx{copy} it. Calling \cs{copy}$nn$ is
 %equivalent to \cs{box}$nn$ in all respects except that
 %the register is not cleared.
-The box in a box register is appended
-by the commands \cs{box} and~\cs{copy}
-to whatever list \TeX\ is building: the call
-\begin{verbatim}
-\box38
-\end{verbatim}
-appends box~38.
-To save memory space, box registers become empty by using them:
-\TeX\ assumes that after you have inserted a box by
-calling \csidx{box}$nn$ in some mode, you do not need the
-contents of that register any more and empties it.
-In case you {\em do\/} need the contents of
-a box register more than once,
-you can \csidx{copy} it. Calling \cs{copy}$nn$ is
-equivalent to \cs{box}$nn$ in all respects except that
-the register is not cleared.
+为节省内存，盒子寄存器在使用后会被清空：\TeX 假设当你使用 \csidx{box}$nn$ 之后，你就不会再需要其中的内容了，于是便会清空它。如果你\emph{确实}需要重复使用盒子寄存器的内容，你可以用 \csidx{copy}$nn$ 命令。它与 \cs{box}$nn$ 的效果相同，但不会清空盒子寄存器中的内容。
 
 %It is possible to unwrap the contents of a box register
 %by `unboxing' it using the commands \cs{unhbox} and \cs{unvbox},
@@ -314,55 +268,38 @@ the register is not cleared.
 %since in effect they contribute a partial
 %horizontal or vertical list (see also Chapter~\ref{hvmode}).
 %See below for more information on unboxing registers.
-It is possible to unwrap the contents of a box register
-by `unboxing' it using the commands \cs{unhbox} and \cs{unvbox},
-and their copying versions \cs{unhcopy} and \cs{unvcopy}.
-Whereas a box can be used in any mode, the
-unboxing operations can only be used in the appropriate mode,
-since in effect they contribute a partial
-horizontal or vertical list (see also Chapter~\ref{hvmode}).
-See below for more information on unboxing registers.
+通过 \cs{unhbox} 和 \cs{unvbox} 及其拷贝版本 \cs{unhcopy} 和 \cs{unvcopy} 解包盒子寄存器中的内容是可行的。不同于 \cs{box} 可以在任何模式下使用，解包盒子的操作只能用在恰当的模式下——因为解包盒子会形成一个部分的水平盒子或竖直盒子（参见第~\ref{hvmode}~章）。后文有关于解包盒子寄存器的更多信息。
 
 %%\spoint Testing: \cs{ifvoid}, \cs{ifhbox}, \cs{ifvbox}
 %\subsection{Testing: \cs{ifvoid}, \cs{ifhbox}, \cs{ifvbox}}
 %\spoint Testing: \cs{ifvoid}, \cs{ifhbox}, \cs{ifvbox}
-\subsection{Testing: \cs{ifvoid}, \cs{ifhbox}, \cs{ifvbox}}
+\subsection{关于盒子的条件判断：\cs{ifvoid}、\cs{ifhbox} 及 \cs{ifvbox}}
 
 %Box
 %registers can be tested for their contents:
-%\begin{disp}\cs{ifvoid}\gr{number}\end{disp}
+通过 \cs{ifvoid} 可以判断盒子寄存器是否为空。当 \cs{box}\gr{number} 为空时，下式返回真：
+\begin{disp}\cs{ifvoid}\gr{number}\end{disp}
 %is true if the box register is empty.
 %Note that an empty, or `void',
 %box register is not the same as a register containing an empty box.
 %An empty box is still either a horizontal or a vertical box;
 %a~void register can be used as both.
-Box
-registers can be tested for their contents:
-\begin{disp}\cs{ifvoid}\gr{number}\end{disp}
-is true if the box register is empty.
-Note that an empty, or `void',
-box register is not the same as a register containing an empty box.
-An empty box is still either a horizontal or a vertical box;
-a~void register can be used as both.
+注意，盒子寄存器为空与盒子寄存器保存了空盒子是两码事。空盒子要么是水平盒子要么是竖直盒子；空的盒子寄存器既可以作为水平盒子使用，也可以作为竖直盒子使用。
 
 %The test
-%\begin{disp}\cs{ifhbox}\gr{number}\end{disp}
+\cs{ifhbox} 和 \cs{ifvbox} 则分别用于判断一个盒子寄存器中的盒子是否为水平盒子或竖直盒子：
+\begin{disp}\cs{ifhbox}\gr{number}\end{disp}
 %is true if the box register contains a horizontal box;
-%\begin{disp}\cs{ifvbox}\gr{number}\end{disp}
+\begin{disp}\cs{ifvbox}\gr{number}\end{disp}
 %is true if the box register contains a vertical box.
 %Both tests are false for void registers.
-The test
-\begin{disp}\cs{ifhbox}\gr{number}\end{disp}
-is true if the box register contains a horizontal box;
-\begin{disp}\cs{ifvbox}\gr{number}\end{disp}
-is true if the box register contains a vertical box.
-Both tests are false for void registers.
+注意，若寄存器为空，则两个判断都为假。
 
 %%\spoint[lastbox] The \cs{lastbox}
 %\subsection{The \cs{lastbox}}
 %\label{lastbox}
 %\spoint[lastbox] The \cs{lastbox}
-\subsection{The \cs{lastbox}}
+\subsection{\cs{lastbox}}
 \label{lastbox}
 
 %When \TeX\ has built a partial list, the last box in this
@@ -374,20 +311,13 @@ Both tests are false for void registers.
 %It is not possible to get hold of the last box
 %in the case of the main vertical list.
 %The \cs{lastbox} is then always void.
-When \TeX\ has built a partial list, the last box in this
-list is accessible as the \csidx{lastbox}. This behaves
-like a box register, so you can remove the last box from  the
-list by assigning the \cs{lastbox} to some  box register.
-If the last item on the current list is not a box,
-the \cs{lastbox} acts like a void box register.
-It is not possible to get hold of the last box
-in the case of the main vertical list.
-The \cs{lastbox} is then always void.
+当 \TeX 构建完成一个部分列表（partial list）后，此列表中的最后一个盒子可通过 \csidx{lastbox} 来访问。该命令的行为与盒子寄存器相似；因此，你可以将 \cs{lastbox} 赋值给其他盒子寄存器，以将其从列表中删除。如果列表中最后一个元素不是盒子，则 \cs{lastbox} 的行为与空寄存器相似。你无法通过 \cs{lastbox} 访问主竖直列表中的最后一个元素；在这种情况下，\cs{lastbox} 总是空寄存器。
 
 %As an example, the statement
-%\begin{verbatim}
-%{\setbox0=\lastbox}
-%\end{verbatim}
+举例来说，下面的语句将当前列表中的最后一个盒子赋值给编号为 0 的盒子寄存器，并将其从当前列表中删除：
+\begin{verbatim}
+{\setbox0=\lastbox}
+\end{verbatim}
 %removes
 %the last box from the current list, assigning it to box
 %register~0. Since this assignment occurs inside a group,
@@ -395,34 +325,17 @@ The \cs{lastbox} is then always void.
 %At the start of a paragraph this can be used to remove the
 %indentation box (see Chapter~\ref{par:start}).
 %Another example of \cs{lastbox} can be found on page~\pageref{varioset}.
-As an example, the statement
-\begin{verbatim}
-{\setbox0=\lastbox}
-\end{verbatim}
-removes
-the last box from the current list, assigning it to box
-register~0. Since this assignment occurs inside a group,
-the register is cleared at the end of the group.
-At the start of a paragraph this can be used to remove the
-indentation box (see Chapter~\ref{par:start}).
-Another example of \cs{lastbox} can be found on page~\pageref{varioset}.
+由于赋值过程位于分组之内，在分组结束后，寄存器会被清空。因此，在一个自然段开始之时使用这一语句，可以删除缩进盒子（见第~\ref{par:start}~章）。在第~\pageref{varioset}~页也有关于 \cs{lastbox} 的例子。
 
 %Because the \verb-\lastbox- is always empty in external vertical mode,
 %it is not possible to get hold of boxes that have been
 %added to the page. However, it is possible to dissect
 %the page once it is in \cs{box255}, for instance doing
-%\begin{verbatim}
-%\vbox{\unvbox255{\setbox0=\lastbox}}
-%\end{verbatim}
-%inside the output routine.
-Because the \verb-\lastbox- is always empty in external vertical mode,
-it is not possible to get hold of boxes that have been
-added to the page. However, it is possible to dissect
-the page once it is in \cs{box255}, for instance doing
+由于 \cs{lastbox} 在外部竖直模式中总是为空，它不能访问追加到输出页上的盒子。但当页面保存在 \cs{box255} 中时，我们可以在输出阶段解包这个盒子，而后取得 \cs{lastbox}\liamfnote{关于这一技巧，这里有一个完整的示例：\url{https://gist.github.com/91fd658069b0d3dfb7dbd2cba69b856a}}：
 \begin{verbatim}
 \vbox{\unvbox255{\setbox0=\lastbox}}
 \end{verbatim}
-inside the output routine.
+%inside the output routine.
 
 %If boxes in vertical mode have been shifted by \cs{moveright}
 %or \cs{moveleft}, or if boxes in horizontal mode  have
@@ -430,12 +343,7 @@ inside the output routine.
 %any information about this
 %displacement due to such a command is lost when
 %the \cs{lastbox} is taken from the list.
-If boxes in vertical mode have been shifted by \cs{moveright}
-or \cs{moveleft}, or if boxes in horizontal mode  have
-been raised by \cs{raise} or lowered by \cs{lower},
-any information about this
-displacement due to such a command is lost when
-the \cs{lastbox} is taken from the list.
+值得一提的是，如果竖直模式中的盒子被 \cs{moveright} 或 \cs{moveleft} 调整过位置，或是水平模式中的盒子被 \cs{raise} 或 \cs{lower} 调整过位置，则使用 \cs{lastbox} 访问列表中最后一个元素时，这些位置调整信息都会丢失。
 
 %%\point Natural dimensions of boxes
 %\section{Natural dimensions of boxes}
