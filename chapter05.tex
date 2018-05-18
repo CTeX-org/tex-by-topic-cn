@@ -401,7 +401,7 @@ plain \TeX 中的 \csidx{newbox} 宏可用于分配一个未被使用的盒子�
 %%\spoint Dimensions of created vertical boxes
 %\subsection{Dimensions of created vertical boxes}
 %\spoint Dimensions of created vertical boxes
-\subsection{Dimensions of created vertical boxes}
+\subsection{已创建的竖直盒子的尺寸}
 
 %Inside a \csidx{vbox} vertical material is lined up with the
 %\cstoidx vtop\par
@@ -409,14 +409,9 @@ plain \TeX 中的 \csidx{newbox} 宏可用于分配一个未被使用的盒子�
 %point of the box,
 %unless components are moved explicitly in the horizontal direction
 %by \csidx{moveleft} or~\csidx{moveright}.
-Inside a \csidx{vbox} vertical material is lined up with the
-\cstoidx vtop\par
-reference points on the vertical line through the reference
-point of the box,
-unless components are moved explicitly in the horizontal direction
-by \csidx{moveleft} or~\csidx{moveright}.
+在 \csidx{vbox} 内，竖直元素的参考点与盒子的参考点在竖直方向上对齐，除非显式使用 \cs{moveright} 或者 \cs{moveleft} 调整它们水平方向上的位置。\cstoidx vtop\par
 
-%The  reference point of a vertical box
+%The reference point of a vertical box
 %is always located at the left boundary of the box.
 %The width of a vertical box
 %is then the maximal amount that any material in the
@@ -424,23 +419,12 @@ by \csidx{moveleft} or~\csidx{moveright}.
 %Material to the left of the reference point is
 %not taken into account in the width.
 %Thus the result of
-%\begin{disp}\verb>a\vbox{\hbox{\kern-1em b}}-->\end{disp}
-%is
-%\begin{disp}\leavevmode\hphantom{b}a\vbox{\hbox{\kern-1em b}}--\end{disp}
-%This should be contrasted with the above example.
-The  reference point of a vertical box
-is always located at the left boundary of the box.
-The width of a vertical box
-is then the maximal amount that any material in the
-box sticks to the right of the reference point.
-Material to the left of the reference point is
-not taken into account in the width.
-Thus the result of
+竖直盒子的参考点总是在盒子的左边界上。竖直盒子的宽度是盒子内所有元素的右边界相对参考点向右超出距离的最大值。盒子内元素相对参考点向左超出的距离则不被计算在盒子的宽度之中。因此，与前例相对应，下列代码的结果
 \begin{disp}\verb>a\vbox{\hbox{\kern-1em b}}-->\end{disp}
-is
+%is
+是
 \begin{disp}\leavevmode\hphantom{b}a\vbox{\hbox{\kern-1em b}}--\end{disp}
-This should be contrasted with the above example.
-
+%This should be contrasted with the above example.
 
 %The calculation of height and depth is different
 %for vertical boxes constructed by \cs{vbox} and \cs{vtop}.
