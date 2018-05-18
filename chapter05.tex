@@ -220,41 +220,34 @@ plain \TeX 中的 \csidx{newbox} 宏可用于分配一个未被使用的盒子�
 
 
 %\subsection{Usage: \cs{setbox}, \cs{box}, \cs{copy}}
-\subsection{Usage: \cs{setbox}, \cs{box}, \cs{copy}}
+\subsection{\cs{setbox}、\cs{box} 和 \cs{copy} 的用法}
 
 %A~register is filled by assigning a \gr{box}
 %\cstoidx setbox\par
 %to it:
-%\begin{Disp}\verb>\setbox>\gr{number}\gr{equals}\gr{box}\end{Disp}
-%For example, the \gr{box} can be explicit
-%\begin{Disp}\verb>\setbox37=\hbox{...}>\quad or\quad \verb>\setbox37=\vbox{...}>
-%\end{Disp}
-%or it can be a box register:
-%\begin{verbatim}
-%\setbox37=\box38
-%\end{verbatim}
-%Usually, box numbers will have been assigned by a \cs{newbox}
-%command.
-A~register is filled by assigning a \gr{box}
-\cstoidx setbox\par
-to it:
+我们可以将一个盒子（\gr{box}）赋值给盒子寄存器\cstoidx setbox\par ：
 \begin{Disp}\verb>\setbox>\gr{number}\gr{equals}\gr{box}\end{Disp}
-For example, the \gr{box} can be explicit
-\begin{Disp}\verb>\setbox37=\hbox{...}>\quad or\quad \verb>\setbox37=\vbox{...}>
+%For example, the \gr{box} can be explicit
+此处的 \gr{box} 可以是显式的盒子，比如
+\begin{Disp}
+\verb>\setbox37=\hbox{...}>\quad or\quad \verb>\setbox37=\vbox{...}>
 \end{Disp}
-or it can be a box register:
+%or it can be a box register:
+也可以是另一个盒子寄存器:
 \begin{verbatim}
 \setbox37=\box38
 \end{verbatim}
-Usually, box numbers will have been assigned by a \cs{newbox}
-command.
+%Usually, box numbers will have been assigned by a \cs{newbox}
+%command.
+一般来说，盒子寄存器的编号由 \cs{newbox} 命令分配。
 
 %The box in a box register is appended
 %by the commands \cs{box} and~\cs{copy}
 %to whatever list \TeX\ is building: the call
-%\begin{verbatim}
-%\box38
-%\end{verbatim}
+通过 \cs{box} 和 \cs{copy}，我们可以将盒子寄存器中保存的盒子追加在 \TeX 正在构建的列表当中。例如，下列命令会将编号为 38 的盒子追加到当前列表中：
+\begin{verbatim}
+\box38
+\end{verbatim}
 %appends box~38.
 %To save memory space, box registers become empty by using them:
 %\TeX\ assumes that after you have inserted a box by
@@ -265,22 +258,7 @@ command.
 %you can \csidx{copy} it. Calling \cs{copy}$nn$ is
 %equivalent to \cs{box}$nn$ in all respects except that
 %the register is not cleared.
-The box in a box register is appended
-by the commands \cs{box} and~\cs{copy}
-to whatever list \TeX\ is building: the call
-\begin{verbatim}
-\box38
-\end{verbatim}
-appends box~38.
-To save memory space, box registers become empty by using them:
-\TeX\ assumes that after you have inserted a box by
-calling \csidx{box}$nn$ in some mode, you do not need the
-contents of that register any more and empties it.
-In case you {\em do\/} need the contents of
-a box register more than once,
-you can \csidx{copy} it. Calling \cs{copy}$nn$ is
-equivalent to \cs{box}$nn$ in all respects except that
-the register is not cleared.
+为节省内存，盒子寄存器在使用后会被清空：\TeX 假设当你使用 \csidx{box}$nn$ 之后，你就不会再需要其中的内容了，于是便会清空它。如果你\emph{确实}需要重复使用盒子寄存器的内容，你可以用 \csidx{copy}$nn$ 命令。它与 \cs{box}$nn$ 的效果相同，但不会清空盒子寄存器中的内容。
 
 %It is possible to unwrap the contents of a box register
 %by `unboxing' it using the commands \cs{unhbox} and \cs{unvbox},
@@ -290,14 +268,7 @@ the register is not cleared.
 %since in effect they contribute a partial
 %horizontal or vertical list (see also Chapter~\ref{hvmode}).
 %See below for more information on unboxing registers.
-It is possible to unwrap the contents of a box register
-by `unboxing' it using the commands \cs{unhbox} and \cs{unvbox},
-and their copying versions \cs{unhcopy} and \cs{unvcopy}.
-Whereas a box can be used in any mode, the
-unboxing operations can only be used in the appropriate mode,
-since in effect they contribute a partial
-horizontal or vertical list (see also Chapter~\ref{hvmode}).
-See below for more information on unboxing registers.
+通过 \cs{unhbox} 和 \cs{unvbox} 及其拷贝版本 \cs{unhcopy} 和 \cs{unvcopy} 解包盒子寄存器中的内容是可行的。不同于 \cs{box} 可以在任何模式下使用，解包盒子的操作只能用在恰当的模式下——因为解包盒子会形成一个部分的水平盒子或竖直盒子（参见第~\ref{hvmode}~章）。后文有关于解包盒子寄存器的更多信息。
 
 %%\spoint Testing: \cs{ifvoid}, \cs{ifhbox}, \cs{ifvbox}
 %\subsection{Testing: \cs{ifvoid}, \cs{ifhbox}, \cs{ifvbox}}
