@@ -273,37 +273,27 @@ plain \TeX 中的 \csidx{newbox} 宏可用于分配一个未被使用的盒子�
 %%\spoint Testing: \cs{ifvoid}, \cs{ifhbox}, \cs{ifvbox}
 %\subsection{Testing: \cs{ifvoid}, \cs{ifhbox}, \cs{ifvbox}}
 %\spoint Testing: \cs{ifvoid}, \cs{ifhbox}, \cs{ifvbox}
-\subsection{Testing: \cs{ifvoid}, \cs{ifhbox}, \cs{ifvbox}}
+\subsection{关于盒子的条件判断：\cs{ifvoid}、\cs{ifhbox} 及 \cs{ifvbox}}
 
 %Box
 %registers can be tested for their contents:
-%\begin{disp}\cs{ifvoid}\gr{number}\end{disp}
+通过 \cs{ifvoid} 可以判断盒子寄存器是否为空。当 \cs{box}\gr{number} 为空时，下式返回真：
+\begin{disp}\cs{ifvoid}\gr{number}\end{disp}
 %is true if the box register is empty.
 %Note that an empty, or `void',
 %box register is not the same as a register containing an empty box.
 %An empty box is still either a horizontal or a vertical box;
 %a~void register can be used as both.
-Box
-registers can be tested for their contents:
-\begin{disp}\cs{ifvoid}\gr{number}\end{disp}
-is true if the box register is empty.
-Note that an empty, or `void',
-box register is not the same as a register containing an empty box.
-An empty box is still either a horizontal or a vertical box;
-a~void register can be used as both.
+注意，盒子寄存器为空与盒子寄存器保存了空盒子是两码事。空盒子要么是水平盒子要么是竖直盒子；空的盒子寄存器既可以作为水平盒子使用，也可以作为竖直盒子使用。
 
 %The test
-%\begin{disp}\cs{ifhbox}\gr{number}\end{disp}
+\cs{ifhbox} 和 \cs{ifvbox} 则分别用于判断一个盒子寄存器中的盒子是否为水平盒子或竖直盒子：
+\begin{disp}\cs{ifhbox}\gr{number}\end{disp}
 %is true if the box register contains a horizontal box;
-%\begin{disp}\cs{ifvbox}\gr{number}\end{disp}
+\begin{disp}\cs{ifvbox}\gr{number}\end{disp}
 %is true if the box register contains a vertical box.
 %Both tests are false for void registers.
-The test
-\begin{disp}\cs{ifhbox}\gr{number}\end{disp}
-is true if the box register contains a horizontal box;
-\begin{disp}\cs{ifvbox}\gr{number}\end{disp}
-is true if the box register contains a vertical box.
-Both tests are false for void registers.
+注意，若寄存器为空，则两个判断都为假。
 
 %%\spoint[lastbox] The \cs{lastbox}
 %\subsection{The \cs{lastbox}}
