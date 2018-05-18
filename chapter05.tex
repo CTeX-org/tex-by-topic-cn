@@ -348,63 +348,46 @@ plain \TeX 中的 \csidx{newbox} 宏可用于分配一个未被使用的盒子�
 %%\point Natural dimensions of boxes
 %\section{Natural dimensions of boxes}
 %\point Natural dimensions of boxes
-\section{Natural dimensions of boxes}
+\section{盒子的天然尺寸}
 
 %%\spoint Dimensions of created horizontal boxes
 %\subsection{Dimensions of created horizontal boxes}
 %\spoint Dimensions of created horizontal boxes
-\subsection{Dimensions of created horizontal boxes}
+\subsection{已创建的水平盒子的尺寸}
 
 %Inside an \csidx{hbox} all constituents are lined up next to each other,
 %with their reference points on the baseline of the box,
 %unless they are moved explicitly in the vertical direction
 %by \cs{lower} or~\cs{raise}.
-Inside an \csidx{hbox} all constituents are lined up next to each other,
-with their reference points on the baseline of the box,
-unless they are moved explicitly in the vertical direction
-by \cs{lower} or~\cs{raise}.
+\csidx{hbox} 内所有的元素都依次排在一行，并且它们的参考点会在齐盒子的基线（baseline）上对齐，除非显式使用 \cs{raise} 或者 \cs{lower} 调整它们竖直方向上的位置。
 
 %The resulting width of the box is the sum of the widths
 %of the components. Thus the width of
-%\begin{verbatim}
-%\hbox{\hskip1cm}
-%\end{verbatim}
-%is positive, and the width of
-%\begin{verbatim}
-%\hbox{\hskip-1cm}
-%\end{verbatim}
-%is negative. By way of example,
-%\begin{disp}\verb>a\hbox{\kern-1em b}-->\end{disp}
-%gives as output
-%\begin{disp}\leavevmode\hphantom{b}a\hbox{\kern-1em b}--\end{disp}
-%\message{check align input/output}
-%which shows that a horizontal box can have negative
-%width.
-The resulting width of the box is the sum of the widths
-of the components. Thus the width of
+盒子的宽度是盒子内所有元素宽度之和。因此下面盒子的宽度为正
 \begin{verbatim}
 \hbox{\hskip1cm}
 \end{verbatim}
-is positive, and the width of
+%is positive, and the width of
+而下面盒子的宽度为负
 \begin{verbatim}
 \hbox{\hskip-1cm}
 \end{verbatim}
-is negative. By way of example,
+%is negative. By way of example,
+具体距离来说：
 \begin{disp}\verb>a\hbox{\kern-1em b}-->\end{disp}
-gives as output
+%gives as output
+的输出是
 \begin{disp}\leavevmode\hphantom{b}a\hbox{\kern-1em b}--\end{disp}
-\message{check align input/output}
-which shows that a horizontal box can have negative
-width.
+%\message{check align input/output}
+%which shows that a horizontal box can have negative
+%width.
+这表明，水平盒子可以有负的宽度。
 
 %The height and depth of an \cs{hbox} are the
 %maximum amount that constituent boxes project above and
 %below the baseline of the box. They are non-negative when the
 %box is created.
-The height and depth of an \cs{hbox} are the
-maximum amount that constituent boxes project above and
-below the baseline of the box. They are non-negative when the
-box is created.
+\cs{hbox} 的高度和深度是盒子内所有元素在盒子基线上方和下方的最大值。水平盒子的高度和深度都是非负的。
 
 %The commands \cs{lower} and \cs{raise} are the only possibilities
 %for vertical movement inside an \cs{hbox} (other than
@@ -413,18 +396,12 @@ box is created.
 %is not allowed in a horizontal box, and
 %\cs{par}, although allowed,
 %does not do anything inside a horizontal box.
-The commands \cs{lower} and \cs{raise} are the only possibilities
-for vertical movement inside an \cs{hbox} (other than
-including a \cs{vbox} inside the \cs{hbox}, of course);
-a~\gr{vertical command} \ldash such as \cs{vskip} \rdash
-is not allowed in a horizontal box, and
-\cs{par}, although allowed,
-does not do anything inside a horizontal box.
+\cs{raise} 和 \cs{lower} 命令是在 \cs{hbox} 内调整元素水平位置的唯一方法（当然，除了在 \cs{hbox} 中嵌套一个新的 \cs{vbox}）；\TeX 不允许在水平盒子中使用竖直命令（\gr{vertical command}，例如 \cs{vskip}），此外，虽然我们可以在水平盒子中使用 \cs{par}，但它却不会有任何作用。
 
 %%\spoint Dimensions of created vertical boxes
 %\subsection{Dimensions of created vertical boxes}
 %\spoint Dimensions of created vertical boxes
-\subsection{Dimensions of created vertical boxes}
+\subsection{已创建的竖直盒子的尺寸}
 
 %Inside a \csidx{vbox} vertical material is lined up with the
 %\cstoidx vtop\par
@@ -432,14 +409,9 @@ does not do anything inside a horizontal box.
 %point of the box,
 %unless components are moved explicitly in the horizontal direction
 %by \csidx{moveleft} or~\csidx{moveright}.
-Inside a \csidx{vbox} vertical material is lined up with the
-\cstoidx vtop\par
-reference points on the vertical line through the reference
-point of the box,
-unless components are moved explicitly in the horizontal direction
-by \csidx{moveleft} or~\csidx{moveright}.
+在 \csidx{vbox} 内，竖直元素的参考点与盒子的参考点在竖直方向上对齐，除非显式使用 \cs{moveright} 或者 \cs{moveleft} 调整它们水平方向上的位置。\cstoidx vtop\par
 
-%The  reference point of a vertical box
+%The reference point of a vertical box
 %is always located at the left boundary of the box.
 %The width of a vertical box
 %is then the maximal amount that any material in the
@@ -447,23 +419,12 @@ by \csidx{moveleft} or~\csidx{moveright}.
 %Material to the left of the reference point is
 %not taken into account in the width.
 %Thus the result of
-%\begin{disp}\verb>a\vbox{\hbox{\kern-1em b}}-->\end{disp}
-%is
-%\begin{disp}\leavevmode\hphantom{b}a\vbox{\hbox{\kern-1em b}}--\end{disp}
-%This should be contrasted with the above example.
-The  reference point of a vertical box
-is always located at the left boundary of the box.
-The width of a vertical box
-is then the maximal amount that any material in the
-box sticks to the right of the reference point.
-Material to the left of the reference point is
-not taken into account in the width.
-Thus the result of
+竖直盒子的参考点总是在盒子的左边界上。竖直盒子的宽度是盒子内所有元素的右边界相对参考点向右超出距离的最大值。盒子内元素相对参考点向左超出的距离则不被计算在盒子的宽度之中。因此，与前例相对应，下列代码的结果
 \begin{disp}\verb>a\vbox{\hbox{\kern-1em b}}-->\end{disp}
-is
+%is
+是
 \begin{disp}\leavevmode\hphantom{b}a\vbox{\hbox{\kern-1em b}}--\end{disp}
-This should be contrasted with the above example.
-
+%This should be contrasted with the above example.
 
 %The calculation of height and depth is different
 %for vertical boxes constructed by \cs{vbox} and \cs{vtop}.
