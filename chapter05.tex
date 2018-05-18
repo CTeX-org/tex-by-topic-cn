@@ -170,7 +170,7 @@
 \cs{vsplit} 命令将在第~\ref{page:break}~章详细讨论。
 
 %\section{Box registers}
-\section{Box registers}
+\section{盒子寄存器}
 
 %There are 256 box registers, numbered 0--255.
 %Either a box register is  empty (`void'), or it contains a horizontal
@@ -178,52 +178,35 @@
 %This section discusses specifically box {\em registers};
 %the sizes of boxes, and the way material is arranged inside them,
 %is treated below.
-There are 256 box registers, numbered 0--255.
-Either a box register is  empty (`void'), or it contains a horizontal
-or vertical box.
-This section discusses specifically box {\em registers};
-the sizes of boxes, and the way material is arranged inside them,
-is treated below.
+共有 256 个盒子寄存器，它们从 0 开始编号至 255。盒子寄存器要不然是空的（void），要不然包含了一个水平盒子或一个竖直盒子。本节只讨论盒子\emph{寄存器}；盒子的尺寸、内部内容的排列方式则在后续小节中讨论。
 
 %%\spoint Allocation: \cs{newbox}
 %\subsection{Allocation: \cs{newbox}}
 %\spoint Allocation: \cs{newbox}
-\subsection{Allocation: \cs{newbox}}
+\subsection{使用 \cs{newbox} 分配盒子寄存器}
 
 %The plain \TeX\ \csidx{newbox} macro allocates an unused
 %box register:
-%\begin{verbatim}
-%\newbox\MyBox
-%\end{verbatim}
+plain \TeX 中的 \csidx{newbox} 宏可用于分配一个未被使用的盒子寄存器：
+\begin{verbatim}
+\newbox\MyBox
+\end{verbatim}
 %after which one can say
-%\begin{verbatim}
-%\setbox\MyBox=...
-%\end{verbatim}
+此后，我们可以这样给盒子寄存器赋值：
+\begin{verbatim}
+\setbox\MyBox=...
+\end{verbatim}
 %or
-%\begin{verbatim}
-%\box\MyBox
-%\end{verbatim}
+或者这样使用盒子寄存器里的内容：
+\begin{verbatim}
+\box\MyBox
+\end{verbatim}
 %and so on.
 %Subsequent calls to this macro give subsequent box numbers;
 %this way macro collections can allocate their own boxes
 %without fear of collision with other macros.
-The plain \TeX\ \csidx{newbox} macro allocates an unused
-box register:
-\begin{verbatim}
-\newbox\MyBox
-\end{verbatim}
-after which one can say
-\begin{verbatim}
-\setbox\MyBox=...
-\end{verbatim}
-or
-\begin{verbatim}
-\box\MyBox
-\end{verbatim}
-and so on.
-Subsequent calls to this macro give subsequent box numbers;
-this way macro collections can allocate their own boxes
-without fear of collision with other macros.
+连续调用该命令会生成的盒子寄存器的编号也是连续的；这样，宏集合（macro collections）% TODO(Liam0205): 这里翻译可能需要调整
+可以各自分配盒子寄存器，而无需担心与其它宏中分配的寄存器冲突。
 
 %The number of the box is assigned by \cs{chardef}
 %(see Chapter~\ref{alloc}).
@@ -233,14 +216,7 @@ without fear of collision with other macros.
 %\altt
 %\cs{newbox} is an \cs{outer} macro.
 %Newly allocated box registers are initially empty.
-The number of the box is assigned by \cs{chardef}
-(see Chapter~\ref{alloc}).
-This implies that \cs{MyBox} is equivalent to,
-and can be used as, a~\gr{number}.
-The control sequence
-\altt
-\cs{newbox} is an \cs{outer} macro.
-Newly allocated box registers are initially empty.
+盒子寄存器的编号是通过 \cs{chardef} 赋值的（见第~\ref{alloc}~章）。这说明，\cs{MyBox} 等价于一个数字（\gr{number}），并且能被当做是数字使用。控制序列 \cs{newbox} 是一个外部（\cs{outer}）宏。新分配的盒子寄存器初始时是空的。
 
 
 %\subsection{Usage: \cs{setbox}, \cs{box}, \cs{copy}}
