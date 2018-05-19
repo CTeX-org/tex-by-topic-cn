@@ -84,13 +84,13 @@
 %\mdqon
 %      a horizontal/""vertical box overfull.
 %\mdqoff
-\item [\cs{hfuzz} \cs{vfuzz}] 该命令表示一个水平盒子或竖直盒子超出外层盒子尺寸的阈值；当超过该阈值时，\TeX 会考虑将其认定为溢出的（overfull）盒子。
+\item [\cs{hfuzz} \cs{vfuzz}] 该命令表示一个水平盒子或竖直盒子超出指定尺寸的阈值；当超过该阈值时，\TeX 会考虑将其认定为溢出的（overfull）盒子。
 %\item [\cs{hbadness} \cs{vbadness}]
 %      Amount of tolerance before \TeX\ reports an underfull
 %\mdqon
 %      or overfull  horizontal/""vertical box.
 %\mdqoff
-\item [\cs{hbadness} \cs{vbadness}] 该命令表示一个阈值；当超过该阈值时，\TeX 会将相应盒子认定为欠满的（underfull）或者溢出的。
+\item [\cs{hbadness} \cs{vbadness}] 该命令表示一个阈值；当盒子的劣度超过该阈值时，\TeX 会将相应盒子认定为欠满的（underfull）或者溢出的。
 %\item [\cs{overfullrule}]
 %      Width of the rule that is printed to indicate
 %      overfull horizontal boxes.
@@ -820,10 +820,10 @@ plain \TeX 中的 \csidx{newbox} 宏可用于分配一个未被使用的盒子�
 
 %\section{Overfull and underfull boxes}
 %\label{over/underfull}
-\section{Overfull and underfull boxes}
+\section{盒子的欠满与溢出}
 \label{over/underfull}
 
-%If a box has a  size specification \TeX\ will
+%If a box has a size specification \TeX\ will
 %stretch or shrink glue in the box. For glue with
 %only finite stretch or shrink components the {\em badness\/}
 %(see Chapter~\ref{line:break}) of stretching or shrinking
@@ -836,35 +836,24 @@ plain \TeX 中的 \csidx{newbox} 宏可用于分配一个未被使用的盒子�
 %by the user through the \cs{badness} parameter. Values for
 %badness range 0--$10\,000$, but if the box is overfull
 %it is~$1\,000\,000$.
-If a box has a  size specification \TeX\ will
-stretch or shrink glue in the box. For glue with
-only finite stretch or shrink components the {\em badness\/}
-(see Chapter~\ref{line:break}) of stretching or shrinking
-is computed.
-In \TeX\ version~3 the badness
+如果盒子有尺寸说明符则 \TeX 会拉伸或收缩其中的伸缩胶。对于仅有有限伸缩能力的伸缩胶，\TeX 会计算其伸缩过程中的\emph{劣度}（见第~\ref{line:break}~章）。%
 \cstoidx badness\par
+在 \TeX3 中，%
 \thecstoidxsub{TeX}{version 3}
-of the box most recently
-constructed is available for inspection
-by the user through the \cs{badness} parameter. Values for
-badness range 0--$10\,000$, but if the box is overfull
-it is~$1\,000\,000$.
+用户可通过 \cs{badness} 宏来检查刚刚构建的盒子的劣度。劣度的取值范围是 $0$--$10\,000$；而如果盒子溢出了，则其劣度为~$1\,000\,000$。
 
 %When \TeX\ considers the badness too large,
 %it gives a diagnostic message. Let us first consider error reporting
 %for horizontal boxes.
-When \TeX\ considers the badness too large,
-it gives a diagnostic message. Let us first consider error reporting
-for horizontal boxes.
+如果 \TeX 认为劣度过大，则会给出一条诊断信息。我们首先考虑对水平盒子的报错。
 
 %Horizontal boxes of which the glue has to stretch are never reported if
 %\cstoidx hbadness\par\cstoidx vbadness\par
 %\cs{hbadness}${}\geq10\,000$; otherwise \TeX\ reports them
 %as `underfull' if their badness is more than \cs{hbadness}.
-Horizontal boxes of which the glue has to stretch are never reported if
-\cstoidx hbadness\par\cstoidx vbadness\par
-\cs{hbadness}${}\geq10\,000$; otherwise \TeX\ reports them
-as `underfull' if their badness is more than \cs{hbadness}.
+若 $\text{\cs{hbadness}}\geqslant10\,000$，则 \TeX 不会对需要拉伸其中伸缩胶的水平盒子报错；否则，当水平盒子中的伸缩胶拉伸的劣度超过 \cs{hbadness} 时，\TeX 会提示盒子欠满（underfull）。
+\cstoidx hbadness\par
+\cstoidx vbadness\par
 
 %Glue shrinking can lead to `overfull' boxes: a box is called
 %\cstoidx hfuzz\par\cstoidx vfuzz\par
@@ -873,39 +862,24 @@ as `underfull' if their badness is more than \cs{hbadness}.
 %is only reported if the difference in shrink is more than
 %\cs{hfuzz}, or if \cs{hbadness}${}<100$ (and it turns out that
 %using all available shrinkability has badness~$100$).
-Glue shrinking can lead to `overfull' boxes: a box is called
-\cstoidx hfuzz\par\cstoidx vfuzz\par
-overfull if the available shrink is less than the shrink
-necessary to meet the box specification. An overfull box
-is only reported if the difference in shrink is more than
-\cs{hfuzz}, or if \cs{hbadness}${}<100$ (and it turns out that
-using all available shrinkability has badness~$100$).
+伸缩胶的收缩可能引发盒子溢出的报错：如果盒子内伸缩胶最大的收缩量不足以使盒子的宽度满足指定的宽度，则 \TeX 认为该盒子溢出了。%
+\cstoidx hfuzz\par
+\cstoidx vfuzz\par
+当且仅当收缩量不足的量大于 \cs{hfuzz} 或者 $\text{\cs{hbadness}}<100$ 时（这会使得所有可用的收缩的劣度为 $100$），\TeX 才会报告盒子溢出的问题。
 
-%\begin{example} Setting \verb>\hfuzz=1pt> will let \TeX\ ignore
+\begin{example}
+%Setting \verb>\hfuzz=1pt> will let \TeX\ ignore
 %boxes that can not shrink enough if they lack less than~\n{1pt}.
 %In
-%\begin{verbatim}
-%\hbox to 1pt{\hskip3pt minus .5pt}
-%\end{verbatim}
-%\begin{verbatim}
-%\hbox to 1pt{\hskip3pt minus 1.5pt}
-%\end{verbatim}
+如果盒子内伸缩胶的最大收缩量不足以使盒子的宽度减小到指定的尺寸，则若设置 \emph{\cs{hfuzz=1pt}}，\TeX 会忽略上述不足的部分小于 \n{1pt} 的盒子而不报错。
+\begin{verbatim}
+\hbox to 1pt{\hskip3pt minus .5pt}
+\hbox to 1pt{\hskip3pt minus 1.5pt}
+\end{verbatim}
 %only the first box will give an error message:
 %it is \n{1.5pt} too big, whereas the second lacks
 %\n{.5pt} which is less than \cs{hfuzz}.
-%\end{example}
-\begin{example} Setting \verb>\hfuzz=1pt> will let \TeX\ ignore
-boxes that can not shrink enough if they lack less than~\n{1pt}.
-In
-\begin{verbatim}
-\hbox to 1pt{\hskip3pt minus .5pt}
-\end{verbatim}
-\begin{verbatim}
-\hbox to 1pt{\hskip3pt minus 1.5pt}
-\end{verbatim}
-only the first box will give an error message:
-it is \n{1.5pt} too big, whereas the second lacks
-\n{.5pt} which is less than \cs{hfuzz}.
+这里只有第一个盒子会报错：它比目标尺寸大了 \n{1.5pt}；但是第二个盒子不会报错，因为它只比目标尺寸大了 \n{0.5pt}，小于 \emph{\cs{hfuzz}}。
 \end{example}
 
 %Also, boxes that shrink but that are not overfull can be reported:
