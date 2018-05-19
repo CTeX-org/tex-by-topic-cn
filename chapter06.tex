@@ -356,7 +356,7 @@
 %\cs{lastbox} is always empty in external vertical mode.
 %See further pages \pageref{lastbox} and~\pageref{unskip}.
 内部和外部竖直模式的一个区别是：在内部竖直模式中，\cs{unskip} 和 \cs{unkern} 命令没有效果，并且 \cs{lastbox}s 总是空的。
-详见第 \pageref{lastbox} 和 \pageref{unskip}。·
+详见第 \pageref{lastbox} 和 \pageref{unskip}。
 
 %The entries of alignments (see Chapter~\ref{align}) are 
 %processed in internal modes: restricted horizontal mode
@@ -380,54 +380,49 @@
 %\section{Boxes and modes}
 %\label{hvbox}
 %\point[hvbox]  Boxes and modes
-\section{Boxes and modes}
+\section{盒子与模式}
 \label{hvbox}
 
 %There are horizontal and vertical boxes, and there is
 %horizontal and vertical mode. Not surprisingly, there is
 %a connection between the boxes and the modes.
 %One can ask about this connection in two ways.
-There are horizontal and vertical boxes, and there is
-horizontal and vertical mode. Not surprisingly, there is
-a connection between the boxes and the modes.
-One can ask about this connection in two ways.
+\TeX\ 有水平盒子和竖直盒子，也有水平模式和竖直模式。
+毫不奇怪，盒子与模式之间肯定有关系。你可能会产生以下疑问。
 
 %%\spoint What box do you use in what mode?
 %\subsection{What box do you use in what mode?}
 %\spoint What box do you use in what mode?
-\subsection{What box do you use in what mode?}
+\subsection{某种模式下应该用哪种盒子？}
 
 %This is the wrong question. Both horizontal  and vertical boxes
 %can be used in both horizontal and vertical mode. 
 %Their placement is determined by the prevailing mode at that moment.
-This is the wrong question. Both horizontal  and vertical boxes
-can be used in both horizontal and vertical mode. 
-Their placement is determined by the prevailing mode at that moment.
+这个问法不对。水平盒子和竖直盒子均可以用在水平模式和竖直模式中。
+它们的放置的位置取决于那一刻的状态。
 
 %%\spoint What mode holds in what box?
 %\subsection{What mode holds in what box?}
 %\spoint What mode holds in what box?
-\subsection{What mode holds in what box?}
+\subsection{某个盒子里应该用哪种模式？}
 
 %This is the right question.
 %When an \cs{hbox} starts, \TeX\ is in restricted horizontal
 %mode. Thus everything in a horizontal box is lined up horizontally.
-This is the right question.
-When an \cs{hbox} starts, \TeX\ is in restricted horizontal
-mode. Thus everything in a horizontal box is lined up horizontally.
+这才是正确的问法。当一个 \cs{hbox} 开始时，\TeX\ 处于受限水平模式。
+这就是为什么在水平盒子里，所有的东西都呈水平线性排列。
 
 %When a \cs{vbox} is started, \TeX\ is in internal vertical mode.
 %Boxes of both kinds and other items are then stacked
 %on top of each other.
-When a \cs{vbox} is started, \TeX\ is in internal vertical mode.
-Boxes of both kinds and other items are then stacked
-on top of each other.
+当一个 \cs{vbox} 开始时，\TeX\ 进入内部竖直模式。
+两种模式下的盒子和其它的项目都会一个摞一个的堆叠起来。
 
 
 %%\spoint Mode-dependent behaviour of boxes
 %\subsection{Mode-dependent behaviour of boxes}
 %\spoint Mode-dependent behaviour of boxes
-\subsection{Mode-dependent behaviour of boxes}
+\subsection{盒子的模式无关行为}
 
 %Any \gr{box} (see Chapter \ref{boxes} for the full definition)
 %can be used in horizontal, vertical, and math mode.
@@ -438,15 +433,10 @@ on top of each other.
 %both \cs{unvbox} and \cs{unvcopy} are \gr{vertical command}s,
 %so they can make \TeX\ switch from horizontal to vertical
 %mode.
-Any \gr{box} (see Chapter \ref{boxes} for the full definition)
-can be used in horizontal, vertical, and math mode.
-Unboxing commands, however, are specific for horizontal or vertical mode.
-Both \cs{unhbox} and \cs{unhcopy} are \gr{horizontal command}s,
-so they can make \TeX\ switch from vertical to horizontal
-mode; 
-both \cs{unvbox} and \cs{unvcopy} are \gr{vertical command}s,
-so they can make \TeX\ switch from horizontal to vertical
-mode.
+任何盒子 \gr{box} (详细定义见第 \ref{boxes} 章)都能用于水平、竖直和数学模式中。
+但是，解包命令对于水平或竖直模式是特定的。
+\cs{unhbox} 和 \cs{unhcopy} 都是 \gr{horizontal command}，所以它们能使 \TeX\ 从竖直模式切换成水平模式。
+\cs{unvbox} 和 \cs{unvcopy} 都是 \gr{vertical command}，所以它们能使 \TeX\ 从水平模式切换成竖直模式。
 
 %In horizontal mode the \cs{spacefactor} is set to 1000
 %after a box has been placed. In vertical mode the
@@ -457,22 +447,18 @@ mode.
 %the \cs{prevdepth} remains unchanged.
 %After all, these commands do not add a box,
 %but a piece of a~(horizontal or vertical) list.
-In horizontal mode the \cs{spacefactor} is set to 1000
-after a box has been placed. In vertical mode the
-\cs{prevdepth} is set to the depth of the box placed.
-Neither statement holds for
-unboxing commands: after an \cs{unhbox} or \cs{unhcopy} the 
-spacefactor is not altered, and after \cs{unvbox} or \cs{unvcopy}
-the \cs{prevdepth} remains unchanged.
-After all, these commands do not add a box,
-but a piece of a~(horizontal or vertical) list.
+水平模式中，在放置了一个盒子之后 \cs{spacefactor} 被设定为 1000.
+竖直模式中 \cs{prevdepth} 被设定为盒子放置时的深度。
+这两个语句都不支持解包命令：
+在 \cs{unvbox} 或 \cs{unvcopy} 之后spacefactor的值不变；
+并且在 \cs{unhbox} 或 \cs{unhcopy} 之后 \cs{prevdepth} 保持原值。
+毕竟，这些命令并不会添加一个新的盒子，只是添加了水平或竖直列表的一部分。
 
 %The operations \cs{raise} and \cs{lower} can only be
 %applied to a box in horizontal mode; similarly, \cs{moveleft} and
 %\cs{moveright} can only be applied in vertical mode.
-The operations \cs{raise} and \cs{lower} can only be
-applied to a box in horizontal mode; similarly, \cs{moveleft} and
-\cs{moveright} can only be applied in vertical mode.
+\cs{raise} 和 \cs{lower} 操作只能用于水平模式中的盒子。
+类似的，\cs{moveleft} 和 \cs{moveright} 只能用于竖直模式中的盒子.
 
 
 %%\point Modes and glue
