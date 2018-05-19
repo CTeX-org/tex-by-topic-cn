@@ -639,7 +639,7 @@ plain \TeX 中的 \csidx{newbox} 宏可用于分配一个未被使用的盒子�
 %%\spoint Changes to box dimensions
 %\subsection{Changes to box dimensions}
 %\spoint Changes to box dimensions
-\subsection{Changes to box dimensions}
+\subsection{改变盒子的尺寸}
 
 %The dimensions of a box register are accessible by the
 %commands \csidx{ht}, \csidx{dp}, and~\csidx{wd};
@@ -651,62 +651,35 @@ plain \TeX 中的 \csidx{newbox} 宏可用于分配一个未被使用的盒子�
 %However, changing the dimensions of a box does not change
 %anything about the contents; in particular it does not
 %change the way the glue is set.
-The dimensions of a box register are accessible by the
-commands \csidx{ht}, \csidx{dp}, and~\csidx{wd};
-for instance \cs{dp13} gives the depth of box~13.
-However, not only can boxes be measured this way;
-by assigning values to these
-dimensions \TeX\ can even be fooled into thinking that
-a box has a  size different from its actual.
-However, changing the dimensions of a box does not change
-anything about the contents; in particular it does not
-change the way the glue is set.
-
+我们可以用 \csidx{ht}、\csidx{dp} 和 \csidx{wd} 来分别获得盒子寄存器的高度、深度和宽度。举例来说，\cs{dp18} 会给出 18 号盒子的深度。盒子的尺寸不光可读，还可写。通过给盒子的尺寸赋值，我们可以在某种意义上愚弄 \TeX，使得在 \TeX 看来某个盒子的尺寸不同于其真实值。不过，修改盒子尺寸并不会修改其中的内容；特别地，不会修改伸缩胶设置的方式。
 
 %Various formats use this in `smash' macros: the macro defined by
 %\cstoidx smash\par
-%\begin{verbatim}
-%\def\smash#1{{\setbox0=\hbox{#1}\dp0=0pt \ht0=0pt \box0\relax}}
-%\end{verbatim}
+不少格式（format）都定义了 \csidx{smash} 宏：
+\begin{verbatim}
+\def\smash#1{{\setbox0=\hbox{#1}\dp0=0pt \ht0=0pt \box0\relax}}
+\end{verbatim}
 %places its argument but annihilates its height and depth;
 %\altt
 %that is, the output does show the whole box, but further calculations
 %by \TeX\ act as if the height and depth were zero.
-Various formats use this in `smash' macros: the macro defined by
-\cstoidx smash\par
-\begin{verbatim}
-\def\smash#1{{\setbox0=\hbox{#1}\dp0=0pt \ht0=0pt \box0\relax}}
-\end{verbatim}
-places its argument but annihilates its height and depth;
-\altt
-that is, the output does show the whole box, but further calculations
-by \TeX\ act as if the height and depth were zero.
+在宏定义中，\cs{smash} 命令将内容保存在盒子中，但是将盒子的高度和深度都值为零；这也就是说，最终盒子会被输出，但是后续有关盒子尺寸的计算中，\TeX 都会将高度和深度认作是零。
 
 %Box dimensions can be changed only by setting them.
 %They are \gr{box dimen}s, which can only be set
 %in a \gr{box size assignment}, and not, for instance
 %changed with \cs{advance}.
-Box dimensions can be changed only by setting them.
-They are \gr{box dimen}s, which can only be set
-in a \gr{box size assignment}, and not, for instance
-changed with \cs{advance}.
+改变盒子尺寸只能通过为其赋值来实现：这些盒子尺寸（\gr{box dimen}s）能且只能通过盒子尺寸赋值语句（\gr{box size assignment}）来设置，而不能用诸如 \cs{advance} 的命令来修改。
 
 %Note that a \gr{box size assignment}\index{assignment!box size} is a
 %\gr{global assignment}\index{assignment!global} its effect transcends
 %  any groups in which it occurs (see Chapter~\ref{group}).  Thus the
 %  output of
-%\begin{verbatim}
-%\setbox0=\hbox{---} {\wd0=0pt} a\box0b
-%\end{verbatim}
-%is `{\setbox0=\hbox{---}{\wd0=0pt}a\box0b}\kern.5em'.
-Note that a \gr{box size assignment}\index{assignment!box size} is a
-\gr{global assignment}\index{assignment!global} its effect transcends
-  any groups in which it occurs (see Chapter~\ref{group}).  Thus the
-  output of
+注意，\cindextermbus{盒子尺寸}{赋值}总是\cindextermbus{全局}{赋值}。赋值的效果会超出任意限定它的分组（参见第~\ref{group}~章）。因此下列代码的输出为：「{\setbox0=\hbox{---}{\wd0=0pt}a\box0b}\kern.5em」。
 \begin{verbatim}
 \setbox0=\hbox{---} {\wd0=0pt} a\box0b
 \end{verbatim}
-is `{\setbox0=\hbox{---}{\wd0=0pt}a\box0b}\kern.5em'.
+%is `{\setbox0=\hbox{---}{\wd0=0pt}a\box0b}\kern.5em'.
 
 %The limits that hold on the dimensions with which a
 %box can be created (see above) do not hold for explicit changes to the
@@ -714,12 +687,7 @@ is `{\setbox0=\hbox{---}{\wd0=0pt}a\box0b}\kern.5em'.
 %size of a box: the assignment \cs{dp0=}""\n{-2pt} for a
 %\mdqoff
 %horizontal box is perfectly admissible.
-The limits that hold on the dimensions with which a
-box can be created (see above) do not hold for explicit changes to the
-\mdqon
-size of a box: the assignment \cs{dp0=}""\n{-2pt} for a
-\mdqoff
-horizontal box is perfectly admissible.
+上述有关被创建的盒子的尺寸限制并不适用于显式修改盒子尺寸的情况。例如，对水平盒子设置 \cs{dp0=-2pt} 是合法的。
 
 %\subsection{Moving boxes around}
 \subsection{Moving boxes around}
