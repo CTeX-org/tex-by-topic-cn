@@ -903,7 +903,7 @@ plain \TeX 中的 \csidx{newbox} 宏可用于分配一个未被使用的盒子�
 此处有一个例外，在 \cs{halign} 中，如果 \cs{tabskip} 伸缩胶无法提供足够的收缩量时，\TeX 不会绘制溢出标尺。
 
 %\section{Opening and closing boxes}
-\section{Opening and closing boxes}
+\section{盒子的开始与结束}
 
 %The opening and closing braces of a box can be either explicit, that
 %is, character tokens of category 1\index{category!1}
@@ -912,31 +912,9 @@ plain \TeX 中的 \csidx{newbox} 宏可用于分配一个未被使用的盒子�
 %\csidx{everyvbox} tokens are inserted.  If this box appeared in a
 %\csidx{setbox} assignment any \csidx{afterassignment} token is
 %inserted even before the `everybox' tokens.
-The opening and closing braces of a box can be either explicit, that
-is, character tokens of category 1\index{category!1}
-and~2\index{category!2}, or implicit, a control sequence \verb=\let=
-to such a character.  After the opening brace the \csidx{everyhbox} or
-\csidx{everyvbox} tokens are inserted.  If this box appeared in a
-\csidx{setbox} assignment any \csidx{afterassignment} token is
-inserted even before the `everybox' tokens.
+盒子的内容以花括号定界。其中，左右花括号既可以是显式字符（分类码为 1\index{category!1} 和 2\index{category!2} 的字符），也可以是使用命令 \cs{let} 定义的隐式字符。\TeX 会将记号 \csidx{everyhbox} 或者 \csidx{everyvbox} 插入在左花括号之后。如果盒子位于 \csidx{setbox} 赋值语句中，则记号 \csidx{afterassignment} 会在「everybox」记号之前插入在左花括号之后。
 
-%\begin{example} \label{every:box:assign}
-%\begin{verbatim}
-%\everyhbox{b}
-%\afterassignment a
-%\setbox0=\hbox{c}
-%\showbox0
-%\end{verbatim}
-%gives
-%\begin{verbatim}
-%> \box0=
-%\hbox(6.94444+0.0)x15.27782
-%.\tenrm a
-%.\tenrm b
-%.\kern0.27779
-%.\tenrm c
-%\end{verbatim}
-%\end{example}
+
 \begin{example} \label{every:box:assign}
 \begin{verbatim}
 \everyhbox{b}
@@ -944,7 +922,8 @@ inserted even before the `everybox' tokens.
 \setbox0=\hbox{c}
 \showbox0
 \end{verbatim}
-gives
+% gives
+的结果是：
 \begin{verbatim}
 > \box0=
 \hbox(6.94444+0.0)x15.27782
@@ -957,11 +936,12 @@ gives
 
 %Implicit braces can be used to let a box be opened or closed
 %by a macro, for example:
-%\begin{verbatim}
-%\def\openbox#1{\setbox#1=\hbox\bgroup}
-%\def\closebox#1{\egroup\DoSomethingWithBox#1}
-%\openbox0 ... \closebox0
-%\end{verbatim}
+借助隐式花括号，我们可以通过宏来开始和结束盒子。比如下面的代码就用到了这一特性：
+\begin{verbatim}
+\def\openbox#1{\setbox#1=\hbox\bgroup}
+\def\closebox#1{\egroup\DoSomethingWithBox#1}
+\openbox0 ... \closebox0
+\end{verbatim}
 %This mechanism can be used to scoop up paragraphs:
 %\begin{verbatim}
 %\everypar{\setbox\parbox=
@@ -986,13 +966,6 @@ gives
 %\begin{verbatim}
 %... a text ends.}\Usebox\parbox
 %\end{verbatim}
-Implicit braces can be used to let a box be opened or closed
-by a macro, for example:
-\begin{verbatim}
-\def\openbox#1{\setbox#1=\hbox\bgroup}
-\def\closebox#1{\egroup\DoSomethingWithBox#1}
-\openbox0 ... \closebox0
-\end{verbatim}
 This mechanism can be used to scoop up paragraphs:
 \begin{verbatim}
 \everypar{\setbox\parbox=
