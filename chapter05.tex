@@ -690,7 +690,7 @@ plain \TeX 中的 \csidx{newbox} 宏可用于分配一个未被使用的盒子�
 上述有关被创建的盒子的尺寸限制并不适用于显式修改盒子尺寸的情况。例如，对水平盒子设置 \cs{dp0=-2pt} 是合法的。
 
 %\subsection{Moving boxes around}
-\subsection{Moving boxes around}
+\subsection{移动盒子}
 
 %In a horizontal box all constituent elements are lined up
 %\cstoidx raise\par\cstoidx lower\par
@@ -698,28 +698,18 @@ plain \TeX 中的 \csidx{newbox} 宏可用于分配一个未被使用的盒子�
 %reference point of the box. Any box inside a horizontal
 %box can be lifted or dropped using the macros
 %\cs{raise} and~\cs{lower}.
-In a horizontal box all constituent elements are lined up
-\cstoidx raise\par\cstoidx lower\par
-with their reference points at the same height as the
-reference point of the box. Any box inside a horizontal
-box can be lifted or dropped using the macros
-\cs{raise} and~\cs{lower}.
+在水平盒子中，所有元素的参考点与盒子自身的参考点都位于同一条水平线上。水平盒子中的盒子可用 \csidx{raise} 或 \csidx{lower} 来上移或下移。
 
 %Similarly, in a vertical box all constituent elements
 %are lined up with their reference points underneath one another,
 %in line with the reference point of the box.
 %Boxes can now be moved sideways by the macros
 %\csidx{moveleft} and~\csidx{moveright}.
-Similarly, in a vertical box all constituent elements
-are lined up with their reference points underneath one another,
-in line with the reference point of the box.
-Boxes can now be moved sideways by the macros
-\csidx{moveleft} and~\csidx{moveright}.
+相似地，在竖直盒子中，所有元素的参考点与盒子自身的参考点都位于同一条竖直线上，且各个元素从上到下依次排列。竖直盒子中的盒子可用 \csidx{moveleft} 或 \csidx{moveright} 来左移或右移。
 
 %Only boxes can be shifted thus; these operations cannot
 %be applied to, for instance, characters or rules.
-Only boxes can be shifted thus; these operations cannot
-be applied to, for instance, characters or rules.
+注意，只有盒子能用上述命令来移动，因此，这些命令不能用于字符或标尺。
 
 %\subsection{Box dimensions and box placement}
 \subsection{Box dimensions and box placement}
