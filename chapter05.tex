@@ -486,167 +486,104 @@ plain \TeX 中的 \csidx{newbox} 宏可用于分配一个未被使用的盒子�
 通常，\cs{boxmaxdepth} 的值是 \TeX 能表示的最大尺寸。但在一些情况下，例如，在 plain \TeX 的输出阶段的一些计算中，它的值会被修改得小很多。详见第~\ref{output}~章。
 
 %\subsection{Examples}
-\subsection{Examples}
+\subsection{例子}
 
 %Horizontal boxes are relatively straightforward. Their width is the
 %distance between the `beginning' and the `end' of the
 %box,
 %and consequently the width is not necessarily positive.
 %With
-%\begin{verbatim}
-%\setbox0=\hbox{aa} \setbox1=\hbox{\copy0 \hskip-\wd0}
-%\end{verbatim}
-%the \cs{box1} has width zero;
-%\begin{Disp} \verb-/\box1/-\quad gives\quad
-%`{\setbox0=\hbox{aa}\setbox1=\hbox{\copy0 \hskip-\wd0}/\box1/}\kern.75em'
-%\end{Disp}
-%The height and depth of a horizontal box cannot be negative: in
-%\begin{verbatim}
-%\setbox0=\hbox{\vrule height 5pt depth 5pt}
-%\setbox1=\hbox{\raise 10pt \box0}
-%\end{verbatim}
-%the \cs{box1} has depth \n{0pt} and height~\n{15pt}
-Horizontal boxes are relatively straightforward. Their width is the
-distance between the `beginning' and the `end' of the
-box,
-and consequently the width is not necessarily positive.
-With
+水平盒子相较而言简单直接一些。水平盒子的宽度是盒子两条竖直边界之间的距离：从开始到结束，因此，水平盒子的宽度不一定是正数。例如在下例中，\cs{box1} 的宽度为零。
 \begin{verbatim}
 \setbox0=\hbox{aa} \setbox1=\hbox{\copy0 \hskip-\wd0}
 \end{verbatim}
-the \cs{box1} has width zero;
-\begin{Disp} \verb-/\box1/-\quad gives\quad
+%the \cs{box1} has width zero;
+具体来说
+\begin{Disp}
+\verb-/\box1/-\quad gives\quad
 `{\setbox0=\hbox{aa}\setbox1=\hbox{\copy0 \hskip-\wd0}/\box1/}\kern.75em'
 \end{Disp}
-The height and depth of a horizontal box cannot be negative: in
+%The height and depth of a horizontal box cannot be negative: in
+水平盒子的高度和深度则不能为负。例如在下例中，\cs{box1} 的深度是 \n{0pt} 而高度是 \n{15pt}。
 \begin{verbatim}
 \setbox0=\hbox{\vrule height 5pt depth 5pt}
 \setbox1=\hbox{\raise 10pt \box0}
 \end{verbatim}
-the \cs{box1} has depth \n{0pt} and height~\n{15pt}
+%the \cs{box1} has depth \n{0pt} and height~\n{15pt}
 
 %Vertical boxes are more troublesome than horizontal boxes.
 %Let us first treat their width.
 %After
-%\begin{verbatim}
-%\setbox0=\hbox{\hskip 10pt}
-%\end{verbatim}
-%the box in the
-%\cs{box0} register has a width of \n{10pt}. Defining
-%\begin{verbatim}
-%\setbox1=\vbox{\moveleft 5pt \copy0}
-%\end{verbatim}
-%the \cs{box1} will have width \n{5pt}; material to the
-%left of the reference point is not accounted for in the
-%width of a vertical box. With
-%\begin{verbatim}
-%\setbox2=\vbox{\moveright 5pt \copy0}
-%\end{verbatim}
-%the \cs{box2} will have width \n{15pt}.
-Vertical boxes are more troublesome than horizontal boxes.
-Let us first treat their width.
-After
+竖直盒子相较而言就要麻烦不少。我们首先来讨论其宽度。首先，如下定义的水平盒子的宽度是 \n{10pt}。
 \begin{verbatim}
 \setbox0=\hbox{\hskip 10pt}
 \end{verbatim}
-the box in the
-\cs{box0} register has a width of \n{10pt}. Defining
+%the box in the
+%\cs{box0} register has a width of \n{10pt}. Defining
+则如下定义的竖直盒子宽度是 \n{5pt}。
 \begin{verbatim}
 \setbox1=\vbox{\moveleft 5pt \copy0}
 \end{verbatim}
-the \cs{box1} will have width \n{5pt}; material to the
-left of the reference point is not accounted for in the
-width of a vertical box. With
+%the \cs{box1} will have width \n{5pt}; material to the
+%left of the reference point is not accounted for in the
+%width of a vertical box. With
+这是因为，在竖直盒子中，位于参考点左边的内容不计入其宽度。同样的，如下定义的竖直盒子宽度是 \n{15pt}。
 \begin{verbatim}
 \setbox2=\vbox{\moveright 5pt \copy0}
 \end{verbatim}
-the \cs{box2} will have width \n{15pt}.
+%the \cs{box2} will have width \n{15pt}.
 
 %The depth of a \cs{vbox} is the depth of the last item if
 %that is a box, so
-%\begin{verbatim}
-%\vbox{\vskip 5pt \hbox{\vrule height 5pt depth 5pt}}
-%\end{verbatim}
-%has height \n{10pt} and depth \n{5pt},
-%and
-%\begin{verbatim}
-%\vbox{\vskip -5pt \hbox{\vrule height 5pt depth 5pt}}
-%\end{verbatim}
-%has height \n{0pt} and depth~\n{5pt}.
-%With a glue or kern as the last item in the box, the resulting depth
-%is zero, so
-%\begin{verbatim}
-%\vbox{\hbox{\vrule height 5pt depth 5pt}\vskip 5pt}
-%\end{verbatim}
-%has height \n{15pt} and depth~\n{0pt};
-%\begin{verbatim}
-%\vbox{\hbox{\vrule height 5pt depth 5pt}\vskip -5pt}
-%\end{verbatim}
-%has height \n{5pt} and depth~\n{0pt}.
-The depth of a \cs{vbox} is the depth of the last item if
-that is a box, so
+如果 \cs{vbox} 的最后一个元素是盒子，则其深度是最后一个元素的深度。因此，如下定义的 \cs{vbox} 高度为 \n{10pt} 深度为 \n{5pt}。
 \begin{verbatim}
 \vbox{\vskip 5pt \hbox{\vrule height 5pt depth 5pt}}
 \end{verbatim}
-has height \n{10pt} and depth \n{5pt},
-and
+%has height \n{10pt} and depth \n{5pt},
+%and
+如下定义的 \cs{vbox} 的高度则是 \n{0pt} 而深度为 \n{5pt}。
 \begin{verbatim}
 \vbox{\vskip -5pt \hbox{\vrule height 5pt depth 5pt}}
 \end{verbatim}
-has height \n{0pt} and depth~\n{5pt}.
-With a glue or kern as the last item in the box, the resulting depth
-is zero, so
+%has height \n{0pt} and depth~\n{5pt}.
+%With a glue or kern as the last item in the box, the resulting depth
+%is zero, so
+如果最后一个元素是铅空或伸缩胶，则竖直盒子的深度为零。因此，如下定义的 \cs{vbox} 高度为 \n{15pt} 深度为 \n{0pt}。
 \begin{verbatim}
 \vbox{\hbox{\vrule height 5pt depth 5pt}\vskip 5pt}
 \end{verbatim}
-has height \n{15pt} and depth~\n{0pt};
+%has height \n{15pt} and depth~\n{0pt};
+下列 \cs{vbox} 的高度为 \n{5pt} 深度则是 \n{0pt}。
 \begin{verbatim}
 \vbox{\hbox{\vrule height 5pt depth 5pt}\vskip -5pt}
 \end{verbatim}
-has height \n{5pt} and depth~\n{0pt}.
+%has height \n{5pt} and depth~\n{0pt}.
 
 %The height of a \cs{vtop} behaves (almost) the same with respect to
 %the first item of the box, as the depth of a \cs{vbox} does
 %with respect to the last item. Repeating the above examples with
 %a \cs{vtop} gives the following:
-%\begin{verbatim}
-%\vtop{\vskip 5pt \hbox{\vrule height 5pt depth 5pt}}
-%\end{verbatim}
-%has height \n{0pt} and depth \n{15pt},
-%and
-%\begin{verbatim}
-%\vtop{\vskip -5pt \hbox{\vrule height 5pt depth 5pt}}
-%\end{verbatim}
-%has height \n{0pt} and depth~\n{5pt};
-%\begin{verbatim}
-%\vtop{\hbox{\vrule height 5pt depth 5pt} \vskip 5pt}
-%\end{verbatim}
-%has height \n{5pt} and depth~\n{10pt}, and
-%\begin{verbatim}
-%\vtop{\hbox{\vrule height 5pt depth 5pt} \vskip -5pt}
-%\end{verbatim}
-%has height \n{5pt} and depth~\n{0pt}.
-The height of a \cs{vtop} behaves (almost) the same with respect to
-the first item of the box, as the depth of a \cs{vbox} does
-with respect to the last item. Repeating the above examples with
-a \cs{vtop} gives the following:
+与 \cs{vbox} 的深度对应，\cs{vtop} 的高度基本上就是其第一个元素的高度。重复之前的例子，则如下定义的 \cs{vtop} 高度为 \n{0pt} 深度为 \n{15pt}。
 \begin{verbatim}
 \vtop{\vskip 5pt \hbox{\vrule height 5pt depth 5pt}}
 \end{verbatim}
-has height \n{0pt} and depth \n{15pt},
-and
+%has height \n{0pt} and depth \n{15pt},
+%and
+如下定义的 \cs{vtop} 高度为 \n{0pt} 深度为 \n{5pt}。
 \begin{verbatim}
 \vtop{\vskip -5pt \hbox{\vrule height 5pt depth 5pt}}
 \end{verbatim}
-has height \n{0pt} and depth~\n{5pt};
+%has height \n{0pt} and depth~\n{5pt};
+如下定义的 \cs{vtop} 高度为 \n{5pt} 深度为 \n{10pt}。
 \begin{verbatim}
 \vtop{\hbox{\vrule height 5pt depth 5pt} \vskip 5pt}
 \end{verbatim}
-has height \n{5pt} and depth~\n{10pt}, and
+%has height \n{5pt} and depth~\n{10pt}, and
+如下定义的 \cs{vtop} 高度为 \n{5pt} 深度为 \n{0pt}。
 \begin{verbatim}
 \vtop{\hbox{\vrule height 5pt depth 5pt} \vskip -5pt}
 \end{verbatim}
-has height \n{5pt} and depth~\n{0pt}.
+%has height \n{5pt} and depth~\n{0pt}.
 
 %%\point More about box dimensions
 %\section{More about box dimensions}
