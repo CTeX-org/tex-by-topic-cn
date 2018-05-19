@@ -887,11 +887,7 @@ plain \TeX 中的 \csidx{newbox} 宏可用于分配一个未被使用的盒子�
 %shrinkability, \TeX\ reports this fact if the
 %computed badness (which is between 13 and~100) is more than
 %\cs{hbadness}.
-Also, boxes that shrink but that are not overfull can be reported:
-if a box is `tight', that is, if it uses at least half its
-shrinkability, \TeX\ reports this fact if the
-computed badness (which is between 13 and~100) is more than
-\cs{hbadness}.
+如果一个盒子虽不至变成溢出盒子但也被收缩了，也有可能被 \TeX 报告问题：如果一个盒子比较紧凑，也就是说，如果这个盒子使用了至少一半的收缩能力，则在劣度（介于 13 到 100 之间）超过 \cs{hbadness} 时，\TeX 会报告这个问题。
 
 %For horizontal and vertical boxes this error reporting is almost
 %\cstoidx overfullrule\par
@@ -902,15 +898,9 @@ computed badness (which is between 13 and~100) is more than
 %No overfull rule ensues if
 %the \cs{tabskip} glue in an \cs{halign} cannot be
 %shrunk enough.
-For horizontal and vertical boxes this error reporting is almost
+对水平盒子与竖直盒子来说，相关警告的逻辑几乎完全相同。对于竖直盒子来说，有 \cs{vbadness} 以及 \cs{vfuzz} 来控制相关报错。区别之处在于，如果一个水平盒子溢出了，则 \TeX 会在盒子右侧绘制一个高度与盒子相同宽度为 \cs{overfullrule} 的溢出标尺。%
 \cstoidx overfullrule\par
-the same, with parameters \cs{vbadness} and \cs{vfuzz}.
-The difference is that for horizontal overfull boxes
-\TeX\ will draw a rule to the right of the box that has the
-same height as the box, and width \cs{overfullrule}.
-No overfull rule ensues if
-the \cs{tabskip} glue in an \cs{halign} cannot be
-shrunk enough.
+此处有一个例外，在 \cs{halign} 中，如果 \cs{tabskip} 伸缩胶无法提供足够的收缩量时，\TeX 不会绘制溢出标尺。
 
 %\section{Opening and closing boxes}
 \section{Opening and closing boxes}
