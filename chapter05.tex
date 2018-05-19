@@ -639,7 +639,7 @@ plain \TeX 中的 \csidx{newbox} 宏可用于分配一个未被使用的盒子�
 %%\spoint Changes to box dimensions
 %\subsection{Changes to box dimensions}
 %\spoint Changes to box dimensions
-\subsection{Changes to box dimensions}
+\subsection{改变盒子的尺寸}
 
 %The dimensions of a box register are accessible by the
 %commands \csidx{ht}, \csidx{dp}, and~\csidx{wd};
@@ -651,62 +651,35 @@ plain \TeX 中的 \csidx{newbox} 宏可用于分配一个未被使用的盒子�
 %However, changing the dimensions of a box does not change
 %anything about the contents; in particular it does not
 %change the way the glue is set.
-The dimensions of a box register are accessible by the
-commands \csidx{ht}, \csidx{dp}, and~\csidx{wd};
-for instance \cs{dp13} gives the depth of box~13.
-However, not only can boxes be measured this way;
-by assigning values to these
-dimensions \TeX\ can even be fooled into thinking that
-a box has a  size different from its actual.
-However, changing the dimensions of a box does not change
-anything about the contents; in particular it does not
-change the way the glue is set.
-
+我们可以用 \csidx{ht}、\csidx{dp} 和 \csidx{wd} 来分别获得盒子寄存器的高度、深度和宽度。举例来说，\cs{dp18} 会给出 18 号盒子的深度。盒子的尺寸不光可读，还可写。通过给盒子的尺寸赋值，我们可以在某种意义上愚弄 \TeX，使得在 \TeX 看来某个盒子的尺寸不同于其真实值。不过，修改盒子尺寸并不会修改其中的内容；特别地，不会修改伸缩胶设置的方式。
 
 %Various formats use this in `smash' macros: the macro defined by
 %\cstoidx smash\par
-%\begin{verbatim}
-%\def\smash#1{{\setbox0=\hbox{#1}\dp0=0pt \ht0=0pt \box0\relax}}
-%\end{verbatim}
+不少格式（format）都定义了 \csidx{smash} 宏：
+\begin{verbatim}
+\def\smash#1{{\setbox0=\hbox{#1}\dp0=0pt \ht0=0pt \box0\relax}}
+\end{verbatim}
 %places its argument but annihilates its height and depth;
 %\altt
 %that is, the output does show the whole box, but further calculations
 %by \TeX\ act as if the height and depth were zero.
-Various formats use this in `smash' macros: the macro defined by
-\cstoidx smash\par
-\begin{verbatim}
-\def\smash#1{{\setbox0=\hbox{#1}\dp0=0pt \ht0=0pt \box0\relax}}
-\end{verbatim}
-places its argument but annihilates its height and depth;
-\altt
-that is, the output does show the whole box, but further calculations
-by \TeX\ act as if the height and depth were zero.
+在宏定义中，\cs{smash} 命令将内容保存在盒子中，但是将盒子的高度和深度都值为零；这也就是说，最终盒子会被输出，但是后续有关盒子尺寸的计算中，\TeX 都会将高度和深度认作是零。
 
 %Box dimensions can be changed only by setting them.
 %They are \gr{box dimen}s, which can only be set
 %in a \gr{box size assignment}, and not, for instance
 %changed with \cs{advance}.
-Box dimensions can be changed only by setting them.
-They are \gr{box dimen}s, which can only be set
-in a \gr{box size assignment}, and not, for instance
-changed with \cs{advance}.
+改变盒子尺寸只能通过为其赋值来实现：这些盒子尺寸（\gr{box dimen}s）能且只能通过盒子尺寸赋值语句（\gr{box size assignment}）来设置，而不能用诸如 \cs{advance} 的命令来修改。
 
 %Note that a \gr{box size assignment}\index{assignment!box size} is a
 %\gr{global assignment}\index{assignment!global} its effect transcends
 %  any groups in which it occurs (see Chapter~\ref{group}).  Thus the
 %  output of
-%\begin{verbatim}
-%\setbox0=\hbox{---} {\wd0=0pt} a\box0b
-%\end{verbatim}
-%is `{\setbox0=\hbox{---}{\wd0=0pt}a\box0b}\kern.5em'.
-Note that a \gr{box size assignment}\index{assignment!box size} is a
-\gr{global assignment}\index{assignment!global} its effect transcends
-  any groups in which it occurs (see Chapter~\ref{group}).  Thus the
-  output of
+注意，\cindextermbus{盒子尺寸}{赋值}总是\cindextermbus{全局}{赋值}。赋值的效果会超出任意限定它的分组（参见第~\ref{group}~章）。因此下列代码的输出为：「{\setbox0=\hbox{---}{\wd0=0pt}a\box0b}\kern.5em」。
 \begin{verbatim}
 \setbox0=\hbox{---} {\wd0=0pt} a\box0b
 \end{verbatim}
-is `{\setbox0=\hbox{---}{\wd0=0pt}a\box0b}\kern.5em'.
+%is `{\setbox0=\hbox{---}{\wd0=0pt}a\box0b}\kern.5em'.
 
 %The limits that hold on the dimensions with which a
 %box can be created (see above) do not hold for explicit changes to the
@@ -714,15 +687,10 @@ is `{\setbox0=\hbox{---}{\wd0=0pt}a\box0b}\kern.5em'.
 %size of a box: the assignment \cs{dp0=}""\n{-2pt} for a
 %\mdqoff
 %horizontal box is perfectly admissible.
-The limits that hold on the dimensions with which a
-box can be created (see above) do not hold for explicit changes to the
-\mdqon
-size of a box: the assignment \cs{dp0=}""\n{-2pt} for a
-\mdqoff
-horizontal box is perfectly admissible.
+上述有关被创建的盒子的尺寸限制并不适用于显式修改盒子尺寸的情况。例如，对水平盒子设置 \cs{dp0=-2pt} 是合法的。
 
 %\subsection{Moving boxes around}
-\subsection{Moving boxes around}
+\subsection{移动盒子}
 
 %In a horizontal box all constituent elements are lined up
 %\cstoidx raise\par\cstoidx lower\par
@@ -730,31 +698,21 @@ horizontal box is perfectly admissible.
 %reference point of the box. Any box inside a horizontal
 %box can be lifted or dropped using the macros
 %\cs{raise} and~\cs{lower}.
-In a horizontal box all constituent elements are lined up
-\cstoidx raise\par\cstoidx lower\par
-with their reference points at the same height as the
-reference point of the box. Any box inside a horizontal
-box can be lifted or dropped using the macros
-\cs{raise} and~\cs{lower}.
+在水平盒子中，所有元素的参考点与盒子自身的参考点都位于同一条水平线上。水平盒子中的盒子可用 \csidx{raise} 或 \csidx{lower} 来上移或下移。
 
 %Similarly, in a vertical box all constituent elements
 %are lined up with their reference points underneath one another,
 %in line with the reference point of the box.
 %Boxes can now be moved sideways by the macros
 %\csidx{moveleft} and~\csidx{moveright}.
-Similarly, in a vertical box all constituent elements
-are lined up with their reference points underneath one another,
-in line with the reference point of the box.
-Boxes can now be moved sideways by the macros
-\csidx{moveleft} and~\csidx{moveright}.
+相似地，在竖直盒子中，所有元素的参考点与盒子自身的参考点都位于同一条竖直线上，且各个元素从上到下依次排列。竖直盒子中的盒子可用 \csidx{moveleft} 或 \csidx{moveright} 来左移或右移。
 
 %Only boxes can be shifted thus; these operations cannot
 %be applied to, for instance, characters or rules.
-Only boxes can be shifted thus; these operations cannot
-be applied to, for instance, characters or rules.
+注意，只有盒子能用上述命令来移动，因此，这些命令不能用于字符或标尺。
 
 %\subsection{Box dimensions and box placement}
-\subsection{Box dimensions and box placement}
+\subsection{盒子的尺寸与盒子的摆放}
 
 %\TeX\ places the components of horizontal and
 %vertical lists by maintaining a reference line and a
@@ -762,44 +720,28 @@ be applied to, for instance, characters or rules.
 %the reference line is the baseline of the surrounding
 %\cs{hbox}; for vertical lists it is the vertical line
 %through the reference point of the surrounding \cs{vbox}.
-\TeX\ places the components of horizontal and
-vertical lists by maintaining a reference line and a
-current position on that line. For horizontal lists
-the reference line is the baseline of the surrounding
-\cs{hbox}; for vertical lists it is the vertical line
-through the reference point of the surrounding \cs{vbox}.
+在确定水平列表和竖直列表中元素的摆放位置时，\TeX 需要维护两个变量：当前参考线以及在参考线上的当前位置。对于水平列表来说，参考线是包围当前内容的 \cs{hbox} 的基线；对于竖直列表来说，参考线是穿过包围当前内容的 \cs{vbox} 的参考点的竖线。
 
 %In horizontal mode a component is placed as follows.
 %The current position coincides initially
 %with the reference point of the surrounding box. After that,
 %the following actions are carried out.
-%\begin{enumerate} \item If the component has been shifted by
+在水平模式中，\TeX 放置元素的逻辑如下。初始时，参考线上的当前位置即是包围当前内容的从水平盒子的参考点。此后，\TeX 会依如下步骤操作。
+\begin{enumerate}
+% \item If the component has been shifted by
 %\cs{raise} or \cs{lower}, shift the current
 %position correspondingly.
+\item 如果元素被 \cs{raise} 或 \cs{lower} 上下移动了位置，则相应地调整元素的位置。
 %\item If the component is a horizontal box, use
 %this algorithm recursively for its contents;
 %if it is a vertical box, go up  by the height of this box,
 %putting  a new current position for the enclosed vertical list there,
 %and place its components using the algorithm for vertical
 %lists below.
+\item 如果元素是水平盒子，则对其内容递归地调用该算法；如果元素是竖直盒子，按盒子的高度向上移动当前位置，而后按照后文所述的有关竖直盒子的算法防止盒子内竖直列表中的元素。
 %\item Move the current position (on the reference line)
 %to the right by the width of the component.
-%\end{enumerate}
-In horizontal mode a component is placed as follows.
-The current position coincides initially
-with the reference point of the surrounding box. After that,
-the following actions are carried out.
-\begin{enumerate} \item If the component has been shifted by
-\cs{raise} or \cs{lower}, shift the current
-position correspondingly.
-\item If the component is a horizontal box, use
-this algorithm recursively for its contents;
-if it is a vertical box, go up  by the height of this box,
-putting  a new current position for the enclosed vertical list there,
-and place its components using the algorithm for vertical
-lists below.
-\item Move the current position (on the reference line)
-to the right by the width of the component.
+\item 按当前元素的宽度，沿着参考线向右移动当前位置。
 \end{enumerate}
 
 %For the list in a vertical box \TeX's  current position is
@@ -807,118 +749,73 @@ to the right by the width of the component.
 %and the reference line is the vertical line through that point;
 %it also runs through the reference point of the box.
 %Enclosed components are then placed as follows.
-%\begin{enumerate} \item If a component has been shifted using
+对于竖直盒子中的竖直列表，\TeX 的会将当前位置初始设置在盒子的左上角，参考线则是穿过该点的竖线——这条竖线同样也会穿过盒子的参考点。竖直盒子中的元素依照如下逻辑摆放。
+\begin{enumerate}
+%\item If a component has been shifted using
 %\cs{moveleft} or \cs{moveright}, shift the current position
 %accordingly.
+\item 如果元素被 \cs{moveleft} 或 \cs{moveright} 上下移动了位置，则相应地调整元素的位置。
 %\item Put the component with its upper left corner at the
 %current position.
+\item 将元素的左上角与当前位置对齐。
 %\item If the component is a vertical box, use this algorithm
 %recursively for its contents; if it is a horizontal box,
 %its reference point can be found below  the current position
 %by the height of the box. Put the current position for that
 %box there, and use the above algorithm for horizontal lists.
+\item 如果元素是竖直盒子，则对其内容递归地调用该算法；如果元素是水平盒子，按盒子的高度向下移动当前位置，而后按照前文所述的有关竖直盒子的算法防止盒子内水平列表中的元素。
 %\item Go down by the height plus depth of the box
 %(that is, starting at the upper left corner of the box)
 %on the  reference line,
 %and continue processing vertically.
-%\end{enumerate}
+\item 按当前元素的高度与深度之和，沿着参考线向下移动当前位置。
+\end{enumerate}
 %Note that the above processes do not describe the construction
 %of boxes. That would (for instance)
 %involve for vertical boxes the insertion
 %of baselineskip glue. Rather, it describes the way the components
 %of a finished box are arranged in the output.
-For the list in a vertical box \TeX's  current position is
-initially at the upper left corner of that box, as explained above,
-and the reference line is the vertical line through that point;
-it also runs through the reference point of the box.
-Enclosed components are then placed as follows.
-\begin{enumerate} \item If a component has been shifted using
-\cs{moveleft} or \cs{moveright}, shift the current position
-accordingly.
-\item Put the component with its upper left corner at the
-current position.
-\item If the component is a vertical box, use this algorithm
-recursively for its contents; if it is a horizontal box,
-its reference point can be found below  the current position
-by the height of the box. Put the current position for that
-box there, and use the above algorithm for horizontal lists.
-\item Go down by the height plus depth of the box
-(that is, starting at the upper left corner of the box)
-on the  reference line,
-and continue processing vertically.
-\end{enumerate}
-Note that the above processes do not describe the construction
-of boxes. That would (for instance)
-involve for vertical boxes the insertion
-of baselineskip glue. Rather, it describes the way the components
-of a finished box are arranged in the output.
+注意，上文中没有描述 \TeX 是如何构建盒子的。对于竖直盒子，构建盒子的过程还要包括插入行间距伸缩胶（行间胶，baselineskip glue）的过程。上文介绍的过程描述的是 \TeX 会如何输出一个已经构建完成的盒子中的内容。
 
 %\subsection{Boxes and negative glue}
-\subsection{Boxes and negative glue}
+\subsection{盒子与反向伸缩胶}
 
 %Sometimes it is useful to have boxes overlapping instead of
 %line up. An easy way to do this is to use negative glue.
 %In horizontal mode
-%\begin{verbatim}
-%{\dimen0=\wd8 \box8 \kern-\dimen0}
-%\end{verbatim}
-%places box 8 without moving the current location.
-Sometimes it is useful to have boxes overlapping instead of
-line up. An easy way to do this is to use negative glue.
-In horizontal mode
+默认情况下，盒子在一条参考线上依次摆放。但有时，让盒子互相重叠也是很有用的。让盒子互相重叠，最简单的办法是使用反向行间胶。在水平模式中，下列代码会摆放编号为 8 的盒子，但不会移动当前位置。
 \begin{verbatim}
 {\dimen0=\wd8 \box8 \kern-\dimen0}
 \end{verbatim}
-places box 8 without moving the current location.
+%places box 8 without moving the current location.
 
 %More versatile are the macros \csidx{llap} and \csidx{rlap}\label{rlap},
 %defined as
-%\begin{verbatim}
-%\def\llap#1{\hbox to 0pt{\hss #1}}
-%\end{verbatim}
-%and
-%\begin{verbatim}
-%\def\rlap#1{\hbox to 0pt{#1\hss}}
-%\end{verbatim}
+更实用的是使用 \csidx{llap} 和 \csidx{rlap}\label{rlap} 命令。它们的定义如下：
+\begin{verbatim}
+\def\llap#1{\hbox to 0pt{\hss #1}}
+\def\rlap#1{\hbox to 0pt{#1\hss}}
+\end{verbatim}
 %that allow material to protrude left or right from the
 %current location.
 %The \cs{hss} glue is equivalent to \verb>\hskip 0pt plus 1fil minus 1fil>,
 %which absorbs any positive or negative width
 %of the argument of \cs{llap} or \cs{rlap}.
-More versatile are the macros \csidx{llap} and \csidx{rlap}\label{rlap},
-defined as
-\begin{verbatim}
-\def\llap#1{\hbox to 0pt{\hss #1}}
-\end{verbatim}
-and
-\begin{verbatim}
-\def\rlap#1{\hbox to 0pt{#1\hss}}
-\end{verbatim}
-that allow material to protrude left or right from the
-current location.
-The \cs{hss} glue is equivalent to \verb>\hskip 0pt plus 1fil minus 1fil>,
-which absorbs any positive or negative width
-of the argument of \cs{llap} or \cs{rlap}.
+这两个命令允许其中的内容基于当前位置向左或向右突出。这里，\cs{hss} 伸缩胶等价于 \cs{hskip 0pt plus 1fil minus 1fil}，它能吸收 \cs{llap} 或 \cs{rlap} 的参数的任意正负宽度。
 
-%\begin{example} The sequence
-%\begin{verbatim}
-%\llap{\hbox to 10pt{a\hfil}}
-%\end{verbatim}
-%is effectively the same as
-%\begin{verbatim}
-%\hbox{\hskip-10pt \hbox to 10pt{a\hfil}}
-%\end{verbatim}
-%which has a total width of~\n{0pt}.
-%\end{example}
-\begin{example} The sequence
+\begin{example}
+%The sequence
+下列代码
 \begin{verbatim}
 \llap{\hbox to 10pt{a\hfil}}
 \end{verbatim}
-is effectively the same as
+%is effectively the same as
+等价于
 \begin{verbatim}
 \hbox{\hskip-10pt \hbox to 10pt{a\hfil}}
 \end{verbatim}
-which has a total width of~\n{0pt}.
+%which has a total width of~\n{0pt}.
+它们的宽度都是 \n{0pt}。
 \end{example}
 
 %\section{Overfull and underfull boxes}
