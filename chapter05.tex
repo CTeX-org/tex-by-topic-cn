@@ -778,71 +778,44 @@ plain \TeX 中的 \csidx{newbox} 宏可用于分配一个未被使用的盒子�
 注意，上文中没有描述 \TeX 是如何构建盒子的。对于竖直盒子，构建盒子的过程还要包括插入行间距伸缩胶（行间胶，baselineskip glue）的过程。上文介绍的过程描述的是 \TeX 会如何输出一个已经构建完成的盒子中的内容。
 
 %\subsection{Boxes and negative glue}
-\subsection{Boxes and negative glue}
+\subsection{盒子与反向伸缩胶}
 
 %Sometimes it is useful to have boxes overlapping instead of
 %line up. An easy way to do this is to use negative glue.
 %In horizontal mode
-%\begin{verbatim}
-%{\dimen0=\wd8 \box8 \kern-\dimen0}
-%\end{verbatim}
-%places box 8 without moving the current location.
-Sometimes it is useful to have boxes overlapping instead of
-line up. An easy way to do this is to use negative glue.
-In horizontal mode
+默认情况下，盒子在一条参考线上依次摆放。但有时，让盒子互相重叠也是很有用的。让盒子互相重叠，最简单的办法是使用反向行间胶。在水平模式中，下列代码会摆放编号为 8 的盒子，但不会移动当前位置。
 \begin{verbatim}
 {\dimen0=\wd8 \box8 \kern-\dimen0}
 \end{verbatim}
-places box 8 without moving the current location.
+%places box 8 without moving the current location.
 
 %More versatile are the macros \csidx{llap} and \csidx{rlap}\label{rlap},
 %defined as
-%\begin{verbatim}
-%\def\llap#1{\hbox to 0pt{\hss #1}}
-%\end{verbatim}
-%and
-%\begin{verbatim}
-%\def\rlap#1{\hbox to 0pt{#1\hss}}
-%\end{verbatim}
+更实用的是使用 \csidx{llap} 和 \csidx{rlap}\label{rlap} 命令。它们的定义如下：
+\begin{verbatim}
+\def\llap#1{\hbox to 0pt{\hss #1}}
+\def\rlap#1{\hbox to 0pt{#1\hss}}
+\end{verbatim}
 %that allow material to protrude left or right from the
 %current location.
 %The \cs{hss} glue is equivalent to \verb>\hskip 0pt plus 1fil minus 1fil>,
 %which absorbs any positive or negative width
 %of the argument of \cs{llap} or \cs{rlap}.
-More versatile are the macros \csidx{llap} and \csidx{rlap}\label{rlap},
-defined as
-\begin{verbatim}
-\def\llap#1{\hbox to 0pt{\hss #1}}
-\end{verbatim}
-and
-\begin{verbatim}
-\def\rlap#1{\hbox to 0pt{#1\hss}}
-\end{verbatim}
-that allow material to protrude left or right from the
-current location.
-The \cs{hss} glue is equivalent to \verb>\hskip 0pt plus 1fil minus 1fil>,
-which absorbs any positive or negative width
-of the argument of \cs{llap} or \cs{rlap}.
+这两个命令允许其中的内容基于当前位置向左或向右突出。这里，\cs{hss} 伸缩胶等价于 \cs{hskip 0pt plus 1fil minus 1fil}，它能吸收 \cs{llap} 或 \cs{rlap} 的参数的任意正负宽度。
 
-%\begin{example} The sequence
-%\begin{verbatim}
-%\llap{\hbox to 10pt{a\hfil}}
-%\end{verbatim}
-%is effectively the same as
-%\begin{verbatim}
-%\hbox{\hskip-10pt \hbox to 10pt{a\hfil}}
-%\end{verbatim}
-%which has a total width of~\n{0pt}.
-%\end{example}
-\begin{example} The sequence
+\begin{example}
+%The sequence
+下列代码
 \begin{verbatim}
 \llap{\hbox to 10pt{a\hfil}}
 \end{verbatim}
-is effectively the same as
+%is effectively the same as
+等价于
 \begin{verbatim}
 \hbox{\hskip-10pt \hbox to 10pt{a\hfil}}
 \end{verbatim}
-which has a total width of~\n{0pt}.
+%which has a total width of~\n{0pt}.
+它们的宽度都是 \n{0pt}。
 \end{example}
 
 %\section{Overfull and underfull boxes}
