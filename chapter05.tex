@@ -712,7 +712,7 @@ plain \TeX 中的 \csidx{newbox} 宏可用于分配一个未被使用的盒子�
 注意，只有盒子能用上述命令来移动，因此，这些命令不能用于字符或标尺。
 
 %\subsection{Box dimensions and box placement}
-\subsection{Box dimensions and box placement}
+\subsection{盒子的尺寸与盒子的摆放}
 
 %\TeX\ places the components of horizontal and
 %vertical lists by maintaining a reference line and a
@@ -720,44 +720,28 @@ plain \TeX 中的 \csidx{newbox} 宏可用于分配一个未被使用的盒子�
 %the reference line is the baseline of the surrounding
 %\cs{hbox}; for vertical lists it is the vertical line
 %through the reference point of the surrounding \cs{vbox}.
-\TeX\ places the components of horizontal and
-vertical lists by maintaining a reference line and a
-current position on that line. For horizontal lists
-the reference line is the baseline of the surrounding
-\cs{hbox}; for vertical lists it is the vertical line
-through the reference point of the surrounding \cs{vbox}.
+在确定水平列表和竖直列表中元素的摆放位置时，\TeX 需要维护两个变量：当前参考线以及在参考线上的当前位置。对于水平列表来说，参考线是包围当前内容的 \cs{hbox} 的基线；对于竖直列表来说，参考线是穿过包围当前内容的 \cs{vbox} 的参考点的竖线。
 
 %In horizontal mode a component is placed as follows.
 %The current position coincides initially
 %with the reference point of the surrounding box. After that,
 %the following actions are carried out.
-%\begin{enumerate} \item If the component has been shifted by
+在水平模式中，\TeX 放置元素的逻辑如下。初始时，参考线上的当前位置即是包围当前内容的从水平盒子的参考点。此后，\TeX 会依如下步骤操作。
+\begin{enumerate}
+% \item If the component has been shifted by
 %\cs{raise} or \cs{lower}, shift the current
 %position correspondingly.
+\item 如果元素被 \cs{raise} 或 \cs{lower} 上下移动了位置，则相应地调整元素的位置。
 %\item If the component is a horizontal box, use
 %this algorithm recursively for its contents;
 %if it is a vertical box, go up  by the height of this box,
 %putting  a new current position for the enclosed vertical list there,
 %and place its components using the algorithm for vertical
 %lists below.
+\item 如果元素是水平盒子，则对其内容递归地调用该算法；如果元素是竖直盒子，按盒子的高度向上移动当前位置，而后按照后文所述的有关竖直盒子的算法防止盒子内竖直列表中的元素。
 %\item Move the current position (on the reference line)
 %to the right by the width of the component.
-%\end{enumerate}
-In horizontal mode a component is placed as follows.
-The current position coincides initially
-with the reference point of the surrounding box. After that,
-the following actions are carried out.
-\begin{enumerate} \item If the component has been shifted by
-\cs{raise} or \cs{lower}, shift the current
-position correspondingly.
-\item If the component is a horizontal box, use
-this algorithm recursively for its contents;
-if it is a vertical box, go up  by the height of this box,
-putting  a new current position for the enclosed vertical list there,
-and place its components using the algorithm for vertical
-lists below.
-\item Move the current position (on the reference line)
-to the right by the width of the component.
+\item 按当前元素的宽度，沿着参考线向右移动当前位置。
 \end{enumerate}
 
 %For the list in a vertical box \TeX's  current position is
@@ -765,51 +749,33 @@ to the right by the width of the component.
 %and the reference line is the vertical line through that point;
 %it also runs through the reference point of the box.
 %Enclosed components are then placed as follows.
-%\begin{enumerate} \item If a component has been shifted using
+对于竖直盒子中的竖直列表，\TeX 的会将当前位置初始设置在盒子的左上角，参考线则是穿过该点的竖线——这条竖线同样也会穿过盒子的参考点。竖直盒子中的元素依照如下逻辑摆放。
+\begin{enumerate}
+%\item If a component has been shifted using
 %\cs{moveleft} or \cs{moveright}, shift the current position
 %accordingly.
+\item 如果元素被 \cs{moveleft} 或 \cs{moveright} 上下移动了位置，则相应地调整元素的位置。
 %\item Put the component with its upper left corner at the
 %current position.
+\item 将元素的左上角与当前位置对齐。
 %\item If the component is a vertical box, use this algorithm
 %recursively for its contents; if it is a horizontal box,
 %its reference point can be found below  the current position
 %by the height of the box. Put the current position for that
 %box there, and use the above algorithm for horizontal lists.
+\item 如果元素是竖直盒子，则对其内容递归地调用该算法；如果元素是水平盒子，按盒子的高度向下移动当前位置，而后按照前文所述的有关竖直盒子的算法防止盒子内水平列表中的元素。
 %\item Go down by the height plus depth of the box
 %(that is, starting at the upper left corner of the box)
 %on the  reference line,
 %and continue processing vertically.
-%\end{enumerate}
+\item 按当前元素的高度与深度之和，沿着参考线向下移动当前位置。
+\end{enumerate}
 %Note that the above processes do not describe the construction
 %of boxes. That would (for instance)
 %involve for vertical boxes the insertion
 %of baselineskip glue. Rather, it describes the way the components
 %of a finished box are arranged in the output.
-For the list in a vertical box \TeX's  current position is
-initially at the upper left corner of that box, as explained above,
-and the reference line is the vertical line through that point;
-it also runs through the reference point of the box.
-Enclosed components are then placed as follows.
-\begin{enumerate} \item If a component has been shifted using
-\cs{moveleft} or \cs{moveright}, shift the current position
-accordingly.
-\item Put the component with its upper left corner at the
-current position.
-\item If the component is a vertical box, use this algorithm
-recursively for its contents; if it is a horizontal box,
-its reference point can be found below  the current position
-by the height of the box. Put the current position for that
-box there, and use the above algorithm for horizontal lists.
-\item Go down by the height plus depth of the box
-(that is, starting at the upper left corner of the box)
-on the  reference line,
-and continue processing vertically.
-\end{enumerate}
-Note that the above processes do not describe the construction
-of boxes. That would (for instance)
-involve for vertical boxes the insertion
-of baselineskip glue. Rather, it describes the way the components
-of a finished box are arranged in the output.
+注意，上文中没有描述 \TeX 是如何构建盒子的。对于竖直盒子，构建盒子的过程还要包括插入行间距伸缩胶（行间胶，baselineskip glue）的过程。上文介绍的过程描述的是 \TeX 会如何输出一个已经构建完成的盒子中的内容。
 
 %\subsection{Boxes and negative glue}
 \subsection{Boxes and negative glue}
