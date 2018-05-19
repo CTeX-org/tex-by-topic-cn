@@ -348,7 +348,7 @@ plain \TeX 中的 \csidx{newbox} 宏可用于分配一个未被使用的盒子�
 %%\point Natural dimensions of boxes
 %\section{Natural dimensions of boxes}
 %\point Natural dimensions of boxes
-\section{盒子自身的尺寸}
+\section{盒子天然的尺寸\liamfnote{这里指的是没有其他拉伸、收缩的影响下，盒子自身的尺寸。}}
 
 %%\spoint Dimensions of created horizontal boxes
 %\subsection{Dimensions of created horizontal boxes}
@@ -588,20 +588,23 @@ plain \TeX 中的 \csidx{newbox} 宏可用于分配一个未被使用的盒子�
 %%\point More about box dimensions
 %\section{More about box dimensions}
 %\point More about box dimensions
-\section{More about box dimensions}
+\section{继续讨论盒子的尺寸}
 
 %%\spoint Predetermined dimensions
 %\subsection{Predetermined dimensions}
 %\spoint Predetermined dimensions
-\subsection{Predetermined dimensions}
+\subsection{预先指定尺寸}
 
 %The size of a box can be specified in advance
 %with a \gr{box specification}; see above for the syntax.
 %Any glue
 %in the box is then set in order to reach the required size.
 %Prescribing the size of the box is done by
-%\begin{disp}\cs{hbox} \n{to} \gr{dimen} \n{\lb...\rb},
-%     \cs{vbox} \n{to} \gr{dimen} \n{\lb...\rb}\end{disp}
+盒子的尺寸可以通过尺寸说明符（\gr{box specification}）来指定盒子的尺寸；具体语法可见上文。盒子中的伸缩胶会依需求缩放，使得盒子的尺寸达到上述设定值。预先指定盒子的尺寸的方法是：
+\begin{disp}
+\cs{hbox} \n{to} \gr{dimen} \n{\lb...\rb},
+\cs{vbox} \n{to} \gr{dimen} \n{\lb...\rb}
+\end{disp}
 %If stretchable or shrinkable glue is present in the box,
 %it is stretched or shrunk in order to give the box the
 %specified size. Associated with this glue setting is a badness value
@@ -609,48 +612,29 @@ plain \TeX 中的 \csidx{newbox} 宏可用于分配一个未被使用的盒子�
 %is necessary \rdash  is present, the resulting box will be underfull
 %or overfull respectively. Error reporting for over/underfull
 %boxes is treated below.
-The size of a box can be specified in advance
-with a \gr{box specification}; see above for the syntax.
-Any glue
-in the box is then set in order to reach the required size.
-Prescribing the size of the box is done by
-\begin{disp}\cs{hbox} \n{to} \gr{dimen} \n{\lb...\rb},
-     \cs{vbox} \n{to} \gr{dimen} \n{\lb...\rb}\end{disp}
-If stretchable or shrinkable glue is present in the box,
-it is stretched or shrunk in order to give the box the
-specified size. Associated with this glue setting is a badness value
-(see Chapter~\ref{glue}). If no stretch or shrink \ldash whichever
-is necessary \rdash  is present, the resulting box will be underfull
-or overfull respectively. Error reporting for over/underfull
-boxes is treated below.
+如果盒子中有可以拉伸或收缩的伸缩胶，则这些伸缩胶会被拉伸或收缩，以将盒子的尺寸调整至指定的大小。与伸缩胶伸缩相关的是所谓的劣度值（见第~\ref{glue}~章）。如果伸缩胶能够提供的拉伸和收缩值不足所需，则得到的盒子会欠满或溢出。后文有关于欠满和溢出的报错的相关讨论。
 
 %Another command to let a box have a size other than
 %the natural size is
-%\begin{disp}\cs{hbox} \n{spread} \gr{dimen} \n{\lb...\rb},
-%     \cs{vbox} \n{spread} \gr{dimen} \n{\lb...\rb}\end{disp}
+还有一个命令可使盒子实际的尺寸异于其天然尺寸。
+\begin{disp}
+\cs{hbox} \n{spread} \gr{dimen} \n{\lb...\rb},
+\cs{vbox} \n{spread} \gr{dimen} \n{\lb...\rb}
+\end{disp}
 %which tells \TeX\ to set the glue in such a way that
-%the size of the box is a  specified amount more than the
+%the size of the box is a specified amount more than the
 %natural size.
-Another command to let a box have a size other than
-the natural size is
-\begin{disp}\cs{hbox} \n{spread} \gr{dimen} \n{\lb...\rb},
-     \cs{vbox} \n{spread} \gr{dimen} \n{\lb...\rb}\end{disp}
-which tells \TeX\ to set the glue in such a way that
-the size of the box is a  specified amount more than the
-natural size.
+这种情况下，\TeX 会使盒子内的伸缩胶拉伸或收缩，以在盒子天然尺寸的基础上缩放 \gr{dimen}。
 
 %Box specifications for \cs{vtop} vertical boxes are
 %somewhat difficult to interpret. \TeX\ constructs a \cs{vtop}
 %by first making a \cs{vbox}, including
 %glue settings induced by a \gr{box specification};
 %then it computes the height and depth by the above rules.
+与 \cs{vtop} 配合使用尺寸说明符相对来说比较复杂。\TeX 构造 \cs{vtop} 时会先构造一个 \cs{vbox}，同时会将尺寸说明符传递给该 \cs{vbox}；而后再根据上述规则计算盒子的高度和深度。
+
 %Glue setting is described in Chapter~\ref{glue}.
-Box specifications for \cs{vtop} vertical boxes are
-somewhat difficult to interpret. \TeX\ constructs a \cs{vtop}
-by first making a \cs{vbox}, including
-glue settings induced by a \gr{box specification};
-then it computes the height and depth by the above rules.
-Glue setting is described in Chapter~\ref{glue}.
+伸缩胶相关设置将在第~\ref{glue}~章中讨论。
 
 %%\spoint Changes to box dimensions
 %\subsection{Changes to box dimensions}
