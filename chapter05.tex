@@ -943,50 +943,31 @@ plain \TeX 中的 \csidx{newbox} 宏可用于分配一个未被使用的盒子�
 \openbox0 ... \closebox0
 \end{verbatim}
 %This mechanism can be used to scoop up paragraphs:
-%\begin{verbatim}
-%\everypar{\setbox\parbox=
-%    \vbox\bgroup
-%         \everypar{}
-%         \def\par{\egroup\UseBox\parbox}}
-%\end{verbatim}
-%Here the \cs{everypar} opens the box and lets the text be
-%set in the box: starting for instance
-%\begin{verbatim}
-%Begin a text ...
-%\end{verbatim}
-%gives the equivalent of
-%\begin{verbatim}
-%\setbox\parbox=\vbox{Begin a text ...
-%\end{verbatim}
-%Inside the box \cs{par} has been redefined, so
-%\begin{verbatim}
-%... a text ends.\par
-%\end{verbatim}
-%is equivalent to
-%\begin{verbatim}
-%... a text ends.}\Usebox\parbox
-%\end{verbatim}
-This mechanism can be used to scoop up paragraphs:
+利用这一机制，我们可以提取整个自然段的内容\liamfnote{这是一个在 plain \TeX 下的示例，而非是 \LaTeX 下的。因此，这里的 \cs{parbox} 不是 \LaTeX 里的段落盒子。关于这一技巧，此处有一完整示例：\url{https://gist.github.com/1d8b9bd2f401eb0ea970a47693723ab1}。}：
 \begin{verbatim}
 \everypar{\setbox\parbox=
-    \vbox\bgroup
-         \everypar{}
-         \def\par{\egroup\UseBox\parbox}}
+   \vbox\bgroup
+        \everypar{}
+        \def\par{\egroup\UseBox\parbox}}
 \end{verbatim}
-Here the \cs{everypar} opens the box and lets the text be
-set in the box: starting for instance
+%Here the \cs{everypar} opens the box and lets the text be
+%set in the box: starting for instance
+此处，\cs{everypar} 命令\liamfnote{\cs{everypar} 命令的参数，会被插入在每个开启自然段的水平列表的头部，位于缩进盒子之后。}开始了一个盒子，并且将自然段的文本内容保存在盒子中。假设段落的开头是：
 \begin{verbatim}
 Begin a text ...
 \end{verbatim}
-gives the equivalent of
+%gives the equivalent of
+这就等价于\liamfnote{注意这里忽略了盒子开头位置的 \cs{everypar} 以及对 \cs{par} 的重定义。}
 \begin{verbatim}
 \setbox\parbox=\vbox{Begin a text ...
 \end{verbatim}
-Inside the box \cs{par} has been redefined, so
+%Inside the box \cs{par} has been redefined, so
+由于在盒子中，\cs{par} 被重定义了，所以，假设段落的结尾是\liamfnote{注意这里的 \cs{par} 可以是手工插入的，也可以是输入处理器在\cstate{S} 遇见行尾符自动插入的。}：
 \begin{verbatim}
 ... a text ends.\par
 \end{verbatim}
-is equivalent to
+%is equivalent to
+等价于
 \begin{verbatim}
 ... a text ends.}\Usebox\parbox
 \end{verbatim}
@@ -995,30 +976,18 @@ is equivalent to
 %box as a whole; if the elements of the box should somehow
 %be treated separately another approach is necessary.
 %In
-%\begin{verbatim}
-%\everypar{\setbox\parbox=
-%  \vbox\bgroup\everypar{}%
-%       \def\par{\endgraf\HandleLines
-%                \egroup\box\parbox}}
-%\def\HandleLines{ ... \lastbox ... }
-%\end{verbatim}
+在这个例子中，\cs{UseBox} 命令只能将盒子作为一个整体对待；如果想要分别处理盒子中的元素，则需要使用新的技巧。在下列代码中，\cs{HandleLines} 可以访问自然段竖直列表中连续的元素：
+\begin{verbatim}
+\everypar{\setbox\parbox=
+ \vbox\bgroup\everypar{}%
+      \def\par{\endgraf\HandleLines
+               \egroup\box\parbox}}
+\def\HandleLines{ ... \lastbox ... }
+\end{verbatim}
 %the macro \cs{HandleLines} can have access to successive
 %elements from the vertical list of the paragraph.
 %See also the example on page~\pageref{varioset}.
-In this example, the \cs{UseBox} command can only treat the
-box as a whole; if the elements of the box should somehow
-be treated separately another approach is necessary.
-In
-\begin{verbatim}
-\everypar{\setbox\parbox=
-  \vbox\bgroup\everypar{}%
-       \def\par{\endgraf\HandleLines
-                \egroup\box\parbox}}
-\def\HandleLines{ ... \lastbox ... }
-\end{verbatim}
-the macro \cs{HandleLines} can have access to successive
-elements from the vertical list of the paragraph.
-See also the example on page~\pageref{varioset}.
+第~\pageref{varioset}~页还有一个相关例子。
 
 %%\point Unboxing
 %\section{Unboxing}
