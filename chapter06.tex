@@ -464,45 +464,36 @@
 %%\point Modes and glue
 %\section{Modes and glue}
 %\point Modes and glue
-\section{Modes and glue}
+\section{模式和伸缩胶}
 
 %Both in horizontal and vertical mode
 %\TeX\ can insert glue items the size of which is
 %determined by the preceding object in the list.
-Both in horizontal and vertical mode
-\TeX\ can insert glue items the size of which is
-determined by the preceding object in the list.
+在水平模式和竖直模式中，\TeX\ 都能插入一个伸缩胶项，它的大小由列表里之前的对象决定。
 
 %For horizontal mode the amount of glue that is inserted
 %for a space token depends on the \cs{spacefactor} of
 %the previous object in the list. This is treated
 %in Chapter~\ref{space}.
-For horizontal mode the amount of glue that is inserted
-for a space token depends on the \cs{spacefactor} of
-the previous object in the list. This is treated
-in Chapter~\ref{space}.
+对于水平模式，为一个空格记号插入的伸缩胶的量，由列表里前一个量的 \\
+\cs{spacefactor} 值决定。这会在第 \ref{space} 章讨论。
 
 %In vertical mode \TeX\ inserts glue to keep boxes at a certain
 %distance from each other. This glue is influenced by the
 %height of the current item and the depth of the previous one.
 %The depth of items is recorded in the \cs{prevdepth} parameter
 %(see Chapter~\ref{baseline}).
-In vertical mode \TeX\ inserts glue to keep boxes at a certain
-distance from each other. This glue is influenced by the
-height of the current item and the depth of the previous one.
-The depth of items is recorded in the \cs{prevdepth} parameter
-(see Chapter~\ref{baseline}).
+\TeX\ 在竖直模式中插入伸缩胶，让盒子之间都保持特定的距离。
+伸缩胶会受到当前项高度前一项深度的影响。
+项目的深度记录在 \cs{prevdepth} 参数中(见第 \ref{baseline} 章)。
 
 %The two quantities \cs{prevdepth} 
 %and \cs{spacefactor} 
 %use the same internal register of \TeX. Thus the \cs{prevdepth}
 %can be used or asked only in vertical mode, and the \cs{spacefactor}
 %only in horizontal mode.
-The two quantities \cs{prevdepth} 
-and \cs{spacefactor} 
-use the same internal register of \TeX. Thus the \cs{prevdepth}
-can be used or asked only in vertical mode, and the \cs{spacefactor}
-only in horizontal mode.
+\cs{prevdepth} 和 \cs{spacefactor} 这两个量使用了 \TeX\ 中相同的内部寄存器。
+因此 \cs{prevdepth} 只能在竖直模式中使用或请求，\cs{spacefactor} 只能用于水平模式中。
 
 %%\point[migrate] Migrating material
 %\section{Migrating material}
