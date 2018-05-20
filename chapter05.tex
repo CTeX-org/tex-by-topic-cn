@@ -1117,7 +1117,8 @@ Begin a text ...
 %value of the current language are inserted.
 %This may give problems if the text is subsequently
 %unboxed to form part of a paragraph.
-由于水平盒子中的文本不会被分段成行，受限和非受限水平模式还有这样一个区别：在受限水平模式中，\TeX 不会插入 discretionary nodes 和会改变当前语言值的 whatsit items。如果文本随后被解包形成段落的一部分，则这可能引发一些问题。
+由于水平盒子中的文本不会被分段成行，受限和非受限水平模式还有这样一个区别：在受限水平模式中，\TeX 不会插入 discretionary nodes 和会改变当前语言值的 whatsit items。如果文本随后被解包形成段落的一部分，则这可能引发一些问题。\xeCJKnobreak
+  % See https://github.com/CTeX-org/ctex-kit/issues/364
 \label{wide:vbox}
 
 %See Chapter~\ref{line:break} for an explanation of these
