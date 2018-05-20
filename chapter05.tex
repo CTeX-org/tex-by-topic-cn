@@ -1054,7 +1054,7 @@ Begin a text ...
 %%\point Text in boxes
 %\section{Text in boxes}
 %\point Text in boxes
-\section{Text in boxes}
+\section{盒子中的文本}
 
 %Both horizontal and vertical boxes can contain text. However,
 %\index{boxes !text in}
@@ -1065,15 +1065,8 @@ Begin a text ...
 %(and other items) contained in it. No \gram{vertical command}s
 %are allowed inside a horizontal box, and \cs{par} does
 %nothing in this case.
-Both horizontal and vertical boxes can contain text. However,
-\index{boxes !text in}
-the way text is treated differs.
-In horizontal boxes
-the text is placed in one straight line, and the width of
-the box is in principle the natural width of the text
-(and other items) contained in it. No \gram{vertical command}s
-are allowed inside a horizontal box, and \cs{par} does
-nothing in this case.
+水平盒子与竖直盒子里都能装文本，但它们处理文本的方式有所区别。在水平盒子中，文本被摆放在一条直线上，并且盒子的宽度在原则上是文本（及盒子内其它元素）的自然宽度。水平盒子中不允许有竖直命令（\gram{vertical command}），此外 \cs{par} 在水平盒子里没有任何作用。
+\index{盒子!中的文本}
 
 %For vertical boxes the situation is radically different.
 %As soon as a character, or any other \gram{horizontal command}
@@ -1085,39 +1078,21 @@ nothing in this case.
 %(see page~\pageref{v:com:list}), or at the end
 %of the box, the paragraph is broken into lines using the
 %current values of parameters such as~\cs{hsize}.
-For vertical boxes the situation is radically different.
-As soon as a character, or any other \gram{horizontal command}
-(see page~\pageref{h:com:list}),
-is encountered in a vertical box, \TeX\ starts building a paragraph
-in unrestricted horizontal mode, that is, just as if the paragraph
-were directly part of the page.
-At the occurrence of a \gram{vertical command}
-(see page~\pageref{v:com:list}), or at the end
-of the box, the paragraph is broken into lines using the
-current values of parameters such as~\cs{hsize}.
+竖直盒子相对来水就要复杂得多了。在竖直盒子中，一旦遇到字符或其他任何水平命令（\gram{horizontal command}，见第~\pageref{h:com:list}~页），\TeX 就会开始在非受限水平模式构建段落；也就是说，仿佛这一段落是直属于页面的一部分。而当遇到竖直命令（\gram{vertical command}，见第~\pageref{v:com:list}~页）或盒子结束时，\TeX 会使用当前的参数值（例如 \cs{hsize}）将该段落分段成行。
 
 %Thus
-%\begin{verbatim}
-%\hbox to 3cm{\vbox{some reasonably long text}}
-%\end{verbatim}
-%will {\sl not\/} give a paragraph of width 3 centimetres
-%(it gives an overfull horizontal box if \cs{hsize}${}>{}$\n{3cm}).
-%However,
-%\begin{verbatim}
-%\vbox{\hsize=3cm some reasonably long text}
-%\end{verbatim}
-%will be 3 centimetres wide.
-Thus
+因此，下列代码的\emph{不会}输出宽度为 3 厘米的段落（如果 $\text{\cs{hsize}} > \text{\n{3cm}}$，则水平盒子会溢出）：
 \begin{verbatim}
 \hbox to 3cm{\vbox{some reasonably long text}}
 \end{verbatim}
-will {\sl not\/} give a paragraph of width 3 centimetres
-(it gives an overfull horizontal box if \cs{hsize}${}>{}$\n{3cm}).
-However,
+%will {\sl not\/} give a paragraph of width 3 centimetres
+%(it gives an overfull horizontal box if \cs{hsize}${}>{}$\n{3cm}).
+%However,
+下列代码才会输出宽度为 3 厘米的段落：
 \begin{verbatim}
 \vbox{\hsize=3cm some reasonably long text}
 \end{verbatim}
-will be 3 centimetres wide.
+%will be 3 centimetres wide.
 
 %A paragraph of text inside a vertical box is broken into
 %lines, which are packed in horizontal boxes.
@@ -1127,19 +1102,11 @@ will be 3 centimetres wide.
 %(this is treated in Chapter~\ref{baseline}).
 %This process is also used for text on the page; the boxes
 %are then stacked in outer vertical mode.
-A paragraph of text inside a vertical box is broken into
-lines, which are packed in horizontal boxes.
-These boxes  are then stacked
-in internal vertical mode, possibly with
-\cs{baselineskip} and \cs{lineskip} separating them
-(this is treated in Chapter~\ref{baseline}).
-This process is also used for text on the page; the boxes
-are then stacked in outer vertical mode.
+竖直盒子中的成段文本会被分段成行，而后每行都会被打包进一个水平盒子中。这些水平盒子会堆叠在内部竖直模式当中，盒子之间有 \cs{baselineskip} 和 \cs{lineskip} 分割（见第~\ref{baseline}~章）。这也是页面当中文本内容摆放的过程；只不过水平盒子是在外部竖直模式当中堆叠起来的。
 
 %If the internal vertical list is empty, no \cs{parskip}
 %glue is added at the start of a paragraph.
-If the internal vertical list is empty, no \cs{parskip}
-glue is added at the start of a paragraph.
+如果内部竖直列表是空的，则 \TeX 不会在段落开始处插入 \cs{parskip} 伸缩胶。
 
 %Because text in a horizontal box is not
 %\label{wide:vbox}%
@@ -1150,20 +1117,12 @@ glue is added at the start of a paragraph.
 %value of the current language are inserted.
 %This may give problems if the text is subsequently
 %unboxed to form part of a paragraph.
-Because text in a horizontal box is not
-\label{wide:vbox}%
-broken into lines, there is a further
-difference between text in restricted and unrestricted
-horizontal mode. In restricted horizontal mode no
-discretionary nodes and whatsit items changing the
-value of the current language are inserted.
-This may give problems if the text is subsequently
-unboxed to form part of a paragraph.
+由于水平盒子中的文本不会被分段成行，受限和非受限水平模式还有这样一个区别：在受限水平模式中，\TeX 不会插入 discretionary nodes 和会改变当前语言值的 whatsit items。如果文本随后被解包形成段落的一部分，则这可能引发一些问题。
+\label{wide:vbox}
 
 %See Chapter~\ref{line:break} for an explanation of these
 %items, and \cite{Downs} for a way around this problem.
-See Chapter~\ref{line:break} for an explanation of these
-items, and \cite{Downs} for a way around this problem.
+第~\ref{line:break}~章有关于这些内容的解释，\cite{Downs} 则提供了解决办法。
 
 %%\point Assorted remarks
 %\section{Assorted remarks}
