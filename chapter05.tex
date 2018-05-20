@@ -992,7 +992,7 @@ Begin a text ...
 %%\point Unboxing
 %\section{Unboxing}
 %\point Unboxing
-\section{Unboxing}
+\section{将盒子解包}
 
 %Boxes can be unwrapped by the commands \csidx{unhbox} and
 %\csidx{unvbox}, and by their copying versions
@@ -1004,42 +1004,22 @@ Begin a text ...
 %containing a \cs{vbox} or vice versa,
 %but a void box register can both be \cs{unhbox}ed and
 %\cs{unvbox}ed.
-Boxes can be unwrapped by the commands \csidx{unhbox} and
-\csidx{unvbox}, and by their copying versions
-\csidx{unhcopy} and \csidx{unvcopy}.
-These are horizontal and vertical commands
-(see Chapter~\ref{hvmode}), considering that in effect
-they contribute a partial horizontal or vertical list.
-It is not possible to \cs{unhbox} a register
-containing a \cs{vbox} or vice versa,
-but a void box register can both be \cs{unhbox}ed and
-\cs{unvbox}ed.
+使用 \csidx{unhbox} 和 \csidx{unvbox} 可将盒子解包；\csidx{unhcopy} 和 \cs{unvcopy} 是对应的拷贝版本。由于它们会构建部分的水平列表和竖直列表，它们分别是水平命令和竖直命令（见第~\ref{hvmode}~章）。注意，不能用 \cs{unhbox} 去解包一个寄存了 \cs{vbox} 的盒子寄存器；反过来也一样不行。不过，空寄存器可以用 \cs{unhbox} 也可以用 \cs{unvbox} 解包。
 
 %Unboxing takes the contents of a box in a box register and appends
 %them to the surrounding list; any glue can then
 %be set anew. Thus
-%\begin{verbatim}
-%\setbox0=\hbox to 1cm{\hfil} \hbox to 2cm{\unhbox0}
-%\end{verbatim}
-%is completely equivalent to
-%\begin{verbatim}
-%\hbox to 2cm{\hfil}
-%\end{verbatim}
-%and not to
-%\begin{verbatim}
-%\hbox to 2cm{\kern1cm}
-%\end{verbatim}
-Unboxing takes the contents of a box in a box register and appends
-them to the surrounding list; any glue can then
-be set anew. Thus
+解包操作会将盒子寄存器中盒子的内容取出，而后追加在盒子所处的列表中；所有的伸缩胶会被重新设置。因此下列代码
 \begin{verbatim}
 \setbox0=\hbox to 1cm{\hfil} \hbox to 2cm{\unhbox0}
 \end{verbatim}
-is completely equivalent to
+%is completely equivalent to
+与下列代码完全相同
 \begin{verbatim}
 \hbox to 2cm{\hfil}
 \end{verbatim}
-and not to
+%and not to
+且与下列代码不同
 \begin{verbatim}
 \hbox to 2cm{\kern1cm}
 \end{verbatim}
@@ -1047,9 +1027,10 @@ and not to
 %The intrinsically horizontal nature of \cs{unhbox} is
 %\cstoidx leavevmode\par
 %used to define
-%\begin{verbatim}
-%\def\leavevmode{\unhbox\voidb@x}
-%\end{verbatim}
+\cs{unhbox} 的这一本质特性被用来定义 \csidx{leavevmode}：
+\begin{verbatim}
+\def\leavevmode{\unhbox\voidb@x}
+\end{verbatim}
 %This command switches from vertical mode to horizontal without
 %adding anything to the horizontal list.
 %However, the subsequent \cs{indent} caused by this transition
@@ -1057,19 +1038,7 @@ and not to
 %In horizontal mode the \cs{leavevmode} command has no effect.
 %Note that here it is not necessary to use \cs{unhcopy},
 %because the register is empty anyhow.
-The intrinsically horizontal nature of \cs{unhbox} is
-\cstoidx leavevmode\par
-used to define
-\begin{verbatim}
-\def\leavevmode{\unhbox\voidb@x}
-\end{verbatim}
-This command switches from vertical mode to horizontal without
-adding anything to the horizontal list.
-However, the subsequent \cs{indent} caused by this transition
-adds an indentation box.
-In horizontal mode the \cs{leavevmode} command has no effect.
-Note that here it is not necessary to use \cs{unhcopy},
-because the register is empty anyhow.
+该命令会使 \TeX 从竖直模式切换到水平模式，而不向水平列表中添加任何额外的东西。当然，由模式切换出发的 \cs{indent} 会在水平列表中添加一个缩进盒子。在水平模式中，\cs{leavevmode} 没有任何作用。注意，此处没必要使用 \cs{unhcopy}，因为寄存器本身就是空的。
 
 %Beware of the following subtlety: unboxing in vertical
 %mode does not add interline glue between the box contents and
@@ -1080,15 +1049,7 @@ because the register is empty anyhow.
 %interline glue will be based on the depth of that preceding item.
 %Similarly, unboxing in horizontal mode does not influence
 %the \cs{spacefactor}.
-Beware of the following subtlety: unboxing in vertical
-mode does not add interline glue between the box contents and
-any preceding item.
-Also, the value of \cs{prevdepth} is not
-changed, so glue between the box contents and any following
-item will  occur only if there was something preceding the box;
-interline glue will be based on the depth of that preceding item.
-Similarly, unboxing in horizontal mode does not influence
-the \cs{spacefactor}.
+还有一个细节需要注意：在竖直模式中解包竖直盒子的操作不会在前序内容与盒子内容之间添加任何行间伸缩胶。此外，\cs{prevdepth} 的值也不会发生改变，因此，盒子内容之间的伸缩胶以及盒子内容与后续内容之间的伸缩胶仅在盒子前面有东西存在的时候才会生效；并且，行间伸缩胶的只取决于之前内容的深度。相似地，在水平模式中解包水平盒子的操作不会改变 \cs{spacefactor}。
 
 %%\point Text in boxes
 %\section{Text in boxes}
