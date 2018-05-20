@@ -903,7 +903,7 @@ plain \TeX 中的 \csidx{newbox} 宏可用于分配一个未被使用的盒子�
 此处有一个例外，在 \cs{halign} 中，如果 \cs{tabskip} 伸缩胶无法提供足够的收缩量时，\TeX 不会绘制溢出标尺。
 
 %\section{Opening and closing boxes}
-\section{Opening and closing boxes}
+\section{盒子的开始与结束}
 
 %The opening and closing braces of a box can be either explicit, that
 %is, character tokens of category 1\index{category!1}
@@ -912,31 +912,9 @@ plain \TeX 中的 \csidx{newbox} 宏可用于分配一个未被使用的盒子�
 %\csidx{everyvbox} tokens are inserted.  If this box appeared in a
 %\csidx{setbox} assignment any \csidx{afterassignment} token is
 %inserted even before the `everybox' tokens.
-The opening and closing braces of a box can be either explicit, that
-is, character tokens of category 1\index{category!1}
-and~2\index{category!2}, or implicit, a control sequence \verb=\let=
-to such a character.  After the opening brace the \csidx{everyhbox} or
-\csidx{everyvbox} tokens are inserted.  If this box appeared in a
-\csidx{setbox} assignment any \csidx{afterassignment} token is
-inserted even before the `everybox' tokens.
+盒子的内容以花括号定界。其中，左右花括号既可以是显式字符（分类码为 1\index{category!1} 和 2\index{category!2} 的字符），也可以是使用命令 \cs{let} 定义的隐式字符。\TeX 会将记号 \csidx{everyhbox} 或者 \csidx{everyvbox} 插入在左花括号之后。如果盒子位于 \csidx{setbox} 赋值语句中，则记号 \csidx{afterassignment} 会在「everybox」记号之前插入在左花括号之后。
 
-%\begin{example} \label{every:box:assign}
-%\begin{verbatim}
-%\everyhbox{b}
-%\afterassignment a
-%\setbox0=\hbox{c}
-%\showbox0
-%\end{verbatim}
-%gives
-%\begin{verbatim}
-%> \box0=
-%\hbox(6.94444+0.0)x15.27782
-%.\tenrm a
-%.\tenrm b
-%.\kern0.27779
-%.\tenrm c
-%\end{verbatim}
-%\end{example}
+
 \begin{example} \label{every:box:assign}
 \begin{verbatim}
 \everyhbox{b}
@@ -944,7 +922,8 @@ inserted even before the `everybox' tokens.
 \setbox0=\hbox{c}
 \showbox0
 \end{verbatim}
-gives
+% gives
+的结果是：
 \begin{verbatim}
 > \box0=
 \hbox(6.94444+0.0)x15.27782
@@ -957,63 +936,38 @@ gives
 
 %Implicit braces can be used to let a box be opened or closed
 %by a macro, for example:
-%\begin{verbatim}
-%\def\openbox#1{\setbox#1=\hbox\bgroup}
-%\def\closebox#1{\egroup\DoSomethingWithBox#1}
-%\openbox0 ... \closebox0
-%\end{verbatim}
-%This mechanism can be used to scoop up paragraphs:
-%\begin{verbatim}
-%\everypar{\setbox\parbox=
-%    \vbox\bgroup
-%         \everypar{}
-%         \def\par{\egroup\UseBox\parbox}}
-%\end{verbatim}
-%Here the \cs{everypar} opens the box and lets the text be
-%set in the box: starting for instance
-%\begin{verbatim}
-%Begin a text ...
-%\end{verbatim}
-%gives the equivalent of
-%\begin{verbatim}
-%\setbox\parbox=\vbox{Begin a text ...
-%\end{verbatim}
-%Inside the box \cs{par} has been redefined, so
-%\begin{verbatim}
-%... a text ends.\par
-%\end{verbatim}
-%is equivalent to
-%\begin{verbatim}
-%... a text ends.}\Usebox\parbox
-%\end{verbatim}
-Implicit braces can be used to let a box be opened or closed
-by a macro, for example:
+借助隐式花括号，我们可以通过宏来开始和结束盒子。比如下面的代码就用到了这一特性：
 \begin{verbatim}
 \def\openbox#1{\setbox#1=\hbox\bgroup}
 \def\closebox#1{\egroup\DoSomethingWithBox#1}
 \openbox0 ... \closebox0
 \end{verbatim}
-This mechanism can be used to scoop up paragraphs:
+%This mechanism can be used to scoop up paragraphs:
+利用这一机制，我们可以提取整个自然段的内容\liamfnote{这是一个在 plain \TeX 下的示例，而非是 \LaTeX 下的。因此，这里的 \cs{parbox} 不是 \LaTeX 里的段落盒子。关于这一技巧，此处有一完整示例：\url{https://gist.github.com/1d8b9bd2f401eb0ea970a47693723ab1}。}：
 \begin{verbatim}
 \everypar{\setbox\parbox=
-    \vbox\bgroup
-         \everypar{}
-         \def\par{\egroup\UseBox\parbox}}
+   \vbox\bgroup
+        \everypar{}
+        \def\par{\egroup\UseBox\parbox}}
 \end{verbatim}
-Here the \cs{everypar} opens the box and lets the text be
-set in the box: starting for instance
+%Here the \cs{everypar} opens the box and lets the text be
+%set in the box: starting for instance
+此处，\cs{everypar} 命令\liamfnote{\cs{everypar} 命令的参数，会被插入在每个开启自然段的水平列表的头部，位于缩进盒子之后。}开始了一个盒子，并且将自然段的文本内容保存在盒子中。假设段落的开头是：
 \begin{verbatim}
 Begin a text ...
 \end{verbatim}
-gives the equivalent of
+%gives the equivalent of
+这就等价于\liamfnote{注意这里忽略了盒子开头位置的 \cs{everypar} 以及对 \cs{par} 的重定义。}
 \begin{verbatim}
 \setbox\parbox=\vbox{Begin a text ...
 \end{verbatim}
-Inside the box \cs{par} has been redefined, so
+%Inside the box \cs{par} has been redefined, so
+由于在盒子中，\cs{par} 被重定义了，所以，假设段落的结尾是\liamfnote{注意这里的 \cs{par} 可以是手工插入的，也可以是输入处理器在\cstate{S} 遇见行尾符自动插入的。}：
 \begin{verbatim}
 ... a text ends.\par
 \end{verbatim}
-is equivalent to
+%is equivalent to
+等价于
 \begin{verbatim}
 ... a text ends.}\Usebox\parbox
 \end{verbatim}
@@ -1022,35 +976,23 @@ is equivalent to
 %box as a whole; if the elements of the box should somehow
 %be treated separately another approach is necessary.
 %In
-%\begin{verbatim}
-%\everypar{\setbox\parbox=
-%  \vbox\bgroup\everypar{}%
-%       \def\par{\endgraf\HandleLines
-%                \egroup\box\parbox}}
-%\def\HandleLines{ ... \lastbox ... }
-%\end{verbatim}
+在这个例子中，\cs{UseBox} 命令只能将盒子作为一个整体对待；如果想要分别处理盒子中的元素，则需要使用新的技巧。在下列代码中，\cs{HandleLines} 可以访问自然段竖直列表中连续的元素：
+\begin{verbatim}
+\everypar{\setbox\parbox=
+ \vbox\bgroup\everypar{}%
+      \def\par{\endgraf\HandleLines
+               \egroup\box\parbox}}
+\def\HandleLines{ ... \lastbox ... }
+\end{verbatim}
 %the macro \cs{HandleLines} can have access to successive
 %elements from the vertical list of the paragraph.
 %See also the example on page~\pageref{varioset}.
-In this example, the \cs{UseBox} command can only treat the
-box as a whole; if the elements of the box should somehow
-be treated separately another approach is necessary.
-In
-\begin{verbatim}
-\everypar{\setbox\parbox=
-  \vbox\bgroup\everypar{}%
-       \def\par{\endgraf\HandleLines
-                \egroup\box\parbox}}
-\def\HandleLines{ ... \lastbox ... }
-\end{verbatim}
-the macro \cs{HandleLines} can have access to successive
-elements from the vertical list of the paragraph.
-See also the example on page~\pageref{varioset}.
+第~\pageref{varioset}~页还有一个相关例子。
 
 %%\point Unboxing
 %\section{Unboxing}
 %\point Unboxing
-\section{Unboxing}
+\section{将盒子解包}
 
 %Boxes can be unwrapped by the commands \csidx{unhbox} and
 %\csidx{unvbox}, and by their copying versions
@@ -1062,42 +1004,22 @@ See also the example on page~\pageref{varioset}.
 %containing a \cs{vbox} or vice versa,
 %but a void box register can both be \cs{unhbox}ed and
 %\cs{unvbox}ed.
-Boxes can be unwrapped by the commands \csidx{unhbox} and
-\csidx{unvbox}, and by their copying versions
-\csidx{unhcopy} and \csidx{unvcopy}.
-These are horizontal and vertical commands
-(see Chapter~\ref{hvmode}), considering that in effect
-they contribute a partial horizontal or vertical list.
-It is not possible to \cs{unhbox} a register
-containing a \cs{vbox} or vice versa,
-but a void box register can both be \cs{unhbox}ed and
-\cs{unvbox}ed.
+使用 \csidx{unhbox} 和 \csidx{unvbox} 可将盒子解包；\csidx{unhcopy} 和 \cs{unvcopy} 是对应的拷贝版本。由于它们会构建部分的水平列表和竖直列表，它们分别是水平命令和竖直命令（见第~\ref{hvmode}~章）。注意，不能用 \cs{unhbox} 去解包一个寄存了 \cs{vbox} 的盒子寄存器；反过来也一样不行。不过，空寄存器可以用 \cs{unhbox} 也可以用 \cs{unvbox} 解包。
 
 %Unboxing takes the contents of a box in a box register and appends
 %them to the surrounding list; any glue can then
 %be set anew. Thus
-%\begin{verbatim}
-%\setbox0=\hbox to 1cm{\hfil} \hbox to 2cm{\unhbox0}
-%\end{verbatim}
-%is completely equivalent to
-%\begin{verbatim}
-%\hbox to 2cm{\hfil}
-%\end{verbatim}
-%and not to
-%\begin{verbatim}
-%\hbox to 2cm{\kern1cm}
-%\end{verbatim}
-Unboxing takes the contents of a box in a box register and appends
-them to the surrounding list; any glue can then
-be set anew. Thus
+解包操作会将盒子寄存器中盒子的内容取出，而后追加在盒子所处的列表中；所有的伸缩胶会被重新设置。因此下列代码
 \begin{verbatim}
 \setbox0=\hbox to 1cm{\hfil} \hbox to 2cm{\unhbox0}
 \end{verbatim}
-is completely equivalent to
+%is completely equivalent to
+与下列代码完全相同
 \begin{verbatim}
 \hbox to 2cm{\hfil}
 \end{verbatim}
-and not to
+%and not to
+且与下列代码不同
 \begin{verbatim}
 \hbox to 2cm{\kern1cm}
 \end{verbatim}
@@ -1105,9 +1027,10 @@ and not to
 %The intrinsically horizontal nature of \cs{unhbox} is
 %\cstoidx leavevmode\par
 %used to define
-%\begin{verbatim}
-%\def\leavevmode{\unhbox\voidb@x}
-%\end{verbatim}
+\cs{unhbox} 的这一本质特性被用来定义 \csidx{leavevmode}：
+\begin{verbatim}
+\def\leavevmode{\unhbox\voidb@x}
+\end{verbatim}
 %This command switches from vertical mode to horizontal without
 %adding anything to the horizontal list.
 %However, the subsequent \cs{indent} caused by this transition
@@ -1115,19 +1038,7 @@ and not to
 %In horizontal mode the \cs{leavevmode} command has no effect.
 %Note that here it is not necessary to use \cs{unhcopy},
 %because the register is empty anyhow.
-The intrinsically horizontal nature of \cs{unhbox} is
-\cstoidx leavevmode\par
-used to define
-\begin{verbatim}
-\def\leavevmode{\unhbox\voidb@x}
-\end{verbatim}
-This command switches from vertical mode to horizontal without
-adding anything to the horizontal list.
-However, the subsequent \cs{indent} caused by this transition
-adds an indentation box.
-In horizontal mode the \cs{leavevmode} command has no effect.
-Note that here it is not necessary to use \cs{unhcopy},
-because the register is empty anyhow.
+该命令会使 \TeX 从竖直模式切换到水平模式，而不向水平列表中添加任何额外的东西。当然，由模式切换出发的 \cs{indent} 会在水平列表中添加一个缩进盒子。在水平模式中，\cs{leavevmode} 没有任何作用。注意，此处没必要使用 \cs{unhcopy}，因为寄存器本身就是空的。
 
 %Beware of the following subtlety: unboxing in vertical
 %mode does not add interline glue between the box contents and
@@ -1138,15 +1049,7 @@ because the register is empty anyhow.
 %interline glue will be based on the depth of that preceding item.
 %Similarly, unboxing in horizontal mode does not influence
 %the \cs{spacefactor}.
-Beware of the following subtlety: unboxing in vertical
-mode does not add interline glue between the box contents and
-any preceding item.
-Also, the value of \cs{prevdepth} is not
-changed, so glue between the box contents and any following
-item will  occur only if there was something preceding the box;
-interline glue will be based on the depth of that preceding item.
-Similarly, unboxing in horizontal mode does not influence
-the \cs{spacefactor}.
+还有一个细节需要注意：在竖直模式中解包竖直盒子的操作不会在前序内容与盒子内容之间添加任何行间伸缩胶。此外，\cs{prevdepth} 的值也不会发生改变，因此，盒子内容之间的伸缩胶以及盒子内容与后续内容之间的伸缩胶仅在盒子前面有东西存在的时候才会生效；并且，行间伸缩胶的只取决于之前内容的深度。相似地，在水平模式中解包水平盒子的操作不会改变 \cs{spacefactor}。
 
 %%\point Text in boxes
 %\section{Text in boxes}
