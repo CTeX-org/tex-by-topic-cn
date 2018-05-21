@@ -1260,64 +1260,43 @@ Begin a text ...
 %a bit tricky. There is for instance a difference between
 %how vertical and horizontal boxes are treated in a
 %vertical list. Consider the following examples.
-%After \cs{offinterlineskip} the first example\begin{verbatim}
-%\vbox{\hbox{a}
-%      \setbox0=\vbox{\hbox{(}}
-%      \ht0=0pt \dp0=0pt \box0
-%      \hbox{ b}}
-%\end{verbatim}
-%gives \begin{disp}\offinterlineskip\leavevmode\vbox{\hbox{a}
-%      \setbox0=\vbox{\hbox{(}}
-%      \ht0=0pt \dp0=0pt \box0
-%      \hbox{ b}}
-%\end{disp}
-%while a slight variant\begin{verbatim}
-%\vbox{\hbox{a}
-%      \setbox0=\hbox{(}
-%      \ht0=0pt \dp0=0pt \box0
-%      \hbox{ b}}
-%\end{verbatim}
+%After \cs{offinterlineskip} the first example
+摆放数值列表中的元素有时会比较棘手。例如，竖直列表中的水平盒子与竖直盒子的处理方式是不一样的。考虑以下例子，在 \cs{offinterlineskip} 之后，第一个例子
+\begin{verbatim}
+\vbox{\hbox{a}
+     \setbox0=\vbox{\hbox{(}}
+     \ht0=0pt \dp0=0pt \box0
+     \hbox{ b}}
+\end{verbatim}
 %gives
-%\begin{disp}\offinterlineskip\leavevmode\vbox{\hbox{a}
-%      \setbox0=\hbox{(}
-%      \ht0=0pt \dp0=0pt
-%      \box0
-%      \hbox{ b}}
-%\end{disp}
+结果是
+\begin{disp}
+     \offinterlineskip\leavevmode\vbox{\hbox{a}
+     \setbox0=\vbox{\hbox{(}}
+     \ht0=0pt \dp0=0pt \box0
+     \hbox{ b}}
+\end{disp}
+%while a slight variant
+稍稍修改之后
+\begin{verbatim}
+\vbox{\hbox{a}
+     \setbox0=\hbox{(}
+     \ht0=0pt \dp0=0pt \box0
+     \hbox{ b}}
+\end{verbatim}
+%gives
+结果变成了
+\begin{disp}
+     \offinterlineskip\leavevmode\vbox{\hbox{a}
+     \setbox0=\hbox{(}
+     \ht0=0pt \dp0=0pt
+     \box0
+     \hbox{ b}}
+\end{disp}
 %The difference is caused by the fact that horizontal boxes
 %are placed with respect to their reference point, but vertical
 %boxes with respect to their upper left corner.
-Placement of items in a vertical list is sometimes
-a bit tricky. There is for instance a difference between
-how vertical and horizontal boxes are treated in a
-vertical list. Consider the following examples.
-After \cs{offinterlineskip} the first example\begin{verbatim}
-\vbox{\hbox{a}
-      \setbox0=\vbox{\hbox{(}}
-      \ht0=0pt \dp0=0pt \box0
-      \hbox{ b}}
-\end{verbatim}
-gives \begin{disp}\offinterlineskip\leavevmode\vbox{\hbox{a}
-      \setbox0=\vbox{\hbox{(}}
-      \ht0=0pt \dp0=0pt \box0
-      \hbox{ b}}
-\end{disp}
-while a slight variant\begin{verbatim}
-\vbox{\hbox{a}
-      \setbox0=\hbox{(}
-      \ht0=0pt \dp0=0pt \box0
-      \hbox{ b}}
-\end{verbatim}
-gives
-\begin{disp}\offinterlineskip\leavevmode\vbox{\hbox{a}
-      \setbox0=\hbox{(}
-      \ht0=0pt \dp0=0pt
-      \box0
-      \hbox{ b}}
-\end{disp}
-The difference is caused by the fact that horizontal boxes
-are placed with respect to their reference point, but vertical
-boxes with respect to their upper left corner.
+造成这一区别的原因在于，水平盒子的摆放位置由其参考点确定，而竖直盒子的摆放位置由其左上角确定。
 
 %%\spoint Hanging the \cs{lastbox} back in the list
 %\subsection{Hanging the \cs{lastbox} back in the list}
