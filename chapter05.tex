@@ -1,6 +1,6 @@
 % -*- coding: utf-8 -*-
 % Translated by Liam0205@bbs.ctex.org
-% Date of translated: 2018-05-12
+% Date of translated: 2018-05-21
 \documentclass{book}
 
 \input{preamble}
@@ -1261,7 +1261,7 @@ Begin a text ...
 %how vertical and horizontal boxes are treated in a
 %vertical list. Consider the following examples.
 %After \cs{offinterlineskip} the first example
-摆放数值列表中的元素有时会比较棘手。例如，竖直列表中的水平盒子与竖直盒子的处理方式是不一样的。考虑以下例子，在 \cs{offinterlineskip} 之后，第一个例子
+摆放数值列表中的元素有时会比较棘手。例如，竖直列表中的水平盒子与竖直盒子的处理方式是不一样的。考虑以下例子，在 \cs{offinterlineskip} 之后\liamfnote{\cs{offinterlineskip} 会禁止 \TeX 在行与行之间自动地插入行间伸缩胶；因此，在 \cs{offinterlineskip} 之后，每行的 \cs{hbox} 会没有缝隙地堆叠在一起。}，第一个例子
 \begin{verbatim}
 \vbox{\hbox{a}
      \setbox0=\vbox{\hbox{(}}
@@ -1301,22 +1301,24 @@ Begin a text ...
 %%\spoint Hanging the \cs{lastbox} back in the list
 %\subsection{Hanging the \cs{lastbox} back in the list}
 %\spoint Hanging the \cs{lastbox} back in the list
-\subsection{Hanging the \cs{lastbox} back in the list}
+\subsection{将 \cs{lastbox} 还回列表} % Liam：Hanging 此处是 giving 的意思
 
 %You can pick the last box off a vertical list that has been
 %compiled in (internal) vertical mode.
 %However, if you try to hang it back in the list the vertical
 %spacing may go haywire. If you just hang it back,
-%\begin{verbatim}
-%\setbox\tmpbox=\lastbox
-%\usethetmpbox \box\tmpbox
-%\end{verbatim}
+通过 \cs{lastbox} 你可以将（内部）竖直列表中最后一个盒子取出。但是，如果你想把取出的盒子换回去，则竖直间距可能会出问题。比如说，如果你这样将它换回去，则行间伸缩胶会有两份。
+\begin{verbatim}
+\setbox\tmpbox=\lastbox
+\usethetmpbox \box\tmpbox
+\end{verbatim}
 %baselineskip glue is added a second time. If you `unskip' prior
 %to hanging the box back,
-%\begin{verbatim}
-%\setbox\tmpbox=\lastbox \unskip
-%\usethetmpbox \box\tmpbox
-%\end{verbatim}
+而如果你在换回去之前使用 \cs{unskip} 命令，看上去解决了问题，但实际上错得更加微妙：
+\begin{verbatim}
+\setbox\tmpbox=\lastbox
+\unskip \usethetmpbox \box\tmpbox
+\end{verbatim}
 %things go wrong in a more subtle way.
 %The \gram{internal dimen} \cs{prevdepth}
 %(which controls interline glue; see Chapter~\ref{baseline})
@@ -1325,32 +1327,7 @@ Begin a text ...
 %interline glue is a depth based on one box earlier.
 %The solution is not to unskip,
 %but to specify \cs{nointerlineskip}:
-%\begin{verbatim}
-%\setbox\tmpbox=\lastbox
-%\usethetmpbox \nointerlineskip \box\tmpbox
-%\end{verbatim}
-You can pick the last box off a vertical list that has been
-compiled in (internal) vertical mode.
-However, if you try to hang it back in the list the vertical
-spacing may go haywire. If you just hang it back,
-\begin{verbatim}
-\setbox\tmpbox=\lastbox
-\usethetmpbox \box\tmpbox
-\end{verbatim}
-baselineskip glue is added a second time. If you `unskip' prior
-to hanging the box back,
-\begin{verbatim}
-\setbox\tmpbox=\lastbox \unskip
-\usethetmpbox \box\tmpbox
-\end{verbatim}
-things go wrong in a more subtle way.
-The \gram{internal dimen} \cs{prevdepth}
-(which controls interline glue; see Chapter~\ref{baseline})
-will have a
-value based on the last box, but what you need for the proper
-interline glue is a depth based on one box earlier.
-The solution is not to unskip,
-but to specify \cs{nointerlineskip}:
+此时，内部距离（\gram{internal dimen}）\cs{prevdepth}（控制行间伸缩胶；见第~\ref{baseline}~章）的值会因最后一个盒子而改变，但正确的行间伸缩胶应该由上一个盒子来决定。正确的方法不是使用 \cs{unskip}，而是使用 \cs{nointerlineskip}：
 \begin{verbatim}
 \setbox\tmpbox=\lastbox
 \usethetmpbox \nointerlineskip \box\tmpbox
@@ -1361,50 +1338,16 @@ but to specify \cs{nointerlineskip}:
 %\subsection{Dissecting paragraphs with \cs{lastbox}}
 %\label{varioset}
 %\spoint[varioset] Dissecting paragraphs with \cs{lastbox}
-\subsection{Dissecting paragraphs with \cs{lastbox}}
+\subsection{使用 \cs{lastbox} 切分自然段}
 \label{varioset}
 
 %Repeatedly applying \cs{last...} and \cs{un...} macros
 %\howto Take a paragraph apart\par
 %can be used to take a paragraph apart.
 %Here is an example of that.
-Repeatedly applying \cs{last...} and \cs{un...} macros
+反复调用 \cs{last...} 和 \cs{un...} 可以将自然段切分开。这里给出一个例子。
 \howto Take a paragraph apart\par
-can be used to take a paragraph apart.
-Here is an example of that.
 
-%\indent\vbox{\message{Check vario look!}
-%\hyphenpenalty10000 \exhyphenpenalty10000 \parindent 10pt\relax
-%\advance\hsize by -2\parindent \rightskip 0pt\relax
-%\newif\ifsnap \spaceskip=\fontdimen2\font plus 2\fontdimen2\font
-%\def\eatlines{
-%    \setbox2\lastbox    % check the last line
-%    \ifvoid2\global\snaptrue
-%    \else                      % if it's not empty
-%    \unskip\unpenalty          % take whatever is
-%    {\eatlines}                % above it;
-%    \setbox4\hbox{\unhcopy2}   % collapse this line
-%\message{^^Jsnap \the\wd4 vs \the\wd2^^J}
-%%\hbox{\copy4 .4} \hbox{\copy 2 .2}
-%    \ifdim\wd4<.97\wd2 % if the difference is too large, maybe snap
-%        \ifsnap \message{^^JNot snapping just now ^^J}
-%          \hbox to \hsize{\unhbox2} \global\snapfalse % we just snapped: not again
-%        \else   \message{^^JSnapping!^^J}
-%          \box4 \global\snaptrue    % safe to snap; remember snap
-%        \fi
-%    \else \message{^^Jfull length, no snap^^J}
-%      \box2 \global\snapfalse
-%    \fi
-%    \fi}
-%\advance\hsize by -.8in \advance \leftskip by .5 in\relax
-%\noindent In typesetting advertisement copy, a way of justifying
-%paragraphs has become popular in recent years
-%that is somewhere between flushright and raggedright
-%setting.
-%Lines that would stretch beyond certain limits
-%are set with their glue at natural width. This single paragraph
-%is but an example of this procedure; the macros are given
-% next.\par\eatlines}\par
 \indent\vbox{\message{Check vario look!}
 \hyphenpenalty10000 \exhyphenpenalty10000 \parindent 10pt\relax
 \advance\hsize by -2\parindent \rightskip 0pt\relax
@@ -1438,50 +1381,30 @@ are set with their glue at natural width. This single paragraph
 is but an example of this procedure; the macros are given
  next.\par\eatlines}\par
 
-%\begin{verbatim}
-%\newbox\linebox \newbox\snapbox
-%\def\eatlines{
-%    \setbox\linebox\lastbox    % check the last line
-%    \ifvoid\linebox
-%    \else                      % if it's not empty
-%    \unskip\unpenalty          % take whatever is
-%    {\eatlines}                % above it;
-%                               % collapse the line
-%    \setbox\snapbox\hbox{\unhcopy\linebox}
-%                       % depending on the difference
-%    \ifdim\wd\snapbox<.98\wd\linebox
-%          \box\snapbox % take the one or the other,
-%    \else \box\linebox \fi
-%    \fi}
-%\end{verbatim}
-%This macro can be called as
-%\begin{verbatim}
-%\vbox{ ... some text ... \par\eatlines}
-%\end{verbatim}
-%or it can be inserted automatically
-%with \cs{everypar}; see~\cite{E1}.
 \begin{verbatim}
 \newbox\linebox \newbox\snapbox
 \def\eatlines{
-    \setbox\linebox\lastbox    % check the last line
-    \ifvoid\linebox
-    \else                      % if it's not empty
-    \unskip\unpenalty          % take whatever is
-    {\eatlines}                % above it;
-                               % collapse the line
-    \setbox\snapbox\hbox{\unhcopy\linebox}
-                       % depending on the difference
-    \ifdim\wd\snapbox<.98\wd\linebox
-          \box\snapbox % take the one or the other,
-    \else \box\linebox \fi
-    \fi}
+   \setbox\linebox\lastbox    % check the last line
+   \ifvoid\linebox
+   \else                      % if it's not empty
+   \unskip\unpenalty          % take whatever is
+   {\eatlines}                % above it;
+                              % collapse the line
+   \setbox\snapbox\hbox{\unhcopy\linebox}
+                      % depending on the difference
+   \ifdim\wd\snapbox<.98\wd\linebox
+         \box\snapbox % take the one or the other,
+   \else \box\linebox \fi
+   \fi}
 \end{verbatim}
-This macro can be called as
+%This macro can be called as
+它的使用方式是
 \begin{verbatim}
 \vbox{ ... some text ... \par\eatlines}
 \end{verbatim}
-or it can be inserted automatically
-with \cs{everypar}; see~\cite{E1}.
+%or it can be inserted automatically
+%with \cs{everypar}; see~\cite{E1}.
+或者也可以用 \cs{everypar} 自动插入；参见~\cite{E1}。
 
 %In the macro \cs{eatlines}, the \cs{lastbox} is taken
 %from a vertical list. If the list is empty
@@ -1490,18 +1413,12 @@ with \cs{everypar}; see~\cite{E1}.
 %are actually horizontal boxes: the test
 %\cs{ifhbox} applied to them would give a true
 %result.
-In the macro \cs{eatlines}, the \cs{lastbox} is taken
-from a vertical list. If the list is empty
-the last box will test true on \cs{ifvoid}.
-These boxes containing lines from a paragraph
-are actually horizontal boxes: the test
-\cs{ifhbox} applied to them would give a true
-result.
+宏 \cs{eatlines} 会从竖直列表取得 \cs{lastbox}。如果列表为空，则 \cs{ifvoid} 将返回真。这些盒子都是水平盒子，每个盒子包含了段落中的一行：如果使用 \cs{ifhbox} 来判断盒子分类的话，将返回真。
 
 %\index{boxes|)}
 %\endofchapter
 %%%%% end of input file [boxes]
-\index{boxes|)}
+\index{盒子|)}
 \endofchapter
 %%%% end of input file [boxes]
 
