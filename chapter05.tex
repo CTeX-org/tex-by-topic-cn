@@ -1128,12 +1128,12 @@ Begin a text ...
 %%\point Assorted remarks
 %\section{Assorted remarks}
 %\point Assorted remarks
-\section{Assorted remarks}
+\section{杂记}
 
 %%\spoint Forgetting the \cs{box}
 %\subsection{Forgetting the \cs{box}}
 %\spoint Forgetting the \cs{box}
-\subsection{Forgetting the \cs{box}}
+\subsection{忘掉 \cs{box}}
 
 %After \verb.\newcount\foo., one can use \cs{foo} on its own
 %to get the \cs{foo} counter.
@@ -1142,23 +1142,13 @@ Begin a text ...
 %The reason for this is that there exists
 %no separate \cs{boxdef} command, so \cs{chardef} is
 %used (see Chapter~\ref{alloc}).
-After \verb.\newcount\foo., one can use \cs{foo} on its own
-to get the \cs{foo} counter.
-For  boxes, however, one has to use \verb.\box\foo. to get
-the \cs{foo} box.
-The reason for this is that there exists
-no separate \cs{boxdef} command, so \cs{chardef} is
-used (see Chapter~\ref{alloc}).
+在 \cs{newcount}\cs{foo} 之后，我们j留可以单独用 \cs{foo} 来访问这个计数器了。但是，对于盒子来说则必须使用 \cs{box}\cs{foo} 来访问相应的盒子。其原因在于，不存在单独的 \cs{boxdef} 命令，而是用 \cs{chardef} 命令来代替（详见第~\ref{alloc}~章）。
 
-%\begin{example}
+\begin{example}
 %Suppose \verb.\newbox\foo. allocates box register~25; then
 %typing \cs{foo} is equivalent  to typing
 %\verb.\char25..
-%\end{example}
-\begin{example}
-Suppose \verb.\newbox\foo. allocates box register~25; then
-typing \cs{foo} is equivalent  to typing
-\verb.\char25..
+假设 \verb.\newbox\foo. 命令分配了编号为 25 的寄存器，则 \textup{\cs{foo}} 与 \verb.\char25. 等价。
 \end{example}
 
 %%\spoint Special-purpose boxes
