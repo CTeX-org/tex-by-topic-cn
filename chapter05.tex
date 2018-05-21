@@ -1180,7 +1180,7 @@ Begin a text ...
 %%\spoint The height of a vertical box in horizontal mode
 %\subsection{The height of a vertical box in horizontal mode}
 %\spoint The height of a vertical box in horizontal mode
-\subsection{The height of a vertical box in horizontal mode}
+\subsection{水平模式中竖直盒子的高度}
 
 %In horizontal mode a vertical box is placed with its
 %reference point aligned vertically with the reference
@@ -1190,44 +1190,28 @@ Begin a text ...
 %point by a distance of the height of the box.
 %Changing the height of the box  implies then that the
 %contents of the box are placed at a different height.
-In horizontal mode a vertical box is placed with its
-reference point aligned vertically with the reference
-point of the surrounding box.
-\TeX\ then traverses its contents starting at the left
-upper corner; that is, the point that lies above the reference
-point by a distance of the height of the box.
-Changing the height of the box  implies then that the
-contents of the box are placed at a different height.
+在水平模式中，竖直盒子的参考点与包围它的水平盒子的参考点在竖直方向上对齐。\TeX 会从竖直盒子的左上角，即竖直盒子参考点上方与参考点距离等于竖直盒子高度的点，开始遍历竖直盒子中的内容。改变盒子的高度会改变盒子中内容摆放的高度。
 
 %Consider as an example
-%\begin{verbatim}
-%\hbox{a\setbox0=\vbox{\hbox{b}}\box0 c}
-%\end{verbatim}
-%which gives
-%\begin{disp}\leavevmode\hbox{a\setbox0=\vbox{\hbox{b}}\box0 c}\end{disp}
-%and
-%\begin{verbatim}
-%\hbox{a\setbox0=\vbox{\hbox{b}}\ht0=0cm \box0 c}
-%\end{verbatim}
-%which gives
-%\begin{disp}\leavevmode\hbox{a\setbox0=\vbox{\hbox{b}}\ht0=0cm \box0 c}\end{disp}
-Consider as an example
+考虑以下代码
 \begin{verbatim}
 \hbox{a\setbox0=\vbox{\hbox{b}}\box0 c}
 \end{verbatim}
-which gives
+%which gives
+其效果是
 \begin{disp}\leavevmode\hbox{a\setbox0=\vbox{\hbox{b}}\box0 c}\end{disp}
-and
+%and
+再考虑以下代码
 \begin{verbatim}
 \hbox{a\setbox0=\vbox{\hbox{b}}\ht0=0cm \box0 c}
 \end{verbatim}
-which gives
+%which gives
+其效果是
 \begin{disp}\leavevmode\hbox{a\setbox0=\vbox{\hbox{b}}\ht0=0cm \box0 c}\end{disp}
 
 %By contrast, changing the width of a box placed in vertical
 %mode has no effect on its placement.
-By contrast, changing the width of a box placed in vertical
-mode has no effect on its placement.
+相对的，在竖直模式中改变水平盒子的宽度不会影响水平盒子摆放的位置。
 
 %%\spoint More subtleties with vertical boxes
 %\subsection{More subtleties with vertical boxes}
