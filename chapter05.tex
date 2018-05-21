@@ -1338,50 +1338,16 @@ Begin a text ...
 %\subsection{Dissecting paragraphs with \cs{lastbox}}
 %\label{varioset}
 %\spoint[varioset] Dissecting paragraphs with \cs{lastbox}
-\subsection{Dissecting paragraphs with \cs{lastbox}}
+\subsection{使用 \cs{lastbox} 切分自然段}
 \label{varioset}
 
 %Repeatedly applying \cs{last...} and \cs{un...} macros
 %\howto Take a paragraph apart\par
 %can be used to take a paragraph apart.
 %Here is an example of that.
-Repeatedly applying \cs{last...} and \cs{un...} macros
+反复调用 \cs{last...} 和 \cs{un...} 可以将自然段切分开。这里给出一个例子。
 \howto Take a paragraph apart\par
-can be used to take a paragraph apart.
-Here is an example of that.
 
-%\indent\vbox{\message{Check vario look!}
-%\hyphenpenalty10000 \exhyphenpenalty10000 \parindent 10pt\relax
-%\advance\hsize by -2\parindent \rightskip 0pt\relax
-%\newif\ifsnap \spaceskip=\fontdimen2\font plus 2\fontdimen2\font
-%\def\eatlines{
-%    \setbox2\lastbox    % check the last line
-%    \ifvoid2\global\snaptrue
-%    \else                      % if it's not empty
-%    \unskip\unpenalty          % take whatever is
-%    {\eatlines}                % above it;
-%    \setbox4\hbox{\unhcopy2}   % collapse this line
-%\message{^^Jsnap \the\wd4 vs \the\wd2^^J}
-%%\hbox{\copy4 .4} \hbox{\copy 2 .2}
-%    \ifdim\wd4<.97\wd2 % if the difference is too large, maybe snap
-%        \ifsnap \message{^^JNot snapping just now ^^J}
-%          \hbox to \hsize{\unhbox2} \global\snapfalse % we just snapped: not again
-%        \else   \message{^^JSnapping!^^J}
-%          \box4 \global\snaptrue    % safe to snap; remember snap
-%        \fi
-%    \else \message{^^Jfull length, no snap^^J}
-%      \box2 \global\snapfalse
-%    \fi
-%    \fi}
-%\advance\hsize by -.8in \advance \leftskip by .5 in\relax
-%\noindent In typesetting advertisement copy, a way of justifying
-%paragraphs has become popular in recent years
-%that is somewhere between flushright and raggedright
-%setting.
-%Lines that would stretch beyond certain limits
-%are set with their glue at natural width. This single paragraph
-%is but an example of this procedure; the macros are given
-% next.\par\eatlines}\par
 \indent\vbox{\message{Check vario look!}
 \hyphenpenalty10000 \exhyphenpenalty10000 \parindent 10pt\relax
 \advance\hsize by -2\parindent \rightskip 0pt\relax
@@ -1415,50 +1381,30 @@ are set with their glue at natural width. This single paragraph
 is but an example of this procedure; the macros are given
  next.\par\eatlines}\par
 
-%\begin{verbatim}
-%\newbox\linebox \newbox\snapbox
-%\def\eatlines{
-%    \setbox\linebox\lastbox    % check the last line
-%    \ifvoid\linebox
-%    \else                      % if it's not empty
-%    \unskip\unpenalty          % take whatever is
-%    {\eatlines}                % above it;
-%                               % collapse the line
-%    \setbox\snapbox\hbox{\unhcopy\linebox}
-%                       % depending on the difference
-%    \ifdim\wd\snapbox<.98\wd\linebox
-%          \box\snapbox % take the one or the other,
-%    \else \box\linebox \fi
-%    \fi}
-%\end{verbatim}
-%This macro can be called as
-%\begin{verbatim}
-%\vbox{ ... some text ... \par\eatlines}
-%\end{verbatim}
-%or it can be inserted automatically
-%with \cs{everypar}; see~\cite{E1}.
 \begin{verbatim}
 \newbox\linebox \newbox\snapbox
 \def\eatlines{
-    \setbox\linebox\lastbox    % check the last line
-    \ifvoid\linebox
-    \else                      % if it's not empty
-    \unskip\unpenalty          % take whatever is
-    {\eatlines}                % above it;
-                               % collapse the line
-    \setbox\snapbox\hbox{\unhcopy\linebox}
-                       % depending on the difference
-    \ifdim\wd\snapbox<.98\wd\linebox
-          \box\snapbox % take the one or the other,
-    \else \box\linebox \fi
-    \fi}
+   \setbox\linebox\lastbox    % check the last line
+   \ifvoid\linebox
+   \else                      % if it's not empty
+   \unskip\unpenalty          % take whatever is
+   {\eatlines}                % above it;
+                              % collapse the line
+   \setbox\snapbox\hbox{\unhcopy\linebox}
+                      % depending on the difference
+   \ifdim\wd\snapbox<.98\wd\linebox
+         \box\snapbox % take the one or the other,
+   \else \box\linebox \fi
+   \fi}
 \end{verbatim}
-This macro can be called as
+%This macro can be called as
+它的使用方式是
 \begin{verbatim}
 \vbox{ ... some text ... \par\eatlines}
 \end{verbatim}
-or it can be inserted automatically
-with \cs{everypar}; see~\cite{E1}.
+%or it can be inserted automatically
+%with \cs{everypar}; see~\cite{E1}.
+或者也可以用 \cs{everypar} 自动插入；参见~\cite{E1}。
 
 %In the macro \cs{eatlines}, the \cs{lastbox} is taken
 %from a vertical list. If the list is empty
@@ -1467,18 +1413,12 @@ with \cs{everypar}; see~\cite{E1}.
 %are actually horizontal boxes: the test
 %\cs{ifhbox} applied to them would give a true
 %result.
-In the macro \cs{eatlines}, the \cs{lastbox} is taken
-from a vertical list. If the list is empty
-the last box will test true on \cs{ifvoid}.
-These boxes containing lines from a paragraph
-are actually horizontal boxes: the test
-\cs{ifhbox} applied to them would give a true
-result.
+宏 \cs{eatlines} 会从竖直列表取得 \cs{lastbox}。如果列表为空，则 \cs{ifvoid} 将返回真。这些盒子都是水平盒子，每个盒子包含了段落中的一行：如果使用 \cs{ifhbox} 来判断盒子分类的话，将返回真。
 
 %\index{boxes|)}
 %\endofchapter
 %%%%% end of input file [boxes]
-\index{boxes|)}
+\index{盒子|)}
 \endofchapter
 %%%% end of input file [boxes]
 
