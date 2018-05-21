@@ -68,7 +68,7 @@
 \item [\cs{unhcopy} \cs{unvcopy}] 与 \cs{unhbox}、\cs{unvbox} 的行为相同，但不清空寄存器。
 %\item [\cs{ht} \cs{dp} \cs{wd}]
 %      Height/depth/width of the box in a box register.
-\item [\cs{ht} \cs{dp} \cs{wd}] 返回盒子寄存器中盒子的高度、深度、宽度。
+\item [\cs{ht} \cs{dp} \cs{wd}] 返回及设置盒子寄存器中盒子的高度、深度、宽度。
 %\item [\cs{boxmaxdepth}]
 %      Maximum allowed depth of boxes.
 %      Plain \TeX\ default:~\cs{maxdimen}.
@@ -84,7 +84,7 @@
 %\mdqon
 %      a horizontal/""vertical box overfull.
 %\mdqoff
-\item [\cs{hfuzz} \cs{vfuzz}] 该命令表示一个水平盒子或竖直盒子超出指定尺寸的阈值；当超过该阈值时，\TeX 会考虑将其认定为溢出的（overfull）盒子。
+\item [\cs{hfuzz} \cs{vfuzz}] 该命令表示水平或竖直盒子的尺寸超出指定尺寸的阈值；当超过该阈值时，\TeX 会考虑将其认定为溢出的（overfull）盒子。
 %\item [\cs{hbadness} \cs{vbadness}]
 %      Amount of tolerance before \TeX\ reports an underfull
 %\mdqon
@@ -268,7 +268,7 @@ plain \TeX 中的 \csidx{newbox} 宏可用于分配一个未被使用的盒子�
 %since in effect they contribute a partial
 %horizontal or vertical list (see also Chapter~\ref{hvmode}).
 %See below for more information on unboxing registers.
-通过 \cs{unhbox} 和 \cs{unvbox} 及其拷贝版本 \cs{unhcopy} 和 \cs{unvcopy} 解包盒子寄存器中的内容是可行的。不同于 \cs{box} 可以在任何模式下使用，解包盒子的操作只能用在恰当的模式下——因为解包盒子会形成一个部分的水平盒子或竖直盒子（参见第~\ref{hvmode}~章）。后文有关于解包盒子寄存器的更多信息。
+通过 \cs{unhbox} 和 \cs{unvbox} 及其拷贝版本 \cs{unhcopy} 和 \cs{unvcopy} 解包盒子寄存器中的内容是可行的。不同于 \cs{box} 可以在任何模式下使用，解包盒子的操作只能用在恰当的模式下——因为解包盒子会形成一个部分的水平列表或竖直列表（参见第~\ref{hvmode}~章）。后文有关于解包盒子寄存器的更多信息。
 
 %%\spoint Testing: \cs{ifvoid}, \cs{ifhbox}, \cs{ifvbox}
 %\subsection{Testing: \cs{ifvoid}, \cs{ifhbox}, \cs{ifvbox}}
@@ -373,7 +373,7 @@ plain \TeX 中的 \csidx{newbox} 宏可用于分配一个未被使用的盒子�
 \hbox{\hskip-1cm}
 \end{verbatim}
 %is negative. By way of example,
-具体距离来说：
+具体举例来说：
 \begin{disp}\verb>a\hbox{\kern-1em b}-->\end{disp}
 %gives as output
 的输出是
@@ -396,7 +396,7 @@ plain \TeX 中的 \csidx{newbox} 宏可用于分配一个未被使用的盒子�
 %is not allowed in a horizontal box, and
 %\cs{par}, although allowed,
 %does not do anything inside a horizontal box.
-\cs{raise} 和 \cs{lower} 命令是在 \cs{hbox} 内调整元素水平位置的唯一方法（当然，除了在 \cs{hbox} 中嵌套一个新的 \cs{vbox}）；\TeX 不允许在水平盒子中使用竖直命令（\gr{vertical command}，例如 \cs{vskip}），此外，虽然我们可以在水平盒子中使用 \cs{par}，但它却不会有任何作用。
+\cs{raise} 和 \cs{lower} 命令是在 \cs{hbox} 内调整元素水平位置的唯一方法（当然，除了在 \cs{hbox} 中嵌套一个新的 \cs{vbox}）；\TeX 不允许在水平盒子中使用竖直命令（\gr{vertical command}，例如 \cs{vskip}）；此外，虽然我们可以在水平盒子中使用 \cs{par}，但它却不会有任何作用。
 
 %%\spoint Dimensions of created vertical boxes
 %\subsection{Dimensions of created vertical boxes}
@@ -476,7 +476,7 @@ plain \TeX 中的 \csidx{newbox} 宏可用于分配一个未被使用的盒子�
 %natural height of the box. If the box had a \n{to} or
 %\n{spread} specification, any glue is set anew to take
 %the new height into account.
-关于竖直盒子，还有一个限制：如果 \cs{vbox} 或者 \cs{vtop} 的深度超出 \csidx{boxmaxdepth}，则盒子的参考点会下移这一超出的数值。具体来说，超出限制的深度，会被加在盒子自身的高度之上。如果盒子有 \n{to} 或者 \n{spread} 声明符，则相关的伸缩胶都会被重新设置，以将追加的高度考虑在内。
+关于竖直盒子，还有一个限制：如果 \cs{vbox} 或者 \cs{vtop} 的深度超出 \csidx{boxmaxdepth}，则盒子的参考点会下移这一超出的数值。具体来说，超出限制的那一部分深度，会被加在盒子自身的高度之上。如果盒子有 \n{to} 或者 \n{spread} 声明符，则相关的伸缩胶都会被重新设置，以将追加的高度考虑在内。
 
 %Ordinarily,
 %\cs{boxmaxdepth} is set to the maximum dimension
@@ -600,7 +600,7 @@ plain \TeX 中的 \csidx{newbox} 宏可用于分配一个未被使用的盒子�
 %Any glue
 %in the box is then set in order to reach the required size.
 %Prescribing the size of the box is done by
-盒子的尺寸可以通过尺寸说明符（\gr{box specification}）来指定盒子的尺寸；具体语法可见上文。盒子中的伸缩胶会依需求缩放，使得盒子的尺寸达到上述设定值。预先指定盒子的尺寸的方法是：
+盒子的尺寸可以通过尺寸说明符（\gr{box specification}）来指定；具体语法可见上文。盒子中的伸缩胶会依需求缩放，使得盒子的尺寸达到上述设定值。预先指定盒子的尺寸的方法是：
 \begin{disp}
 \cs{hbox} \n{to} \gr{dimen} \n{\lb...\rb},
 \cs{vbox} \n{to} \gr{dimen} \n{\lb...\rb}
@@ -612,7 +612,7 @@ plain \TeX 中的 \csidx{newbox} 宏可用于分配一个未被使用的盒子�
 %is necessary \rdash  is present, the resulting box will be underfull
 %or overfull respectively. Error reporting for over/underfull
 %boxes is treated below.
-如果盒子中有可以拉伸或收缩的伸缩胶，则这些伸缩胶会被拉伸或收缩，以将盒子的尺寸调整至指定的大小。与伸缩胶伸缩相关的是所谓的劣度值（见第~\ref{glue}~章）。如果伸缩胶能够提供的拉伸和收缩值不足所需，则得到的盒子会欠满或溢出。后文有关于欠满和溢出的报错的相关讨论。
+如果盒子中有可以拉伸或收缩的伸缩胶，则这些伸缩胶会被拉伸或收缩，以将盒子的尺寸调整至指定的大小。与伸缩胶伸缩相关的是所谓的劣度值（见第~\ref{glue}~章）。如果伸缩胶能够提供的拉伸或收缩值不足所需，则得到的盒子会欠满或溢出。后文有关于欠满和溢出的报错的相关讨论。
 
 %Another command to let a box have a size other than
 %the natural size is
@@ -709,7 +709,7 @@ plain \TeX 中的 \csidx{newbox} 宏可用于分配一个未被使用的盒子�
 
 %Only boxes can be shifted thus; these operations cannot
 %be applied to, for instance, characters or rules.
-注意，只有盒子能用上述命令来移动，因此，这些命令不能用于字符或标尺。
+注意，上述命令只能用来移动盒子，特别地，这些命令不能用于字符或标尺。
 
 %\subsection{Box dimensions and box placement}
 \subsection{盒子的尺寸与盒子的摆放}
@@ -738,7 +738,7 @@ plain \TeX 中的 \csidx{newbox} 宏可用于分配一个未被使用的盒子�
 %putting  a new current position for the enclosed vertical list there,
 %and place its components using the algorithm for vertical
 %lists below.
-\item 如果元素是水平盒子，则对其内容递归地调用该算法；如果元素是竖直盒子，按盒子的高度向上移动当前位置，而后按照后文所述的有关竖直盒子的算法防止盒子内竖直列表中的元素。
+\item 如果元素是水平盒子，则对其内容递归地调用该算法；如果元素是竖直盒子，按盒子的高度向上移动当前位置，而后按照后文所述的有关竖直盒子的算法放置盒子内竖直列表中的元素。
 %\item Move the current position (on the reference line)
 %to the right by the width of the component.
 \item 按当前元素的宽度，沿着参考线向右移动当前位置。
@@ -763,7 +763,7 @@ plain \TeX 中的 \csidx{newbox} 宏可用于分配一个未被使用的盒子�
 %its reference point can be found below  the current position
 %by the height of the box. Put the current position for that
 %box there, and use the above algorithm for horizontal lists.
-\item 如果元素是竖直盒子，则对其内容递归地调用该算法；如果元素是水平盒子，按盒子的高度向下移动当前位置，而后按照前文所述的有关竖直盒子的算法防止盒子内水平列表中的元素。
+\item 如果元素是竖直盒子，则对其内容递归地调用该算法；如果元素是水平盒子，按盒子的高度向下移动当前位置，而后按照前文所述的有关竖直盒子的算法放置盒子内水平列表中的元素。
 %\item Go down by the height plus depth of the box
 %(that is, starting at the upper left corner of the box)
 %on the  reference line,
@@ -801,7 +801,7 @@ plain \TeX 中的 \csidx{newbox} 宏可用于分配一个未被使用的盒子�
 %The \cs{hss} glue is equivalent to \verb>\hskip 0pt plus 1fil minus 1fil>,
 %which absorbs any positive or negative width
 %of the argument of \cs{llap} or \cs{rlap}.
-这两个命令允许其中的内容基于当前位置向左或向右突出。这里，\cs{hss} 伸缩胶等价于 \cs{hskip 0pt plus 1fil minus 1fil}，它能吸收 \cs{llap} 或 \cs{rlap} 的参数的任意正负宽度。
+这两个命令允许其中的内容基于当前位置向左或向右突出。这里，\cs{hss} 伸缩胶等价于 \cs{hskip 0pt plus 1fil minus 1fil}，它能吸收 \cs{llap} 或 \cs{rlap} 的参数中的任意正负宽度。
 
 \begin{example}
 %The sequence
@@ -1078,7 +1078,7 @@ Begin a text ...
 %(see page~\pageref{v:com:list}), or at the end
 %of the box, the paragraph is broken into lines using the
 %current values of parameters such as~\cs{hsize}.
-竖直盒子相对来水就要复杂得多了。在竖直盒子中，一旦遇到字符或其他任何水平命令（\gram{horizontal command}，见第~\pageref{h:com:list}~页），\TeX 就会开始在非受限水平模式构建段落；也就是说，仿佛这一段落是直属于页面的一部分。而当遇到竖直命令（\gram{vertical command}，见第~\pageref{v:com:list}~页）或盒子结束时，\TeX 会使用当前的参数值（例如 \cs{hsize}）将该段落分段成行。
+竖直盒子相对来说就要复杂得多了。在竖直盒子中，一旦遇到字符或其他任何水平命令（\gram{horizontal command}，见第~\pageref{h:com:list}~页），\TeX 就会开始在非受限水平模式构建段落；也就是说，仿佛这一段落是直属于页面的一部分。而当遇到竖直命令（\gram{vertical command}，见第~\pageref{v:com:list}~页）或盒子结束时，\TeX 会使用当前的参数值（例如 \cs{hsize}）将该段落分段成行。
 
 %Thus
 因此，下列代码的\emph{不会}输出宽度为 3 厘米的段落（如果 $\text{\cs{hsize}} > \text{\n{3cm}}$，则水平盒子会溢出）：
@@ -1142,7 +1142,7 @@ Begin a text ...
 %The reason for this is that there exists
 %no separate \cs{boxdef} command, so \cs{chardef} is
 %used (see Chapter~\ref{alloc}).
-在 \cs{newcount}\cs{foo} 之后，我们就可以单独用 \cs{foo} 来访问这个计数器了。但是，对于盒子来说则必须使用 \cs{box}\cs{foo} 来访问相应的盒子。其原因在于，不存在单独的 \cs{boxdef} 命令，而是用 \cs{chardef} 命令来代替（详见第~\ref{alloc}~章）。
+在 \cs{newcount}\cs{foo} 之后，我们就可以单独用 \cs{foo} 来访问这个计数器了。但是，对于盒子来说则必须使用 \cs{box}\cs{foo} 来访问相应的盒子。其原因在于，\TeX 中不存在单独的 \cs{boxdef} 命令，而是用 \cs{chardef} 命令来代替（详见第~\ref{alloc}~章）。
 
 \begin{example}
 %Suppose \verb.\newbox\foo. allocates box register~25; then
