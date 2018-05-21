@@ -1261,7 +1261,7 @@ Begin a text ...
 %how vertical and horizontal boxes are treated in a
 %vertical list. Consider the following examples.
 %After \cs{offinterlineskip} the first example
-摆放数值列表中的元素有时会比较棘手。例如，竖直列表中的水平盒子与竖直盒子的处理方式是不一样的。考虑以下例子，在 \cs{offinterlineskip} 之后，第一个例子
+摆放数值列表中的元素有时会比较棘手。例如，竖直列表中的水平盒子与竖直盒子的处理方式是不一样的。考虑以下例子，在 \cs{offinterlineskip} 之后\liamfnote{\cs{offinterlineskip} 会禁止 \TeX 在行与行之间自动地插入行间伸缩胶；因此，在 \cs{offinterlineskip} 之后，每行的 \cs{hbox} 会没有缝隙地堆叠在一起。}，第一个例子
 \begin{verbatim}
 \vbox{\hbox{a}
      \setbox0=\vbox{\hbox{(}}
@@ -1301,22 +1301,24 @@ Begin a text ...
 %%\spoint Hanging the \cs{lastbox} back in the list
 %\subsection{Hanging the \cs{lastbox} back in the list}
 %\spoint Hanging the \cs{lastbox} back in the list
-\subsection{Hanging the \cs{lastbox} back in the list}
+\subsection{将 \cs{lastbox} 还回列表} % Liam：Hanging 此处是 giving 的意思
 
 %You can pick the last box off a vertical list that has been
 %compiled in (internal) vertical mode.
 %However, if you try to hang it back in the list the vertical
 %spacing may go haywire. If you just hang it back,
-%\begin{verbatim}
-%\setbox\tmpbox=\lastbox
-%\usethetmpbox \box\tmpbox
-%\end{verbatim}
+通过 \cs{lastbox} 你可以将（内部）竖直列表中最后一个盒子取出。但是，如果你想把取出的盒子换回去，则竖直间距可能会出问题。比如说，如果你这样将它换回去，则行间伸缩胶会有两份。
+\begin{verbatim}
+\setbox\tmpbox=\lastbox
+\usethetmpbox \box\tmpbox
+\end{verbatim}
 %baselineskip glue is added a second time. If you `unskip' prior
 %to hanging the box back,
-%\begin{verbatim}
-%\setbox\tmpbox=\lastbox \unskip
-%\usethetmpbox \box\tmpbox
-%\end{verbatim}
+而如果你在换回去之前使用 \cs{unskip} 命令，看上去解决了问题，但实际上错得更加微妙：
+\begin{verbatim}
+\setbox\tmpbox=\lastbox
+\unskip \usethetmpbox \box\tmpbox
+\end{verbatim}
 %things go wrong in a more subtle way.
 %The \gram{internal dimen} \cs{prevdepth}
 %(which controls interline glue; see Chapter~\ref{baseline})
@@ -1325,32 +1327,7 @@ Begin a text ...
 %interline glue is a depth based on one box earlier.
 %The solution is not to unskip,
 %but to specify \cs{nointerlineskip}:
-%\begin{verbatim}
-%\setbox\tmpbox=\lastbox
-%\usethetmpbox \nointerlineskip \box\tmpbox
-%\end{verbatim}
-You can pick the last box off a vertical list that has been
-compiled in (internal) vertical mode.
-However, if you try to hang it back in the list the vertical
-spacing may go haywire. If you just hang it back,
-\begin{verbatim}
-\setbox\tmpbox=\lastbox
-\usethetmpbox \box\tmpbox
-\end{verbatim}
-baselineskip glue is added a second time. If you `unskip' prior
-to hanging the box back,
-\begin{verbatim}
-\setbox\tmpbox=\lastbox \unskip
-\usethetmpbox \box\tmpbox
-\end{verbatim}
-things go wrong in a more subtle way.
-The \gram{internal dimen} \cs{prevdepth}
-(which controls interline glue; see Chapter~\ref{baseline})
-will have a
-value based on the last box, but what you need for the proper
-interline glue is a depth based on one box earlier.
-The solution is not to unskip,
-but to specify \cs{nointerlineskip}:
+此时，内部距离（\gram{internal dimen}）\cs{prevdepth}（控制行间伸缩胶；见第~\ref{baseline}~章）的值会因最后一个盒子而改变，但正确的行间伸缩胶应该由上一个盒子来决定。正确的方法不是使用 \cs{unskip}，而是使用 \cs{nointerlineskip}：
 \begin{verbatim}
 \setbox\tmpbox=\lastbox
 \usethetmpbox \nointerlineskip \box\tmpbox
