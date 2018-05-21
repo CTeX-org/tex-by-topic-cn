@@ -1221,25 +1221,17 @@ Begin a text ...
 %%\spoint More subtleties with vertical boxes
 %\subsection{More subtleties with vertical boxes}
 %\spoint More subtleties with vertical boxes
-\subsection{More subtleties with vertical boxes}
+\subsection{竖直盒子的更多细节}
 
 %Since there are two kinds of vertical boxes, the \cs{vbox} and
 %the \cs{vtop}, using these two kinds nested may lead to
 %confusing results. For instance,
-%\begin{verbatim}
-%\vtop{\vbox{...}}
-%\end{verbatim}
-%is completely equivalent to just
-%\begin{verbatim}
-%\vbox{...}
-%\end{verbatim}
-Since there are two kinds of vertical boxes, the \cs{vbox} and
-the \cs{vtop}, using these two kinds nested may lead to
-confusing results. For instance,
+有两种竖直盒子：\cs{vbox} 和 \cs{vtop}。嵌套使用两种盒子的结果可能会令人困惑。例如
 \begin{verbatim}
 \vtop{\vbox{...}}
 \end{verbatim}
-is completely equivalent to just
+%is completely equivalent to just
+完全等价于
 \begin{verbatim}
 \vbox{...}
 \end{verbatim}
@@ -1253,6 +1245,7 @@ is completely equivalent to just
 %this item is not a glue or kern, one is apt to
 %overlook the effect that it has on the surrounding box.
 %For instance,
+如前所述，若 \cs{vbox} 的最后一个元素是铅空或伸缩胶，则其深度为零；若 \cs{vtop} 的第一个元素是铅空或伸缩胶，则其高度为零。
 %\begin{verbatim}
 %\vtop{\write16{...}...}
 %\end{verbatim}
@@ -1266,28 +1259,6 @@ is completely equivalent to just
 %\end{verbatim}
 %which puts the whatsit in the beginning of the paragraph,
 %instead of above it.
-It was stated above that
-the depth of a \cs{vbox} is zero if the last item
-is a kern or  glue, and the height of a \cs{vtop} is
-zero unless the first item in it is a box.
-The above examples used a kern for that first or last item,
-but if, in the case of a \cs{vtop},
-this item is not a glue or kern, one is apt to
-overlook the effect that it has on the surrounding box.
-For instance,
-\begin{verbatim}
-\vtop{\write16{...}...}
-\end{verbatim}
-has zero height,
-because the write instruction
-is packed into a `whatsit' item that is placed on the current,
-that is, the vertical, list.
-The remedy here is
-\begin{verbatim}
-\vtop{\leavevmode\write16{...}...}
-\end{verbatim}
-which puts the whatsit in the beginning of the paragraph,
-instead of above it.
 
 %Placement of items in a vertical list is sometimes
 %a bit tricky. There is for instance a difference between
