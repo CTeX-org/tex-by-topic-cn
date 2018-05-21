@@ -1128,82 +1128,60 @@ Begin a text ...
 %%\point Assorted remarks
 %\section{Assorted remarks}
 %\point Assorted remarks
-\section{Assorted remarks}
+\section{杂记}
 
 %%\spoint Forgetting the \cs{box}
 %\subsection{Forgetting the \cs{box}}
 %\spoint Forgetting the \cs{box}
-\subsection{Forgetting the \cs{box}}
+\subsection{忘掉 \cs{box}}
 
 %After \verb.\newcount\foo., one can use \cs{foo} on its own
 %to get the \cs{foo} counter.
-%For  boxes, however, one has to use \verb.\box\foo. to get
+%For boxes, however, one has to use \verb.\box\foo. to get
 %the \cs{foo} box.
 %The reason for this is that there exists
 %no separate \cs{boxdef} command, so \cs{chardef} is
 %used (see Chapter~\ref{alloc}).
-After \verb.\newcount\foo., one can use \cs{foo} on its own
-to get the \cs{foo} counter.
-For  boxes, however, one has to use \verb.\box\foo. to get
-the \cs{foo} box.
-The reason for this is that there exists
-no separate \cs{boxdef} command, so \cs{chardef} is
-used (see Chapter~\ref{alloc}).
+在 \cs{newcount}\cs{foo} 之后，我们就可以单独使用 \cs{foo} 来访问 \cs{foo} 这个计数器。但对于盒子来说，必须使用 \cs{box}\cs{foo} 来访问 \cs{foo} 这个盒子。究其原因，在于 \TeX 中没有单独的 \cs{boxdef} 命令，而是借助了 \cs{chardef} 命令（见第~\ref{alloc}~章）。
 
-%\begin{example}
-%Suppose \verb.\newbox\foo. allocates box register~25; then
-%typing \cs{foo} is equivalent  to typing
-%\verb.\char25..
-%\end{example}
 \begin{example}
-Suppose \verb.\newbox\foo. allocates box register~25; then
-typing \cs{foo} is equivalent  to typing
-\verb.\char25..
+%Suppose \verb.\newbox\foo. allocates box register~25; then
+%typing \cs{foo} is equivalent to typing
+%\verb.\char25..
+假设 \textup{\cs{newbox}\cs{foo}} 分配了第 25 号盒子寄存器，则 \textup{\cs{foo} }等价于 \textup{\cs{char25}}。
 \end{example}
 
 %%\spoint Special-purpose boxes
 %\subsection{Special-purpose boxes}
 %\spoint Special-purpose boxes
-\subsection{Special-purpose boxes}
+\subsection{具有特殊用途的盒子}
 
 %Some   box registers
 %have a special
 %purpose:
-%\begin{itemize}
+有些盒子寄存器有特殊用途。
+\begin{itemize}
 %\item \cs{box255} is by used \TeX\ internally
 % to give the page to the output routine.
+\item \cs{box255} 为 \TeX 内部所用，参与页面输出例程。
 %\item \cs{voidb@x} is the number of
 % a box register allocated in
 % \n{plain.tex}; it is supposed to be empty always.
 % It is used in the macro \cs{leavevmode} and others.
+\item \cs{voidb@x} 是一个数字，它对应的盒子寄存器在 \n{plain.tex} 中分配；该寄存器可以假定总是空的。该寄存器用于定义 \cs{leavevmode} 等宏。
 %\item when a new \cs{insert} is created with the plain \TeX\
 % \cs{newinsert} macro, a \cs{count},
 % \cs{dimen}, \cs{skip}, and \cs{box} all with the same number
 % are reserved for that insert.
 % The numbers for these registers count down from~254.
-%\end{itemize}
-Some   box registers
-have a special
-purpose:
-\begin{itemize}
-\item \cs{box255} is by used \TeX\ internally
- to give the page to the output routine.
-\item \cs{voidb@x} is the number of
- a box register allocated in
- \n{plain.tex}; it is supposed to be empty always.
- It is used in the macro \cs{leavevmode} and others.
-\item when a new \cs{insert} is created with the plain \TeX\
- \cs{newinsert} macro, a \cs{count},
- \cs{dimen}, \cs{skip}, and \cs{box} all with the same number
- are reserved for that insert.
- The numbers for these registers count down from~254.
+\item 在 plain \TeX 中，使用 \cs{newinsert} 创建新的 \cs{insert} 时，\TeX 会为其预留编号相同的 \cs{count}、\cs{dimen}、\cs{skip}、\cs{box}。这些寄存器的编号从 254 开始向前倒数。
 \end{itemize}
 
 
 %%\spoint The height of a vertical box in horizontal mode
 %\subsection{The height of a vertical box in horizontal mode}
 %\spoint The height of a vertical box in horizontal mode
-\subsection{The height of a vertical box in horizontal mode}
+\subsection{水平模式下竖直盒子的高度}
 
 %In horizontal mode a vertical box is placed with its
 %reference point aligned vertically with the reference
@@ -1213,67 +1191,47 @@ purpose:
 %point by a distance of the height of the box.
 %Changing the height of the box  implies then that the
 %contents of the box are placed at a different height.
-In horizontal mode a vertical box is placed with its
-reference point aligned vertically with the reference
-point of the surrounding box.
-\TeX\ then traverses its contents starting at the left
-upper corner; that is, the point that lies above the reference
-point by a distance of the height of the box.
-Changing the height of the box  implies then that the
-contents of the box are placed at a different height.
+在水平模式下，竖直盒子的参考点会在竖直方向上与包围它的外部盒子的参考点。而后，\TeX 从其左上角——在竖直盒子参考点之上，与参考点距离为数值盒子高度——开始遍历其内容。改变竖直盒子的高度，意味着改变盒中内容摆放位置的起点。
 
 %Consider as an example
-%\begin{verbatim}
-%\hbox{a\setbox0=\vbox{\hbox{b}}\box0 c}
-%\end{verbatim}
-%which gives
-%\begin{disp}\leavevmode\hbox{a\setbox0=\vbox{\hbox{b}}\box0 c}\end{disp}
-%and
-%\begin{verbatim}
-%\hbox{a\setbox0=\vbox{\hbox{b}}\ht0=0cm \box0 c}
-%\end{verbatim}
-%which gives
-%\begin{disp}\leavevmode\hbox{a\setbox0=\vbox{\hbox{b}}\ht0=0cm \box0 c}\end{disp}
-Consider as an example
+考虑以下示例
 \begin{verbatim}
 \hbox{a\setbox0=\vbox{\hbox{b}}\box0 c}
 \end{verbatim}
-which gives
-\begin{disp}\leavevmode\hbox{a\setbox0=\vbox{\hbox{b}}\box0 c}\end{disp}
-and
+%which gives
+效果是
+\begin{disp}
+\leavevmode\hbox{a\setbox0=\vbox{\hbox{b}}\box0 c}
+\end{disp}
+%and
+而
 \begin{verbatim}
 \hbox{a\setbox0=\vbox{\hbox{b}}\ht0=0cm \box0 c}
 \end{verbatim}
-which gives
-\begin{disp}\leavevmode\hbox{a\setbox0=\vbox{\hbox{b}}\ht0=0cm \box0 c}\end{disp}
+%which gives
+效果是
+\begin{disp}
+\leavevmode\hbox{a\setbox0=\vbox{\hbox{b}}\ht0=0cm \box0 c}
+\end{disp}
 
 %By contrast, changing the width of a box placed in vertical
 %mode has no effect on its placement.
-By contrast, changing the width of a box placed in vertical
-mode has no effect on its placement.
+相对应的，改变竖直模式中水平盒子的高度对其摆放位置则没什么影响。
 
 %%\spoint More subtleties with vertical boxes
 %\subsection{More subtleties with vertical boxes}
 %\spoint More subtleties with vertical boxes
-\subsection{More subtleties with vertical boxes}
+\subsection{竖直盒子的更多细节}
 
 %Since there are two kinds of vertical boxes, the \cs{vbox} and
 %the \cs{vtop}, using these two kinds nested may lead to
 %confusing results. For instance,
-%\begin{verbatim}
-%\vtop{\vbox{...}}
-%\end{verbatim}
-%is completely equivalent to just
-%\begin{verbatim}
-%\vbox{...}
-%\end{verbatim}
-Since there are two kinds of vertical boxes, the \cs{vbox} and
-the \cs{vtop}, using these two kinds nested may lead to
-confusing results. For instance,
+有两种竖直盒子：\cs{vbox} 和 \cs{vtop}。嵌套使用两种盒子的结果可能会令人困惑。例如
 \begin{verbatim}
 \vtop{\vbox{...}}
 \end{verbatim}
-is completely equivalent to just
+%is completely equivalent to just
+完全等价于
 \begin{verbatim}
 \vbox{...}
 \end{verbatim}
@@ -1287,6 +1245,7 @@ is completely equivalent to just
 %this item is not a glue or kern, one is apt to
 %overlook the effect that it has on the surrounding box.
 %For instance,
+如前所述，若 \cs{vbox} 的最后一个元素是铅空或伸缩胶，则其深度为零；若 \cs{vtop} 的第一个元素是铅空或伸缩胶，则其高度为零。
 %\begin{verbatim}
 %\vtop{\write16{...}...}
 %\end{verbatim}
@@ -1300,28 +1259,6 @@ is completely equivalent to just
 %\end{verbatim}
 %which puts the whatsit in the beginning of the paragraph,
 %instead of above it.
-It was stated above that
-the depth of a \cs{vbox} is zero if the last item
-is a kern or  glue, and the height of a \cs{vtop} is
-zero unless the first item in it is a box.
-The above examples used a kern for that first or last item,
-but if, in the case of a \cs{vtop},
-this item is not a glue or kern, one is apt to
-overlook the effect that it has on the surrounding box.
-For instance,
-\begin{verbatim}
-\vtop{\write16{...}...}
-\end{verbatim}
-has zero height,
-because the write instruction
-is packed into a `whatsit' item that is placed on the current,
-that is, the vertical, list.
-The remedy here is
-\begin{verbatim}
-\vtop{\leavevmode\write16{...}...}
-\end{verbatim}
-which puts the whatsit in the beginning of the paragraph,
-instead of above it.
 
 %Placement of items in a vertical list is sometimes
 %a bit tricky. There is for instance a difference between
