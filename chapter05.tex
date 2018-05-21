@@ -1181,7 +1181,7 @@ Begin a text ...
 %%\spoint The height of a vertical box in horizontal mode
 %\subsection{The height of a vertical box in horizontal mode}
 %\spoint The height of a vertical box in horizontal mode
-\subsection{The height of a vertical box in horizontal mode}
+\subsection{水平模式下竖直盒子的高度}
 
 %In horizontal mode a vertical box is placed with its
 %reference point aligned vertically with the reference
@@ -1191,44 +1191,32 @@ Begin a text ...
 %point by a distance of the height of the box.
 %Changing the height of the box  implies then that the
 %contents of the box are placed at a different height.
-In horizontal mode a vertical box is placed with its
-reference point aligned vertically with the reference
-point of the surrounding box.
-\TeX\ then traverses its contents starting at the left
-upper corner; that is, the point that lies above the reference
-point by a distance of the height of the box.
-Changing the height of the box  implies then that the
-contents of the box are placed at a different height.
+在水平模式下，竖直盒子的参考点会在竖直方向上与包围它的外部盒子的参考点。而后，\TeX 从其左上角——在竖直盒子参考点之上，与参考点距离为数值盒子高度——开始遍历其内容。改变竖直盒子的高度，意味着改变盒中内容摆放位置的起点。
 
 %Consider as an example
-%\begin{verbatim}
-%\hbox{a\setbox0=\vbox{\hbox{b}}\box0 c}
-%\end{verbatim}
-%which gives
-%\begin{disp}\leavevmode\hbox{a\setbox0=\vbox{\hbox{b}}\box0 c}\end{disp}
-%and
-%\begin{verbatim}
-%\hbox{a\setbox0=\vbox{\hbox{b}}\ht0=0cm \box0 c}
-%\end{verbatim}
-%which gives
-%\begin{disp}\leavevmode\hbox{a\setbox0=\vbox{\hbox{b}}\ht0=0cm \box0 c}\end{disp}
-Consider as an example
+考虑以下示例
 \begin{verbatim}
 \hbox{a\setbox0=\vbox{\hbox{b}}\box0 c}
 \end{verbatim}
-which gives
-\begin{disp}\leavevmode\hbox{a\setbox0=\vbox{\hbox{b}}\box0 c}\end{disp}
-and
+%which gives
+效果是
+\begin{disp}
+\leavevmode\hbox{a\setbox0=\vbox{\hbox{b}}\box0 c}
+\end{disp}
+%and
+而
 \begin{verbatim}
 \hbox{a\setbox0=\vbox{\hbox{b}}\ht0=0cm \box0 c}
 \end{verbatim}
-which gives
-\begin{disp}\leavevmode\hbox{a\setbox0=\vbox{\hbox{b}}\ht0=0cm \box0 c}\end{disp}
+%which gives
+效果是
+\begin{disp}
+\leavevmode\hbox{a\setbox0=\vbox{\hbox{b}}\ht0=0cm \box0 c}
+\end{disp}
 
 %By contrast, changing the width of a box placed in vertical
 %mode has no effect on its placement.
-By contrast, changing the width of a box placed in vertical
-mode has no effect on its placement.
+相对应的，改变竖直模式中水平盒子的高度对其摆放位置则没什么影响。
 
 %%\spoint More subtleties with vertical boxes
 %\subsection{More subtleties with vertical boxes}
