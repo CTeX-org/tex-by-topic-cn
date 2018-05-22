@@ -1,4 +1,6 @@
 % -*- coding: utf-8 -*-
+% Translated by Liam0205@bbs.ctex.org
+% Date of translated: 2018-05-22
 \documentclass{book}
 
 \input{preamble}
@@ -7,81 +9,81 @@
 \begin{document}
 
 %\chapter{Numbers}\label{number}
-\chapter{Numbers}\label{number}
+\chapter{数字}\label{number}
 
 %In this chapter integers and their
 %denotations will be treated,
-%the conversions that are possible either way, 
+%the conversions that are possible either way,
 %allocation and use of \cs{count} registers, and
 %arithmetic with integers.
 In this chapter integers and their
 denotations will be treated,
-the conversions that are possible either way, 
+the conversions that are possible either way,
 allocation and use of \cs{count} registers, and
 arithmetic with integers.
 
 %\label{cschap:number}\label{cschap:romannumeral}\label{cschap:count}\label{cschap:countdef}\label{cschap:newcount}\label{cschap:advance}\label{cschap:multiply}\label{cschap:divide}
-%\begin{inventory} 
-%\item [\cs{number}] 
-%      Convert a \gr{number} to decimal representation. 
+%\begin{inventory}
+%\item [\cs{number}]
+%      Convert a \gr{number} to decimal representation.
 \label{cschap:number}\label{cschap:romannumeral}\label{cschap:count}\label{cschap:countdef}\label{cschap:newcount}\label{cschap:advance}\label{cschap:multiply}\label{cschap:divide}
-\begin{inventory} 
-\item [\cs{number}] 
-      Convert a \gr{number} to decimal representation. 
+\begin{inventory}
+\item [\cs{number}]
+      Convert a \gr{number} to decimal representation.
 
-%\item [\cs{romannumeral}] 
+%\item [\cs{romannumeral}]
 %      Convert a positive \gr{number} to lowercase roman representation.
-\item [\cs{romannumeral}] 
+\item [\cs{romannumeral}]
       Convert a positive \gr{number} to lowercase roman representation.
 
-%\item [\cs{ifnum}] 
+%\item [\cs{ifnum}]
 %      Test relations between numbers.
-\item [\cs{ifnum}] 
+\item [\cs{ifnum}]
       Test relations between numbers.
 
-%\item [\cs{ifodd}] 
+%\item [\cs{ifodd}]
 %      Test whether a number is odd.
-\item [\cs{ifodd}] 
+\item [\cs{ifodd}]
       Test whether a number is odd.
 
-%\item [\cs{ifcase}] 
+%\item [\cs{ifcase}]
 %      Enumerated case statement.
-\item [\cs{ifcase}] 
+\item [\cs{ifcase}]
       Enumerated case statement.
 
 
-%\item [\cs{count}] 
-%      Prefix for count registers. 
-\item [\cs{count}] 
-      Prefix for count registers. 
+%\item [\cs{count}]
+%      Prefix for count registers.
+\item [\cs{count}]
+      Prefix for count registers.
 
-%\item [\cs{countdef}] 
+%\item [\cs{countdef}]
 %      Define a control sequence to be a synonym for
 %      a~\cs{count} register.
-\item [\cs{countdef}] 
+\item [\cs{countdef}]
       Define a control sequence to be a synonym for
       a~\cs{count} register.
 
-%\item [\cs{newcount}] 
-%      Allocate an unused \cs{count} register. 
-\item [\cs{newcount}] 
-      Allocate an unused \cs{count} register. 
+%\item [\cs{newcount}]
+%      Allocate an unused \cs{count} register.
+\item [\cs{newcount}]
+      Allocate an unused \cs{count} register.
 
-%\item [\cs{advance}] 
-%      Arithmetic command to add to or subtract from 
+%\item [\cs{advance}]
+%      Arithmetic command to add to or subtract from
 %      a~\gr{numeric variable}.
-\item [\cs{advance}] 
-      Arithmetic command to add to or subtract from 
+\item [\cs{advance}]
+      Arithmetic command to add to or subtract from
       a~\gr{numeric variable}.
 
-%\item [\cs{multiply}] 
+%\item [\cs{multiply}]
 %      Arithmetic command to multiply a \gr{numeric variable}.
-\item [\cs{multiply}] 
+\item [\cs{multiply}]
       Arithmetic command to multiply a \gr{numeric variable}.
 
-%\item [\cs{divide}] 
+%\item [\cs{divide}]
 %      Arithmetic command to divide a \gr{numeric variable}.
-\item [\cs{divide}] 
+\item [\cs{divide}]
       Arithmetic command to divide a \gr{numeric variable}.
 
 %\end{inventory}
@@ -105,7 +107,7 @@ chapter. Towards the end, \cs{count} registers, arithmetic, and tests
 for numbers are discussed.
 
 %For clarity of discussion a distinction will be made
-%here between integers and numbers, 
+%here between integers and numbers,
 %but note that a \gr{number} can be both
 %an `integer' and a `number'.
 %`Integer'  will be taken to denote a mathematical number:
@@ -113,7 +115,7 @@ for numbers are discussed.
 %`Number' will be taken to refer to the printed representation
 %of an integer: a string of digits, in other words.
 For clarity of discussion a distinction will be made
-here between integers and numbers, 
+here between integers and numbers,
 but note that a \gr{number} can be both
 an `integer' and a `number'.
 `Integer'  will be taken to denote a mathematical number:
@@ -134,13 +136,13 @@ be treated, accompanied by the relevant lines from
 the grammar of \TeX.
 
 %First of all, an integer can be positive or negative:
-%\begin{disp}\gr{number} $\longrightarrow$ 
+%\begin{disp}\gr{number} $\longrightarrow$
 %\gr{optional signs}\gr{unsigned number}\nl
 %\gr{optional signs} $\longrightarrow$ \gr{optional spaces}\nl
 %\indent $|$ \gr{optional signs}\gr{plus or minus}\gr{optional spaces}
 %\end{disp}
 First of all, an integer can be positive or negative:
-\begin{disp}\gr{number} $\longrightarrow$ 
+\begin{disp}\gr{number} $\longrightarrow$
 \gr{optional signs}\gr{unsigned number}\nl
 \gr{optional signs} $\longrightarrow$ \gr{optional spaces}\nl
 \indent $|$ \gr{optional signs}\gr{plus or minus}\gr{optional spaces}
@@ -152,9 +154,9 @@ First of all, an integer can be positive or negative:
 %here \gr{integer denotation}.
 %Another possibility for an integer is an
 %internal integer quantity, an \gr{internal integer};
-%together with the denotations these form the 
+%together with the denotations these form the
 %\gr{normal integer}s.
-%Lastly an integer can be a \gr{coerced integer}: 
+%Lastly an integer can be a \gr{coerced integer}:
 %an internal \gr{dimen} or \gr{glue}
 %quantity that is converted to an integer value.
 %\begin{disp}\gr{unsigned number} $\longrightarrow$ \gr{normal integer}
@@ -170,9 +172,9 @@ Together with the alphabetic constants these will be named
 here \gr{integer denotation}.
 Another possibility for an integer is an
 internal integer quantity, an \gr{internal integer};
-together with the denotations these form the 
+together with the denotations these form the
 \gr{normal integer}s.
-Lastly an integer can be a \gr{coerced integer}: 
+Lastly an integer can be a \gr{coerced integer}:
 an internal \gr{dimen} or \gr{glue}
 quantity that is converted to an integer value.
 \begin{disp}\gr{unsigned number} $\longrightarrow$ \gr{normal integer}
@@ -210,12 +212,12 @@ All of these possibilities will be treated in sequence.
 %\indent $|$ \n{\char`\"}\gr{hexadecimal constant}\gr{one optional space}
 %\end{disp}
 %The octal digits are \n0--\n7; a~digit \n8 or~\n9 following an
-%octal denotation is not part of the number: 
+%octal denotation is not part of the number:
 %after
 %\begin{verbatim}
 %\count0='078
 %\end{verbatim}
-%the \cs{count0} will have the value~7, and the 
+%the \cs{count0} will have the value~7, and the
 %digit~\n8 is typeset.
 Anything that looks like a number
 can be used as a \gr{number}: thus \verb-42- is a number.
@@ -236,12 +238,12 @@ for $1\times16^2+2\times16^1+3\times16^0=291$.
 \indent $|$ \n{\char`\"}\gr{hexadecimal constant}\gr{one optional space}
 \end{disp}
 The octal digits are \n0--\n7; a~digit \n8 or~\n9 following an
-octal denotation is not part of the number: 
+octal denotation is not part of the number:
 after
 \begin{verbatim}
 \count0='078
 \end{verbatim}
-the \cs{count0} will have the value~7, and the 
+the \cs{count0} will have the value~7, and the
 digit~\n8 is typeset.
 
 %The hexadecimal digits are \n0--\n9, \n A--\n F, where the \n A--\n F
@@ -267,25 +269,25 @@ Chapter~\ref{char}).
 \subsection{Denotations: characters}
 
 %A character token is a pair consisting of a character code,
-%which is a~number in the range 0--255, 
+%which is a~number in the range 0--255,
 %and a category code. Both of these codes are accessible,
-%and can be used as a \gr{number}. 
+%and can be used as a \gr{number}.
 A character token is a pair consisting of a character code,
-which is a~number in the range 0--255, 
+which is a~number in the range 0--255,
 and a category code. Both of these codes are accessible,
-and can be used as a \gr{number}. 
+and can be used as a \gr{number}.
 
 %The character code of a character token, or of a single letter
 %control sequence, is accessible through the left quote command:
 %both \verb-`a- and~\verb-`\a- denote the character code of~{\tt a},
-%which can be used as an integer. 
-%\begin{disp}\gr{integer denotation} $\longrightarrow$ 
+%which can be used as an integer.
+%\begin{disp}\gr{integer denotation} $\longrightarrow$
 %\n{\char`\`}\gr{character token}\gr{one optional space}\end{disp}
 The character code of a character token, or of a single letter
 control sequence, is accessible through the left quote command:
 both \verb-`a- and~\verb-`\a- denote the character code of~{\tt a},
-which can be used as an integer. 
-\begin{disp}\gr{integer denotation} $\longrightarrow$ 
+which can be used as an integer.
+\begin{disp}\gr{integer denotation} $\longrightarrow$
 \n{\char`\`}\gr{character token}\gr{one optional space}\end{disp}
 
 %In order to emphasize that accessing the character code is
@@ -303,18 +305,18 @@ The left quote must have category~12\index{category!12}.
 \subsection{Internal integers}
 
 %The class of \gr{internal integers} can
-%be split into five parts. 
+%be split into five parts.
 %The \gr{codename}s and \gr{special integer}s
 %will be treated separately below; furthermore, there are the following.
 The class of \gr{internal integers} can
-be split into five parts. 
+be split into five parts.
 The \gr{codename}s and \gr{special integer}s
 will be treated separately below; furthermore, there are the following.
 
 %\begin{itemize} \item The contents of \cs{count} registers;
 %either explicitly used by writing for instance \cs{count23},
 %or by referring to such a register by means of a
-%control sequence 
+%control sequence
 %that was defined by \cs{countdef}:
 %after
 %\begin{verbatim}
@@ -325,7 +327,7 @@ will be treated separately below; furthermore, there are the following.
 \begin{itemize} \item The contents of \cs{count} registers;
 either explicitly used by writing for instance \cs{count23},
 or by referring to such a register by means of a
-control sequence 
+control sequence
 that was defined by \cs{countdef}:
 after
 \begin{verbatim}
@@ -340,14 +342,14 @@ after
 %\cs{hyphenchar}\gr{font} and \cs{parshape}
 %(if a paragraph shape has been defined for $n$ lines,
 %using \cs{parshape} in the context of a \gr{number}
-%will yield this value of~$n$). 
+%will yield this value of~$n$).
 \item All parameters of \TeX\ that hold integer values;
 this includes obvious ones such as \cs{linepenalty}, but
 also parameters such as
 \cs{hyphenchar}\gr{font} and \cs{parshape}
 (if a paragraph shape has been defined for $n$ lines,
 using \cs{parshape} in the context of a \gr{number}
-will yield this value of~$n$). 
+will yield this value of~$n$).
 
 %\item\label{num:chardef} Tokens defined by \cs{chardef} or \cs{mathchardef}.
 %After
@@ -380,10 +382,10 @@ This fact is
 exploited in the allocation routines for registers (see
 Chapter~\ref{alloc}).
 
-%A control sequence thus defined by \cs{chardef} is called a 
+%A control sequence thus defined by \cs{chardef} is called a
 %\gr{chardef token}; if it is defined by \cs{mathchardef} it
 %is called a \gr{mathchardef token}.
-A control sequence thus defined by \cs{chardef} is called a 
+A control sequence thus defined by \cs{chardef} is called a
 \gr{chardef token}; if it is defined by \cs{mathchardef} it
 is called a \gr{mathchardef token}.
 
@@ -406,7 +408,7 @@ is called a \gr{mathchardef token}.
 %\nl
 %\indent $|$ \cs{defaulthyphenchar} $|$ \cs{defaultskewchar} \nl
 %\indent $|$ \cs{delimiterfactor} $|$ \cs{displaywidowpenalty} \nl
-%\indent $|$ \cs{doublehyphendemerits} $|$ \cs{endlinechar} 
+%\indent $|$ \cs{doublehyphendemerits} $|$ \cs{endlinechar}
 %        $|$ \cs{escapechar}\nl
 %\indent $|$ \cs{exhypenpenalty} $|$ \cs{fam} $|$ \cs{finalhyphendemerits}\nl
 %\indent $|$ \cs{floatingpenalty} $|$ \cs{globaldefs} $|$ \cs{hangafter}\nl
@@ -443,7 +445,7 @@ $|$ \cs{adjdemerits} $|$ \cs{binoppenalty}\nl
 \nl
 \indent $|$ \cs{defaulthyphenchar} $|$ \cs{defaultskewchar} \nl
 \indent $|$ \cs{delimiterfactor} $|$ \cs{displaywidowpenalty} \nl
-\indent $|$ \cs{doublehyphendemerits} $|$ \cs{endlinechar} 
+\indent $|$ \cs{doublehyphendemerits} $|$ \cs{endlinechar}
         $|$ \cs{escapechar}\nl
 \indent $|$ \cs{exhypenpenalty} $|$ \cs{fam} $|$ \cs{finalhyphendemerits}\nl
 \indent $|$ \cs{floatingpenalty} $|$ \cs{globaldefs} $|$ \cs{hangafter}\nl
@@ -466,11 +468,11 @@ $|$ \cs{adjdemerits} $|$ \cs{binoppenalty}\nl
 \end{disp}
 
 %Any internal integer can function as an \gr{internal unit},
-%which  \ldash preceded by \gr{optional spaces} \rdash  
+%which  \ldash preceded by \gr{optional spaces} \rdash
 %can serve as a \gr{unit of measure}.
 %Examples of this are given in Chapter~\ref{glue}.
 Any internal integer can function as an \gr{internal unit},
-which  \ldash preceded by \gr{optional spaces} \rdash  
+which  \ldash preceded by \gr{optional spaces} \rdash
 can serve as a \gr{unit of measure}.
 Examples of this are given in Chapter~\ref{glue}.
 
@@ -480,7 +482,7 @@ Examples of this are given in Chapter~\ref{glue}.
 \subsection{Internal integers: other codes of a character}
 
 %The \cs{catcode} command
-%(which was  described in Chapter~\ref{mouth}) 
+%(which was  described in Chapter~\ref{mouth})
 %is a \gr{codename}, and like the other code names
 %it can be used as an integer.
 %\begin{disp}\gr{codename} $\longrightarrow$ \cs{catcode} $|$ \cs{mathcode}
@@ -488,7 +490,7 @@ Examples of this are given in Chapter~\ref{glue}.
 %\end{disp}
 %A~\gr{codename} has to be followed by an \gr{8-bit number}.
 The \cs{catcode} command
-(which was  described in Chapter~\ref{mouth}) 
+(which was  described in Chapter~\ref{mouth})
 is a \gr{codename}, and like the other code names
 it can be used as an integer.
 \begin{disp}\gr{codename} $\longrightarrow$ \cs{catcode} $|$ \cs{mathcode}
@@ -540,7 +542,7 @@ assignment}, and is automatically global
 
 %\TeX\ provides a conversion between dimensions and integers:
 %if an integer is expected, a \gr{dimen} or \gr{glue} used
-%in that context is converted by taking its 
+%in that context is converted by taking its
 %(natural) size
 %in scaled points\index{point!scaled}.
 %However, only \gr{internal dimen}s and \gr{internal glue}
@@ -548,7 +550,7 @@ assignment}, and is automatically global
 %can be coerced to integers.
 \TeX\ provides a conversion between dimensions and integers:
 if an integer is expected, a \gr{dimen} or \gr{glue} used
-in that context is converted by taking its 
+in that context is converted by taking its
 (natural) size
 in scaled points\index{point!scaled}.
 However, only \gr{internal dimen}s and \gr{internal glue}
@@ -575,16 +577,16 @@ if it was a space token, and backing up if it was not.
 %after it has seen one space token, this
 %scanning behaviour implies that
 %integer denotations can be followed by
-%arbitrarily many space characters in the input. 
+%arbitrarily many space characters in the input.
 %Also, a line end is admissible.
-%However, only one space token is allowed. 
+%However, only one space token is allowed.
 Because \TeX's input processor goes into the state `skipping spaces'
 after it has seen one space token, this
 scanning behaviour implies that
 integer denotations can be followed by
-arbitrarily many space characters in the input. 
+arbitrarily many space characters in the input.
 Also, a line end is admissible.
-However, only one space token is allowed. 
+However, only one space token is allowed.
 
 %%\point Numbers
 %\section{Numbers}
@@ -666,25 +668,25 @@ a negative number, the result is simply empty.
 %Integers can be stored in \csidx{count} registers:
 %\begin{Disp}\cs{count}\gr{8-bit number}\end{Disp}
 %is an \gr{integer variable} and an \gr{internal integer}.
-%As an integer variable it can be used in a 
+%As an integer variable it can be used in a
 %\gr{variable assignment}:
 %\begin{Disp}\gr{variable assignment} $\longrightarrow$
 %     \gr{integer variable}\gr{equals}\gr{number} $|$ \dots\end{Disp}
 %As an internal integer it can be used as a \gr{number}:
 %\begin{Disp}\gr{number} $\rightarrow$ \gr{optional signs}\gr{internal integer}
 %     $|$ \dots
-%\end{Disp} 
+%\end{Disp}
 Integers can be stored in \csidx{count} registers:
 \begin{Disp}\cs{count}\gr{8-bit number}\end{Disp}
 is an \gr{integer variable} and an \gr{internal integer}.
-As an integer variable it can be used in a 
+As an integer variable it can be used in a
 \gr{variable assignment}:
 \begin{Disp}\gr{variable assignment} $\longrightarrow$
      \gr{integer variable}\gr{equals}\gr{number} $|$ \dots\end{Disp}
 As an internal integer it can be used as a \gr{number}:
 \begin{Disp}\gr{number} $\rightarrow$ \gr{optional signs}\gr{internal integer}
      $|$ \dots
-\end{Disp} 
+\end{Disp}
 
 %Synonyms for \cs{count} registers can be introduced by the
 %\csidx{countdef} command in a \gr{shorthand definition}:
@@ -703,9 +705,9 @@ is called a \gr{countdef token}, and it serves as an
 %(which is declared \cs{outer}) uses the \cs{countdef} command
 %to allocate an unused \cs{count} register.
 %Counters 0--9 are scratch registers, like all
-%registers with numbers~0--9. 
+%registers with numbers~0--9.
 %However, counters 0--9 are used for page identification
-%in the \n{dvi} file (see Chapter~\ref{TeXcomm}), 
+%in the \n{dvi} file (see Chapter~\ref{TeXcomm}),
 %so they should be used as scratch
 %registers only inside a group.
 %Counters 10--22 are
@@ -715,9 +717,9 @@ The plain \TeX\ macro \csidx{newcount}
 (which is declared \cs{outer}) uses the \cs{countdef} command
 to allocate an unused \cs{count} register.
 Counters 0--9 are scratch registers, like all
-registers with numbers~0--9. 
+registers with numbers~0--9.
 However, counters 0--9 are used for page identification
-in the \n{dvi} file (see Chapter~\ref{TeXcomm}), 
+in the \n{dvi} file (see Chapter~\ref{TeXcomm}),
 so they should be used as scratch
 registers only inside a group.
 Counters 10--22 are
@@ -751,12 +753,12 @@ case of glue setting on floating-point numbers.
 %\cstoidx advance\par\cstoidx multiply\par\cstoidx divide\par
 %perform some arithmetic on integers. The statement
 %\begin{Disp}\cs{advance}\gr{integer variable}\gr{optional \n{by}}%
-%     \gr{number}\end{Disp} 
+%     \gr{number}\end{Disp}
 %adds the value of the \gr{number}
 % \ldash which may be negative \rdash  to the \gr{integer variable}.
 %Similarly,
 %\begin{Disp}\cs{multiply}\gr{integer variable}\gr{optional \n{by}}%
-%     \gr{number}\end{Disp} 
+%     \gr{number}\end{Disp}
 %multiplies the value of the \gr{integer variable}, and
 %\begin{Disp}\cs{divide}\gr{integer variable}\gr{optional \n{by}}%
 %     \gr{number}\end{Disp}
@@ -765,12 +767,12 @@ case of glue setting on floating-point numbers.
 \cstoidx advance\par\cstoidx multiply\par\cstoidx divide\par
 perform some arithmetic on integers. The statement
 \begin{Disp}\cs{advance}\gr{integer variable}\gr{optional \n{by}}%
-     \gr{number}\end{Disp} 
+     \gr{number}\end{Disp}
 adds the value of the \gr{number}
  \ldash which may be negative \rdash  to the \gr{integer variable}.
 Similarly,
 \begin{Disp}\cs{multiply}\gr{integer variable}\gr{optional \n{by}}%
-     \gr{number}\end{Disp} 
+     \gr{number}\end{Disp}
 multiplies the value of the \gr{integer variable}, and
 \begin{Disp}\cs{divide}\gr{integer variable}\gr{optional \n{by}}%
      \gr{number}\end{Disp}
@@ -906,10 +908,10 @@ skipped, similarly to what ordinarily happens in conditionals
 
 %In formats and macro collections numeric constants
 %are often needed. There are several ways to implement these
-%in \TeX. 
+%in \TeX.
 In formats and macro collections numeric constants
 are often needed. There are several ways to implement these
-in \TeX. 
+in \TeX.
 
 %Firstly,
 %\begin{verbatim}
@@ -986,7 +988,7 @@ is trying to compose a number. For example:
 \end{verbatim}
 Here the page number will be absorbed into the value of the penalty.
 
-%Now consider 
+%Now consider
 %\begin{verbatim}
 %\newcount\midpenalty \midpenalty=200
 %\def\par{\endgraf\penalty\midpenalty}
@@ -997,7 +999,7 @@ Here the page number will be absorbed into the value of the penalty.
 %and it finds a \gr{countdef token}. This is {\em not\/}
 %converted to a representation in digits, so there is never any
 %danger of the page number being touched.
-Now consider 
+Now consider
 \begin{verbatim}
 \newcount\midpenalty \midpenalty=200
 \def\par{\endgraf\penalty\midpenalty}
