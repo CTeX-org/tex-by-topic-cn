@@ -475,7 +475,7 @@
 %for a space token depends on the \cs{spacefactor} of
 %the previous object in the list. This is treated
 %in Chapter~\ref{space}.
-对于水平模式，为一个空格记号插入的伸缩胶的量，由列表里前一个量的 \\
+对于水平模式，为一个空格记号插入的伸缩胶的量，由列表里前一个量的 \\ 
 \cs{spacefactor} 值决定。这会在第 \ref{space} 章讨论。
 
 %In vertical mode \TeX\ inserts glue to keep boxes at a certain
@@ -499,7 +499,7 @@
 %\section{Migrating material}
 %\label{migrate}
 %\point[migrate] Migrating material
-\section{Migrating material}
+\section{迁移材料}
 \label{migrate}
 
 %The three control sequences \cs{insert}, \cs{mark}, and \cs{vadjust}
@@ -512,16 +512,10 @@
 %the main vertical list: it can be a vertical box
 %containing a paragraph of text. In this case a \cs{mark}
 %or \cs{insert} command will not reach the page breaking algorithm.
-The three control sequences \cs{insert}, \cs{mark}, and \cs{vadjust}
-can be given in a paragraph 
-(the first two can also occur
-in vertical mode) to specify \indexterm{migrating material}:
-material that will wind up on the
-surrounding vertical list rather than on the current list.
-Note that this need not be 
-the main vertical list: it can be a vertical box
-containing a paragraph of text. In this case a \cs{mark}
-or \cs{insert} command will not reach the page breaking algorithm.
+在一段话中，可以用三种控制序列 \cs{insert}, \cs{mark} 和 \cs{vadjust}指定\indexterm{迁移材料} (前两个也可以出现在竖直模式中)：
+材料会在周围的竖直列表而不是当前列表中结束。
+注意这并不一定是主竖直列表：也可以是包含一段文字的竖直盒子。
+这种情况下 \cs{mark} 或 \cs{insert} 命令不会触发分页算法。
 
 %When several migrating items are specified in a certain line
 %of text, their left-to-right order is preserved when they are
@@ -530,13 +524,8 @@ or \cs{insert} command will not reach the page breaking algorithm.
 %in which they were specified: they come before any
 %penalty or glue items that are automatically inserted
 %(see page~\pageref{between:lines}).
-When several migrating items are specified in a certain line
-of text, their left-to-right order is preserved when they are
-placed on the surrounding vertical list. These items are placed
-directly after the horizontal box containing the line of text
-in which they were specified: they come before any
-penalty or glue items that are automatically inserted
-(see page~\pageref{between:lines}).
+在特定的文本行中指定了多个迁移项目后，当将其放置在周围的竖直列表中时，它们从左至右的顺序会保留下来。
+这些项目直接放置在包含指定文本的水平盒子之后：它们会在任何自动生成的惩罚值或伸缩胶项目之前插入(见第 \pageref{between:lines} 页)。
 
 %%\spoint \cs{vadjust}
 %\subsection{\cs{vadjust}}
@@ -552,22 +541,18 @@ penalty or glue items that are automatically inserted
 %the horizontal list in which the command is given
 %to the surrounding vertical list, directly after the box
 %in which it occurred.
-The command
+命令 
 \cstoidx vadjust\par
 \begin{disp}\cs{vadjust}\gr{filler}\lb\gr{vertical mode material}\rb\end{disp}
-is only allowed in horizontal and math modes (but it is
-not a \gr{horizontal command}).
-Vertical mode material specified by \cs{vadjust} is moved from
-the horizontal list in which the command is given
-to the surrounding vertical list, directly after the box
-in which it occurred.
+只允许在水平和数学模式中使用 (但它不是一个\gr{horizontal command})。
+由 \cs{vadjust} 指定的竖直模式材料，将从给出该命令的水平列表中移动到周围的竖直列表中，直接放置在它原本出现的盒子之后。
 
 %In the current line
 %\vadjust{\setbox0=\hbox{$\bullet$\hskip1em}\ht0=0pt \dp0=0pt \llap{\box0}}
 %a \cs{vadjust} item was placed to put the bullet in the margin.
-In the current line
+在当前行中，
 \vadjust{\setbox0=\hbox{$\bullet$\hskip1em}\ht0=0pt \dp0=0pt \llap{\box0}}
-a \cs{vadjust} item was placed to put the bullet in the margin.
+放置了一个 \cs{vadjust} 项目，它在页边中插入了一个点。
 
 
 %Any vertical material in a \cs{vadjust} item is processed
@@ -577,18 +562,16 @@ a \cs{vadjust} item was placed to put the bullet in the margin.
 %\mdqon
 %of the vertical material \cs{prevdepth}$=$""\n{-1000pt}.
 %\mdqoff
-Any vertical material in a \cs{vadjust} item is processed
-in internal vertical mode, even though it will wind up
-on the main vertical list. For instance, the \cs{ifinner}
-test is true in a \cs{vadjust}, and at the start
+\cs{vadjust} 项目中的任何竖直材料会在内部竖直模式中处理，即使它会结束主竖直列表。
+举个例子，在 \cs{vadjust} 中 \cs{ifinner} 测试为真，并且在竖直材料的开头
 \mdqon
-of the vertical material \cs{prevdepth}$=$""\n{-1000pt}.
+\cs{prevdepth}$=$""\n{-1000pt}。
 \mdqoff
 
 %%\point Testing modes
 %\section{Testing modes}
 %\point Testing modes
-\section{Testing modes}
+\section{测试模式}
 
 %The three conditionals \cs{ifhmode}, \cs{ifvmode}, and
 %\cs{ifinner} can distinguish between the four modes of
@@ -599,26 +582,17 @@ of the vertical material \cs{prevdepth}$=$""\n{-1000pt}.
 %Exceptional condition: during a \cs{write} \TeX\
 %is in a `no mode' state. The tests \cs{ifhmode},
 %\cs{ifvmode}, and \cs{ifmmode} are then all false.
-The three conditionals \cs{ifhmode}, \cs{ifvmode}, and
-\cs{ifinner} can distinguish between the four modes of
-\TeX\ that are not math modes.
-The \cs{ifinner} test is true if \TeX\ is in 
-restricted horizontal mode or internal vertical mode
-(or in non-display math mode).
-Exceptional condition: during a \cs{write} \TeX\
-is in a `no mode' state. The tests \cs{ifhmode},
-\cs{ifvmode}, and \cs{ifmmode} are then all false.
+三种条件语句 \cs{ifhmode}, \cs{ifvmode} 和 \cs{ifinner} 可以用来区分非数学模式的四种 \TeX\ 模式。
+当 \TeX\ 处于受限水平模式、内部竖直模式或非显示数学模式中时， \cs{ifinner} 测试为真。
+有一个例外情况：在 \cs{write} 指令执行的时候， \TeX\ 处于无模式状态。此时 \cs{ifhmode}, \cs{ifvmode} 和 \cs{ifmmode} 测试都为假。
 
 %Inspection of all current lists, including the `recent
 %contributions' (see Chapter~\ref{page:break}),
 %is possible through the command \csidx{showlists}\label{showlists}.
 %This command writes to the log file the contents of all
 %lists that are being built at the moment the command is given.
-Inspection of all current lists, including the `recent
-contributions' (see Chapter~\ref{page:break}),
-is possible through the command \csidx{showlists}\label{showlists}.
-This command writes to the log file the contents of all
-lists that are being built at the moment the command is given.
+我们可以通过 \csidx{showlists}\label{showlists} 命令检查所有列表的值，包括“最近贡献”(见第 \ref{page:break} 章)。
+这个命令会把执行此命令时，所有正在构建的列表的内容写入日志里。
 
 %Consider the example
 %\begin{verbatim}
@@ -629,15 +603,14 @@ lists that are being built at the moment the command is given.
 %Here the first paragraph has been broken into two lines, and
 %these have been added to the current page. The second paragraph
 %has not been concluded or broken into lines.
-Consider the example
+考虑以下例子
 \begin{verbatim}
 a\hfil\break b\par 
 c\hfill\break d
 \hbox{e\vbox{f\showlists
 \end{verbatim}
-Here the first paragraph has been broken into two lines, and
-these have been added to the current page. The second paragraph
-has not been concluded or broken into lines.
+这里第一段被分为两行，这两部分被添加进当前页中。
+第二段尚未结束，也没有被分为多行。
 
 %The log file shows the following. \TeX\ was busy
 %building a paragraph (starting with an indentation box
@@ -670,26 +643,27 @@ has not been concluded or broken into lines.
 %\end{verbatim}
 %Note how the infinite glue and the \cs{break} penalty
 %are still part of the horizontal list.
-The log file shows the following. \TeX\ was busy
-building a paragraph (starting with an indentation box
-\n{20pt} wide):\begin{verbatim}
+以下是日志的记录。
+\TeX\ 正在忙于构建一个段落(从一个\n{20pt}宽的缩进盒子开始):
+\begin{verbatim}
 ### horizontal mode entered at line 3
 \hbox(0.0+0.0)x20.0
 \tenrm f
 spacefactor 1000
 \end{verbatim}
-This paragraph was inside a vertical box:\begin{verbatim}
+这个段落处于一个竖直盒子中:
+\begin{verbatim}
 ### internal vertical mode entered at line 3
 prevdepth ignored
 \end{verbatim}
-The vertical box was in  a horizontal box, 
+竖直盒子处于一个水平盒子中, 
 \begin{verbatim}
 ### restricted horizontal mode entered at line 3
 \tenrm e
 spacefactor 1000
 \end{verbatim}
-which was part of
-an as-yet unfinished paragraph:\begin{verbatim}
+而水平盒子又是另一个未完成段落的一部分:
+\begin{verbatim}
 ### horizontal mode entered at line 2
 \hbox(0.0+0.0)x20.0
 \tenrm c
@@ -699,8 +673,7 @@ an as-yet unfinished paragraph:\begin{verbatim}
 etc.
 spacefactor 1000
 \end{verbatim}
-Note how the infinite glue and the \cs{break} penalty
-are still part of the horizontal list.
+注意到无限制的伸缩胶和断行\cs{break}惩罚值仍然是水平列表的一部分。
 
 %Finally, the first paragraph has been broken into lines and 
 %added to the current page:\begin{verbatim}
@@ -725,8 +698,8 @@ are still part of the horizontal list.
 % goal height 643.20255
 %prevdepth 0.0
 %\end{verbatim}
-Finally, the first paragraph has been broken into lines and 
-added to the current page:\begin{verbatim}
+最终，第一个段落被分为行然后加入到当前页中:
+\begin{verbatim}
 ### vertical mode entered at line 0
 ### current page:
 \glue(\topskip) 5.69446
