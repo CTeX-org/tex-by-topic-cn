@@ -33,8 +33,8 @@
 \item 数学模式和数学显示模式。
 \end{enumerate}
 数学模式将会在其他章节详细介绍(见 \pageref{math:modes} 页)。
-这里我们首先关注水平和竖直模式，对象的类型会在相应的列表中出现，
-并且每个模式的命令都是专用的。
+这里我们首先关注水平和竖直模式、相应列表中可能出现的对象类型、
+以及某种模式中的专用命令。
 
 %\label{cschap:vadjust}\label{cschap:showlists}
 %\begin{inventory}
@@ -235,7 +235,7 @@
 %A~vertical command in restricted horizontal mode thus gives
 %an error; the \cs{par} command in restricted horizontal mode
 %has no effect.
-但是，并非所有的模式转换都是可行的：
+但是，并非所有的模式间转换都是可行的：
 \TeX\ 能从两种竖直模式切换到(无限制的)水平模式，并可以通过水平和竖直命令切换回去。
 但转入或转出受限水平模式的转换均是不可行的(除了在竖直盒子内闭合水平盒子或使用其他的方式)。
 在受限水平模式内使用竖直命令会导致错误；
