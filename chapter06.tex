@@ -59,7 +59,7 @@
 %      Specify vertical material for the enclosing vertical list
 %      while in horizontal mode.
 \item [\cs{vadjust}] 
-      指定用于在水平模式中闭合竖直列表的指定竖直符号。
+      用于指定在水平模式中闭合竖直列表的竖直材料。
 
 %\item [\cs{showlists}] 
 %      Write to the log file the contents of the partial lists 
@@ -132,13 +132,13 @@
 %lists is discussed in Chapter~\ref{line:break}.
 \cindextermbus{水平}{列表}的每一个元素都是以下各项之一：
 \begin{itemize}
-  \item 一个盒子(一个字符、合字、\cs{vrule} 或一个 \gr{box})，
+  \item 一个盒子(一个字符、连字、\cs{vrule} 或一个 \gr{box})，
   \item 一个软换行
   \item 一个延迟操作(见第 \ref{io} 章)
   \item 由 \cs{mark}, \cs{vadjust} 或 \cs{insert} 闭合的竖直材料，
   \item 
 \mdqon
-活动铅空或目录连接符、铅空、断行惩罚或数学模式开/""关符号
+伸缩胶或引导符、铅空、惩罚值或数学模式开/""关符号
 \mdqoff
 \end{itemize}
 最后一点的项目都是可丢弃的。
@@ -187,12 +187,12 @@
 \cindextermbus{竖直}{列表}的每一个元素都是以下各项之一：
 \begin{itemize}
   \item 一个盒子(水平或竖直盒子或一个 \cs{hrule})
-  \item 一个延迟操作，
+  \item 一个无名的（项目），
   \item 一个标记，
-  \item 活动铅空或目录连接符、铅空或断行惩罚。
+  \item 伸缩胶或引导符、铅空或惩罚值。
 \end{itemize}
 列表最后一点中的项目都是可丢弃的。
-竖直列表的断行将在第 \ref{page:break} 章讨论。
+竖直列表的分解将在第 \ref{page:break} 章讨论。
 
 %There are a few exceptional conditions at the beginning
 %of  a vertical list: the value of \cs{prevdepth} is set
@@ -205,9 +205,9 @@
 %(see Chapters \ref{page:shape} and~\ref{page:break}).
 在竖直列表的开始处有一些特殊条件需要注意：
 \cs{prevdepth} 的值被设为 \n{-1000pt}。
-此外，在内部竖直列表的顶端没有附加 \cs{parskip} 的可变铅空。
-在主竖直列表的顶端(即“当前页”的顶端)没有附加可变铅空或其他可丢弃的项目，
-\cs{topskip} 的可变铅空会在第一个盒子加入列表时加入
+此外，在内部竖直列表的顶端没有附加 \cs{parskip} 的伸缩胶。
+在主竖直列表的顶端(即“当前页”的顶端)没有附加伸缩胶或其他可丢弃的项目，
+\cs{topskip} 的伸缩胶会在第一个盒子加入列表时加入
 (见第 \ref{page:shape} 和 \ref{page:break} 章)。
 
 %%\point Horizontal and vertical commands
@@ -673,7 +673,7 @@ spacefactor 1000
 etc.
 spacefactor 1000
 \end{verbatim}
-注意到无限制的伸缩胶和断行\cs{break}惩罚值仍然是水平列表的一部分。
+注意到无限制的伸缩胶和\cs{break}惩罚值仍然是水平列表的一部分。
 
 %Finally, the first paragraph has been broken into lines and 
 %added to the current page:\begin{verbatim}
