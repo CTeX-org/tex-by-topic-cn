@@ -7,89 +7,97 @@
 \begin{document}
 
 %\chapter{Numbers}\label{number}
-\chapter{Numbers}\label{number}
+\chapter{数字}\label{number}
 
 %In this chapter integers and their
 %denotations will be treated,
-%the conversions that are possible either way, 
+%the conversions that are possible either way,
 %allocation and use of \cs{count} registers, and
 %arithmetic with integers.
-In this chapter integers and their
-denotations will be treated,
-the conversions that are possible either way, 
-allocation and use of \cs{count} registers, and
-arithmetic with integers.
+本章将讨论整数和罗马数字等不同的表示形式，以及两者之间的转换。还将讨论\cs{count}寄存器的分配和使用，以及整数的算术运算。
 
 %\label{cschap:number}\label{cschap:romannumeral}\label{cschap:count}\label{cschap:countdef}\label{cschap:newcount}\label{cschap:advance}\label{cschap:multiply}\label{cschap:divide}
-%\begin{inventory} 
-%\item [\cs{number}] 
-%      Convert a \gr{number} to decimal representation. 
+%\begin{inventory}
+%\item [\cs{number}]
+%      Convert a \gr{number} to decimal representation.
 \label{cschap:number}\label{cschap:romannumeral}\label{cschap:count}\label{cschap:countdef}\label{cschap:newcount}\label{cschap:advance}\label{cschap:multiply}\label{cschap:divide}
-\begin{inventory} 
-\item [\cs{number}] 
-      Convert a \gr{number} to decimal representation. 
+\begin{inventory}
+\item [\cs{number}]
+      %Convert a \gr{number} to decimal representation.
+将一个\gr{number}转换为十进制数。
 
-%\item [\cs{romannumeral}] 
+%\item [\cs{romannumeral}]
 %      Convert a positive \gr{number} to lowercase roman representation.
-\item [\cs{romannumeral}] 
-      Convert a positive \gr{number} to lowercase roman representation.
+\item [\cs{romannumeral}]
+      %Convert a positive \gr{number} to lowercase roman representation.
+      
+      将一个正的\gr{number}转换为小写罗马数字。
 
-%\item [\cs{ifnum}] 
+%\item [\cs{ifnum}]
 %      Test relations between numbers.
-\item [\cs{ifnum}] 
-      Test relations between numbers.
+\item [\cs{ifnum}]
+      %Test relations between numbers.
+      用于测试两个数字间的大小关系
 
-%\item [\cs{ifodd}] 
+%\item [\cs{ifodd}]
 %      Test whether a number is odd.
-\item [\cs{ifodd}] 
-      Test whether a number is odd.
+\item [\cs{ifodd}]
+      %Test whether a number is odd.
+      用于测试数字是否为奇数
 
-%\item [\cs{ifcase}] 
+%\item [\cs{ifcase}]
 %      Enumerated case statement.
-\item [\cs{ifcase}] 
-      Enumerated case statement.
+\item [\cs{ifcase}]
+      %Enumerated case statement.
+      用于枚举条件声明
 
 
-%\item [\cs{count}] 
-%      Prefix for count registers. 
-\item [\cs{count}] 
-      Prefix for count registers. 
+%\item [\cs{count}]
+%      Prefix for count registers.
+\item [\cs{count}]
+      %Prefix for count registers.
+      计数寄存器的前缀
 
-%\item [\cs{countdef}] 
+%\item [\cs{countdef}]
 %      Define a control sequence to be a synonym for
 %      a~\cs{count} register.
-\item [\cs{countdef}] 
-      Define a control sequence to be a synonym for
-      a~\cs{count} register.
+\item [\cs{countdef}]
+      %Define a control sequence to be a synonym for
+      %a~\cs{count} register.
+      为一个\cs{count}寄存器定义一个同义的控制序列
 
-%\item [\cs{newcount}] 
-%      Allocate an unused \cs{count} register. 
-\item [\cs{newcount}] 
-      Allocate an unused \cs{count} register. 
+%\item [\cs{newcount}]
+%      Allocate an unused \cs{count} register.
+\item [\cs{newcount}]
+      %Allocate an unused \cs{count} register.
+      分配一个未使用的\cs{count}寄存器
 
-%\item [\cs{advance}] 
-%      Arithmetic command to add to or subtract from 
+%\item [\cs{advance}]
+%      Arithmetic command to add to or subtract from
 %      a~\gr{numeric variable}.
-\item [\cs{advance}] 
-      Arithmetic command to add to or subtract from 
-      a~\gr{numeric variable}.
+\item [\cs{advance}]
+      %Arithmetic command to add to or subtract from
+      %a~\gr{numeric variable}.
+      算术运算命令用于对\gr{numeric variable}做加法和减法
 
-%\item [\cs{multiply}] 
+%\item [\cs{multiply}]
 %      Arithmetic command to multiply a \gr{numeric variable}.
-\item [\cs{multiply}] 
-      Arithmetic command to multiply a \gr{numeric variable}.
+\item [\cs{multiply}]
+      %Arithmetic command to multiply a \gr{numeric variable}.
+      算术运算命令用于对\gr{numeric variable}做乘法
 
-%\item [\cs{divide}] 
+%\item [\cs{divide}]
 %      Arithmetic command to divide a \gr{numeric variable}.
-\item [\cs{divide}] 
-      Arithmetic command to divide a \gr{numeric variable}.
+\item [\cs{divide}]
+      %Arithmetic command to divide a \gr{numeric variable}.
+      算术运算命令用于对\gr{numeric variable}做除法
 
 %\end{inventory}
 \end{inventory}
 
 
 %\section{Numbers and \gr{number}s}
-\section{Numbers and \gr{number}s}
+\section{数字和 \gr{number}s}
 
 %An important part of the grammar of \TeX\ is the rigorous definition
 %of a \gr{number}\index{numbers}, the syntactic entity that
@@ -97,50 +105,50 @@ arithmetic with integers.
 %expected. This definition will take the largest part of this
 %chapter. Towards the end, \cs{count} registers, arithmetic, and tests
 %for numbers are discussed.
-An important part of the grammar of \TeX\ is the rigorous definition
-of a \gr{number}\index{numbers}, the syntactic entity that
-\TeX\ expects when semantically an \indexterm{integer} is
-expected. This definition will take the largest part of this
-chapter. Towards the end, \cs{count} registers, arithmetic, and tests
-for numbers are discussed.
+
+对\gr{number}\index{numbers}的严格定义是\TeX\ 语法的一个重要部分，当从语义上需要一个
+\indexterm{整数}时，\TeX\ 要求这样的语法实体。这一定义将占据本章的最大一部分内容。本章最后将讨论\cs{count}寄存器、算术运算和数字间的关系判断。 
 
 %For clarity of discussion a distinction will be made
-%here between integers and numbers, 
+%here between integers and numbers,
 %but note that a \gr{number} can be both
 %an `integer' and a `number'.
 %`Integer'  will be taken to denote a mathematical number:
 %a~quantity that can be added or multiplied.
 %`Number' will be taken to refer to the printed representation
 %of an integer: a string of digits, in other words.
-For clarity of discussion a distinction will be made
-here between integers and numbers, 
-but note that a \gr{number} can be both
-an `integer' and a `number'.
-`Integer'  will be taken to denote a mathematical number:
-a~quantity that can be added or multiplied.
-`Number' will be taken to refer to the printed representation
-of an integer: a string of digits, in other words.
+
+为清楚起见，讨论之前先在此强调一下整数(integer)和数字(number)间的区别
+\footnote{译者注:这里number本质指的是整数的打印形式，暂译为数字。而integer作为数学上的整数很好理解。而\gr{number}是本文中表示整数或数字的形式，也可以称为表示整数或数字的量}。
+但要注意
+\gr{number}既可以是整数也可以是数字。“整数”代表数学上的数字，一个可以做算术运算的量。
+而“数字”用来指代打印一个整数的表示形式: 换句话说就是一个数字构造的字符串。
 
 %\section{Integers}
-\section{Integers}
+\section{整数}
 
 %Quite a few different sorts of objects can function
 %as integers in \TeX. In this section they will all
 %be treated, accompanied by the relevant lines from
 %the grammar of \TeX.
-Quite a few different sorts of objects can function
-as integers in \TeX. In this section they will all
-be treated, accompanied by the relevant lines from
-the grammar of \TeX.
+
+\TeX 中有相当多的对象用来表示整数。本节将讨论所有这些对象，及其相关的 \TeX 语法内容。
 
 %First of all, an integer can be positive or negative:
-%\begin{disp}\gr{number} $\longrightarrow$ 
+%\begin{disp}\gr{number} $\longrightarrow$
 %\gr{optional signs}\gr{unsigned number}\nl
 %\gr{optional signs} $\longrightarrow$ \gr{optional spaces}\nl
 %\indent $|$ \gr{optional signs}\gr{plus or minus}\gr{optional spaces}
 %\end{disp}
 First of all, an integer can be positive or negative:
-\begin{disp}\gr{number} $\longrightarrow$ 
+\begin{disp}\gr{number} $\longrightarrow$
+\gr{optional signs}\gr{unsigned number}\nl
+\gr{optional signs} $\longrightarrow$ \gr{optional spaces}\nl
+\indent $|$ \gr{optional signs}\gr{plus or minus}\gr{optional spaces}
+\end{disp}
+
+首先，一个整数可正可负:
+\begin{disp}\gr{number} $\longrightarrow$
 \gr{optional signs}\gr{unsigned number}\nl
 \gr{optional signs} $\longrightarrow$ \gr{optional spaces}\nl
 \indent $|$ \gr{optional signs}\gr{plus or minus}\gr{optional spaces}
@@ -152,9 +160,9 @@ First of all, an integer can be positive or negative:
 %here \gr{integer denotation}.
 %Another possibility for an integer is an
 %internal integer quantity, an \gr{internal integer};
-%together with the denotations these form the 
+%together with the denotations these form the
 %\gr{normal integer}s.
-%Lastly an integer can be a \gr{coerced integer}: 
+%Lastly an integer can be a \gr{coerced integer}:
 %an internal \gr{dimen} or \gr{glue}
 %quantity that is converted to an integer value.
 %\begin{disp}\gr{unsigned number} $\longrightarrow$ \gr{normal integer}
@@ -164,31 +172,25 @@ First of all, an integer can be positive or negative:
 %\gr{coerced integer} $\longrightarrow$ \gr{internal dimen}
 %$|$ \gr{internal glue}\end{disp}
 %All of these possibilities will be treated in sequence.
-A first possibility for an unsigned integer is a string of digits
-in decimal, octal, or hexadecimal notation.
-Together with the alphabetic constants these will be named
-here \gr{integer denotation}.
-Another possibility for an integer is an
-internal integer quantity, an \gr{internal integer};
-together with the denotations these form the 
-\gr{normal integer}s.
-Lastly an integer can be a \gr{coerced integer}: 
-an internal \gr{dimen} or \gr{glue}
-quantity that is converted to an integer value.
+
+一个无正负号的整数的第一种可能是以十进制、八进制或十六进制数字表示的字符串。连同字母常量，这些可以称为整数记号(\gr{integer denotation})。整数的另一种可能是内部整数量，
+即\gr{internal integer}; 加上它的表示形式称为规范整数(\gr{normal integer}s)。
+最后整数可以是一个强制整数(\gr{coerced integer}):内部的尺寸(\gr{dimen}) 或 粘连(\gr{glue})量总是转换为一个整数值。
+
 \begin{disp}\gr{unsigned number} $\longrightarrow$ \gr{normal integer}
 $|$ \gr{coerced integer}\nl
 \gr{normal integer} $\longrightarrow$ \gr{integer denotation}
 $|$ \gr{internal integer}\nl
 \gr{coerced integer} $\longrightarrow$ \gr{internal dimen}
 $|$ \gr{internal glue}\end{disp}
-All of these possibilities will be treated in sequence.
 
+所有这些形式下面将一一介绍:
 
 %%\spoint[int:denotation] Denotations: integers
 %\subsection{Denotations: integers}
 %\label{int:denotation}
 %\spoint[int:denotation] Denotations: integers
-\subsection{Denotations: integers}
+\subsection{表示整数的记号}
 \label{int:denotation}
 
 %Anything that looks like a number
@@ -210,39 +212,42 @@ All of these possibilities will be treated in sequence.
 %\indent $|$ \n{\char`\"}\gr{hexadecimal constant}\gr{one optional space}
 %\end{disp}
 %The octal digits are \n0--\n7; a~digit \n8 or~\n9 following an
-%octal denotation is not part of the number: 
+%octal denotation is not part of the number:
 %after
 %\begin{verbatim}
 %\count0='078
 %\end{verbatim}
-%the \cs{count0} will have the value~7, and the 
+%the \cs{count0} will have the value~7, and the
 %digit~\n8 is typeset.
-Anything that looks like a number
-can be used as a \gr{number}: thus \verb-42- is a number.
-However, bases other than decimal can also be used:
+
+任何看起来像平常数字的对象都可以当作\gr{number}使用:因此\verb-42- 是一个数字。
+而且，也可以使用非十进制的数字符号:
+
 \begin{verbatim}
 '123
 \end{verbatim}
-is the octal notation for $1\times8^2+2\times8^1+3\times8^0=83$,
-and
+
+是一个八进制数，其值为$1\times8^2+2\times8^1+3\times8^0=83$，而
+
 \begin{verbatim}
 "123
 \end{verbatim}
-is the hexadecimal notation
-for $1\times16^2+2\times16^1+3\times16^0=291$.
+
+是一个十六进制数，其值为$1\times16^2+2\times16^1+3\times16^0=291$.
+
 \begin{disp}\gr{integer denotation} $\longrightarrow$
 \gr{integer constant}\gr{one optional space} \nl
 \indent $|$ \n{\char`\'}\gr{octal constant}\gr{one optional space}\nl
 \indent $|$ \n{\char`\"}\gr{hexadecimal constant}\gr{one optional space}
 \end{disp}
-The octal digits are \n0--\n7; a~digit \n8 or~\n9 following an
-octal denotation is not part of the number: 
-after
+
+八进制数的数字包括 \n0--\n7; 
+八进制数后面跟着的数字\n8 或 \n9 就不再是该八进制数的一部分。比如:
+
 \begin{verbatim}
 \count0='078
 \end{verbatim}
-the \cs{count0} will have the value~7, and the 
-digit~\n8 is typeset.
+其中 \cs{count0} 的值为 7，而数字~\n8 只是一个排印的数字。
 
 %The hexadecimal digits are \n0--\n9, \n A--\n F, where the \n A--\n F
 %can have category code 11\index{category!11}
@@ -252,69 +257,57 @@ digit~\n8 is typeset.
 %digits, although (in \TeX3) they are used for hexadecimal notation in
 %the `circumflex method' for accessing all character codes (see
 %Chapter~\ref{char}).
-The hexadecimal digits are \n0--\n9, \n A--\n F, where the \n A--\n F
-can have category code 11\index{category!11}
-or~12\index{category!12}. The latter has a somewhat far-fetched
-justification: the characters resulting from a \cs{string} operation
-have category code~12.  Lowercase \n a--\n f are not hexadecimal
-digits, although (in \TeX3) they are used for hexadecimal notation in
-the `circumflex method' for accessing all character codes (see
-Chapter~\ref{char}).
+
+十六进制数的数字包括\n0--\n9, \n A--\n F, 其中\n A--\n F 的字符分类码为11 \index{category!11} 或 12\index{category!12}。后者有一个有些勉强的合理解释:
+来自\cs{string}操作结果中字符的分类码为 12。小写的\n a--\n f 不是十六进制数字，尽管(在 \TeX3)中，他们也可用作十六进制表示，用于访问所有字符编码的“取码方法(circumflex method)”中(见第~\ref{char}~章)。
 
 %%\spoint Denotations: characters
 %\subsection{Denotations: characters}
 %\spoint Denotations: characters
-\subsection{Denotations: characters}
+\subsection{表示字符的记号}
 
 %A character token is a pair consisting of a character code,
-%which is a~number in the range 0--255, 
+%which is a~number in the range 0--255,
 %and a category code. Both of these codes are accessible,
-%and can be used as a \gr{number}. 
-A character token is a pair consisting of a character code,
-which is a~number in the range 0--255, 
-and a category code. Both of these codes are accessible,
-and can be used as a \gr{number}. 
+%and can be used as a \gr{number}.
+一个字符记号是由范围在 0--255 的字符编码和分类码组成的一对数字。
+两者均可访问，可以用作\gr{number}。
 
 %The character code of a character token, or of a single letter
 %control sequence, is accessible through the left quote command:
 %both \verb-`a- and~\verb-`\a- denote the character code of~{\tt a},
-%which can be used as an integer. 
-%\begin{disp}\gr{integer denotation} $\longrightarrow$ 
+%which can be used as an integer.
+%\begin{disp}\gr{integer denotation} $\longrightarrow$
 %\n{\char`\`}\gr{character token}\gr{one optional space}\end{disp}
-The character code of a character token, or of a single letter
-control sequence, is accessible through the left quote command:
-both \verb-`a- and~\verb-`\a- denote the character code of~{\tt a},
-which can be used as an integer. 
-\begin{disp}\gr{integer denotation} $\longrightarrow$ 
+字符记号或一个单字母控制序列的字符编码，可以通过左引号命令访问:
+\verb-`a- 和 \verb-`\a- 均代表 {\tt a} 的字符编码，可以用作整数。
+
+\begin{disp}\gr{integer denotation} $\longrightarrow$
 \n{\char`\`}\gr{character token}\gr{one optional space}\end{disp}
 
 %In order to emphasize that accessing the character code is
 %in a sense using a denotation, the syntax of \TeX\ allows
 %an optional space after such a `character constant'.
 %The left quote must have category~12\index{category!12}.
-In order to emphasize that accessing the character code is
-in a sense using a denotation, the syntax of \TeX\ allows
-an optional space after such a `character constant'.
-The left quote must have category~12\index{category!12}.
+
+为了强调:访问字符编码某种程度上是在使用记法，\TeX\ 语法允许在这一字符常量后面带有可选的空格。反引号的分类码必须是~12\index{category!12}。
 
 %%\spoint Internal integers
 %\subsection{Internal integers}
 %\spoint Internal integers
-\subsection{Internal integers}
+\subsection{内部整数}
 
 %The class of \gr{internal integers} can
-%be split into five parts. 
+%be split into five parts.
 %The \gr{codename}s and \gr{special integer}s
 %will be treated separately below; furthermore, there are the following.
-The class of \gr{internal integers} can
-be split into five parts. 
-The \gr{codename}s and \gr{special integer}s
-will be treated separately below; furthermore, there are the following.
+内部整数(\gr{internal integers})可以分为五类。包括如下，其中
+编码名(\gr{codename})和特殊整数(\gr{special integer})将在后面单独介绍。
 
 %\begin{itemize} \item The contents of \cs{count} registers;
 %either explicitly used by writing for instance \cs{count23},
 %or by referring to such a register by means of a
-%control sequence 
+%control sequence
 %that was defined by \cs{countdef}:
 %after
 %\begin{verbatim}
@@ -322,17 +315,13 @@ will be treated separately below; furthermore, there are the following.
 %\end{verbatim}
 %\cs{MyCount} is called a
 %\gr{countdef token}, and it is fully equivalent to \cs{count23}.
-\begin{itemize} \item The contents of \cs{count} registers;
-either explicitly used by writing for instance \cs{count23},
-or by referring to such a register by means of a
-control sequence 
-that was defined by \cs{countdef}:
-after
+\begin{itemize} \item \cs{count} 寄存器的内容;
+即可以显式的使用，比如以\cs{count23}的方式,
+也可以通过指代该寄存器的控制序列(通过\cs{countdef}定义)使用:
 \begin{verbatim}
 \countdef\MyCount=23
 \end{verbatim}
-\cs{MyCount} is called a
-\gr{countdef token}, and it is fully equivalent to \cs{count23}.
+\cs{MyCount}称为一个\gr{countdef token}，完全等价于\cs{count23}。
 
 %\item All parameters of \TeX\ that hold integer values;
 %this includes obvious ones such as \cs{linepenalty}, but
@@ -340,14 +329,8 @@ after
 %\cs{hyphenchar}\gr{font} and \cs{parshape}
 %(if a paragraph shape has been defined for $n$ lines,
 %using \cs{parshape} in the context of a \gr{number}
-%will yield this value of~$n$). 
-\item All parameters of \TeX\ that hold integer values;
-this includes obvious ones such as \cs{linepenalty}, but
-also parameters such as
-\cs{hyphenchar}\gr{font} and \cs{parshape}
-(if a paragraph shape has been defined for $n$ lines,
-using \cs{parshape} in the context of a \gr{number}
-will yield this value of~$n$). 
+%will yield this value of~$n$).
+\item 所有保存整数值的\TeX\ 参数，包括一些显而易见的参数如\cs{linepenalty}，但还有其它一些参数比如\cs{hyphenchar} 、\gr{font} 和 \cs{parshape}(如果段落形状共定义$n$ 行，在\gr{number}上下文使用\cs{parshape}将得到值 $n$)等。
 
 %\item\label{num:chardef} Tokens defined by \cs{chardef} or \cs{mathchardef}.
 %After
@@ -364,28 +347,26 @@ will yield this value of~$n$).
 %This fact is
 %exploited in the allocation routines for registers (see
 %Chapter~\ref{alloc}).
-\item\label{num:chardef} Tokens defined by \cs{chardef} or \cs{mathchardef}.
-After
+\item\label{num:chardef} 由\cs{chardef} or \cs{mathchardef}定义的记号，比如定义:
+
 \begin{verbatim}
 \chardef\foo=74
 \end{verbatim}
-the control sequence \cs{foo}
-can be used on its own to mean \cs{char74}, but in a context
-where a \gr{number} is wanted it can be used to denote~74:
+
+控制序列\cs{foo}可以用来表示原义\cs{char74}，但在一个\gr{number}上下文中，也可以用于表示74:
+
 \begin{verbatim}
 \count\foo
 \end{verbatim}
-is equivalent to \verb=\count74=.
-This fact is
-exploited in the allocation routines for registers (see
-Chapter~\ref{alloc}).
 
-%A control sequence thus defined by \cs{chardef} is called a 
+等价于\verb=\count74=。其原理详见寄存器的分配程序(见第 \ref{alloc} 章)。
+
+%A control sequence thus defined by \cs{chardef} is called a
 %\gr{chardef token}; if it is defined by \cs{mathchardef} it
 %is called a \gr{mathchardef token}.
-A control sequence thus defined by \cs{chardef} is called a 
-\gr{chardef token}; if it is defined by \cs{mathchardef} it
-is called a \gr{mathchardef token}.
+
+一个由\cs{chardef}定义的控制序列称为\gr{chardef token};
+而由\cs{mathchardef}定义的控制序列称为\gr{mathchardef token}。
 
 %\end{itemize}
 \end{itemize}
@@ -406,7 +387,7 @@ is called a \gr{mathchardef token}.
 %\nl
 %\indent $|$ \cs{defaulthyphenchar} $|$ \cs{defaultskewchar} \nl
 %\indent $|$ \cs{delimiterfactor} $|$ \cs{displaywidowpenalty} \nl
-%\indent $|$ \cs{doublehyphendemerits} $|$ \cs{endlinechar} 
+%\indent $|$ \cs{doublehyphendemerits} $|$ \cs{endlinechar}
 %        $|$ \cs{escapechar}\nl
 %\indent $|$ \cs{exhypenpenalty} $|$ \cs{fam} $|$ \cs{finalhyphendemerits}\nl
 %\indent $|$ \cs{floatingpenalty} $|$ \cs{globaldefs} $|$ \cs{hangafter}\nl
@@ -427,7 +408,7 @@ is called a \gr{mathchardef token}.
 %\indent $|$ \cs{uchyph} $|$ \cs{vbadness} $|$ \cs{widowpenalty}
 %        $|$ \cs{year}
 %\end{disp}
-Here is the full list:
+下面是完整的列表:
 \begin{disp}\gr{internal integer} $\longrightarrow$
 \gr{integer parameter} \nl
 \indent $|$ \gr{special integer} $|$ \cs{lastpenalty}\nl
@@ -443,7 +424,7 @@ $|$ \cs{adjdemerits} $|$ \cs{binoppenalty}\nl
 \nl
 \indent $|$ \cs{defaulthyphenchar} $|$ \cs{defaultskewchar} \nl
 \indent $|$ \cs{delimiterfactor} $|$ \cs{displaywidowpenalty} \nl
-\indent $|$ \cs{doublehyphendemerits} $|$ \cs{endlinechar} 
+\indent $|$ \cs{doublehyphendemerits} $|$ \cs{endlinechar}
         $|$ \cs{escapechar}\nl
 \indent $|$ \cs{exhypenpenalty} $|$ \cs{fam} $|$ \cs{finalhyphendemerits}\nl
 \indent $|$ \cs{floatingpenalty} $|$ \cs{globaldefs} $|$ \cs{hangafter}\nl
@@ -466,52 +447,49 @@ $|$ \cs{adjdemerits} $|$ \cs{binoppenalty}\nl
 \end{disp}
 
 %Any internal integer can function as an \gr{internal unit},
-%which  \ldash preceded by \gr{optional spaces} \rdash  
+%which  \ldash preceded by \gr{optional spaces} \rdash
 %can serve as a \gr{unit of measure}.
 %Examples of this are given in Chapter~\ref{glue}.
-Any internal integer can function as an \gr{internal unit},
-which  \ldash preceded by \gr{optional spaces} \rdash  
-can serve as a \gr{unit of measure}.
-Examples of this are given in Chapter~\ref{glue}.
+
+任何内部整数可以用作内部单位(\gr{internal unit})，\gr{internal unit}(可以带前置可选空格)可以作为一个度量单位(\gr{unit of measure})。相应的示例见第 \ref{glue} 章。
 
 %%\spoint Internal integers: other codes of a character
 %\subsection{Internal integers: other codes of a character}
 %\spoint Internal integers: other codes of a character
-\subsection{Internal integers: other codes of a character}
+\subsection{内部整数: 字符的其它相关码}
 
 %The \cs{catcode} command
-%(which was  described in Chapter~\ref{mouth}) 
+%(which was  described in Chapter~\ref{mouth})
 %is a \gr{codename}, and like the other code names
 %it can be used as an integer.
 %\begin{disp}\gr{codename} $\longrightarrow$ \cs{catcode} $|$ \cs{mathcode}
 %$|$ \cs{uccode} $|$ \cs{lccode}\nl \indent $|$ \cs{sfcode} $|$ \cs{delcode}
 %\end{disp}
 %A~\gr{codename} has to be followed by an \gr{8-bit number}.
-The \cs{catcode} command
-(which was  described in Chapter~\ref{mouth}) 
-is a \gr{codename}, and like the other code names
-it can be used as an integer.
+\cs{catcode} (描述见第 \ref{mouth} 章)命令是一个编码名(\gr{codename})，与其它编码名类似，可以用作一个整数。
+
 \begin{disp}\gr{codename} $\longrightarrow$ \cs{catcode} $|$ \cs{mathcode}
 $|$ \cs{uccode} $|$ \cs{lccode}\nl \indent $|$ \cs{sfcode} $|$ \cs{delcode}
 \end{disp}
-A~\gr{codename} has to be followed by an \gr{8-bit number}.
+
+一个编码名(\gr{codename})后必须跟一个8位数字(\gr{8-bit number})。
+
 
 %Uppercase and lowercase codes were treated in Chapter~\ref{char};
 %the \cs{sfcode} is treated
 %in Chapter~\ref{space};
 %the \cs{mathcode} and~\cs{delcode} are treated in
 %Chapter~\ref{mathchar}.
-Uppercase and lowercase codes were treated in Chapter~\ref{char};
-the \cs{sfcode} is treated
-in Chapter~\ref{space};
-the \cs{mathcode} and~\cs{delcode} are treated in
-Chapter~\ref{mathchar}.
+
+大写和小写编码见第~\ref{char}~章; \cs{sfcode}讨论见第~\ref{space}~章; 
+\cs{mathcode} 和 \cs{delcode} 讨论见第~\ref{mathchar}~章。
+
 
 %%\spoint[special:int:list] \gr{special integer}
 %\subsection{\gr{special integer}}
 %\label{special:int:list}
 %\spoint[special:int:list] \gr{special integer}
-\subsection{\gr{special integer}}
+\subsection{特殊整数(\gr{special integer})}
 \label{special:int:list}
 
 %One of the subclasses of the internal integers is
@@ -523,73 +501,59 @@ Chapter~\ref{mathchar}.
 %An assignment to any of these is called an \gr{intimate
 %assignment}, and is automatically global
 %(see Chapter~\ref{group}).
-One of the subclasses of the internal integers is
-that of the special integers.
+
+内部整数的一个子类是特殊整数:
 \begin{disp}\gr{special integer} $\longrightarrow$
 \cs{spacefactor} $|$ \cs{prevgraf}\nl
 \indent $|$ \cs{deadcycles} $|$ \cs{insertpenalties}
 \end{disp}
-An assignment to any of these is called an \gr{intimate
-assignment}, and is automatically global
-(see Chapter~\ref{group}).
+
+对这些量赋值称为一个\gr{intimate assignment}，是自动全局化的(见第 \ref{group} 章)。
 
 %%\spoint Other internal quantities: coersion to integer
 %\subsection{Other internal quantities: coersion to integer}
 %\spoint Other internal quantities: coersion to integer
-\subsection{Other internal quantities: coersion to integer}
+\subsection{其它内部量:强制转换的整数}
 
 %\TeX\ provides a conversion between dimensions and integers:
 %if an integer is expected, a \gr{dimen} or \gr{glue} used
-%in that context is converted by taking its 
+%in that context is converted by taking its
 %(natural) size
 %in scaled points\index{point!scaled}.
 %However, only \gr{internal dimen}s and \gr{internal glue}
 %can be used this way: no dimension or glue denotations
 %can be coerced to integers.
-\TeX\ provides a conversion between dimensions and integers:
-if an integer is expected, a \gr{dimen} or \gr{glue} used
-in that context is converted by taking its 
-(natural) size
-in scaled points\index{point!scaled}.
-However, only \gr{internal dimen}s and \gr{internal glue}
-can be used this way: no dimension or glue denotations
-can be coerced to integers.
+
+\TeX\ 提供了尺寸和整数间的转换方法。在一个需要整数的上下文中，使用的\gr{dimen} 或 \gr{glue}会转换为它在定标点中(自然)大小\index{point!scaled}。然而，只有\gr{internal dimen}s 和 \gr{internal glue}可以用于这种方式，其它尺寸和粘连标记不能强制转换。
 
 %%\spoint Trailing spaces
 %\subsection{Trailing spaces}
 %\spoint Trailing spaces
-\subsection{Trailing spaces}
+\subsection{拖尾的空格}
 
 %The syntax of \TeX\ defines integer denotations (decimal,
 %octal, and hexadecimal) and `back-quoted' character tokens
 %to be followed by \gr{one optional space}. This means that
 %\TeX\ reads the token after the number, absorbing it
 %if it was a space token, and backing up if it was not.
-The syntax of \TeX\ defines integer denotations (decimal,
-octal, and hexadecimal) and `back-quoted' character tokens
-to be followed by \gr{one optional space}. This means that
-\TeX\ reads the token after the number, absorbing it
-if it was a space token, and backing up if it was not.
+
+\TeX\ 定义整数记号(十进制、八进制、十六进制)的语法和反引号字符记号后可以跟着一个可选空格(optional space)。这意味着 \TeX\ 读取数字后面的记号，当它是空格时则吸收它，若不是空额，则将其返回到输入流中。
 
 %Because \TeX's input processor goes into the state `skipping spaces'
 %after it has seen one space token, this
 %scanning behaviour implies that
 %integer denotations can be followed by
-%arbitrarily many space characters in the input. 
+%arbitrarily many space characters in the input.
 %Also, a line end is admissible.
-%However, only one space token is allowed. 
-Because \TeX's input processor goes into the state `skipping spaces'
-after it has seen one space token, this
-scanning behaviour implies that
-integer denotations can be followed by
-arbitrarily many space characters in the input. 
-Also, a line end is admissible.
-However, only one space token is allowed. 
+%However, only one space token is allowed.
+
+
+因为 \TeX 的输入处理器，看到空格记号会进入跳过空格(skipping spaces)的状态，这一扫描机制表明整数记号后可以跟随任意多个空格字符，而且一个行末符号也是可以的。但空格记号只能允许一个。
 
 %%\point Numbers
 %\section{Numbers}
 %\point Numbers
-\section{Numbers}
+\section{数字}
 
 %\TeX\ can perform an implicit \indextermsub{number}{conversion} from a string
 %\cstoidx number\par\cstoidx romannumeral\par
@@ -605,20 +569,11 @@ However, only one space token is allowed.
 %when followed by an internal integer.
 %These commands are performed in the expansion processor of \TeX, that is,
 %they are expanded whenever expansion has not been inhibited.
-\TeX\ can perform an implicit \indextermsub{number}{conversion} from a string
-\cstoidx number\par\cstoidx romannumeral\par
-of digits to an integer. Conversion from a representation
-in decimal, octal, or hexadecimal notation was
-treated above. The conversion the other way,
-from an \gr{internal integer} to a printed representation,
-has to be performed explicitly.
-\TeX\ provides two conversion routines,
-\cs{number}, to decimal, and \cs{romannumeral} to
-\indexterm{roman numerals}.
-The command \cs{number} is equivalent to \cs{the}
-when followed by an internal integer.
-These commands are performed in the expansion processor of \TeX, that is,
-they are expanded whenever expansion has not been inhibited.
+
+\TeX\ 可以执行一个隐式的转换\indextermsub{number}{conversion} 从一个数字组成的字符串到一个整数\cstoidx number\par\cstoidx romannumeral\par。以十进制、八进制、十六进制符号表示的转换前面已经介绍过。相反的，从整数到其它数字形式的转换则是显式的。\TeX\ 提供了两种机制包括:\cs{number}转换为十进制数字字符串，
+\cs{romannumeral}转换为罗马数字字符串\indexterm{roman numerals}。
+这些命令是在 \TeX 的展开处理器中执行，也就是说无论是否抑制展开，它们都会展开。
+
 
 %Both commands
 %yield a string of tokens with category code~12\index{category!12};
@@ -627,13 +582,10 @@ they are expanded whenever expansion has not been inhibited.
 %and~\verb-\number\linepenalty- are valid, and so is \verb-\number13-.
 %Applying \cs{number} to a denotation has some uses:
 %it removes leading zeros and superfluous plus and minus signs.
-Both commands
-yield a string of tokens with category code~12\index{category!12};
-their argument is a~\gr{number}.
-Thus \verb-\romannumeral51-, \verb-\romannumeral\year-,
-and~\verb-\number\linepenalty- are valid, and so is \verb-\number13-.
-Applying \cs{number} to a denotation has some uses:
-it removes leading zeros and superfluous plus and minus signs.
+
+两个命令产生分类码为12\index{category!12}的符号字符串，它们的参数\gr{number}。因此 
+\verb-\romannumeral51-、 \verb-\romannumeral\year-、 
+、 \verb-\number\linepenalty- 和 \verb-\number13- 都是有效的。所以对\cs{number}一个数字表示形式应用\cs{number}会有多种用途，包括移除前置的0和多余的加减号。
 
 %A roman numeral is a string of lowercase `roman digits',
 %which are characters of category code~12.
@@ -646,45 +598,46 @@ it removes leading zeros and superfluous plus and minus signs.
 %tokens in order to find the opening brace of the argument
 %of \verb=\uppercase=. If \cs{romannumeral} is applied to
 %a negative number, the result is simply empty.
-A roman numeral is a string of lowercase `roman digits',
-which are characters of category code~12.
-The sequence\howto Uppercase roman numberals\par
+
+罗马数是一个小写的罗马数字(roman digits)构成的字符串，这些罗马数字的分类码为12。
+序列 \howto Uppercase roman numberals\par
+
 \begin{verbatim}
 \uppercase\expandafter{\romannumeral ...}
 \end{verbatim}
-gives uppercase roman numerals.
-This works because \TeX\  expands
-tokens in order to find the opening brace of the argument
-of \verb=\uppercase=. If \cs{romannumeral} is applied to
-a negative number, the result is simply empty.
+
+将给出大写的罗马数。因为\TeX\  展开记号来寻找\verb=\uppercase=参数的左括号，所以小写罗马数字能转换成大写。如果\cs{romannumeral}被用于一个负数，结果将为空。
 
 %%\point Integer registers
 %\section{Integer registers}
 %\point Integer registers
-\section{Integer registers}
+\section{整数寄存器}
 
 %Integers can be stored in \csidx{count} registers:
 %\begin{Disp}\cs{count}\gr{8-bit number}\end{Disp}
 %is an \gr{integer variable} and an \gr{internal integer}.
-%As an integer variable it can be used in a 
+%As an integer variable it can be used in a
 %\gr{variable assignment}:
 %\begin{Disp}\gr{variable assignment} $\longrightarrow$
 %     \gr{integer variable}\gr{equals}\gr{number} $|$ \dots\end{Disp}
 %As an internal integer it can be used as a \gr{number}:
 %\begin{Disp}\gr{number} $\rightarrow$ \gr{optional signs}\gr{internal integer}
 %     $|$ \dots
-%\end{Disp} 
-Integers can be stored in \csidx{count} registers:
+%\end{Disp}
+整数可以保存在\csidx{count}寄存器中:
+
 \begin{Disp}\cs{count}\gr{8-bit number}\end{Disp}
-is an \gr{integer variable} and an \gr{internal integer}.
-As an integer variable it can be used in a 
-\gr{variable assignment}:
+
+是一个整数变量(\gr{integer variable})和一个内部整数(\gr{internal integer})。作为一个整数变量，它可以用于一个变量赋值(\gr{variable assignment})中:
+
 \begin{Disp}\gr{variable assignment} $\longrightarrow$
      \gr{integer variable}\gr{equals}\gr{number} $|$ \dots\end{Disp}
-As an internal integer it can be used as a \gr{number}:
+     
+
+一个内部整数可以用作数字(\gr{number}):
 \begin{Disp}\gr{number} $\rightarrow$ \gr{optional signs}\gr{internal integer}
      $|$ \dots
-\end{Disp} 
+\end{Disp}
 
 %Synonyms for \cs{count} registers can be introduced by the
 %\csidx{countdef} command in a \gr{shorthand definition}:
@@ -692,42 +645,34 @@ As an internal integer it can be used as a \gr{number}:
 %\end{Disp} A control sequence defined this way
 %is called a \gr{countdef token}, and it serves as an
 %\gr{internal integer}.
-Synonyms for \cs{count} registers can be introduced by the
-\csidx{countdef} command in a \gr{shorthand definition}:
+
+\cs{count}寄存器的同名词可以由\csidx{countdef}命令以缩略定义(\gr{shorthand definition})的形式引入。
+
 \begin{Disp}\cs{countdef}\gr{control sequence}\gr{equals}\gr{8-bit number}
-\end{Disp} A control sequence defined this way
-is called a \gr{countdef token}, and it serves as an
-\gr{internal integer}.
+\end{Disp} 
+
+以此方式定义的控制序列称为\gr{countdef token}，它可作为内部整数(\gr{internal integer})。
+
 
 %The plain \TeX\ macro \csidx{newcount}
 %(which is declared \cs{outer}) uses the \cs{countdef} command
 %to allocate an unused \cs{count} register.
 %Counters 0--9 are scratch registers, like all
-%registers with numbers~0--9. 
+%registers with numbers~0--9.
 %However, counters 0--9 are used for page identification
-%in the \n{dvi} file (see Chapter~\ref{TeXcomm}), 
+%in the \n{dvi} file (see Chapter~\ref{TeXcomm}),
 %so they should be used as scratch
 %registers only inside a group.
 %Counters 10--22 are
 %used for plain \TeX's bookkeeping of allocation of registers.
 %Counter 255 is also scratch.
-The plain \TeX\ macro \csidx{newcount}
-(which is declared \cs{outer}) uses the \cs{countdef} command
-to allocate an unused \cs{count} register.
-Counters 0--9 are scratch registers, like all
-registers with numbers~0--9. 
-However, counters 0--9 are used for page identification
-in the \n{dvi} file (see Chapter~\ref{TeXcomm}), 
-so they should be used as scratch
-registers only inside a group.
-Counters 10--22 are
-used for plain \TeX's bookkeeping of allocation of registers.
-Counter 255 is also scratch.
+plain \TeX\ 宏 \csidx{newcount} (以\cs{outer}声明) 使用了\cs{countdef} 命令来分配未使用的\cs{count}寄存器。计数器0--9 是保留寄存器，类似于其它名为0--9的寄存器。然而计数器0--9 用于在\n{dvi}文件中的页面识别(见第~\ref{TeXcomm}~章)。所以在一个编组中它们只能用作保留寄存器。计数器10--22，在 plain \TeX 中用于记录寄存器的分配情况，计数器255也是保留的。
+
 
 %%\point Arithmetic
 %\section{Arithmetic}
 %\point Arithmetic
-\section{Arithmetic}
+\section{算术运算}
 
 %The user can perform some \indexterm{arithmetic}
 %in \TeX, and
@@ -735,46 +680,50 @@ Counter 255 is also scratch.
 %is concerned only with integers; the internal arithmetic
 %is mostly on fixed-point quantities, and only in the
 %case of glue setting on floating-point numbers.
-The user can perform some \indexterm{arithmetic}
-in \TeX, and
-\TeX\ also performs arithmetic internally. User arithmetic
-is concerned only with integers; the internal arithmetic
-is mostly on fixed-point quantities, and only in the
-case of glue setting on floating-point numbers.
+
+用户可以在\TeX 中执行算术运算(\indexterm{arithmetic})，\TeX 在内部也执行算术运算。用户使用算术运算仅与整数相关; 内部的算术运算大多基于定点量，只有在粘连中才基于浮点量。
+
 
 %%\spoint Arithmetic statements
 %\subsection{Arithmetic statements}
 %\spoint Arithmetic statements
-\subsection{Arithmetic statements}
+\subsection{运算语句}
 
 %\TeX\ allows the user to
 %\cstoidx advance\par\cstoidx multiply\par\cstoidx divide\par
 %perform some arithmetic on integers. The statement
 %\begin{Disp}\cs{advance}\gr{integer variable}\gr{optional \n{by}}%
-%     \gr{number}\end{Disp} 
+%     \gr{number}\end{Disp}
 %adds the value of the \gr{number}
 % \ldash which may be negative \rdash  to the \gr{integer variable}.
 %Similarly,
 %\begin{Disp}\cs{multiply}\gr{integer variable}\gr{optional \n{by}}%
-%     \gr{number}\end{Disp} 
+%     \gr{number}\end{Disp}
 %multiplies the value of the \gr{integer variable}, and
 %\begin{Disp}\cs{divide}\gr{integer variable}\gr{optional \n{by}}%
 %     \gr{number}\end{Disp}
 %divides an \gr{integer variable}.
-\TeX\ allows the user to
-\cstoidx advance\par\cstoidx multiply\par\cstoidx divide\par
-perform some arithmetic on integers. The statement
+
+\TeX\ 运行用户\cstoidx advance\par\cstoidx multiply\par\cstoidx divide\par
+
+对整数执行一些算术运算，语句包括:
+
 \begin{Disp}\cs{advance}\gr{integer variable}\gr{optional \n{by}}%
-     \gr{number}\end{Disp} 
-adds the value of the \gr{number}
- \ldash which may be negative \rdash  to the \gr{integer variable}.
-Similarly,
+     \gr{number}\end{Disp}
+     
+为整数变量(\gr{integer variable})加上一个\gr{number}的值，该值可以是负的。
+  
+类似的:
+
 \begin{Disp}\cs{multiply}\gr{integer variable}\gr{optional \n{by}}%
-     \gr{number}\end{Disp} 
-multiplies the value of the \gr{integer variable}, and
+     \gr{number}\end{Disp}
+     
+乘上一个\gr{integer variable}的值，而
+
 \begin{Disp}\cs{divide}\gr{integer variable}\gr{optional \n{by}}%
      \gr{number}\end{Disp}
-divides an \gr{integer variable}.
+     
+表示除以一个\gr{integer variable}。
 
 %Multiplication and division are also available for any so-called
 %\gr{numeric variable}: their most general form is
@@ -783,34 +732,36 @@ divides an \gr{integer variable}.
 %\begin{disp}\gr{numeric variable} $\longrightarrow$
 %\gr{integer variable} $|$ \gr{dimen variable}\nl
 %\indent $|$ \gr{glue variable} $|$ \gr{muglue variable}\end{disp}
-Multiplication and division are also available for any so-called
-\gr{numeric variable}: their most general form is
+
+乘除运算可以用于所谓的数字变量(\gr{numeric variable})，主要的形式为:
+
 \begin{disp}\cs{multiply}\gr{numeric variable}\gr{optional \n{by}}\gr{number}
-\end{disp} where
+\end{disp}
+
+其中
+
 \begin{disp}\gr{numeric variable} $\longrightarrow$
 \gr{integer variable} $|$ \gr{dimen variable}\nl
 \indent $|$ \gr{glue variable} $|$ \gr{muglue variable}\end{disp}
 
 %The result of an arithmetic operation should not exceed
 %$2^{30}$ in absolute value.
-The result of an arithmetic operation should not exceed
-$2^{30}$ in absolute value.
+
+运算结果的绝对值不应超过$2^{30}$。
 
 %Division of integers yields an integer; that is, the remainder
 %is discarded. This raises the question of how rounding is performed
 %when either operand is negative. In such cases \TeX\ performs
 %the division with the absolute values of the operands, and
 %takes the negative of the result if exactly one operand was negative.
-Division of integers yields an integer; that is, the remainder
-is discarded. This raises the question of how rounding is performed
-when either operand is negative. In such cases \TeX\ performs
-the division with the absolute values of the operands, and
-takes the negative of the result if exactly one operand was negative.
+
+整数的除得到一个整数，即丢弃了余数。这在运算数中有负数时将引起怎么取整的问题。这些情况下，\TeX\ 执行绝对值的除法，然后在结果中加上可能的负号。
+
 
 %%\spoint Floating-point arithmetic
 %\subsection{Floating-point arithmetic}
 %\spoint Floating-point arithmetic
-\subsection{Floating-point arithmetic}
+\subsection{浮点运算}
 
 %Internally some \indextermsub{floating-point}{arithmetic}
 %is performed, namely
@@ -820,19 +771,13 @@ takes the negative of the result if exactly one operand was negative.
 %influence the decision process of \TeX, so machine independence
 %of \TeX\ is guaranteed in this respect (sufficient
 %accuracy of rounding is enforced by the \n{Trip} test of~\cite{K:trip}).
-Internally some \indextermsub{floating-point}{arithmetic}
-is performed, namely
-in the calculation of glue set ratios.
-%and slant for accents!!
-However, machine-dependent aspects of rounding cannot
-influence the decision process of \TeX, so machine independence
-of \TeX\ is guaranteed in this respect (sufficient
-accuracy of rounding is enforced by the \n{Trip} test of~\cite{K:trip}).
+
+内部也执行一些浮点运算(\indextermsub{floating-point}{arithmetic})，比如在粘连比例设置计算中。然而依赖于机器的舍入方面不会对 \TeX 的处理过程产生影响，所以 \TeX 在舍入方面是保证与机器无关的(通过\cite{K:trip} 的\n{Trip} 测试来强制保证舍入的精度。)。
 
 %%\spoint Fixed-point arithmetic
 %\subsection{Fixed-point arithmetic}
 %\spoint Fixed-point arithmetic
-\subsection{Fixed-point arithmetic}
+\subsection{定点计算}
 
 %All fractional arithmetic in \TeX\ is performed in
 %\indextermsub{fixed-point}{arithmetic}
@@ -840,12 +785,9 @@ accuracy of rounding is enforced by the \n{Trip} test of~\cite{K:trip}).
 %This ensures the machine independence of \TeX.
 %Printed representations of scaled integers are rounded
 %to 5 decimal digits.
-All fractional arithmetic in \TeX\ is performed in
-\indextermsub{fixed-point}{arithmetic}
-of `scaled integers': multiples of~$2^{-16}$.
-This ensures the machine independence of \TeX.
-Printed representations of scaled integers are rounded
-to 5 decimal digits.
+所有的分数运算是对 `scaled integers' 执行的定点运算(\indextermsub{fixed-point}{arithmetic}): 乘以~$2^{-16}$。
+scaled integer的排印精度取到5位小数。
+
 
 %In ordinary 32-bit implementations of \TeX\ the largest
 %integers are $2^{31}-1$ in absolute size.
@@ -853,31 +795,31 @@ to 5 decimal digits.
 %dimensions larger in absolute size than~$2^{30}-1$: two
 %such dimensions can be added or subtracted without
 %overflow on a 32-bit system.
-In ordinary 32-bit implementations of \TeX\ the largest
-integers are $2^{31}-1$ in absolute size.
-The user is not allowed to specify
-dimensions larger in absolute size than~$2^{30}-1$: two
-such dimensions can be added or subtracted without
-overflow on a 32-bit system.
+
+在一般的32位 \TeX\ 实现中，最大的整数绝对值为 $2^{31}-1$。用户不允许设置超过 $2^{30}-1$ 的尺寸: 两个这样的尺寸可以在32位系统中相加或相减而不溢出。
 
 %%\point Number testing
 %\section{Number testing}
 %\point Number testing
-\section{Number testing}
+\section{数字测试}
 
 %The most general test for integers in \TeX\ is
 %\begin{disp}\cs{ifnum}\gr{number$_1$}\gr{relation}\gr{number$_2$}\end{disp}
 %where \gr{relation} is a~\n<, \n>, or~\n= character,
 %all of category~12\index{category!12}.
-The most general test for integers in \TeX\ is
+\TeX\ 中最一般的测试为:
+
 \begin{disp}\cs{ifnum}\gr{number$_1$}\gr{relation}\gr{number$_2$}\end{disp}
-where \gr{relation} is a~\n<, \n>, or~\n= character,
-all of category~12\index{category!12}.
+
+其中\gr{relation}是一个~\n<, \n>, or~\n= 字符，其分类码为~12\index{category!12}。
+
 
 %Distinguishing between odd and even numbers is done
 %by \begin{disp}\cs{ifodd}\gr{number}\end{disp}
-Distinguishing between odd and even numbers is done
-by \begin{disp}\cs{ifodd}\gr{number}\end{disp}
+
+在奇数和偶数之间判断则使用:
+
+\begin{disp}\cs{ifodd}\gr{number}\end{disp}
 
 %A numeric case statement is provided by
 %\begin{disp}\cs{ifcase}\gr{number}\gr{case$_0$}\cs{or}\n{...}\cs{or}%
@@ -886,41 +828,41 @@ by \begin{disp}\cs{ifodd}\gr{number}\end{disp}
 %are processed if the number turns out to be~$i$; other cases are
 %skipped, similarly to what ordinarily happens in conditionals
 %(see Chapter~\ref{if}).
-A numeric case statement is provided by
+
+提供的数字分支控制语句为:
+
 \begin{disp}\cs{ifcase}\gr{number}\gr{case$_0$}\cs{or}\n{...}\cs{or}%
      \gr{case$_n$}\cs{else}\gr{other cases}\cs{fi}\end{disp}
-where the \cs{else}-part is optional. The tokens for \gr{case$_i$}
-are processed if the number turns out to be~$i$; other cases are
-skipped, similarly to what ordinarily happens in conditionals
-(see Chapter~\ref{if}).
+
+其中 \cs{else} 部分是可选的。当数字等于$i$时，记号\gr{case$_i$}将被执行，其它情况将被忽略，逻辑类似于一般的条件判断(见第\ref{if}章)。
+
 
 %%\point Remarks
 %\section{Remarks}
 %\point Remarks
-\section{Remarks}
+\section{注意事项}
 
 %%\spoint Character constants
 %\subsection{Character constants}
 %\spoint Character constants
-\subsection{Character constants}
+\subsection{字符常量}
 
 %In formats and macro collections numeric constants
 %are often needed. There are several ways to implement these
-%in \TeX. 
-In formats and macro collections numeric constants
-are often needed. There are several ways to implement these
-in \TeX. 
+%in \TeX.
+在格式和宏集中，数字常量常被用到。\TeX 中有多种实现方法:
 
 %Firstly,
 %\begin{verbatim}
 %\newcount\SomeConstant \SomeConstant=42
 %\end{verbatim}
 %This is wasteful, as it uses up a \cs{count} register.
-Firstly,
+第一种:
 \begin{verbatim}
 \newcount\SomeConstant \SomeConstant=42
 \end{verbatim}
-This is wasteful, as it uses up a \cs{count} register.
+
+这比较浪费，因为它将占据计数器(\cs{count}寄存器)。
 
 %Secondly,
 %\begin{verbatim}
@@ -929,13 +871,12 @@ This is wasteful, as it uses up a \cs{count} register.
 %Better but accident prone: \TeX\ has to expand to find the number
 % \ldash which in itself is a slight overhead \rdash  and may inadvertently
 %expand some tokens that should have been left alone.
-Secondly,
+第二种:
 \begin{verbatim}
 \def\SomeConstant{42}
 \end{verbatim}
-Better but accident prone: \TeX\ has to expand to find the number
- \ldash which in itself is a slight overhead \rdash  and may inadvertently
-expand some tokens that should have been left alone.
+
+好一些，但偶尔会出问题: \TeX\ 必须展开来找到数字，但不注意的可能导致展开一些需要避免展开的记号。
 
 %Thirdly,
 %\begin{verbatim}
@@ -950,24 +891,20 @@ expand some tokens that should have been left alone.
 %which runs to \verb>"7FFF>${}=32\,767$.
 %Note that a \gr{mathchardef token} can usually only appear
 %in math mode, but in the context of a number it can appear anywhere.
-Thirdly,
+
+第三种:
 \begin{verbatim}
 \chardef\SomeConstant=42
 \end{verbatim}
-This one is fine.
-A \gr{chardef token} has the same status as a \cs{count}
-register: both are \gr{internal integer}s.
-Therefore a number defined this way can be used everywhere that
-a \cs{count} register is feasible.
-For large numbers the \cs{chardef} can be replaced by \cs{mathchardef},
-which runs to \verb>"7FFF>${}=32\,767$.
-Note that a \gr{mathchardef token} can usually only appear
-in math mode, but in the context of a number it can appear anywhere.
+
+这是好的方法的。一个\gr{chardef token}具有与\cs{count}寄存器相同的状态，两者都是内部整数(\gr{internal integer})。因此以此定义数字可以在\cs{count}寄存器适用的地方适用。对于大的数字可以用\cs{mathchardef}代替\cs{chardef}，该命令可以取到 \verb>"7FFF>${}=32\,767$。注意
+\gr{mathchardef token}通常只出现在数学模式中，但可在数字的上下文中可以任意出现。
+
 
 %%\spoint Expanding too far / how far
 %\subsection{Expanding too far / how far}
 %\spoint Expanding too far / how far
-\subsection{Expanding too far / how far}
+\subsection{展开太远/多远}
 
 %It is a common mistake to write pieces of \TeX\ code
 %where \TeX\ will inadvertently expand something because it
@@ -977,16 +914,17 @@ in math mode, but in the context of a number it can appear anywhere.
 %...\par \number\pageno
 %\end{verbatim}
 %Here the page number will be absorbed into the value of the penalty.
-It is a common mistake to write pieces of \TeX\ code
-where \TeX\ will inadvertently expand something because it
-is trying to compose a number. For example:
+写\TeX\ 代码时的一个常见错误是\TeX\ 在努力处理数字时不注意地展开一些东西，比如:
+
 \begin{verbatim}
 \def\par{\endgraf\penalty200}
 ...\par \number\pageno
 \end{verbatim}
-Here the page number will be absorbed into the value of the penalty.
 
-%Now consider 
+这里页码将被吸收进行 penalty 的值中。
+
+
+%Now consider
 %\begin{verbatim}
 %\newcount\midpenalty \midpenalty=200
 %\def\par{\endgraf\penalty\midpenalty}
@@ -997,17 +935,16 @@ Here the page number will be absorbed into the value of the penalty.
 %and it finds a \gr{countdef token}. This is {\em not\/}
 %converted to a representation in digits, so there is never any
 %danger of the page number being touched.
-Now consider 
+
+现在考虑:
 \begin{verbatim}
 \newcount\midpenalty \midpenalty=200
 \def\par{\endgraf\penalty\midpenalty}
 ...\par \number\pageno
 \end{verbatim}
-Here the page number is not scooped up by mistake:
-\TeX\ is trying to locate a \gr{number} after the \cs{penalty},
-and it finds a \gr{countdef token}. This is {\em not\/}
-converted to a representation in digits, so there is never any
-danger of the page number being touched.
+
+这里页码不会错误地被吸收，\TeX\ 努力定位\cs{penalty}命令后的\gr{number}，
+它找到了一个\gr{countdef token}。这{\em 不会} 转换为数字形式，所以碰到页码也不会有任何危险。
 
 %It is possible to convert a \gr{countdef token} first to
 %a representation in digits before assigning it:
@@ -1015,12 +952,15 @@ danger of the page number being touched.
 %\penalty\number\midpenalty
 %\end{verbatim}
 %and this brings back again all previous problems of expansion.
-It is possible to convert a \gr{countdef token} first to
-a representation in digits before assigning it:
+
+有可能会在赋值前先将\gr{countdef token}转换为数字形式:
+
 \begin{verbatim}
 \penalty\number\midpenalty
 \end{verbatim}
-and this brings back again all previous problems of expansion.
+
+而这又将再次导致前面出现过的展开问题。
+
 
 %\endofchapter
 %%%%% end of input file [number]
