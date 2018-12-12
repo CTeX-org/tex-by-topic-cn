@@ -158,7 +158,7 @@
 %and math mode, but see below for the \cs{lastbox}.
 %The connection between
 %boxes and modes is explored further in Chapter~\ref{hvmode}.
-除下文提到的 \cs{lastbox} 之外，盒子通常可以用在水平、竖直和数学模式。盒子与模式之间的关系将在第~\ref{hvmode}~中讨论。
+除下文提到的 \cs{lastbox} 之外，盒子通常可以用在水平、竖直和数学模式。盒子与模式之间的关系将在第~\ref{hvmode}~章中讨论。
 
 %The box produced by \cs{vcenter} \ldash a command that is allowed only in
 %math mode \rdash  is not a \gr{box}. For instance,
@@ -359,7 +359,7 @@ plain \TeX 中的 \csidx{newbox} 宏可用于分配一个未被使用的盒子�
 %with their reference points on the baseline of the box,
 %unless they are moved explicitly in the vertical direction
 %by \cs{lower} or~\cs{raise}.
-\csidx{hbox} 内所有的元素都依次排在一行，并且它们的参考点会在齐盒子的基线（baseline）上对齐，除非显式使用 \cs{raise} 或者 \cs{lower} 调整它们竖直方向上的位置。
+\csidx{hbox} 内所有的元素都依次排在一行，并且它们的参考点会在对齐盒子的基线（baseline）上对齐，除非显式使用 \cs{raise} 或者 \cs{lower} 调整它们竖直方向上的位置。
 
 %The resulting width of the box is the sum of the widths
 %of the components. Thus the width of
@@ -663,7 +663,7 @@ plain \TeX 中的 \csidx{newbox} 宏可用于分配一个未被使用的盒子�
 %\altt
 %that is, the output does show the whole box, but further calculations
 %by \TeX\ act as if the height and depth were zero.
-在宏定义中，\cs{smash} 命令将内容保存在盒子中，但是将盒子的高度和深度都值为零；这也就是说，最终盒子会被输出，但是后续有关盒子尺寸的计算中，\TeX 都会将高度和深度认作是零。
+在宏定义中，\cs{smash} 命令将内容保存在盒子中，但是将盒子的高度和深度都设置为零；这也就是说，最终盒子会被输出，但是后续有关盒子尺寸的计算中，\TeX 都会将高度和深度认作是零。
 
 %Box dimensions can be changed only by setting them.
 %They are \gr{box dimen}s, which can only be set
