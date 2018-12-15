@@ -13,7 +13,7 @@
 %procedure calls in most programming languages. This chapter treats the
 %commands connected with expansion, and gives a number of (non-trivial)
 %examples.
-在\TeX\中，\emph{展开}与众多编程语言的函数调用不同。本章主要讲命令的展开，并给出一些非平凡的例子。
+在\TeX\ 中，\emph{展开}与众多编程语言的函数调用不同。本章主要讲命令的展开，并给出一些非平凡的例子。
 
 %\label{cschap:relax}\label{cschap:expandafter}\label{cschap:noexpand}\label{cschap:afterassignment}\label{cschap:the}
 %\begin{inventory}
@@ -22,28 +22,27 @@
 \label{cschap:relax}\label{cschap:expandafter}\label{cschap:noexpand}\label{cschap:afterassignment}\label{cschap:the}
 \begin{inventory}
 \item [\cs{relax}] 
-     Do nothing.
+     什么也不做
 
 
 %\item [\cs{expandafter}]  
 %      Take the next two tokens and place the expansion of the
 %      second after the first.
 \item [\cs{expandafter}]  
-      Take the next two tokens and place the expansion of the
-      second after the first.
+	   将后一个记号放到前一个记号之前
 
 %\item [\cs{noexpand}]   
 %      Do not expand the next token.
 \item [\cs{noexpand}]   
-      Do not expand the next token.
+      不展开下一个记号
 
 
 %\item [\cs{edef}] 
 %      Start a macro definition; 
 %      the replacement text is expanded at definition time.
 \item [\cs{edef}] 
-      Start a macro definition; 
-      the replacement text is expanded at definition time.
+      开始一个宏定义;
+      替换的文字在定义时即展开
 
 % 
 %\item [\cs{aftergroup}]  
