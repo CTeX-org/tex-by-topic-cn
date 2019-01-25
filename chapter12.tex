@@ -13,7 +13,7 @@
 %procedure calls in most programming languages. This chapter treats the
 %commands connected with expansion, and gives a number of (non-trivial)
 %examples.
-在\TeX\ 中，\emph{展开}与众多编程语言的函数调用不同。本章主要讲命令的展开，并给出一些非平凡的例子。
+在\TeX\ 中，\emph{展开}\index{expansion} 与众多编程语言的函数调用不同。本章主要讲命令的展开，并给出一些非平凡的例子。
 
 %\label{cschap:relax}\label{cschap:expandafter}\label{cschap:noexpand}\label{cschap:afterassignment}\label{cschap:the}
 %\begin{inventory}
@@ -42,7 +42,7 @@
 %      the replacement text is expanded at definition time.
 \item [\cs{edef}] 
       开始一个宏定义;
-      替换的文字在定义时即展开。
+      替换的文字在定义时展开。
 
 % 
 %\item [\cs{aftergroup}]  
@@ -63,7 +63,7 @@
 %      Expand the value of various quantities in \TeX\ into a string
 %      of character tokens.
 \item [\cs{the}] 
-      将 \TeX\ 定义中的各种 quantities 展开成字符记号。
+      将 \TeX\ 定义中的各种 数量（quantities） 展开成字符记号。
 
 %\end{inventory}
 \end{inventory}
@@ -83,8 +83,8 @@
 %largely assignments and typesettable material;
 %the former category
 %is expanded, and the result of that expansion is examined anew.
-\TeX 的 展开处理器接受输入处理器的记号流，并产生记号流的输出结果输入到执行处理器中。 
-对于输入处理器来说，有两种类型的记号：可展开的与不可展开的。后一种在处理过程中保持不变，它主要包括 assignments 和可打印的内容；前一种被展开，下面就展开的结果详细讨论。
+\TeX 的 展开处理器的输入输出都是记号流，其输入来自输入处理器，其输出流向执行处理器。 
+对于展开处理器来说，记号分为两种：可展开记号与不可展开记号。后一种在处理过程中保持不变，它主要包括 赋值 和可打印的内容；前一种被展开，下面就展开的结果详细讨论。
 
 %%\point Ordinary expansion
 %\section{Ordinary expansion}
@@ -107,7 +107,7 @@
 %      \cs{splitfirstmark}, \cs{splitbotmark}
 %\item \cs{input}, \cs{endinput}
 %\end{itemize}
-下面的列表给出了会被展开的 constructs，除非展开被禁止。
+除非被禁止展开，下列内容会被展开：
 \index{expansion!expandable constructs}
 \begin{itemize}
 \item macros\label{expand:lijst}
@@ -163,7 +163,7 @@
 %      preceded by \cs{span} and the tokens in a \cs{tabskip} 
 %      assignment are still expanded.
 %\end{itemize}
-下表是不会展开的所有情形:
+遇到下列情形时，\TeX 不会展开相应记号
 \begin{itemize}\label{noexp:list}
 \item 当 \TeX\ 读到被下述环境作用的记号时
       
@@ -213,7 +213,7 @@
 %expansion of tokens. \TeX\ provides several mechanisms for
 %this. Some of the control sequences in this section are
 %not strictly concerned with expansion.
-人们时常会有改变记号正常的展开顺序的需求。 \TeX\ 提供了若干种机制来达到这一目的。 
+人们时常会有改变记号正常的展开顺序的需求。 \TeX\ 提供了若干机制来达到这一目的。 
 Some of the control sequences in this section are
 not strictly concerned with expansion.
 
@@ -249,7 +249,7 @@ not strictly concerned with expansion.
 %\item If the \cs{tokentwo} is a macro with one or more
 %parameters, sufficiently many subsequent tokens will be absorbed
 %to form the replacement text.\end{itemize}
-最常用的reversed 展开是用
+用于颠倒展开顺序最常见的工具是
 \csidx{expandafter}. 序列
 \begin{disp}\cs{expandafter}\gr{token$_1$}\gr{token$_2$}\end{disp}
 展开为
