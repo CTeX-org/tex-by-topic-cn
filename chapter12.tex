@@ -13,10 +13,7 @@
 %procedure calls in most programming languages. This chapter treats the
 %commands connected with expansion, and gives a number of (non-trivial)
 %examples.
-\emph{Expansion}\index{expansion} in \TeX\ is rather different from
-procedure calls in most programming languages. This chapter treats the
-commands connected with expansion, and gives a number of (non-trivial)
-examples.
+在\TeX\ 中，\emph{展开}\index{expansion} 与众多编程语言的函数调用不同。本章主要讲命令的展开，并给出一些非平凡的例子。
 
 %\label{cschap:relax}\label{cschap:expandafter}\label{cschap:noexpand}\label{cschap:afterassignment}\label{cschap:the}
 %\begin{inventory}
@@ -25,28 +22,27 @@ examples.
 \label{cschap:relax}\label{cschap:expandafter}\label{cschap:noexpand}\label{cschap:afterassignment}\label{cschap:the}
 \begin{inventory}
 \item [\cs{relax}] 
-     Do nothing.
+     什么也不做。
 
 
 %\item [\cs{expandafter}]  
 %      Take the next two tokens and place the expansion of the
 %      second after the first.
 \item [\cs{expandafter}]  
-      Take the next two tokens and place the expansion of the
-      second after the first.
+	   将后一个记号放到前一个记号之前。
 
 %\item [\cs{noexpand}]   
 %      Do not expand the next token.
 \item [\cs{noexpand}]   
-      Do not expand the next token.
+      不展开下一个记号。
 
 
 %\item [\cs{edef}] 
 %      Start a macro definition; 
 %      the replacement text is expanded at definition time.
 \item [\cs{edef}] 
-      Start a macro definition; 
-      the replacement text is expanded at definition time.
+      开始一个宏定义;
+      替换的文字在定义时展开。
 
 % 
 %\item [\cs{aftergroup}]  
@@ -67,8 +63,7 @@ examples.
 %      Expand the value of various quantities in \TeX\ into a string
 %      of character tokens.
 \item [\cs{the}] 
-      Expand the value of various quantities in \TeX\ into a string
-      of character tokens.
+      将 \TeX\ 定义中的各种 数量（quantities） 展开成字符记号。
 
 %\end{inventory}
 \end{inventory}
@@ -88,15 +83,8 @@ examples.
 %largely assignments and typesettable material;
 %the former category
 %is expanded, and the result of that expansion is examined anew.
-\TeX's expansion processor accepts a stream of tokens
-coming out of the input processor, and its result is
-again a stream of tokens, which it feeds to the execution
-processor. For the input processor there are two
-kinds of tokens: expandable and unexpandable ones.
-The latter category is passed untouched, and it contains
-largely assignments and typesettable material;
-the former category
-is expanded, and the result of that expansion is examined anew.
+\TeX 的 展开处理器的输入输出都是记号流，其输入来自输入处理器，其输出流向执行处理器。 
+对于展开处理器来说，记号分为两种：可展开记号与不可展开记号。后一种在处理过程中保持不变，它主要包括 赋值 和可打印的内容；前一种被展开，下面就展开的结果详细讨论。
 
 %%\point Ordinary expansion
 %\section{Ordinary expansion}
@@ -119,9 +107,7 @@ is expanded, and the result of that expansion is examined anew.
 %      \cs{splitfirstmark}, \cs{splitbotmark}
 %\item \cs{input}, \cs{endinput}
 %\end{itemize}
-The following list gives those constructs
-that are expanded, unless
-expansion is inhibited:
+除非被禁止展开，下列内容会被展开：
 \index{expansion!expandable constructs}
 \begin{itemize}
 \item macros\label{expand:lijst}
@@ -177,21 +163,20 @@ expansion is inhibited:
 %      preceded by \cs{span} and the tokens in a \cs{tabskip} 
 %      assignment are still expanded.
 %\end{itemize}
-This is the list of all instances where
-expansion is inhibited:
+遇到下列情形时，\TeX 不会展开相应记号
 \begin{itemize}\label{noexp:list}
-\item when \TeX\ is reading a token to be defined by
+\item 当 \TeX\ 读到被下述环境作用的记号时
       
-\begin{itemize} \item a \gr{let assignment}, that is,
-           by \cs{let} or \cs{futurelet},
-        \item a \gr{shorthand definition}, that is,
-           by \cs{chardef} or \cs{mathchardef}, or a
-           \gr{register def}, that is, \cs{countdef},
+\begin{itemize} \item  \gr{let assignment}, 即,
+           有 \cs{let} 或 \cs{futurelet},
+        \item  \gr{shorthand definition}, 即,
+           有 \cs{chardef} 或 \cs{mathchardef}, 或是
+           \gr{register def}, 包括, \cs{countdef},
            \cs{dimendef}, \cs{skipdef}, \cs{muskipdef},
-           or~\cs{toksdef},
-        \item a \gr{definition}, that is a macro definition
-           with \cs{def}, \cs{gdef}, \cs{edef}, or~\cs{xdef},
-        \item the \gr{simple assignment}s \cs{read} and \cs{font};
+           以及~\cs{toksdef},
+        \item \gr{definition},遇到宏定义时。
+           有 \cs{def}, \cs{gdef}, \cs{edef}, 或~\cs{xdef},
+        \item \gr{simple assignment}s \cs{read} 和 \cs{font};
       \end{itemize}
 \item when a \gr{parameter text} or macro arguments
       are being read; also when  the replacement text of a 
@@ -222,21 +207,20 @@ expansion is inhibited:
 %%\point Reversing expansion order
 %\section{Reversing expansion order}
 %\point Reversing expansion order
-\section{Reversing expansion order}
+\section{颠倒展开的顺序}
 
 %Every once in a while you need to change the normal order of
 %expansion of tokens. \TeX\ provides several mechanisms for
 %this. Some of the control sequences in this section are
 %not strictly concerned with expansion.
-Every once in a while you need to change the normal order of
-expansion of tokens. \TeX\ provides several mechanisms for
-this. Some of the control sequences in this section are
+人们时常会有改变记号正常的展开顺序的需求。 \TeX\ 提供了若干机制来达到这一目的。 
+Some of the control sequences in this section are
 not strictly concerned with expansion.
 
 %%\spoint One step expansion: \cs{expandafter}
 %\subsection{One step expansion: \protect\cs{expandafter}}
 %\spoint One step expansion: \cs{expandafter}
-\subsection{One step expansion: \protect\cs{expandafter}}
+\subsection{一步展开: \protect\cs{expandafter}}
 
 %The most obvious tool for reversed expansion order is
 %\csidx{expandafter}. The sequence
@@ -265,10 +249,10 @@ not strictly concerned with expansion.
 %\item If the \cs{tokentwo} is a macro with one or more
 %parameters, sufficiently many subsequent tokens will be absorbed
 %to form the replacement text.\end{itemize}
-The most obvious tool for reversed expansion order is
-\csidx{expandafter}. The sequence
+用于颠倒展开顺序最常见的工具是
+\csidx{expandafter}. 序列
 \begin{disp}\cs{expandafter}\gr{token$_1$}\gr{token$_2$}\end{disp}
-expands to 
+展开为
 \begin{disp}\gr{token$_1$}\gr{\italic the expansion of token$_2$}
 \end{disp}
 Note the following.
