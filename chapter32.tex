@@ -7,12 +7,11 @@
 \begin{document}
 
 %\chapter{Running \TeX}\label{run}
-\chapter{Running \TeX}\label{run}
+\chapter{运行 \TeX}\label{run}
 
 %This chapter treats the run modes of \TeX, and some
 %other commands associated with the job being processed.
-This chapter treats the run modes of \TeX, and some
-other commands associated with the job being processed.
+本章主要讨论 \TeX 的运行模式以及一些和任务(job)处理有关的命令。
 
 %\label{cschap:everyjob}\label{cschap:jobname}\label{cschap:end}\label{cschap:bye}\label{cschap:pausing}\label{cschap:errorstopmode}\label{cschap:scrollmode}\label{cschap:nonstopmode}\label{cschap:batchmode}
 %\begin{inventory}
@@ -21,50 +20,46 @@ other commands associated with the job being processed.
 \label{cschap:everyjob}\label{cschap:jobname}\label{cschap:end}\label{cschap:bye}\label{cschap:pausing}\label{cschap:errorstopmode}\label{cschap:scrollmode}\label{cschap:nonstopmode}\label{cschap:batchmode}
 \begin{inventory}
 \item [\cs{everyjob}] 
-      Token list that is inserted at the start of each new job.
+      每个新任务开始时都会插入的记号(Token)列表。
 
 %\item [\cs{jobname}] 
 %      Name of the main \TeX\ file being processed.
 \item [\cs{jobname}] 
-      Name of the main \TeX\ file being processed.
+      正在处理的 \TeX\ 文件的名称。
 
 %\item [\cs{end}] 
 %      Command to finish off a run of \TeX.
 \item [\cs{end}] 
-      Command to finish off a run of \TeX.
+      中止 \TeX 运行的命令。
 
 %\item [\cs{bye}]
 %      Plain \TeX\ macro to force the final output.
 \item [\cs{bye}]
-      Plain \TeX\ macro to force the final output.
+      强制最终输出的 Plain \TeX\ 宏。
 
 %\item [\cs{pausing}] 
 %      Specify that \TeX\ should pause after each line that is 
 %      read from a file.
 \item [\cs{pausing}] 
-      Specify that \TeX\ should pause after each line that is 
-      read from a file.
+      让 \TeX\ 每读完文件的一行，就暂停一下。
 
 %\item [\cs{errorstopmode}]
 %      \TeX\ will ask for user input on the occurrence of an error.
 \item [\cs{errorstopmode}]
-      \TeX\ will ask for user input on the occurrence of an error.
+      让 \TeX\ 在每次出错时都暂停下来，要求用户输入。 
 
 %\item [\cs{scrollmode}] 
 %      \TeX\ fixes errors itself,
 %      but will ask the user for missing files.
 \item [\cs{scrollmode}] 
-      \TeX\ fixes errors itself,
-      but will ask the user for missing files.
+      让 \TeX\ 在出错时自行修复错误，但要求用户提供缺失的文件。
 
 %\item [\cs{nonstopmode}] 
 %      \TeX\ fixes errors itself, 
 %      and performs an emergency stop on serious errors 
 %      such as missing input files.
 \item [\cs{nonstopmode}] 
-      \TeX\ fixes errors itself, 
-      and performs an emergency stop on serious errors 
-      such as missing input files.
+      让 \TeX\ 在出错时自行修复错误，并且只在发生类似“输入文件缺失”等致命错误时才停止。
 
 %\item [\cs{batchmode}] 
 %      \TeX\ fixes errors itself 
@@ -72,10 +67,7 @@ other commands associated with the job being processed.
 %      such as missing input files,
 %      but no terminal output is generated.
 \item [\cs{batchmode}] 
-      \TeX\ fixes errors itself 
-      and performs an emergency stop on serious errors 
-      such as missing input files,
-      but no terminal output is generated.
+      功能与上一个命令 \cs{nonstopmode} 相同，但不产生终端输出。
 
 %\end{inventory}
 \end{inventory}
@@ -84,7 +76,7 @@ other commands associated with the job being processed.
 %\section{Jobs}
 %\index{job|(}
 %\point Jobs
-\section{Jobs}
+\section{任务}
 \index{job|(}
 
 %\TeX\ associates with each run a name for the file
@@ -93,12 +85,11 @@ other commands associated with the job being processed.
 %\ldash meaning that it has been invoked without a file argument,
 %and the user types commands \rdash
 %the jobname is \n{texput}.
-\TeX\ associates with each run a name for the file
-being processed: the \csidx{jobname}. If \TeX\ is run
-interactively
-\ldash meaning that it has been invoked without a file argument,
-and the user types commands \rdash
-the jobname is \n{texput}.
+\TeX\ 为每个待处理的文件指定了一个名字：\csidx{jobname}。
+如果交互式的运行 \TeX\ 
+\ldash 这意味着并不存在一个真实的文件，
+用户直接输入命令运行 \rdash 
+这时将用 \n{texput} 作为任务名。
 
 %The \cs{jobname} can be used to generate
 %the names of auxiliary files to be read or
@@ -109,20 +100,19 @@ the jobname is \n{texput}.
 %\openout\TableOfContents=\jobname.toc
 %\end{verbatim}
 %will create the files \n{story.aux} and \n{story.toc}.
-The \cs{jobname} can be used to generate
-the names of auxiliary files to be read or
-written during the run. For instance, for a file \n{story.tex}
-the \cs{jobname} is \n{story}, and writing
+\cs{jobname} 可以用于生成临时文件名。
+例如，对于一个叫 \n{story.tex} 的文件，
+\cs{jobname} 就是 \n{story}，以下代码
 \begin{verbatim}
 \openout\Auxiliary=\jobname.aux
 \openout\TableOfContents=\jobname.toc
 \end{verbatim}
-will create the files \n{story.aux} and \n{story.toc}.
+会创建 \n{story.aux} 和 \n{story.toc} 两个文件。
 
 %%\spoint Start of the job
 %\subsection{Start of the job}
 %\spoint Start of the job
-\subsection{Start of the job}
+\subsection{任务的开始}
 
 %\TeX\ starts each job by inserting the \csidx{everyjob} token
 %list into the command stream.
@@ -131,18 +121,16 @@ will create the files \n{story.aux} and \n{story.toc}.
 %If a
 %format fills the token list, the commands therein are automatically
 %executed when \TeX\ is run using that format.
-\TeX\ starts each job by inserting the \csidx{everyjob} token
-list into the command stream.
-Setting this variable during a run of \TeX\ has no use,
-but a format can use it to identify itself to the user.
-If a
-format fills the token list, the commands therein are automatically
-executed when \TeX\ is run using that format.
+\TeX\ 通过将 \csidx{everyjob} 记号列表插入命令流来启动每个任务。
+在 \TeX\ 运行期间设置这个变量是没有用的，
+但文件格式可以使用它来向用户标识自己。
+如果一种格式填充了记号列表，当 \TeX\ 使用这种格式运行时，
+列表里面的命令会自动执行。
 
 %%\spoint End of the job
 %\subsection{End of the job}
 %\spoint End of the job
-\subsection{End of the job}
+\subsection{任务的结束}
 
 %A \TeX\ job is terminated by the \csidx{end} command. This
 %may involve first forcing the output routine to process any
@@ -151,13 +139,10 @@ executed when \TeX\ is run using that format.
 %\TeX\ will give a diagnostic
 %message. The \cs{end} command is not allowed in internal
 %vertical mode, because this would be inside a vertical box.
-A \TeX\ job is terminated by the \csidx{end} command. This
-may involve first forcing the output routine to process any
-remaining material (see Chapter~\ref{page:break}).
-If the end of job occurs inside a group
-\TeX\ will give a diagnostic
-message. The \cs{end} command is not allowed in internal
-vertical mode, because this would be inside a vertical box.
+一个 \TeX\ 任务通过 \csidx{end} 命令中止。
+这可能包括首先强制输出程序去处理任何剩余的材料（参第~\ref{page:break} 章）。
+如果任务的终止发生在一个组(group)中，\TeX\ 会输出一个诊断信息。
+\cs{end} 命令会插入一个竖直盒子，因此内部竖直模式中不允许使用该命令。
 
 %Usually some sugar coating of the \cs{end} command is necessary.
 %For instance the plain \TeX\ macro \csidx{bye} is defined
@@ -166,18 +151,17 @@ vertical mode, because this would be inside a vertical box.
 %\def\bye{\par\vfill\supereject\end}
 %\end{verbatim}
 %where the \cs{supereject} takes care of any leftover insertions.
-Usually some sugar coating of the \cs{end} command is necessary.
-For instance the plain \TeX\ macro \csidx{bye} is defined
-as
+通常来说，一些 \cs{end} 命令的语法糖是十分必要的。
+例如 plain \TeX\ 宏 \csidx{bye} 是这样定义的：
 \begin{verbatim}
 \def\bye{\par\vfill\supereject\end}
 \end{verbatim}
-where the \cs{supereject} takes care of any leftover insertions.
+其中 \cs{supereject} 负责处理任何剩余的插入项。
 
 %%\spoint The log file
 %\subsection{The log file}
 %\spoint The log file
-\subsection{The log file}
+\subsection{日志文件}
 
 %For each run \TeX\ creates a \indexterm{log file}. Usually this will be
 %a file with as name the value of \cs{jobname}, and the
@@ -190,17 +174,12 @@ where the \cs{supereject} takes care of any leftover insertions.
 %the screen. If the parameter \cs{tracingonline}
 %has a positive value, all the log file information will be
 %shown on the screen.
-For each run \TeX\ creates a \indexterm{log file}. Usually this will be
-a file with as name the value of \cs{jobname}, and the
-extension \n{.log}. Other extensions such as \n{.lis}
-are used by some implementations.
-This log file contains all information that
-is displayed on the screen during the run of \TeX, but
-it will display some information more elaborately, and it
-can contain statistics that are usually not displayed on
-the screen. If the parameter \cs{tracingonline}
-has a positive value, all the log file information will be
-shown on the screen.
+每次运行 \TeX\ 都会创建一个日志文件(\indexterm{log file})。
+通常这个文件名字为 \cs{jobname} 的值，后缀为 \n{.log}。
+有些发行版会使用其他的扩展名如 \n{.lis}。
+日志文件包含 \TeX\ 运行时显示在屏幕上的所有信息，
+但它会更加详细的显示一些信息，并且日志通常会包含不显示在屏幕上的统计信息。
+如果 \cs{tracingonline} 参数为正值，所有的日志信息都会输出到屏幕上。
 
 %Overfull and underfull boxes are reported on the terminal
 %screen, and they are dumped using the parameters
@@ -209,36 +188,31 @@ shown on the screen.
 %for box dumps caused by the \cs{showbox} command, and
 %for the dump of boxes written by \cs{shipout} 
 %if \cs{tracingoutput} is set to a positive value.
-Overfull and underfull boxes are reported on the terminal
-screen, and they are dumped using the parameters
-\cs{showboxdepth} and \cs{showboxbreadth} in the log file
-(see Chapter~\ref{trace}). These parameters are also used
-for box dumps caused by the \cs{showbox} command, and
-for the dump of boxes written by \cs{shipout} 
-if \cs{tracingoutput} is set to a positive value.
+盒子上溢出和下溢出会在终端中报告，使用 \cs{showboxdepth} 和
+\cs{showboxbreadth} 可以转储它们到日志文件中（参见第~\ref{trace}章）。
+这些参数也会影响由 \cs{showbox} 命令生成的盒子转储，
+如果 \cs{tracingoutput} 为正数，
+参数也会影响 \cs{shipout} 命令写入的盒子转储。
 
 %Statistics generated by commands such as \cs{tracingparagraphs}
 %will be written to the log file; if \cs{tracingonline} is positive
 %they will also be shown on the screen.
-Statistics generated by commands such as \cs{tracingparagraphs}
-will be written to the log file; if \cs{tracingonline} is positive
-they will also be shown on the screen.
+由像 \cs{tracingparagraphs} 这样的命令生成的统计信息会写入日志中；
+如果 \cs{tracingonline} 为正数，统计信息还会显示在屏幕上。
 
 %Output operations to a stream that is not open, or to a
 %stream with a number that is not in the range 0--15,
 %go to the log file. If the stream number is positive,
 %they also go to the terminal.
-Output operations to a stream that is not open, or to a
-stream with a number that is not in the range 0--15,
-go to the log file. If the stream number is positive,
-they also go to the terminal.
+输出到未打开的流中、或指定流的编号不在 0--15 这个范围内，会输出到日志里。
+如果流的编号为正数，会同时输出到终端。
 
 %\index{job|)}
 \index{job|)}
 
 %\section{Run modes}
 %\index{run modes|(}
-\section{Run modes}
+\section{运行模式}
 \index{run modes|(}
 
 %By default, \TeX\ goes into \cs{errorstopmode} if an error occurs:
@@ -249,14 +223,12 @@ they also go to the terminal.
 %the internal state of \TeX\ can be inspected (and altered). 
 %See page~\pageref{interaction} for ways to switch the run
 %mode when \TeX\ has been interrupted.
-By default, \TeX\ goes into \cs{errorstopmode} if an error occurs:
+默认情况下 \TeX\ 会进入 \cs{errorstopmode} 模式，
 \cstoidx errorstopmode\par
-it stops and asks for input from the user. Some implementations 
- have a way of forcing \TeX\ into errorstopmode
-when the user interrupts \TeX, so that
-the internal state of \TeX\ can be inspected (and altered). 
-See page~\pageref{interaction} for ways to switch the run
-mode when \TeX\ has been interrupted.
+发生错误时，\TeX\ 会停下来等待用户的输入。
+一些发行版会在用户中断 \TeX\ 运行时，强制进入 errorstopmode 模式，
+这样就可以检查或修改 \TeX\ 的内部状态。
+更多关于 \TeX\ 中断运行时的模式切换，请参见~\pageref{interaction}页。
 
 %Often, \TeX\ can
 %fix an error itself if the user asks \TeX\ just to continue
@@ -270,18 +242,12 @@ mode when \TeX\ has been interrupted.
 %occurring error without confirmation from the user.
 %This is usually done by typing `s' when \TeX\ asks
 %for input.
-Often, \TeX\ can
-fix an error itself if the user asks \TeX\ just to continue
-(usually by hitting the return key),
-but sometimes (for instance in alignments)
-it may take a while before \TeX\ is on the
-right track again (and sometimes it never is).
-In such cases the user may want to
-turn on \csidx{scrollmode},
-which instructs \TeX\ to fix as best it can any
-occurring error without confirmation from the user.
-This is usually done by typing `s' when \TeX\ asks
-for input.
+通常情况下，当用户要求 \TeX\ 继续运行时（通常是按回车健），
+\TeX\ 能自己修复错误，
+但是有时（如在处理对齐(alignments)时）\TeX\ 需要很长时间才能回到正确的道路上。
+这时，用户可能希望进入 \csidx{scrollmode} 模式。在这种模式下，
+发生错误时，用户无需任何确认操作，\TeX\ 就能尽力去修复错误。
+在 \TeX\ 等待用户输入时，输入 “s”，就能进入这种模式。
 
 %In \cs{scrollmode}, \TeX\ also does not ask for input
 %after \cs{show...} commands.
@@ -289,12 +255,11 @@ for input.
 %However, some errors, such as a file that could not be
 %found for \cs{input}, are not so easily remedied, so
 %the user will still be asked for input.
-In \cs{scrollmode}, \TeX\ also does not ask for input
-after \cs{show...} commands.
+在 \cs{scrollmode} 模式中，碰到 \cs{show...} 命令，
+\TeX\ 也不会要求用户输入。
 \alt
-However, some errors, such as a file that could not be
-found for \cs{input}, are not so easily remedied, so
-the user will still be asked for input.
+但是在发生一些难以自动修复的错误时，如找不到 \cs{input} 所需的文件，
+\TeX\ 依旧会等待用户的输入。
 
 %With \csidx{nonstopmode} \TeX\ will scroll through errors and,
 %in the case of the kind of error that cannot be recovered from,
@@ -303,13 +268,10 @@ the user will still be asked for input.
 %from the terminal.
 %The \csidx{batchmode} differs only from nonstopmode in that
 %it gives messages only to the log file, not to the terminal.
-With \csidx{nonstopmode} \TeX\ will scroll through errors and,
-in the case of the kind of error that cannot be recovered from,
-it will make an emergency stop, aborting the run.
-Also \TeX\ will abort the run if a \cs{read} is attempted
-from the terminal.
-The \csidx{batchmode} differs only from nonstopmode in that
-it gives messages only to the log file, not to the terminal.
+在 \csidx{nonstopmode} 模式中，\TeX\ 会忽略错误。
+当发生无法恢复的错误时，\TeX\ 会紧急停止、中断运行。
+碰到 \cs{read} 命令试图从终端读取输入时，\TeX\ 也会中断运行。
+\csidx{batchmode} 与 nonstopmode 唯一的区别是：前者只将输出信息写入日志，而不会输出到终端。
 
 %\index{run modes|)}
 %\endofchapter
