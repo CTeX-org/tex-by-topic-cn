@@ -359,7 +359,7 @@ plain \TeX 中的 \csidx{newbox} 宏可用于分配一个未被使用的盒子�
 %with their reference points on the baseline of the box,
 %unless they are moved explicitly in the vertical direction
 %by \cs{lower} or~\cs{raise}.
-\csidx{hbox} 内所有的元素都依次排在一行，并且它们的参考点会在对齐盒子的基线（baseline）上对齐，除非显式使用 \cs{raise} 或者 \cs{lower} 调整它们竖直方向上的位置。
+\csidx{hbox} 内所有的元素都依次排在一行，并且它们的参考点会在盒子的基线（baseline）上对齐，除非显式使用 \cs{raise} 或者 \cs{lower} 调整它们竖直方向上的位置。
 
 %The resulting width of the box is the sum of the widths
 %of the components. Thus the width of
@@ -396,7 +396,7 @@ plain \TeX 中的 \csidx{newbox} 宏可用于分配一个未被使用的盒子�
 %is not allowed in a horizontal box, and
 %\cs{par}, although allowed,
 %does not do anything inside a horizontal box.
-\cs{raise} 和 \cs{lower} 命令是在 \cs{hbox} 内调整元素水平位置的唯一方法（当然，除了在 \cs{hbox} 中嵌套一个新的 \cs{vbox}）；\TeX 不允许在水平盒子中使用竖直命令（\gr{vertical command}，例如 \cs{vskip}）；此外，虽然我们可以在水平盒子中使用 \cs{par}，但它却不会有任何作用。
+\cs{raise} 和 \cs{lower} 命令是在 \cs{hbox} 内调整元素竖直位置的唯一方法（当然，除了在 \cs{hbox} 中嵌套一个新的 \cs{vbox}）；\TeX 不允许在水平盒子中使用竖直命令（\gr{vertical command}，例如 \cs{vskip}）；此外，虽然我们可以在水平盒子中使用 \cs{par}，但它却不会有任何作用。
 
 %%\spoint Dimensions of created vertical boxes
 %\subsection{Dimensions of created vertical boxes}
