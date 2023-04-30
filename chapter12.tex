@@ -295,8 +295,7 @@
     `\ifvmode vertical\else \ifmmode math
      \else horizontal\fi\fi' mode}
 \end{verbatim}
-The mode tests will be executed at definition time, so the 
-replacement text will be a single string.
+因为模式测试在定义时即被执行，故该宏的替换文本将是一个字符串。
 
 %As a more useful example, suppose that in a file that will be
 %\cs{input} the category code of the~\n@ will be changed.
@@ -311,18 +310,16 @@ replacement text will be a single string.
 %at the end. See page~\pageref{store:cat}
 %for a fully worked-out version of this.
 %\end{example}
-As a more useful example, suppose that in a file that will be
-\cs{input} the category code of the~\n@ will be changed.
-One could then write
+举一个更有用的例子，若要使用\cs{input}读入一个
+\texttt{\@} 的类别码将会发生改变的文件，则可以有
 \begin{verbatim}
 \edef\restorecat{\catcode`@=\the\catcode`@}
 \end{verbatim}
-at the start, and 
+在文件开头，以及
 \begin{verbatim}
 \restorecat
 \end{verbatim}
-at the end. See page~\pageref{store:cat}
-for a fully worked-out version of this.
+在文件末尾。可见第\pageref{store:cat}页的一个更完整的版本。
 \end{example}
 
 %Contrary to the `one step expansion' of
@@ -340,21 +337,17 @@ for a fully worked-out version of this.
 %is expanded to the contents
 %of the list, but the contents are not expanded
 %any further (see Chapter~\ref{token} for examples).\end{itemize}
-Contrary to the `one step expansion' of
-\cs{expandafter}, the expansion inside an \cs{edef} is complete:
-it goes on
-until only unexpandable character and control sequence
-tokens remain.
-There are two exceptions to this total expansion:
-\begin{itemize} \item any control sequence preceded by \cs{noexpand}
-is not expanded, and,
-\item if \cs{sometokenlist} is a token list, the expression
+与「只展开一步」的\cs{expandafter}相异，在\cs{edef}内的展开是彻底的：
+它会持续展开，直到只有不可展开的字符或控制序列留在输入流中。
+对于这类彻底的展开，有两个例外情况：
+\begin{itemize} \item 任何\cs{noexpand}之后的控制序列不会被展开，及
+    \item 若\cs{sometokenlist}是一个记号列表，则以下
 \begin{verbatim}
 \the\sometokenlist 
 \end{verbatim}
-is expanded to the contents
-of the list, but the contents are not expanded
-any further (see Chapter~\ref{token} for examples).\end{itemize}
+只会展开为记号列表的内容、而其内容则不会被进一步展开
+（例见第\ref{token}章）。
+\end{itemize}
 
 %On certain occasions the \cs{edef} can conveniently be
 %abused, in the sense that one is not interested in defining
@@ -383,33 +376,32 @@ any further (see Chapter~\ref{token} for examples).\end{itemize}
 %\somemacro{this}
 %\end{verbatim} 
 %and a~subsequent call to \cs{next} executes this statement.
-On certain occasions the \cs{edef} can conveniently be
-abused, in the sense that one is not interested in defining
-a control sequence, but only in the result of the  expansion.
-For example, with the definitions
+在某些情况之下，\cs{edef}可被方便的「滥用」，
+即当我们无意定义一个控制序列、仅关注展开结果时。
+比如，使用如下定义
 \alt
 \begin{verbatim}
 \def\othermacro{\ifnum1>0 {this}\else {that}\fi}
 \def\somemacro#1{ ... }
 \end{verbatim}
-the call
+宏调用
 \begin{verbatim}
 \expandafter\somemacro\othermacro 
 \end{verbatim}
-gives the parameter assignment
+将会给出如下参量的赋值
 \begin{verbatim}
 #1<-\ifnum
 \end{verbatim}
-This can be repaired by calling
+为使其正确，我们可以这么写
 \begin{verbatim}
 \edef\next{\noexpand\somemacro\othermacro}\next
 \end{verbatim}
-Conditionals are completely expanded inside an \cs{edef},
-so the replacement text of \cs{next} will consist of the sequence
+其中的条件判断被\cs{edef}完全展开，
+所以\cs{next}的替换文本将会是该序列
 \begin{verbatim}
 \somemacro{this}
 \end{verbatim} 
-and a~subsequent call to \cs{next} executes this statement.
+同时其后的\cs{next}调用执行该定义。
 
 
 %%\spoint \cs{afterassignment}
@@ -428,20 +420,16 @@ and a~subsequent call to \cs{next} executes this statement.
 %the token will be inserted right after the opening
 %\alt
 %brace of the box (see page~\pageref{every:box:assign}).
-The \csterm afterassignment\par\ command
-takes one token and sets it aside for insertion
-in the token stream
-after the next assignment or macro definition.
-If the first assignment is of a~box
- to a box register,
-the token will be inserted right after the opening
-\alt
-brace of the box (see page~\pageref{every:box:assign}).
+\csterm afterassignment\par 指令从输入流上取走一个记号，
+并在下一个赋值或宏定义后将其插入到记号流中。
+如果随后出现的是将盒子赋给盒子寄存器的赋值，
+则该记号会在界定盒子内容的左花括号之后被插入
+（见第\pageref{every:box:assign}页)。
 
 %Only one token can be saved this way; a subsequent token 
 %saved by \cs{afterassignment} will override the first.
-Only one token can be saved this way; a subsequent token 
-saved by \cs{afterassignment} will override the first.
+使用这种方式只能存储一个记号；
+之后的\cs{afterassignment}存储的记号会覆盖之前的。
 
 %Let us consider an example of the use of \cs{afterassignment}.
 %It is often desirable to have a macro that will
@@ -468,19 +456,18 @@ saved by \cs{afterassignment} will override the first.
 %ends with a variable to be assigned to. The control sequence
 %\cs{setbaselineskip} is saved for execution after
 %the assignment to \cs{thefontsize}.
-Let us consider an example of the use of \cs{afterassignment}.
-It is often desirable to have a macro that will
-\begin{itemize} \item assign the argument to some variable, and then
-\item do a little calculation, based on the new value
-of the variable.\end{itemize}
-The following example illustrates the
-straightforward approach:
+不妨考虑实际使用\cs{afterassignment}的例子。
+一个诱人的想法可能是能够定义一个宏来完成如下：
+\begin{itemize} \item 将参数赋予某个值，并在之后
+\item 进行一些基于该参量新值的简单计算。
+\end{itemize}
+这是对其较直接的实现方法：
 \begin{verbatim}
 \def\setfontsize#1{\thefontsize=#1pt\relax
     \baselineskip=1.2\thefontsize\relax}
 \setfontsize{10}
 \end{verbatim}
-A more elegant solution is possible using \cs{afterassignment}:
+此时，基于\cs{afterassignment}，我们可以有如下更优雅的实现方法：
 \begin{verbatim}
 \def\setbaselineskip
    {\baselineskip=1.2\thefontsize\relax}
@@ -488,20 +475,18 @@ A more elegant solution is possible using \cs{afterassignment}:
     \thefontsize}
 \fontsize=10pt
 \end{verbatim}
-Now the macro looks like an assignment: the equals sign
-is even optional. In reality its expansion
-ends with a variable to be assigned to. The control sequence
-\cs{setbaselineskip} is saved for execution after
-the assignment to \cs{thefontsize}.
+此时，这个宏看上去更像一个赋值：且等于号是可选的。
+实际上，它的展开以一个将会被赋值的变量结束。
+控制序列\cs{setbaselineskip}被存储直至对\cs{thefontsize}赋值时才执行。
 
 %Examples of \cs{afterassignment} in plain \TeX\ are
 %the \cs{magnification} and \cs{hglue} macros.
 %See \cite{Maus} for another creative application of
 %this command.
-Examples of \cs{afterassignment} in plain \TeX\ are
-the \cs{magnification} and \cs{hglue} macros.
-See \cite{Maus} for another creative application of
-this command.
+在plain {\TeX}中，使用\cs{afterassignment}的实例有
+\cs{magnification}
+以及\cs{hglue}宏。
+对于其的另一个创造性的应用可见\cite{Maus}。
 
 %\subsection{\protect\cs{aftergroup}}
 %\label{sec:aftergroup}
@@ -516,14 +501,13 @@ this command.
 %the \cs{aftergroup} commands were given in.
 %The group can be delimited either by implicit or explicit
 %braces, or by \cs{begingroup} and \cs{endgroup}.
-Several tokens can be saved for insertion after the current
+某些记号可被
 \cstoidx aftergroup\par
-group with an 
-\begin{disp}\cs{aftergroup}\gr{token}\end{disp} command.
-The tokens are inserted after the group in the sequence
-the \cs{aftergroup} commands were given in.
-The group can be delimited either by implicit or explicit
-braces, or by \cs{begingroup} and \cs{endgroup}.
+\begin{disp}\cs{aftergroup}\gr{token}\end{disp}
+控制序列存储以备当前分组结束后再行插入。
+这些记号会在\cs{aftergroup}序列出现的分组结束后被插入。
+分组可同时被使用直接或间接的花括号来定界，
+或使用\cs{begingroup}及\cs{endgroup}。
 
 %\begin{example}
 %\begin{verbatim}
@@ -538,7 +522,7 @@ braces, or by \cs{begingroup} and \cs{endgroup}.
 \begin{verbatim}
 {\aftergroup\a \aftergroup\b}
 \end{verbatim}
-is equivalent to
+等同于
 \begin{verbatim}
 \a \b
 \end{verbatim}
@@ -549,11 +533,10 @@ is equivalent to
 %in the \cs{textvcenter} macro on page~\pageref{text:vcenter};
 %another one is provided
 %by the footnote mechanism of plain \TeX.
-This command has many applications. One can be found
-\alt
-in the \cs{textvcenter} macro on page~\pageref{text:vcenter};
-another one is provided
-by the footnote mechanism of plain \TeX.
+此命令可以有许多应用。
+其中\cs{textvcenter}宏对其的应用
+可在第\pageref{text:vcenter}页上被找到；
+另一个则是plain {\TeX}中的脚注机制。
 
 %The footnote command of plain \TeX\ has the layout
 %\label{footnote:ex}
@@ -562,13 +545,12 @@ by the footnote mechanism of plain \TeX.
 %However, it is undesirable to scoop up the footnote text,
 %since this precludes for
 %instance category code changes in the footnote.
-The footnote command of plain \TeX\ has the layout
+在plain {\TeX}中，使用脚注命令的语法如下
 \label{footnote:ex}
 \begin{disp}\cs{footnote}\gr{footnote symbol}\lb\gr{footnote text}\rb
-\end{disp} which looks like a macro with two arguments.
-However, it is undesirable to scoop up the footnote text,
-since this precludes for
-instance category code changes in the footnote.
+\end{disp} 这让它看起来像是使用两个参数的宏。
+然而，令人不快的是它需要读入脚注内容，
+而这则妨碍了脚注中出现如类别码变动等情况。
 
 %What happens in the plain footnote macro is (globally) the following.
 %\begin{itemize}\item The \cs{footnote} command opens
@@ -599,49 +581,44 @@ instance category code changes in the footnote.
 %\def\@foot{\strut\egroup}
 %\end{verbatim}
 %will be executed.\end{itemize}
-What happens in the plain footnote macro is (globally) the following.
-\begin{itemize}\item The \cs{footnote} command opens
-an insert,
+实际上，该脚注宏主要是以如下的方式实现的。
+\begin{itemize}\item 首先，\cs{footnote}宏开启一个浮动体插入物：
 \begin{verbatim}
 \def\footnote#1{ ...#1... %treat the footnote sign
     \insert\footins\bgroup
 \end{verbatim}
-\item In the insert box a group is opened,
-and an \cs{aftergroup} command
-is given to close off the insert properly:
+\item 在该插入物盒子中，
+\cs{aftergroup}的命令使得该盒子能够被正确的关闭：
 \begin{verbatim}
     \bgroup\aftergroup\@foot
 \end{verbatim}
-This command is meant to wind up after the closing brace of
-the text that the user typed to end the footnote text;
-the opening brace of the user's footnote text must
-be removed by 
+其起到的作用是，
+使用户输入的结束脚注文本的右花括号无效化；
+而左花括号则需使用如下方式无效化：
 \begin{verbatim}
     \let\next=}%end of definition \footnote
 \end{verbatim}
-which assigns the next token, the brace, to \cs{next}.
-\item The footnote text is set as ordinary text
-in this insert box.
-\item After the footnote the command \cs{@foot}
-defined by
+即将随后的左花括号记号赋值给\cs{next}序列。
+\item 脚注文本即可如一般文本一样在浮动体插入物盒子中排版。
+\item 脚注后，如下定义的\cs{@foot}序列
 \begin{verbatim}
 \def\@foot{\strut\egroup}
 \end{verbatim}
-will be executed.\end{itemize}
+会被最后执行。
+\end{itemize}
 
 
 %%\point Preventing expansion
 %\section{Preventing expansion}
 %\point Preventing expansion
-\section{Preventing expansion}
+\section{抑制展开}
 
 %Sometimes it is necessary to prevent expansion in a place
 %where it normally occurs. For this purpose the control
 %sequences \csidx{string} and \csidx{noexpand} are available.
-Sometimes it is necessary to prevent expansion in a place
-where it normally occurs. For this purpose the control
-sequences \csidx{string} and \csidx{noexpand} are available.
-
+有时在一般会被展开的地方抑制它的展开是必要的。
+为了该用途，
+控制序列\csidx{string}和\csidx{noexpand}可供使用。
 %The use of \cs{string} is rather limited, since it converts
 %a control sequence token into a string of characters, with
 %the value of \cs{escapechar} used for the character of
@@ -650,21 +627,19 @@ sequences \csidx{string} and \csidx{noexpand} are available.
 %\cs{write}, in order to output a control sequence name
 %(see also Chapter~\ref{io}); for another application see
 %the explanation of \cs{newif} in Chapter~\ref{if}.
-The use of \cs{string} is rather limited, since it converts
-a control sequence token into a string of characters, with
-the value of \cs{escapechar} used for the character of
-category code~0\index{category!0}.
-It is eminently suitable for use in a 
-\cs{write}, in order to output a control sequence name
-(see also Chapter~\ref{io}); for another application see
-the explanation of \cs{newif} in Chapter~\ref{if}.
+\cs{string}的使用非常局限，
+这是由于它将一个控制序列记号转换为一个字符串
+（此时\cs{escapechar}的值会被用于替换原类别码为0的字符）。
+显而易见，它很适合用在使用\cs{write}的场合，                        
+来输出一个控制序列的名字（亦见第\ref{io}章）；
+其别的用途可见第\ref{if}章中对\cs{newif}的介绍。
 
 %All characters resulting from \cs{string} have category
 %code~12, `other', except for space characters; they receive
 %code~10. See also Chapter~\ref{char}.
-All characters resulting from \cs{string} have category
-code~12, `other', except for space characters; they receive
-code~10. See also Chapter~\ref{char}.
+所有\cs{string}输出的字符除类别码10的空格外，
+都属于类别码12（「其他」）。
+也见第\ref{char}章。
 
 %%\spoint \cs{noexpand}
 %\subsection{\protect\cs{noexpand}}
@@ -675,10 +650,9 @@ code~10. See also Chapter~\ref{char}.
 %is the following token. The meaning of that token is
 %made temporarily equal to \cs{relax}, so that it cannot
 %be expanded further.
-The \cs{noexpand} command is expandable, and its expansion
-is the following token. The meaning of that token is
-made temporarily equal to \cs{relax}, so that it cannot
-be expanded further.
+命令\cs{noexpand}是可展开的，且其展开为其后面的记号。
+（它后面的）记号的意义会暂时等同于\cs{relax}，
+如此使其不会被进一步展开。
 
 %For \cs{noexpand} the most important application is probably
 %in \cs{edef} commands (but in write statements it can often
@@ -688,14 +662,15 @@ be expanded further.
 %\end{verbatim}
 %Without the \cs{noexpand}, \TeX\ would try to expand
 %\cs{two}, thus giving an `undefined control sequence' error.
-For \cs{noexpand} the most important application is probably
-in \cs{edef} commands (but in write statements it can often
-replace \cs{string}). Consider as an example
+对于控制序列\cs{noexpand}而言，
+最重要的应用莫过于在\cs{edef}中时
+（但在\cs{write}的情况下，它也经常能够替代\cs{string}）。
+考虑下例：
 \begin{verbatim}
  \edef\one{\def\noexpand\two{\the\prevdepth}}
 \end{verbatim}
-Without the \cs{noexpand}, \TeX\ would try to expand
-\cs{two}, thus giving an `undefined control sequence' error.
+若没有\cs{noexpand}，则{\TeX}会试图展开\cs{two}，
+便会出现「未定义控制序列」的报错。
 
 %A  (rather pointless)
 %illustration of the fact that \cs{noexpand} makes the following
@@ -707,16 +682,14 @@ Without the \cs{noexpand}, \TeX\ would try to expand
 %This will not produce any output, because the
 %effect of the \cs{noexpand} is to make the control sequence
 %\cs{a} temporarily equal to \cs{relax}.
-A  (rather pointless)
-illustration of the fact that \cs{noexpand} makes the following
-token effectively into a \cs{relax} is
+一个（没太大意义的）
+下例可表明\cs{noexpand}使其后的记号等同于\cs{relax}：
 \begin{verbatim}
 \def\a{b}
 \noexpand\a
 \end{verbatim}
-This will not produce any output, because the
-effect of the \cs{noexpand} is to make the control sequence
-\cs{a} temporarily equal to \cs{relax}.
+因\cs{noexpand}使控制序列\cs{a}暂时等同于\cs{relax}，
+故其将不会有任何输出。
 
 %%\spoint \cs{noexpand} and active characters
 %\subsection{\protect\cs{noexpand} and active characters}
