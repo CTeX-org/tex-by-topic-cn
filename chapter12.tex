@@ -1,4 +1,5 @@
-% -*- coding: utf-8 -*-
+%-*- coding: utf-8 -*-
+% Translation: RadioNoiseE, 2023
 \documentclass{book}
 
 \input{preamble}
@@ -7,16 +8,14 @@
 \begin{document}
 
 %\chapter{Expansion}\label{expand}
-\chapter{Expansion}\label{expand}
+\chapter{宏展开}\label{expand}
 
 %\emph{Expansion}\index{expansion} in \TeX\ is rather different from
 %procedure calls in most programming languages. This chapter treats the
 %commands connected with expansion, and gives a number of (non-trivial)
 %examples.
-\emph{Expansion}\index{expansion} in \TeX\ is rather different from
-procedure calls in most programming languages. This chapter treats the
-commands connected with expansion, and gives a number of (non-trivial)
-examples.
+\index{expansion}{\TeX}中的\emph{宏展开}不同于其他多数程序设计语言中的过程调用。
+本章将讨论于宏展开相关的命令，并给出一些其（不具体）的实例。
 
 %\label{cschap:relax}\label{cschap:expandafter}\label{cschap:noexpand}\label{cschap:afterassignment}\label{cschap:the}
 %\begin{inventory}
@@ -25,50 +24,44 @@ examples.
 \label{cschap:relax}\label{cschap:expandafter}\label{cschap:noexpand}\label{cschap:afterassignment}\label{cschap:the}
 \begin{inventory}
 \item [\cs{relax}] 
-     Do nothing.
+     什么都不做。
 
 
 %\item [\cs{expandafter}]  
 %      Take the next two tokens and place the expansion of the
 %      second after the first.
 \item [\cs{expandafter}]  
-      Take the next two tokens and place the expansion of the
-      second after the first.
+      （从输入流上）取走其后的两个记号，将第二个记号展开并置于第一个记号之后。
 
 %\item [\cs{noexpand}]   
 %      Do not expand the next token.
 \item [\cs{noexpand}]   
-      Do not expand the next token.
+      使其后的记号不被展开。
 
 
 %\item [\cs{edef}] 
 %      Start a macro definition; 
 %      the replacement text is expanded at definition time.
 \item [\cs{edef}] 
-      Start a macro definition; 
-      the replacement text is expanded at definition time.
-
+      进行宏定义；该宏的定义内容将会在定义时展开。
 % 
 %\item [\cs{aftergroup}]  
 %      Save the next token for insertion after the current group.
  
 \item [\cs{aftergroup}]  
-      Save the next token for insertion after the current group.
+      存储其后的一个记号并在当前分组结束后将其放入输入流中。
 
 %\item [\cs{afterassignment}]   
 %      Save the next token for execution after the next assignment
 %      or macro definition.
 \item [\cs{afterassignment}]   
-      Save the next token for execution after the next assignment
-      or macro definition.
-
+      存储其后的一个记号并在下一个赋值抑或宏定义后执行之。
 
 %\item [\cs{the}] 
 %      Expand the value of various quantities in \TeX\ into a string
 %      of character tokens.
 \item [\cs{the}] 
-      Expand the value of various quantities in \TeX\ into a string
-      of character tokens.
+      将{\TeX}中的某些量展开为包含字符记号的字符串。
 
 %\end{inventory}
 \end{inventory}
@@ -77,7 +70,7 @@ examples.
 %%\point Introduction
 %\section{Introduction}
 %\point Introduction
-\section{Introduction}
+\section{简介}
 
 %\TeX's expansion processor accepts a stream of tokens
 %coming out of the input processor, and its result is
@@ -88,20 +81,15 @@ examples.
 %largely assignments and typesettable material;
 %the former category
 %is expanded, and the result of that expansion is examined anew.
-\TeX's expansion processor accepts a stream of tokens
-coming out of the input processor, and its result is
-again a stream of tokens, which it feeds to the execution
-processor. For the input processor there are two
-kinds of tokens: expandable and unexpandable ones.
-The latter category is passed untouched, and it contains
-largely assignments and typesettable material;
-the former category
-is expanded, and the result of that expansion is examined anew.
+{\TeX}的展开处理器接受来自输入处理器中的记号流，并将其输出为被执行处理器处理的记号流。
+对于输入处理器而言有两种记号：可展开的及不可展开的。
+那类主要包含赋值或供排版内容的（不可展开的）记号会原封不动通过展开处理器；
+而对于可展开的记号则会被展开，同时展开的结果会被重新检验（以确保完全展开）。
 
 %%\point Ordinary expansion
 %\section{Ordinary expansion}
 %\point Ordinary expansion
-\section{Ordinary expansion}
+\section{一般展开}
 
 %The following list gives those constructs
 %that are expanded, unless
@@ -119,9 +107,7 @@ is expanded, and the result of that expansion is examined anew.
 %      \cs{splitfirstmark}, \cs{splitbotmark}
 %\item \cs{input}, \cs{endinput}
 %\end{itemize}
-The following list gives those constructs
-that are expanded, unless
-expansion is inhibited:
+那些若不进行抑制，则会被展开的结构体将在下面的列表中给出。
 \index{expansion!expandable constructs}
 \begin{itemize}
 \item macros\label{expand:lijst}
@@ -177,66 +163,51 @@ expansion is inhibited:
 %      preceded by \cs{span} and the tokens in a \cs{tabskip} 
 %      assignment are still expanded.
 %\end{itemize}
-This is the list of all instances where
-expansion is inhibited:
+下面则是展开会被抑制的情况：
 \begin{itemize}\label{noexp:list}
-\item when \TeX\ is reading a token to be defined by
-      
-\begin{itemize} \item a \gr{let assignment}, that is,
-           by \cs{let} or \cs{futurelet},
-        \item a \gr{shorthand definition}, that is,
-           by \cs{chardef} or \cs{mathchardef}, or a
-           \gr{register def}, that is, \cs{countdef},
-           \cs{dimendef}, \cs{skipdef}, \cs{muskipdef},
-           or~\cs{toksdef},
-        \item a \gr{definition}, that is a macro definition
-           with \cs{def}, \cs{gdef}, \cs{edef}, or~\cs{xdef},
-        \item the \gr{simple assignment}s \cs{read} and \cs{font};
-      \end{itemize}
-\item when a \gr{parameter text} or macro arguments
-      are being read; also when  the replacement text of a 
-      control sequence
-      being defined by \cs{def}, \cs{gdef}, or \cs{read}
-      is being read;
-\item when the token list for a \gr{token variable} or
-      \cs{uppercase}, \cs{lowercase}, or \cs{write}
-      is being read; however, the token list for \cs{write}
-      will be  expanded later when it is shipped out;
-\item when tokens are being deleted during error recovery;
-\item when part of a conditional is being skipped;
-\item in two instances when \TeX\ has to know what follows
-      
-\begin{itemize}\item after a left quote in a context where
-         that is used to denote an integer (thus in 
-         \verb-\catcode`\a- the \cs{a} is not expanded), or
-        \item after a math shift character that begins math mode
-         to see whether another math shift character follows (in which case
-         a display opens);
-        \end{itemize}
-\item when an alignment preamble is being scanned; however,
-      in this case a~token
-      preceded by \cs{span} and the tokens in a \cs{tabskip} 
-      assignment are still expanded.
+\item 当{\TeX}在读入被以下列方法定义的记号时。
+    \begin{itemize} \item 一个\gr{let assignment}，即，
+           使用\cs{let}或\cs{futurelet}，
+        \item 一个\gr{shorthand definition}，即，
+           使用\cs{chardef}或\cs{mathchardef}也可能是一个
+           \gr{register def}，即，\cs{countdef}、
+           \cs{dimendef}、\cs{skipdef}、\cs{muskipdef}、
+           或\cs{toksdef}，
+        \item 一个\gr{definition}，即一个宏定义使用
+           \cs{def}、\cs{gdef}、\cs{edef}、或\cs{xdef}，
+        \item \gr{simple assignment}，即使用 \cs{read}或\cs{font}的简单赋值；
+    \end{itemize}
+\item 当\gr{parameter text}或宏参量被读入时；
+      也可能在当被使用\cs{def}、\cs{gdef}、\cs{read}定义的控制序列被读入时；
+\item 当作为\gr{token variable}、\cs{uppercase}、\cs{lowercase}、或\cs{write}的参量被读取时；
+      但是，作为\cs{write}的参量时则会被在作用时展开；
+\item 当在错误恢复时记号被删除时；
+\item 当作为条件判断（错误）的一部分被忽略时；
+\item 在当{\TeX}知道紧随其后的是什么的以下两种情况下
+    \begin{itemize}\item 在被用于表示整数的左引号后时（所以\verb-\catcode`\a-时\cs{a}不会被展开）、
+        \item 在一个开始数学模式的数学模式切换符出现后判断是否紧随另一个此类字符时（若如此、则为公式展示模式）、
+    \end{itemize}
+\item 当一个对齐导言被读入时；
+      但是，若前面出现\cs{span}时、或作为\cs{tabskip}参量的赋值仍会被展开。
 \end{itemize}
 
 %%\point Reversing expansion order
 %\section{Reversing expansion order}
 %\point Reversing expansion order
-\section{Reversing expansion order}
+\section{颠倒展开顺序}
 
 %Every once in a while you need to change the normal order of
 %expansion of tokens. \TeX\ provides several mechanisms for
 %this. Some of the control sequences in this section are
 %not strictly concerned with expansion.
-Every once in a while you need to change the normal order of
-expansion of tokens. \TeX\ provides several mechanisms for
-this. Some of the control sequences in this section are
-not strictly concerned with expansion.
+有时会出现需要调整记号的一般展开顺序的情况。
+为此，{\TeX}提供了几种机制。
+本节中的某些控制序列并不局限于展开。
 
 %%\spoint One step expansion: \cs{expandafter}
 %\subsection{One step expansion: \protect\cs{expandafter}}
 %\spoint One step expansion: \cs{expandafter}
-\subsection{One step expansion: \protect\cs{expandafter}}
+\subsection{提前一步展开：\protect\cs{expandafter}}
 
 %The most obvious tool for reversed expansion order is
 %\csidx{expandafter}. The sequence
@@ -265,37 +236,37 @@ not strictly concerned with expansion.
 %\item If the \cs{tokentwo} is a macro with one or more
 %parameters, sufficiently many subsequent tokens will be absorbed
 %to form the replacement text.\end{itemize}
-The most obvious tool for reversed expansion order is
-\csidx{expandafter}. The sequence
+最常用的可用于颠倒展开顺序的工具是
+\csidx{expandafter}。以下
 \begin{disp}\cs{expandafter}\gr{token$_1$}\gr{token$_2$}\end{disp}
-expands to 
+序列等同于
 \begin{disp}\gr{token$_1$}\gr{\italic the expansion of token$_2$}
 \end{disp}
-Note the following.
-\begin{itemize} \item If \gr{token$_2$} is a macro, it is replaced
-by its replacement text, not by its final expansion.
-Thus, if 
+若在以下两种情况出现时则须额外注意：
+\begin{itemize} \item 若\gr{token$_2$}是一个宏，
+则其会被它的宏定义结果替换，而非它的最终完全展开结果。所以，
 \begin{verbatim}
 \def\tokentwo{\ifsomecondition this \else that \fi}
 \def\tokenone#1{ ... }
 \end{verbatim}
-the call
+以下的
 \begin{verbatim}
 \expandafter\tokenone\tokentwo
 \end{verbatim}
-will give \cs{ifsomecondition} as the parameter
-to \cs{tokenone}:
+会将\cs{ifsomecondition}作为
+\cs{tokenone}的参量：
 \begin{verbatim}
 \tokenone #1-> ...
 #1<-\ifsomecondition
 \end{verbatim}
-\item If the \cs{tokentwo} is a macro with one or more
-parameters, sufficiently many subsequent tokens will be absorbed
-to form the replacement text.\end{itemize}
+\item 若\cs{tokentwo}是一个使用一个或更多参量的宏，
+则足够多的其后的记号会被吸收，
+从而完成宏替换内容的构成。
+\end{itemize}
 
 %\subsection{Total expansion: \protect\cs{edef}}
 %\label{expand:edef}
-\subsection{Total expansion: \protect\cs{edef}}
+\subsection{完全展开：\protect\cs{edef}}
 \label{expand:edef}
 
 %Macros are usually defined by \cs{def}, but for the cases where
@@ -304,12 +275,11 @@ to form the replacement text.\end{itemize}
 %there is an `expanding define', \csidx{edef}, which expands
 %everything in the replacement text, before assigning it to the
 %control sequence. 
-Macros are usually defined by \cs{def}, but for the cases where
-one wants the replacement text to reflect current conditions
-(as opposed to conditions at the time of the call),
-there is an `expanding define', \csidx{edef}, which expands
-everything in the replacement text, before assigning it to the
-control sequence. 
+宏通常是被使用\cs{def}定义的，
+但当我们希望使用宏替换内容去反映定义时的状况
+（与通过其反映被调用是状况不同）时，
+即可使用「展开定义」，\cs{edef}。
+它会将宏替换内容在将其赋值给（被定义的）宏之前完全展开。
 
 %\begin{example}
 %\begin{verbatim}
