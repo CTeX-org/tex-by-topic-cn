@@ -8,14 +8,14 @@
 \begin{document}
 
 %\chapter{Expansion}\label{expand}
-\chapter{宏展开}\label{expand}
+\chapter{展开}\label{expand}
 
 %\emph{Expansion}\index{expansion} in \TeX\ is rather different from
 %procedure calls in most programming languages. This chapter treats the
 %commands connected with expansion, and gives a number of (non-trivial)
 %examples.
-\index{expansion}{\TeX}中的\emph{宏展开}不同于其他多数程序设计语言中的过程调用。
-本章将讨论于宏展开相关的命令，并给出一些其（不具体）的实例。
+\index{expansion}{\TeX}中的\emph{展开}不同于其他多数程序设计语言中的过程调用。
+本章将讨论于展开相关的命令，并给出一些其（不具体）的实例。
 
 %\label{cschap:relax}\label{cschap:expandafter}\label{cschap:noexpand}\label{cschap:afterassignment}\label{cschap:the}
 %\begin{inventory}
@@ -694,7 +694,7 @@
 %%\spoint \cs{noexpand} and active characters
 %\subsection{\protect\cs{noexpand} and active characters}
 %\spoint \cs{noexpand} and active characters
-\subsection{\protect\cs{noexpand} and active characters}
+\subsection{\protect\cs{noexpand}及活动字符}
 
 %The combination \cs{noexpand}\gr{token} 
 %is\index{character!active, and \cs{noexpand}}
@@ -709,19 +709,18 @@
 %in between \cs{csname} and \cs{endcsname}.
 %The solution is to use \cs{string} instead; see page~\pageref{store:cat}
 %for an example.
-The combination \cs{noexpand}\gr{token} 
-is\index{character!active, and \cs{noexpand}}
-equivalent to \cs{relax}, even if the token
-is an active character. Thus,
+序列\cs{noexpand}\gr{token}的组合
+总是\index{character!active, and \cs{noexpand}}
+等同于\cs{relax}，即使该记号是一个活动字符。
+所以，
 \begin{verbatim}
 \csname\noexpand~\endcsname
 \end{verbatim}
-will not be the same as~\verb>\char`\~>.
-Instead it will give an error message, because
-unexpandable commands \ldash such as \cs{relax} \rdash  are not allowed to appear
-in between \cs{csname} and \cs{endcsname}.
-The solution is to use \cs{string} instead; see page~\pageref{store:cat}
-for an example.
+不意味着\verb>\char`\~>。
+相反，因为不可展开的命令——比如说\cs{relax}——
+不被允许出现在\cs{csname}和\cs{endcsname}中
+，它会提示出现错误。
+解决方法则是转而使用\cs{string}；例见\pageref{store:cat}页。
 
 %In another context, however, the sequence
 %\cs{noexpand}\gr{active character} is equivalent
@@ -737,20 +736,19 @@ for an example.
 %\def\a{ ... } \if\noexpand\a\relax % is true
 %\end{verbatim}
 %where two control sequences are tested.
-In another context, however, the sequence
-\cs{noexpand}\gr{active character} is equivalent
-to the character, but in unexpandable form. This is
-when the conditionals \cs{if} and \cs{ifcat} are used
-(for an explanation of these, see Chapter~\ref{if}).
-Compare
+但在某些其他情境下，\cs{noexpand}\gr{active character}的序列
+等同于该字符不可展开的形式。
+这时条件判断命令\cs{if}和\cs{ifcat}可被使用说明这一点
+（这两个控制序列的解释可见第\ref{if}章）。
+比较下两种情况
 \begin{verbatim}
 \if\noexpand~\relax % is false
 \end{verbatim}
-where the character code of the tilde is tested, with
+此时\texttt{\~}的字符编码被测试；而
 \begin{verbatim}
 \def\a{ ... } \if\noexpand\a\relax % is true
 \end{verbatim}
-where two control sequences are tested.
+此时两个控制序列被比较。
 
 %%\point \cs{relax}
 %\section{\protect\cs{relax}}
@@ -759,8 +757,8 @@ where two control sequences are tested.
 
 %The control sequence \csidx{relax} cannot be expanded, but
 %when it is executed nothing happens.
-The control sequence \csidx{relax} cannot be expanded, but
-when it is executed nothing happens.
+控制序列\csidx{relax}不可展开，
+但它被执行的时候则什么也不会做。
 
 %This statement sounds a bit paradoxical, so  consider
 %an example. Let  counters
@@ -787,31 +785,37 @@ when it is executed nothing happens.
 %Since the \cs{relax} token has no effect when it is executed,
 %the result of this line is that \n{123} is assigned to
 %\cs{MyCount}, and the digit 4 is printed.
-This statement sounds a bit paradoxical, so  consider
-an example. Let  counters
+以上说明感觉上有些似是而非，不妨看一个例子。
+给出如下计数器
 \begin{verbatim}
 \newcount\MyCount
 \newcount\MyOtherCount \MyOtherCount=2
 \end{verbatim}
-be given.
-In the assignment
+在赋值过程中，
 \begin{verbatim}
 \MyCount=1\number\MyOtherCount3\relax4
 \end{verbatim}
-the command \cs{number} is expandable, and \cs{relax} is not.
-When \TeX\ constructs the number that is to be assigned
-it will expand all commands, either until a non-digit is 
-found, or until an unexpandable command is encountered.
-Thus it reads the~\n1; it expands the sequence \verb>\number\MyOtherCount>,
-which gives~\n2; it reads the~\n3; it sees the \cs{relax}, and
-as this is unexpandable it halts. The number to be assigned
-is then \n{123}, and the whole call has been expanded into
+命令\cs{number}是可展开的，
+而\cs{relax}则不可以。
+当{\TeX}构建将被赋给的值的时候，
+它会展开所有命令
+直到遇到非数字或不可展开的命令为止。
+所以它读入\n1；
+它会展开\verb>\number\MyOtherCount>
+（其展开后值为\n2）；
+它接着读入\n3；
+它又读入\cs{relax}，
+而由于其不可展开，
+于是便最终停止对赋值过程中值的构建。
+于是最终赋给\cs{MyCount}的值即为\n{123}，
+因为展开的结果为：
 \begin{verbatim}
 \MyCount=123\relax4
 \end{verbatim}
-Since the \cs{relax} token has no effect when it is executed,
-the result of this line is that \n{123} is assigned to
-\cs{MyCount}, and the digit 4 is printed.
+又因为\cs{relax}的执行结果是什么也不做，
+所以该行将会把值\n{123}
+赋给\cs{MyCount}，
+并排版数字\n4
 
 %Another example of how \cs{relax} can be used to indicate
 %the end of a command\label{fil:l:l}\ is
@@ -830,20 +834,20 @@ the result of this line is that \n{123} is assigned to
 %\begin{verbatim}
 %\everypar{\hskip 0cm plus 1fil\relax}
 %\end{verbatim}
-Another example of how \cs{relax} can be used to indicate
-the end of a command\label{fil:l:l}\ is
+命令\cs{relax}还可被用于（显式）表示一个命令的结束，
+如下例\label{fil:l:l}：
 \begin{verbatim}
 \everypar{\hskip 0cm plus 1fil }
 \indent Later that day, ... 
 \end{verbatim}
-This will be misunderstood: \TeX\ will see
+这段代码是有歧义的：{\TeX}实际上读到的是
 \begin{verbatim}
 \hskip 0cm plus 1fil L
 \end{verbatim}
-and \hbox{\n{fil L}} is a~valid,
-if bizarre,
-way of writing \n{fill} (see Chapter~\ref{gramm}).
-One remedy is to write
+而\hbox{\n{fil L}}虽然看起来不太正常，
+但实际上是一种合法的表示\n{fill}的方式
+（详见第\ref{gramm}章）。
+可用\cs{relax}漂亮的解决：
 \begin{verbatim}
 \everypar{\hskip 0cm plus 1fil\relax}
 \end{verbatim}
@@ -852,7 +856,7 @@ One remedy is to write
 %\subsection{\cs{relax} and \cs{csname}}
 %\label{relax:cs}
 %\spoint[relax:cs] \cs{relax} and \cs{csname}
-\subsection{\cs{relax} and \cs{csname}}
+\subsection{\cs{relax}与\cs{csname}}
 \label{relax:cs}
 
 %If a \verb-\csname ... \endcsname- command forms the name
@@ -860,11 +864,10 @@ One remedy is to write
 %that control sequence is made equal to \cs{relax},
 %and the whole statement is also equivalent to \cs{relax}
 %(see also page~\pageref{cs:name}).
-If a \verb-\csname ... \endcsname- command forms the name
-of a previously undefined control sequence,
-that control sequence is made equal to \cs{relax},
-and the whole statement is also equivalent to \cs{relax}
-(see also page~\pageref{cs:name}).
+若\verb-\csname ... \endcsname-被用于构建一个未被定义的控制序列，
+该序列会被等同于\cs{relax}，
+同时整个构建其的语句也会被等同于\cs{relax}
+（亦可见第\pageref{cs:name}页）。
 
 %However,  this assignment of \cs{relax} is
 %\altt
@@ -875,15 +878,14 @@ and the whole statement is also equivalent to \cs{relax}
 %\end{verbatim}
 %gives an error message for an
 %undefined control sequence~\cs{xx}.
-However,  this assignment of \cs{relax} is
+但是，被赋给的\cs{relax}值
 \altt
-only local:
+仅在局部生效：
 \begin{verbatim}
 {\xdef\test{\expandafter\noexpand\csname xx\endcsname}}
 \test
 \end{verbatim}
-gives an error message for an
-undefined control sequence~\cs{xx}.
+会给出未定义控制序列\cs{xx}的错误。
 
 %Consider as an example the \LaTeX\ environments,
 %which are delimited by
@@ -912,38 +914,37 @@ undefined control sequence~\cs{xx}.
 %See page~\pageref{begin:end:macros} for the rationale
 %behind using \cs{begingroup} and \cs{endgroup}
 %instead of \cs{bgroup} and \cs{egroup}.
-Consider as an example the \LaTeX\ environments,
-which are delimited by
+考虑{\LaTeX}中的环境：
+其使用
 \begin{verbatim}
 \begin{...} ... \end{...}
 \end{verbatim}
-The begin and end commands are (in essence)
-defined as follows:
+定界。
+这两个表示开始和结束的命令（究其本质）
+是如此定义的：
 \begin{verbatim}
-\def
-\begin#1{\begingroup\csname#1\endcsname}
+\def\begin#1{\begingroup\csname#1\endcsname}
 \def\end#1{\csname end#1\endcsname \endgroup}
 \end{verbatim}
-Thus, for the list environment the commands
-\cs{list} and \cs{endlist} are defined, but any
-command can be used as an environment name,
-even if no corresponding \cs{end...} has been defined.
-For instance,
+故，对于列表环境，实际定义的是命令\cs{list}和\cs{endlist}。
+但是即使没有定义对应的\cs{end...}
+该命令仍可用来定义环境。
+如：
 \begin{verbatim}
 \begin{it} ... \end{it}
 \end{verbatim}
-is equivalent to 
+等价于
 \begin{verbatim}
 \begingroup\it ... \relax\endgroup
 \end{verbatim}
-See page~\pageref{begin:end:macros} for the rationale
-behind using \cs{begingroup} and \cs{endgroup}
-instead of \cs{bgroup} and \cs{egroup}.
+此处使用\cs{begingroup}、\cs{endgroup}
+而非\cs{bgroup}、\cs{egroup}
+的原理则见第\pageref{begin:end:macros}页。
 
 %%\spoint Preventing expansion with \cs{relax}
 %\subsection{Preventing expansion with \cs{relax}}
 %\spoint Preventing expansion with \cs{relax}
-\subsection{Preventing expansion with \cs{relax}}
+\subsection{使用\cs{relax}抑制展开}
 
 %Because \cs{relax} 
 %cannot be expanded, a control sequence can be prevented
@@ -957,24 +958,23 @@ instead of \cs{bgroup} and \cs{egroup}.
 %of the macro \cs{somemacro} (or give an error message
 %if the macro is undefined) if the \cs{let} statement
 %had been omitted.
-Because \cs{relax} 
-cannot be expanded, a control sequence can be prevented
-from being expanded (for instance in an \cs{edef} or a \cs{write})
-by making it temporarily equal to \cs{relax}:
+因为命令\cs{relax}不可展开的缘故，
+（使用如\cs{edef}或\cs{write}时）
+通过使某个控制序列暂时地等价于\cs{relax}
+即可使该序列不被展开。
 \begin{verbatim}
 {\let\somemacro=\relax \write\outfile{\somemacro}}
 \end{verbatim}
-will write the string `\cs{somemacro}' to an output file.
-It would write the expansion 
-of the macro \cs{somemacro} (or give an error message
-if the macro is undefined) if the \cs{let} statement
-had been omitted.
+该代码片段则会将`\cs{somemacro}'写入到输出文件中。
+若\cs{let}段被遗漏，
+则会将宏\cs{somemacro}的展开结果写入到文件中
+（若其未定义则给出该宏未定义之错误）。
 
 %%\spoint[bump:relax] \TeX\ inserts a \cs{relax}
 %\subsection{\TeX\ inserts a \cs{relax}}
 %\label{bump:relax}
 %\spoint[bump:relax] \TeX\ inserts a \cs{relax}
-\subsection{\TeX\ inserts a \cs{relax}}
+\subsection{{\TeX}自动插入\cs{relax}}
 \label{bump:relax}
 
 %\TeX\ itself inserts \cs{relax} on some occasions.
@@ -991,19 +991,18 @@ had been omitted.
 %\end{verbatim}
 %internally.
 %\end{example}
-\TeX\ itself inserts \cs{relax} on some occasions.
-For instance, \cs{relax} is inserted if \TeX\ encounters an
-\cs{or}, \cs{else}, or~\cs{fi} while still determining
-the extent of the test. 
+{\TeX}自己也会在某些情况下插入\cs{relax}。
+具体来说，
+即是当{\TeX}仍在确定文本范围时读到序列
+\cs{or}、\cs{else}、或\cs{fi}时。
 \begin{example}
 \begin{verbatim}
 \ifvoid1\else ... \fi
 \end{verbatim}
-is changed into
+在内部被转换为
 \begin{verbatim}
 \ifvoid1\relax \else ...\fi
 \end{verbatim}
-internally.
 \end{example}
 
 %Similarly, if one of the tests \cs{if}, \cs{ifcat}
@@ -1016,13 +1015,14 @@ internally.
 %\begin{verbatim}
 %\if1\relax\else ...
 %\end{verbatim}
-Similarly, if one of the tests \cs{if}, \cs{ifcat}
-is given only one comparand, as in
+类似的，
+如果判断语句\cs{if}、\cs{ifcat}仅有一条分支，
+如
 \begin{verbatim}
 \if1\else ...
 \end{verbatim}
-a \cs{relax} token is inserted. Thus this test
-is equivalent to
+{\TeX}也会插入一个\cs{relax}。
+于是上段代码等同于
 \begin{verbatim}
 \if1\relax\else ...
 \end{verbatim}
@@ -1033,17 +1033,17 @@ is equivalent to
 %or \cs{mathchardef} \rdash  its meaning is temporarily made
 %equal to \cs{relax}. This makes it possible to write
 %\verb>\chardef\foo=123\foo>.
-Another place where \cs{relax} is used is the following.
-While a control sequence is being defined in a \gr{shorthand
-definition} \ldash that is, a \gr{registerdef} or \cs{chardef}
-or \cs{mathchardef} \rdash  its meaning is temporarily made
-equal to \cs{relax}. This makes it possible to write
-\verb>\chardef\foo=123\foo>.
+还有另一\cs{relax}被使用的情况。
+当某一序列被使用\gr{shorthand definition}——
+即，一个\gr{registerdef}或\cs{chardef}、\cs{mathchardef}——
+定义时，它的含义被短暂地定义为\cs{relax}。
+这使得我们能够这样写：
+\verb>\chardef\foo=123\foo>。
 
 %%\spoint The value of non-macros; \cs{the}
 %\subsection{The value of non-macros; \cs{the}}
 %\spoint The value of non-macros; \cs{the}
-\subsection{The value of non-macros; \cs{the}}
+\subsection{表示非宏的值：\cs{the}}
 
 %Expansion is a precisely defined activity in \TeX.
 %\cstoidx the\par
@@ -1052,13 +1052,12 @@ equal to \cs{relax}. This makes it possible to write
 %Other tokens than those in the above list may have an `expansion'
 %in an informal sense. For instance one may wish to `expand'
 %the \cs{parindent} into its value, say~\n{20pt}.
-Expansion is a precisely defined activity in \TeX.
+在{\TeX}中，展开被准确地定义。
 \cstoidx the\par
-The full list of tokens that can be expanded
-was given above. 
-Other tokens than those in the above list may have an `expansion'
-in an informal sense. For instance one may wish to `expand'
-the \cs{parindent} into its value, say~\n{20pt}.
+所有能被展开的记号都已在上方给出。
+除此之外，
+其中也有能够以不严格的方式「展开」的记号：
+如将\cs{parindent}展开为它的值，比方说\n{20pt}。
 
 %Converting  the value of (among others) an
 %\gr{integer parameter}, a \gr{glue parameter}, 
@@ -1070,16 +1069,18 @@ the \cs{parindent} into its value, say~\n{20pt}.
 %Its result (in most cases)
 %is a string of tokens of category~12\index{category!12}, except
 %that spaces have category code~10\index{category!10}.
-Converting  the value of (among others) an
-\gr{integer parameter}, a \gr{glue parameter}, 
-\gr{dimen parameter} or a \gr{token parameter}
-into a string of character tokens is done by the expansion processor.
-The command \cs{the}
-is expanded whenever expansion is not inhibited,
-and it takes the value of various sorts of parameters.
-Its result (in most cases)
-is a string of tokens of category~12\index{category!12}, except
-that spaces have category code~10\index{category!10}.
+故除上面描述的外，
+展开处理器还会将一个
+\gr{integer parameter}、
+一个\gr{glue parameter}、
+一个\gr{dimen parameter}、
+抑或是\gr{token parameter}的值
+转换为一串字符记号。
+而\cs{the}（除非被抑制）被展开后将拿取变量作为参数。
+（在大多数情况下），
+其展开的结果是一串
+除类别码为10\index{category!10}的空格之外
+类别码为12\index{category!12}的记号。
 
 %Here is the list of everything that can be prefixed with \cs{the}.
 %\begin{description}\item [\gr{parameter} or \gr{register}]
@@ -1117,41 +1118,38 @@ that spaces have category code~10\index{category!10}.
 %Token list registers and \gr{token parameter}s can be prefixed
 %with \cs{the}; the result is their contents.
 %\end{description}
-Here is the list of everything that can be prefixed with \cs{the}.
-\begin{description}\item [\gr{parameter} or \gr{register}]
-If the parameter or register is of type integer, glue, dimen
-or muglue,
-its value is given as a string of character tokens;
-if it is of type token list (for instance
-\cs{everypar} or \cs{toks5}), the result is a string of tokens.
-Box registers are excluded here.
+所有能以\cs{the}作为前缀的如下所列：
+\begin{description}\item [\gr{parameter}或\gr{register}]
+如果寄存器的参量是一种整数、伸缩胶、长度或数学模式中的伸缩胶，
+则其值以一串字符记号的形式被给出；若为记号列表（如
+\cs{everypar}或\cs{toks5}），
+结果则会是一串记号。
+盒子寄存器在这里不予考虑。
 \item [\gr{codename}\gr{8-bit number}]
-See page~\pageref{codename}.
+见第\pageref{codename}页。
 \item [\gr{special register}]
-The integer registers \cs{prevgraf}, \cs{deadcycles}, \cs{insertpenalties}
-\cs{inputlineno}, \cs{badness}, \cs{parshape}, \cs{spacefactor}
-(only in horizontal mode), or \cs{prevdepth} (only in vertical mode).
-The dimension registers \cs{pagetotal}, \cs{pagegoal}, \cs{pagestretch},
-\handbreak \cs{pagefilstretch}, \cs{pagefillstretch}, \cs{pagefilllstretch},
-\cs{pageshrink}, or \cs{pagedepth}.
-\item [Font properties:]
-\cs{fontdimen}\gr{parameter number}\gr{font}, 
-\cs{skew\-char}\gr{font},
-\cs{hy\-phen\-char}\gr{font}.
-\item [Last quantities:]
-\cs{lastpenalty}, \cs{lastkern}, \cs{lastskip}.
+整数寄存器如\cs{prevgraf}、\cs{deadcycles}、\cs{insertpenalties}、
+\cs{inputlineno}、\cs{badness}、\cs{parshape}、\cs{spacefactor}
+（仅出现在水平模式中）、和\cs{prevdepth}（仅出现在竖直模式中）。
+长度寄存器如\cs{pagetotal}、\cs{pagegoal}、\cs{pagestretch}、
+\handbreak \cs{pagefilstretch}、\cs{pagefillstretch}、
+\cs{pagefilllstretch}、\cs{pageshrink}、和\cs{pagedepth}。
+\item [字体属性：]
+\cs{fontdimen}\gr{parameter number}\gr{font}、
+\cs{skew\-char}\gr{font}、和
+\cs{hy\-phen\-char}\gr{font}。
+\item [前量：]
+\cs{lastpenalty}、\cs{lastkern}、和\cs{lastskip}。
 \item [\gr{defined character}]
-Any control sequence defined by \cs{chardef} or \cs{mathchardef};
-the result is the decimal value.
+任何使用\cs{chardef}或\cs{mathchardef}定义的控制序列；
+结果是十进制数。
 \end{description}
-In some cases \cs{the} can give a control sequence token 
-or list of such tokens.
+有时，\cs{the}会返回一个控制序列记号或是前者的列表。
 \begin{description}\item [\gr{font}]
-The result is the control sequence that stands for the
-font.
+结果是代表该字体的控制序列。
 \item [\gr{token variable}]
-Token list registers and \gr{token parameter}s can be prefixed
-with \cs{the}; the result is their contents.
+记号列表寄存器以及\gr{token parameter}可以使用
+\cs{the}为前缀；展开结果是它们的内容。
 \end{description}
 
 %Let us consider an example of the use of \cs{the}.
@@ -1169,32 +1167,36 @@ with \cs{the}; the result is their contents.
 %\end{verbatim}
 %See page~\pageref{store:cat} for more elaborate macros
 %for saving and restoring catcodes.
-Let us consider an example of the use of \cs{the}.
-If in a file that is to be \cs{input} the
-category code of a character, say the at~sign, is changed,
-one could write
+来思考一个使用\cs{the}的例子。
+若有一个将使用\cs{input}读入的
+某个字符（不妨让它为\texttt{\@}）
+的类别码被改变了的文件。
+我们可以写出
 \begin{verbatim}
 \edef\restorecat{\catcode`@=\the\catcode`@}
 \end{verbatim}
-and call \cs{restorecat} at the end of the file.
-If the category code was~11, \cs{restorecat}
-is defined equivalent to
+并在该文件的末尾写上\cs{restorecat}。
+若类别为11，则\cs{restorecat}的定义等同于
 \begin{verbatim}
 \catcode`@=11
 \end{verbatim}
-See page~\pageref{store:cat} for more elaborate macros
-for saving and restoring catcodes.
+更复杂的被用来保存并恢复类别码的宏可见
+第\pageref{store:cat}页。
 
 
 %%\point Examples
 %\section{Examples}
 %\point Examples
-\section{Examples}
+\section{示例}
 
 %%\spoint Expanding after
 %\subsection{Expanding after}
 %\spoint Expanding after
-\subsection{Expanding after}
+\subsection{滞后展开
+\footnote{译注：实际上是越过一个记号展开后面的记号，
+这里为了使章节名紧凑，且原文为「expand after」，
+故译为「滞后展开」。
+其意指将目前的记号滞后，先行展开其后的记号。}}
 
 %The most obvious use of \cs{expandafter} is to reach over
 %a control sequence:
@@ -1216,26 +1218,26 @@ for saving and restoring catcodes.
 %\end{verbatim}
 %it expands  \cs{romannumeral} on the other side of the opening
 %brace.
-The most obvious use of \cs{expandafter} is to reach over
-a control sequence:
+对于控制序列\cs{expandafter}，
+最显而易见的使用方式莫过于提前展开一个（位于后部）控制序列：
 \begin{verbatim}
 \def\stepcounter
     #1{\expandafter\advance\csname 
              #1:counter\endcsname 1\relax}
 \stepcounter{foo}
 \end{verbatim}
-Here the \cs{expandafter} lets the \cs{csname} command form
-the control sequence \cs{foo:counter}; after \cs{expandafter}
-is finished the statement has reduced to
+此处使用的\cs{expandafter}使得\cs{csname}得以构建完毕
+\cs{foo:counter}控制序列；
+在\cs{expandafter}展开后，
+该声明被缩减为
 \begin{verbatim}
 \advance\foo:counter 1\relax
 \end{verbatim}
-It is possible to reach over tokens other than control sequences: in
+越过不属于控制序列的记号也是可能的，在
 \begin{verbatim}
 \uppercase\expandafter{\romannumeral \year}
 \end{verbatim}
-it expands  \cs{romannumeral} on the other side of the opening
-brace.
+中，它先行展开左花括号右侧的\cs{romannumeral}宏。
 
 %You can expand after two control sequences:
 %\begin{verbatim}
@@ -1254,23 +1256,23 @@ brace.
 %            \expandafter            \a            \b 
 %\end{verbatim} 
 %to expand \cs{c} first.
-You can expand after two control sequences:
+自然，你也可以越过两个控制序列展开：
 \begin{verbatim}
 \def\globalstepcounter
     #1{\expandafter\global\expandafter\advance
              \csname #1:counter\endcsname 1\relax}
 \end{verbatim}
-If you think of \cs{expandafter} as reversing the evaluation
-order of {\sl two\/} control sequences, you can reverse
-{\sl three\/} by
+若你觉得只能使用\cs{expandafter}颠倒
+{\sl 两个\/}控制序列的执行顺序，
+你还可以颠倒{\sl 三个的\/}，使用
 \begin{verbatim}
 \expandafter\expandafter\expandafter\a\expandafter\b\c 
 \end{verbatim}
-which reaches across the three control sequences
+即可最先展开\cs{c}而得到
 \begin{verbatim}
             \expandafter            \a            \b 
 \end{verbatim} 
-to expand \cs{c} first.
+三个控制序列作为结果。
 
 %There is even an unexpected use for \cs{expandafter} in
 %conditionals;
@@ -1290,38 +1292,35 @@ to expand \cs{c} first.
 %The \cs{expandafter} lets \TeX\ see the \cs{fi} and remove it
 %before it tackles the macro \cs{bold}
 %(see also page~\pageref{after:cond}).
-There is even an unexpected use for \cs{expandafter} in
-conditionals;
-with
+在条件判断中，\cs{expandafter}还有更预料不到的作用；如下
 \begin{verbatim}
 \def\bold#1{{\bf #1}}
 \end{verbatim}
-the sequence
+代码中，序列
 \begin{verbatim}
 \ifnum1>0 \bold \fi {word}
 \end{verbatim}
-will not give a boldface `word', but
+并不会让「word」被加粗，而
 \begin{verbatim}
 \ifnum1>0 \expandafter\bold \fi {word}
 \end{verbatim}
-will.
-The \cs{expandafter} lets \TeX\ see the \cs{fi} and remove it
-before it tackles the macro \cs{bold}
-(see also page~\pageref{after:cond}).
+可以（使其被加粗）。
+控制序列\cs{expandafter}会让{\TeX}先一步看到\cs{fi}
+并在它构建宏\cs{bold}的参数之前移除之
+（亦见第~\pageref{after:cond}页）。
 
 %%\spoint Defining inside an \cs{edef}
 %\subsection{Defining inside an \cs{edef}}
 %\spoint Defining inside an \cs{edef}
-\subsection{Defining inside an \cs{edef}}
+\subsection{\cs{edef}内部的定义}
 
 %There is one \TeX\ command that is executed instead of
 %expanded that is worth pointing out explicitly:
 %the primitive command \cs{def} (and all other \gr{def} commands)
 %is not expanded.
-There is one \TeX\ command that is executed instead of
-expanded that is worth pointing out explicitly:
-the primitive command \cs{def} (and all other \gr{def} commands)
-is not expanded.
+有一个以执行代替展开的{\TeX}命令值得特别指出：
+元命令\cs{def}（以及所有其他的\gr{def}命令）
+不会被展开。
 
 %Thus the call
 %\begin{verbatim}
@@ -1346,36 +1345,36 @@ is not expanded.
 %(this time on its second occurrence),
 %as it will only be defined when \cs{next} is called,
 %not when \cs{next} is defined.
-Thus the call
+所以以下写法
 \begin{verbatim}
 \edef\next{\def\thing{text}}
 \end{verbatim}
-will give an `undefined
-control sequence' for \cs{thing}, even though after
-\cs{def} expansion is ordinarily inhibited (see page~\pageref{noexp:list}).
-After
+会给出一个宏\cs{thing}未定义的错误，
+即使一般情况下\cs{def}后的展开被抑制
+（参考第~\pageref{noexp:list}页）。
+而若使用这种写法
 \begin{verbatim}
 \edef\next{\def\noexpand\thing{text}}
 \end{verbatim}
-the `meaning' of \cs{next} will be
+\cs{next}的意义会是
 \begin{verbatim}
 macro: \def \thing {text}
 \end{verbatim}
-The definition
+而以下定义
 \begin{verbatim}
 \edef\next{\def\noexpand\thing{text}\thing}
 \end{verbatim}
-will again give an `undefined control sequence' for \cs{thing}
-(this time on its second occurrence),
-as it will only be defined when \cs{next} is called,
-not when \cs{next} is defined.
+又会给出宏\cs{thing}未定义的错误
+（但这次是由于它的第二次出现），
+因为\cs{thing}只有在\cs{next}被实际调用时才会被定义
+（在定义\cs{next}宏时是不会定义\cs{thing}的）。
 
 
 %%\spoint[expand:write] Expansion and \cs{write}
 %\subsection{Expansion and \cs{write}}
 %\label{expand:write}
 %\spoint[expand:write] Expansion and \cs{write}
-\subsection{Expansion and \cs{write}}
+\subsection{展开与\cs{write}}
 \label{expand:write}
 
 %The argument token list of \csidx{write} is treated in much
@@ -1384,12 +1383,11 @@ not when \cs{next} is defined.
 %are completely expanded. Unexpandable control sequences
 %are treated by \cs{write} as if they are prefixed
 %by \cs{string}.
-The argument token list of \csidx{write} is treated in much
-the same way as the replacement text of an \cs{edef};
-that is, expandable control sequences and active characters
-are completely expanded. Unexpandable control sequences
-are treated by \cs{write} as if they are prefixed
-by \cs{string}.
+\csidx{write}中的作为参量的记号列表
+几乎被以同\cs{edef}的替换文本相同的方法被处理；
+即，可展开的控制序列和活动字符被完全展开。
+在\cs{write}中不可展开的控制序列，
+被像有\cs{string}作前缀那样被处理。
 
 %Because of the expansion performed by \cs{write},
 %some care has to be taken when outputting control
@@ -1398,24 +1396,21 @@ by \cs{string}.
 %the expansion of the argument of \cs{write} is only performed
 %when it is shipped out. Here follows a worked-out
 %example.
-Because of the expansion performed by \cs{write},
-some care has to be taken when outputting control
-sequences with \cs{write}.
-Even more complications arise from the fact that 
-the expansion of the argument of \cs{write} is only performed
-when it is shipped out. Here follows a worked-out
-example.
-
+在使用\cs{write}输出控制序列时，
+需要注意某些情况。
+其更复杂的原因来自于\cs{write}参量的展开
+仅在它被输出的时候发生。
+后面则是一个有启发的例子。
 %Suppose \cs{somecs} is a macro, and you
 %want to write the string 
 %\begin{disp}\verb-\def\othercs-\lb {\italic the expansion of \cs{somecs}}\rb
 %\end{disp}
 %to a file.
-Suppose \cs{somecs} is a macro, and you
-want to write the string 
-\begin{disp}\verb-\def\othercs-\lb {\italic the expansion of \cs{somecs}}\rb
+假设有一个宏\cs{somecs}，
+同时你希望将以下序列
+\begin{disp}\verb-\def\othercs-\lb {\italic \cs{somecs}的展开}\rb
 \end{disp}
-to a file.
+写入到文件中。
 
 %The first attempt is
 %\begin{verbatim}
@@ -1426,15 +1421,14 @@ to a file.
 %because the \cs{write} will try to expand that token. 
 %Note that the \cs{somecs} is also  expanded, 
 %so that part is right.
-The first attempt is
+首先想到的方法是
 \begin{verbatim}
 \write\myfile{\def\othercs{\somecs}}
 \end{verbatim}
-This gives an error `undefined control sequence' for \cs{othercs},
+然而，这会提示\cs{othercs}未定义之错误，
 \altt
-because the \cs{write} will try to expand that token. 
-Note that the \cs{somecs} is also  expanded, 
-so that part is right.
+因为\cs{write}会尝试展开其。
+好事是\cs{somecs}也被展开，所以该部分目的被达到了。
 
 %The next attempt is
 %\begin{verbatim}
@@ -1444,14 +1438,14 @@ so that part is right.
 %statement written is
 %\begin{disp}\verb>\def\othercs>\lb{\italic expansion of \cs{somecs}}\rb\end{disp}
 %which looks right.
-The next attempt is
+随后的实现是
 \begin{verbatim}
 \write\myfile{\def\noexpand\othercs{\somecs}}
 \end{verbatim}
-This is almost right, but not quite. The
-statement written is
+它几乎就对了，但不完全对。
+我们写出的定义是
 \begin{disp}\verb>\def\othercs>\lb{\italic expansion of \cs{somecs}}\rb\end{disp}
-which looks right.
+它看起来无可挑剔。
 
 %However, writes \ldash and the expansion of their argument \rdash 
 %are not executed
@@ -1462,15 +1456,12 @@ which looks right.
 %value at the time the \cs{write} command was given.
 %Somehow, therefore, the current expansion must be
 %inserted in the write command.
-However, writes \ldash and the expansion of their argument \rdash 
-are not executed
-on the spot, but saved until the part of the page on which
-they occur is shipped out (see Chapter~\ref{io}).
-So, in the meantime, the value of \cs{somecs} may have
-changed. In other words, the value written may not be the
-value at the time the \cs{write} command was given.
-Somehow, therefore, the current expansion must be
-inserted in the write command.
+但是，写入——当然也包括写入参量的展开——
+并非即时进行的，
+它是在（它出现的）该部分页面输出时才进行的（参考第\ref{io}章）。
+所以，那时\cs{somecs}的值可能会发生变化。
+这也就意味着写入到文件中的值不一定是\cs{write}命令被给出时的值。
+所以，必须以某种方式使用当前的展开结果作为\cs{write}的参量。
 
 %The following is an attempt at repair:
 %\begin{verbatim}
@@ -1498,32 +1489,30 @@ inserted in the write command.
 %     {\italic current value of \cs{somecs}}\rb\end{disp}
 %This mechanism is the basis for cross-referencing
 %macros in several macro packages.
-The following is an attempt at repair:
+于是我们尝试
 \begin{verbatim}
 \edef\act{\write\myfile{\def\noexpand\othercs{\somecs}}}
 \act
 \end{verbatim} 
-Now the  write command will be
-\begin{disp}\verb>\write\myfile{\def\othercs{>\italic value of\/
-     \verb>\somecs}}>\end{disp}
-The \cs{noexpand} prevented the \cs{edef} from expanding
-the \cs{othercs}, but after the definition it has disappeared,
-so that execution of the write will again give an undefined control
-sequence. The final solution is
+这时写入的命令会是
+\begin{disp}\verb>\write\myfile{\def\othercs{>\italic
+     \verb>\somecs}}>的值\end{disp}
+命令\cs{noexpand}抑制了\cs{edef}对\cs{othercs}的展开，
+但在对\cs{act}定义后它就消失了，
+这就导致在写入时还将出现未定义控制序列的错误。
+于是我们最终的解决方案是如下的
 \begin{verbatim}
 \edef\act{\write\myfile
           {\def \noexpand\noexpand \noexpand\othercs{\somecs}}}
 \act
 \end{verbatim} 
-In this case the write command caused by the expansion of \cs{act}
-will be
+此时\cs{act}开始的写入命令实际上是
 \begin{disp}\verb>\write\myfile{\def\noexpand\othercs>\lb
-     {\italic current value of \cs{somecs}}\rb\end{disp}
-and the string actually written is
+     {\italic \cs{somecs}的当前值}\rb\end{disp}
+而实际写入的序列是
 \begin{disp}\verb>\def\othercs>\lb
-     {\italic current value of \cs{somecs}}\rb\end{disp}
-This mechanism is the basis for cross-referencing
-macros in several macro packages.
+     {\italic \cs{somecs}的当前值}\rb\end{disp}
+以上的机制即为一些宏集交叉索引宏的底层原理。
 
 
 %%\spoint Controlled expansion inside an \cs{edef}
