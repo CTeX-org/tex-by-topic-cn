@@ -2,7 +2,7 @@
 % Translation: RadioNoiseE, 2023
 \documentclass{book}
 
-\input{preamble}
+\input{preamble.tex}
 \setcounter{chapter}{11}
 
 \begin{document}
@@ -14,8 +14,9 @@
 %procedure calls in most programming languages. This chapter treats the
 %commands connected with expansion, and gives a number of (non-trivial)
 %examples.
-\index{expansion}{\TeX}中的\emph{展开}不同于其他多数程序设计语言中的过程调用。
-本章将讨论于展开相关的命令，并给出一些其（不具体）的实例。
+\index{expansion}{\TeX}中的\emph{展开}不同于其他许多程序设计语言中的过程调用。
+本章将讨论与展开相关的命令，
+并给出一些（不那么具体）的实例。
 
 %\label{cschap:relax}\label{cschap:expandafter}\label{cschap:noexpand}\label{cschap:afterassignment}\label{cschap:the}
 %\begin{inventory}
@@ -31,7 +32,8 @@
 %      Take the next two tokens and place the expansion of the
 %      second after the first.
 \item [\cs{expandafter}]  
-      （从输入流上）取走其后的两个记号，将第二个记号展开并置于第一个记号之后。
+      （从输入流上）取走其后的两个记号，
+      将第二个记号展开一步并置于第一个记号之后。
 
 %\item [\cs{noexpand}]   
 %      Do not expand the next token.
@@ -43,7 +45,8 @@
 %      Start a macro definition; 
 %      the replacement text is expanded at definition time.
 \item [\cs{edef}] 
-      进行宏定义；该宏的定义内容将会在定义时展开。
+      进行宏定义；
+      该宏的定义内容将会在定义时被展开。
 % 
 %\item [\cs{aftergroup}]  
 %      Save the next token for insertion after the current group.
@@ -61,7 +64,7 @@
 %      Expand the value of various quantities in \TeX\ into a string
 %      of character tokens.
 \item [\cs{the}] 
-      将{\TeX}中的某些量展开为包含字符记号的字符串。
+      将{\TeX}中的某些量展开为由字符记号构成的字符串。
 
 %\end{inventory}
 \end{inventory}
@@ -81,15 +84,16 @@
 %largely assignments and typesettable material;
 %the former category
 %is expanded, and the result of that expansion is examined anew.
-{\TeX}的展开处理器接受来自输入处理器中的记号流，并将其输出为被执行处理器处理的记号流。
-对于输入处理器而言有两种记号：可展开的及不可展开的。
-那类主要包含赋值或供排版内容的（不可展开的）记号会原封不动通过展开处理器；
-而对于可展开的记号则会被展开，同时展开的结果会被重新检验（以确保完全展开）。
+{\TeX}的展开处理器接受来自输入处理器中的记号流，
+并将其输出为供执行处理器处理的记号流。
+对于输入处理器而言有两种记号：可展开的和不可展开的。
+那类不可展开的主要包含赋值或供排版内容的记号会原封不动通过展开处理器；
+而可展开的记号则会被展开，同时展开的结果会被重新检验（以确保其已经完全展开）。
 
 %%\point Ordinary expansion
 %\section{Ordinary expansion}
 %\point Ordinary expansion
-\section{一般展开}
+\section{展开惯例}
 
 %The following list gives those constructs
 %that are expanded, unless
@@ -110,16 +114,16 @@
 那些若不进行抑制，则会被展开的结构体将在下面的列表中给出。
 \index{expansion!expandable constructs}
 \begin{itemize}
-\item macros\label{expand:lijst}
-\item conditionals
-\item \cs{number}, \cs{romannumeral}
-\item \cs{string}, \cs{fontname}, \cs{jobname}, 
-      \cs{meaning}, \cs{the}
+\item 宏\label{expand:lijst}
+\item 条件判断
+\item \cs{number}，\cs{romannumeral}
+\item \cs{string}，\cs{fontname}，\cs{jobname}，
+      \cs{meaning}，\cs{the}
 \item \verb,\csname ... \endcsname,
-\item \cs{expandafter}, \cs{noexpand}
-\item \cs{topmark}, \cs{botmark}, \cs{firstmark}, 
-      \cs{splitfirstmark}, \cs{splitbotmark}
-\item \cs{input}, \cs{endinput}
+\item \cs{expandafter}，\cs{noexpand}
+\item \cs{topmark}，\cs{botmark}，\cs{firstmark}，
+      \cs{splitfirstmark}，\cs{splitbotmark}
+\item \cs{input}，\cs{endinput}
 \end{itemize}
 
 %This is the list of all instances where
@@ -165,30 +169,36 @@
 %\end{itemize}
 下面则是展开会被抑制的情况：
 \begin{itemize}\label{noexp:list}
-\item 当{\TeX}在读入被以下列方法定义的记号时。
-    \begin{itemize} \item 一个\gr{let assignment}，即，
-           使用\cs{let}或\cs{futurelet}，
-        \item 一个\gr{shorthand definition}，即，
-           使用\cs{chardef}或\cs{mathchardef}也可能是一个
-           \gr{register def}，即，\cs{countdef}、
-           \cs{dimendef}、\cs{skipdef}、\cs{muskipdef}、
-           或\cs{toksdef}，
-        \item 一个\gr{definition}，即一个宏定义使用
-           \cs{def}、\cs{gdef}、\cs{edef}、或\cs{xdef}，
-        \item \gr{simple assignment}，即使用 \cs{read}或\cs{font}的简单赋值；
+\item 当{\TeX}在读入被以下列方法定义的记号时
+    \begin{itemize} \item 一个\gr{let assignment}，
+           即使用\cs{let}或\cs{futurelet}时，
+        \item 一个\gr{shorthand definition}，
+           即使用\cs{chardef}或\cs{mathchardef}时；
+           也可能是一个\gr{register def}，
+           即使用\cs{countdef}、\cs{dimendef}、\cs{skipdef}、\cs{muskipdef}、
+           或\cs{toksdef}时，
+        \item 一个\gr{definition}，即使用
+           \cs{def}、\cs{gdef}、\cs{edef}、或\cs{xdef}
+           进行宏定义时，
+        \item \gr{simple assignment}，
+           即使用\cs{read}或\cs{font}进行简单赋值时；
     \end{itemize}
 \item 当\gr{parameter text}或宏参量被读入时；
-      也可能在当被使用\cs{def}、\cs{gdef}、\cs{read}定义的控制序列被读入时；
-\item 当作为\gr{token variable}、\cs{uppercase}、\cs{lowercase}、或\cs{write}的参量被读取时；
+      也可能在当使用\cs{def}、\cs{gdef}、
+      \cs{read}定义的控制序列被读入时；
+\item 当作为\gr{token variable}的记号列表、\cs{uppercase}、
+      \cs{lowercase}、或\cs{write}的参量被读取时；
       但是，作为\cs{write}的参量时则会被在作用时展开；
-\item 当在错误恢复时记号被删除时；
+\item 当在错误恢复中该记号将被删除时；
 \item 当作为条件判断（错误）的一部分被忽略时；
-\item 在当{\TeX}知道紧随其后的是什么的以下两种情况下
-    \begin{itemize}\item 在被用于表示整数的左引号后时（所以\verb-\catcode`\a-时\cs{a}不会被展开）、
-        \item 在一个开始数学模式的数学模式切换符出现后判断是否紧随另一个此类字符时（若如此、则为公式展示模式）、
-    \end{itemize}
-\item 当一个对齐导言被读入时；
-      但是，若前面出现\cs{span}时、或作为\cs{tabskip}参量的赋值仍会被展开。
+\item 在当{\TeX}需要知道紧随其后的是什么时，其有两种情况
+\begin{itemize}\item 在被用于表示整数的左引号后时
+                     （正因如此，\verb-\catcode`\a-中\cs{a}不会被展开），
+        \item 在一个数学模式开后出现后判断是否紧随另一个同类字符时
+              （若如此、则为公式展示模式），\end{itemize}
+\item 当一个对齐环境的导言被读入时；
+      但是，若记号前面出现\cs{span}、
+      或记号出现在\cs{tabskip}赋值中时，其仍会被展开。
 \end{itemize}
 
 %%\point Reversing expansion order
@@ -202,7 +212,7 @@
 %not strictly concerned with expansion.
 有时会出现需要调整记号的一般展开顺序的情况。
 为此，{\TeX}提供了几种机制。
-本节中的某些控制序列并不局限于展开。
+本节中描述的某些控制序列并不局限于展开。
 
 %%\spoint One step expansion: \cs{expandafter}
 %\subsection{One step expansion: \protect\cs{expandafter}}
@@ -242,9 +252,10 @@
 序列等同于
 \begin{disp}\gr{token$_1$}\gr{\italic the expansion of token$_2$}
 \end{disp}
-若在以下两种情况出现时则须额外注意：
+若在以下两种情况出现时则须格外注意：
 \begin{itemize} \item 若\gr{token$_2$}是一个宏，
-则其会被它的宏定义结果替换，而非它的最终完全展开结果。所以，
+则其会被它的宏定义结果替换，
+而非它的最终完全展开结果。所以，
 \begin{verbatim}
 \def\tokentwo{\ifsomecondition this \else that \fi}
 \def\tokenone#1{ ... }
@@ -261,7 +272,7 @@
 \end{verbatim}
 \item 若\cs{tokentwo}是一个使用一个或更多参量的宏，
 则足够多的其后的记号会被吸收，
-从而完成宏替换内容的构成。
+从而成为\cs{tokentwo}的参量完成宏替换内容的构成。
 \end{itemize}
 
 %\subsection{Total expansion: \protect\cs{edef}}
@@ -276,10 +287,10 @@
 %everything in the replacement text, before assigning it to the
 %control sequence. 
 宏通常是被使用\cs{def}定义的，
-但当我们希望使用宏替换内容去反映定义时的状况
-（与通过其反映被调用是状况不同）时，
+但当我们希望使用宏替换内容去反映其被定义时的状况
+（而非通过其反映被调用时的状况）时，
 即可使用「展开定义」，\cs{edef}。
-它会将宏替换内容在将其赋值给（被定义的）宏之前完全展开。
+它会将宏替换内容在被赋值给（被定义的）宏之前完全展开。
 
 %\begin{example}
 %\begin{verbatim}
@@ -295,7 +306,8 @@
     `\ifvmode vertical\else \ifmmode math
      \else horizontal\fi\fi' mode}
 \end{verbatim}
-因为模式测试在定义时即被执行，故该宏的替换文本将是一个字符串。
+因为模式测试在定义时即被执行，
+故该宏的替换文本将会是一个字符串。
 
 %As a more useful example, suppose that in a file that will be
 %\cs{input} the category code of the~\n@ will be changed.
@@ -311,15 +323,16 @@
 %for a fully worked-out version of this.
 %\end{example}
 举一个更有用的例子，若要使用\cs{input}读入一个
-\texttt{\@} 的类别码将会发生改变的文件，则可以有
+\verb-@-的类别码将会发生改变的文件，则可以将
 \begin{verbatim}
 \edef\restorecat{\catcode`@=\the\catcode`@}
 \end{verbatim}
-在文件开头，以及
+放在文件开头，以及
 \begin{verbatim}
 \restorecat
 \end{verbatim}
-在文件末尾。可见第\pageref{store:cat}页的一个更完整的版本。
+置于文件末尾。
+一个更完整的版本可见第\pageref{store:cat}页。
 \end{example}
 
 %Contrary to the `one step expansion' of
@@ -337,15 +350,18 @@
 %is expanded to the contents
 %of the list, but the contents are not expanded
 %any further (see Chapter~\ref{token} for examples).\end{itemize}
-与「只展开一步」的\cs{expandafter}相异，在\cs{edef}内的展开是彻底的：
-它会持续展开，直到只有不可展开的字符或控制序列留在输入流中。
+与「只展开一步」的\cs{expandafter}不同，
+在\cs{edef}内的展开是彻底的：
+它会持续展开，
+直到只有不可展开的字符或控制序列留在输入流中。
 对于这类彻底的展开，有两个例外情况：
 \begin{itemize} \item 任何\cs{noexpand}之后的控制序列不会被展开，及
-    \item 若\cs{sometokenlist}是一个记号列表，则以下
+\item 若\cs{sometokenlist}是一个记号列表，则以下
 \begin{verbatim}
 \the\sometokenlist 
 \end{verbatim}
-只会展开为记号列表的内容、而其内容则不会被进一步展开
+只会展开为记号列表的内容、
+而其内容并不会被进一步展开
 （例见第\ref{token}章）。
 \end{itemize}
 
@@ -376,19 +392,21 @@
 %\somemacro{this}
 %\end{verbatim} 
 %and a~subsequent call to \cs{next} executes this statement.
-在某些情况之下，\cs{edef}可被方便的「滥用」，
-即当我们无意定义一个控制序列、仅关注展开结果时。
+在某些情况之下，
+\cs{edef}可被方便的「滥用」，
+即当我们无意定义一个控制序列、
+仅关注其展开结果时。
 比如，使用如下定义
 \alt
 \begin{verbatim}
 \def\othermacro{\ifnum1>0 {this}\else {that}\fi}
 \def\somemacro#1{ ... }
 \end{verbatim}
-宏调用
+后，宏调用
 \begin{verbatim}
 \expandafter\somemacro\othermacro 
 \end{verbatim}
-将会给出如下参量的赋值
+将会给出如下对参量的赋值
 \begin{verbatim}
 #1<-\ifnum
 \end{verbatim}
@@ -397,11 +415,11 @@
 \edef\next{\noexpand\somemacro\othermacro}\next
 \end{verbatim}
 其中的条件判断被\cs{edef}完全展开，
-所以\cs{next}的替换文本将会是该序列
+所以\cs{next}的替换文本将会是
 \begin{verbatim}
 \somemacro{this}
 \end{verbatim} 
-同时其后的\cs{next}调用执行该定义。
+同时其后的\cs{next}调用将执行该定义。
 
 
 %%\spoint \cs{afterassignment}
@@ -429,7 +447,7 @@
 %Only one token can be saved this way; a subsequent token 
 %saved by \cs{afterassignment} will override the first.
 使用这种方式只能存储一个记号；
-之后的\cs{afterassignment}存储的记号会覆盖之前的。
+之后出现的其它的\cs{afterassignment}存储的记号会覆盖之前的记号。
 
 %Let us consider an example of the use of \cs{afterassignment}.
 %It is often desirable to have a macro that will
@@ -457,9 +475,9 @@
 %\cs{setbaselineskip} is saved for execution after
 %the assignment to \cs{thefontsize}.
 不妨考虑实际使用\cs{afterassignment}的例子。
-一个诱人的想法可能是能够定义一个宏来完成如下：
+一个诱人的想法可能是定义一个宏去完成如下的：
 \begin{itemize} \item 将参数赋予某个值，并在之后
-\item 进行一些基于该参量新值的简单计算。
+\item 进行一些基于该参数新值的简单计算。
 \end{itemize}
 这是对其较直接的实现方法：
 \begin{verbatim}
@@ -467,7 +485,8 @@
     \baselineskip=1.2\thefontsize\relax}
 \setfontsize{10}
 \end{verbatim}
-此时，基于\cs{afterassignment}，我们可以有如下更优雅的实现方法：
+而，基于\cs{afterassignment}，
+我们可以有如下更优雅的实现方法：
 \begin{verbatim}
 \def\setbaselineskip
    {\baselineskip=1.2\thefontsize\relax}
@@ -475,18 +494,18 @@
     \thefontsize}
 \fontsize=10pt
 \end{verbatim}
-此时，这个宏看上去更像一个赋值：且等于号是可选的。
+此时，这个宏看上去更像一个赋值：等号是可选的。
 实际上，它的展开以一个将会被赋值的变量结束。
-控制序列\cs{setbaselineskip}被存储直至对\cs{thefontsize}赋值时才执行。
+控制序列\cs{setbaselineskip}被存储直至对
+\cs{thefontsize}赋值后才执行。
 
 %Examples of \cs{afterassignment} in plain \TeX\ are
 %the \cs{magnification} and \cs{hglue} macros.
 %See \cite{Maus} for another creative application of
 %this command.
-在plain {\TeX}中，使用\cs{afterassignment}的实例有
-\cs{magnification}
-以及\cs{hglue}宏。
-对于其的另一个创造性的应用可见\cite{Maus}。
+在plain {\TeX}中，利用\cs{afterassignment}实现的有
+\cs{magnification}以及\cs{hglue}宏。
+对于它的另一个创造性的应用可见\cite{Maus}。
 
 %\subsection{\protect\cs{aftergroup}}
 %\label{sec:aftergroup}
@@ -549,8 +568,9 @@
 \label{footnote:ex}
 \begin{disp}\cs{footnote}\gr{footnote symbol}\lb\gr{footnote text}\rb
 \end{disp} 这让它看起来像是使用两个参数的宏。
-然而，令人不快的是它需要读入脚注内容，
-而这则妨碍了脚注中出现如类别码变动等情况。
+然而，若它使用两个参数，
+则意味着它令人不快的需要读入脚注文本，
+而这会妨碍脚注中出现如类别码变动等的情况。
 
 %What happens in the plain footnote macro is (globally) the following.
 %\begin{itemize}\item The \cs{footnote} command opens
@@ -582,13 +602,14 @@
 %\end{verbatim}
 %will be executed.\end{itemize}
 实际上，该脚注宏主要是以如下的方式实现的。
-\begin{itemize}\item 首先，\cs{footnote}宏开启一个浮动体插入物：
+\begin{itemize}\item 首先，
+\cs{footnote}宏开启一个（脚注）浮动体插入物：
 \begin{verbatim}
 \def\footnote#1{ ...#1... %treat the footnote sign
     \insert\footins\bgroup
 \end{verbatim}
 \item 在该插入物盒子中，
-\cs{aftergroup}的命令使得该盒子能够被正确的关闭：
+\cs{aftergroup}的命令使得该盒子能够被正确地关闭：
 \begin{verbatim}
     \bgroup\aftergroup\@foot
 \end{verbatim}
@@ -604,7 +625,7 @@
 \begin{verbatim}
 \def\@foot{\strut\egroup}
 \end{verbatim}
-会被最后执行。
+会被最后执行从而关闭插入物盒子。
 \end{itemize}
 
 
@@ -616,9 +637,8 @@
 %Sometimes it is necessary to prevent expansion in a place
 %where it normally occurs. For this purpose the control
 %sequences \csidx{string} and \csidx{noexpand} are available.
-有时在一般会被展开的地方抑制它的展开是必要的。
-为了该用途，
-控制序列\csidx{string}和\csidx{noexpand}可供使用。
+有时抑制应发生的展开是极必要的。
+控制序列\csidx{string}和\csidx{noexpand}可供在这时使用。
 %The use of \cs{string} is rather limited, since it converts
 %a control sequence token into a string of characters, with
 %the value of \cs{escapechar} used for the character of
@@ -627,8 +647,8 @@
 %\cs{write}, in order to output a control sequence name
 %(see also Chapter~\ref{io}); for another application see
 %the explanation of \cs{newif} in Chapter~\ref{if}.
-\cs{string}的使用非常局限，
-这是由于它将一个控制序列记号转换为一个字符串
+\cs{string}的使用较为局限，
+这是由于它会将一个控制序列记号转换为一个字符串
 （此时\cs{escapechar}的值会被用于替换原类别码为0的字符）。
 显而易见，它很适合用在使用\cs{write}的场合，                        
 来输出一个控制序列的名字（亦见第\ref{io}章）；
@@ -650,7 +670,8 @@
 %is the following token. The meaning of that token is
 %made temporarily equal to \cs{relax}, so that it cannot
 %be expanded further.
-命令\cs{noexpand}是可展开的，且其展开为其后面的记号。
+命令\cs{noexpand}是可展开的，
+且其会展开为其后面的记号。
 （它后面的）记号的意义会暂时等同于\cs{relax}，
 如此使其不会被进一步展开。
 
@@ -663,7 +684,7 @@
 %Without the \cs{noexpand}, \TeX\ would try to expand
 %\cs{two}, thus giving an `undefined control sequence' error.
 对于控制序列\cs{noexpand}而言，
-最重要的应用莫过于在\cs{edef}中时
+最重要的应用莫过于在\cs{edef}中抑制展开
 （但在\cs{write}的情况下，它也经常能够替代\cs{string}）。
 考虑下例：
 \begin{verbatim}
@@ -682,14 +703,14 @@
 %This will not produce any output, because the
 %effect of the \cs{noexpand} is to make the control sequence
 %\cs{a} temporarily equal to \cs{relax}.
-一个（没太大意义的）
-下例可表明\cs{noexpand}使其后的记号等同于\cs{relax}：
+另一个（没太大意义的）
+例子可表明\cs{noexpand}使其后的记号（暂时）等同于\cs{relax}：
 \begin{verbatim}
 \def\a{b}
 \noexpand\a
 \end{verbatim}
 因\cs{noexpand}使控制序列\cs{a}暂时等同于\cs{relax}，
-故其将不会有任何输出。
+故上段代码将不会产生任何输出。
 
 %%\spoint \cs{noexpand} and active characters
 %\subsection{\protect\cs{noexpand} and active characters}
@@ -710,17 +731,18 @@
 %The solution is to use \cs{string} instead; see page~\pageref{store:cat}
 %for an example.
 序列\cs{noexpand}\gr{token}的组合
-总是\index{character!active, and \cs{noexpand}}
-等同于\cs{relax}，即使该记号是一个活动字符。
+总是\index{character!active, and \cs{noexpand}}%
+等同于\cs{relax}，即便该记号是一个活动字符。
 所以，
 \begin{verbatim}
 \csname\noexpand~\endcsname
 \end{verbatim}
-不意味着\verb>\char`\~>。
+的意思不同于\verb>\char`\~>。
 相反，因为不可展开的命令——比如说\cs{relax}——
-不被允许出现在\cs{csname}和\cs{endcsname}中
-，它会提示出现错误。
-解决方法则是转而使用\cs{string}；例见\pageref{store:cat}页。
+不被允许出现在\cs{csname}和\cs{endcsname}中，
+它会提示出现错误。
+解决方法则是转而使用\cs{string}；
+例见\pageref{store:cat}页。
 
 %In another context, however, the sequence
 %\cs{noexpand}\gr{active character} is equivalent
@@ -739,8 +761,8 @@
 但在某些其他情境下，\cs{noexpand}\gr{active character}的序列
 等同于该字符不可展开的形式。
 这时条件判断命令\cs{if}和\cs{ifcat}可被使用说明这一点
-（这两个控制序列的解释可见第\ref{if}章）。
-比较下两种情况
+（对这两个控制序列的解释可见第\ref{if}章）。
+以下
 \begin{verbatim}
 \if\noexpand~\relax % is false
 \end{verbatim}
@@ -748,7 +770,7 @@
 \begin{verbatim}
 \def\a{ ... } \if\noexpand\a\relax % is true
 \end{verbatim}
-此时两个控制序列被比较。
+将比较两个控制序列。
 
 %%\point \cs{relax}
 %\section{\protect\cs{relax}}
@@ -791,15 +813,14 @@
 \newcount\MyCount
 \newcount\MyOtherCount \MyOtherCount=2
 \end{verbatim}
-在赋值过程中，
+在赋值过程中
 \begin{verbatim}
 \MyCount=1\number\MyOtherCount3\relax4
 \end{verbatim}
 命令\cs{number}是可展开的，
-而\cs{relax}则不可以。
+而\cs{relax}则不可被展开。
 当{\TeX}构建将被赋给的值的时候，
-它会展开所有命令
-直到遇到非数字或不可展开的命令为止。
+它会展开所有命令直到遇到非数字或不可展开的命令为止。
 所以它读入\n1；
 它会展开\verb>\number\MyOtherCount>
 （其展开后值为\n2）；
@@ -807,15 +828,15 @@
 它又读入\cs{relax}，
 而由于其不可展开，
 于是便最终停止对赋值过程中值的构建。
-于是最终赋给\cs{MyCount}的值即为\n{123}，
-因为展开的结果为：
+所以最终赋给\cs{MyCount}的值是\n{123}，
+又因为展开的结果为：
 \begin{verbatim}
 \MyCount=123\relax4
 \end{verbatim}
-又因为\cs{relax}的执行结果是什么也不做，
-所以该行将会把值\n{123}
+且\cs{relax}的执行结果是什么也不做，
+所以该序列将会把值\n{123}
 赋给\cs{MyCount}，
-并排版数字\n4
+并排版数字\n4。
 
 %Another example of how \cs{relax} can be used to indicate
 %the end of a command\label{fil:l:l}\ is
@@ -847,7 +868,7 @@
 而\hbox{\n{fil L}}虽然看起来不太正常，
 但实际上是一种合法的表示\n{fill}的方式
 （详见第\ref{gramm}章）。
-可用\cs{relax}漂亮的解决：
+可用\cs{relax}漂亮地解决：
 \begin{verbatim}
 \everypar{\hskip 0cm plus 1fil\relax}
 \end{verbatim}
@@ -864,7 +885,8 @@
 %that control sequence is made equal to \cs{relax},
 %and the whole statement is also equivalent to \cs{relax}
 %(see also page~\pageref{cs:name}).
-若\verb-\csname ... \endcsname-被用于构建一个未被定义的控制序列，
+若\verb-\csname ... \endcsname-
+被用于构建一个未被定义的控制序列，
 该序列会被等同于\cs{relax}，
 同时整个构建其的语句也会被等同于\cs{relax}
 （亦可见第\pageref{cs:name}页）。
@@ -914,21 +936,20 @@
 %See page~\pageref{begin:end:macros} for the rationale
 %behind using \cs{begingroup} and \cs{endgroup}
 %instead of \cs{bgroup} and \cs{egroup}.
-考虑{\LaTeX}中的环境：
-其使用
+考虑{\LaTeX}中的环境，其使用
 \begin{verbatim}
 \begin{...} ... \end{...}
 \end{verbatim}
 定界。
-这两个表示开始和结束的命令（究其本质）
-是如此定义的：
+这两个表示开始和结束的命令（究其本质）是如此定义的：
 \begin{verbatim}
 \def\begin#1{\begingroup\csname#1\endcsname}
 \def\end#1{\csname end#1\endcsname \endgroup}
 \end{verbatim}
-故，对于列表环境，实际定义的是命令\cs{list}和\cs{endlist}。
+故，对于列表环境，
+实际定义的是命令\cs{list}和\cs{endlist}。
 但是即使没有定义对应的\cs{end...}
-该命令仍可用来定义环境。
+该命令仍可用来表示一合法环境。
 如：
 \begin{verbatim}
 \begin{it} ... \end{it}
@@ -966,7 +987,7 @@
 {\let\somemacro=\relax \write\outfile{\somemacro}}
 \end{verbatim}
 该代码片段则会将`\cs{somemacro}'写入到输出文件中。
-若\cs{let}段被遗漏，
+若\cs{let}部分被遗漏，
 则会将宏\cs{somemacro}的展开结果写入到文件中
 （若其未定义则给出该宏未定义之错误）。
 
@@ -974,7 +995,7 @@
 %\subsection{\TeX\ inserts a \cs{relax}}
 %\label{bump:relax}
 %\spoint[bump:relax] \TeX\ inserts a \cs{relax}
-\subsection{{\TeX}自动插入\cs{relax}}
+\subsection{{\TeX}自动插入的\cs{relax}}
 \label{bump:relax}
 
 %\TeX\ itself inserts \cs{relax} on some occasions.
@@ -993,8 +1014,7 @@
 %\end{example}
 {\TeX}自己也会在某些情况下插入\cs{relax}。
 具体来说，
-即是当{\TeX}仍在确定文本范围时读到序列
-\cs{or}、\cs{else}、或\cs{fi}时。
+就是当{\TeX}仍在确定文本范围时读到序列\cs{or}、\cs{else}、或\cs{fi}时。
 \begin{example}
 \begin{verbatim}
 \ifvoid1\else ... \fi
@@ -1034,9 +1054,9 @@
 %equal to \cs{relax}. This makes it possible to write
 %\verb>\chardef\foo=123\foo>.
 还有另一\cs{relax}被使用的情况。
-当某一序列被使用\gr{shorthand definition}——
-即，一个\gr{registerdef}或\cs{chardef}、\cs{mathchardef}——
-定义时，它的含义被短暂地定义为\cs{relax}。
+当某一序列被使用\gr{shorthand definition}
+——即，一个\gr{registerdef}或\cs{chardef}、\cs{mathchardef}——
+定义时，它的含义被短暂地等同于\cs{relax}。
 这使得我们能够这样写：
 \verb>\chardef\foo=123\foo>。
 
@@ -1078,8 +1098,7 @@
 转换为一串字符记号。
 而\cs{the}（除非被抑制）被展开后将拿取变量作为参数。
 （在大多数情况下），
-其展开的结果是一串
-除类别码为10\index{category!10}的空格之外
+其展开的结果是一串除类别码皆为10\index{category!10}的空格之外
 类别码为12\index{category!12}的记号。
 
 %Here is the list of everything that can be prefixed with \cs{the}.
@@ -1118,12 +1137,13 @@
 %Token list registers and \gr{token parameter}s can be prefixed
 %with \cs{the}; the result is their contents.
 %\end{description}
-所有能以\cs{the}作为前缀的如下所列：
+所有能以\cs{the}作为前缀记号的如下所列：
 \begin{description}\item [\gr{parameter}或\gr{register}]
 如果寄存器的参量是一种整数、伸缩胶、长度或数学模式中的伸缩胶，
-则其值以一串字符记号的形式被给出；若为记号列表（如
+则其值以一串字符记号的形式被给出；
+若为记号列表（如
 \cs{everypar}或\cs{toks5}），
-结果则会是一串记号。
+结果则会是一串（任意的）记号。
 盒子寄存器在这里不予考虑。
 \item [\gr{codename}\gr{8-bit number}]
 见第\pageref{codename}页。
@@ -1132,7 +1152,7 @@
 \cs{inputlineno}、\cs{badness}、\cs{parshape}、\cs{spacefactor}
 （仅出现在水平模式中）、和\cs{prevdepth}（仅出现在竖直模式中）。
 长度寄存器如\cs{pagetotal}、\cs{pagegoal}、\cs{pagestretch}、
-\handbreak \cs{pagefilstretch}、\cs{pagefillstretch}、
+\cs{pagefilstretch}、\cs{pagefillstretch}、
 \cs{pagefilllstretch}、\cs{pageshrink}、和\cs{pagedepth}。
 \item [字体属性：]
 \cs{fontdimen}\gr{parameter number}\gr{font}、
@@ -1148,8 +1168,8 @@
 \begin{description}\item [\gr{font}]
 结果是代表该字体的控制序列。
 \item [\gr{token variable}]
-记号列表寄存器以及\gr{token parameter}可以使用
-\cs{the}为前缀；展开结果是它们的内容。
+记号列表寄存器以及\gr{token parameter}可以使用\cs{the}为前缀；
+展开结果是它们的内容。
 \end{description}
 
 %Let us consider an example of the use of \cs{the}.
@@ -1169,7 +1189,7 @@
 %for saving and restoring catcodes.
 来思考一个使用\cs{the}的例子。
 若有一个将使用\cs{input}读入的
-某个字符（不妨让它为\texttt{\@}）
+某个字符（不妨让它为\verb-@-）
 的类别码被改变了的文件。
 我们可以写出
 \begin{verbatim}
@@ -1226,8 +1246,8 @@
              #1:counter\endcsname 1\relax}
 \stepcounter{foo}
 \end{verbatim}
-此处使用的\cs{expandafter}使得\cs{csname}得以构建完毕
-\cs{foo:counter}控制序列；
+此处使用的\cs{expandafter}使得\cs{csname}得以将
+\cs{foo:counter}控制序列构建完毕；
 在\cs{expandafter}展开后，
 该声明被缩减为
 \begin{verbatim}
@@ -1262,7 +1282,7 @@
     #1{\expandafter\global\expandafter\advance
              \csname #1:counter\endcsname 1\relax}
 \end{verbatim}
-若你觉得只能使用\cs{expandafter}颠倒
+如果你觉得只能使用\cs{expandafter}颠倒
 {\sl 两个\/}控制序列的执行顺序，
 你还可以颠倒{\sl 三个的\/}，使用
 \begin{verbatim}
@@ -1292,7 +1312,8 @@
 %The \cs{expandafter} lets \TeX\ see the \cs{fi} and remove it
 %before it tackles the macro \cs{bold}
 %(see also page~\pageref{after:cond}).
-在条件判断中，\cs{expandafter}还有更预料不到的作用；如下
+在条件判断中，\cs{expandafter}还有更预料不到的作用；
+如下
 \begin{verbatim}
 \def\bold#1{{\bf #1}}
 \end{verbatim}
@@ -1400,7 +1421,7 @@ macro: \def \thing {text}
 需要注意某些情况。
 其更复杂的原因来自于\cs{write}参量的展开
 仅在它被输出的时候发生。
-后面则是一个有启发的例子。
+后面则是一个有启发性的例子。
 %Suppose \cs{somecs} is a macro, and you
 %want to write the string 
 %\begin{disp}\verb-\def\othercs-\lb {\italic the expansion of \cs{somecs}}\rb
@@ -1428,7 +1449,8 @@ macro: \def \thing {text}
 然而，这会提示\cs{othercs}未定义之错误，
 \altt
 因为\cs{write}会尝试展开其。
-好事是\cs{somecs}也被展开，所以该部分目的被达到了。
+好事是\cs{somecs}也被展开，
+所以该部分目的算是被达到了。
 
 %The next attempt is
 %\begin{verbatim}
@@ -1444,7 +1466,7 @@ macro: \def \thing {text}
 \end{verbatim}
 它几乎就对了，但不完全对。
 我们写出的定义是
-\begin{disp}\verb>\def\othercs>\lb{\italic expansion of \cs{somecs}}\rb\end{disp}
+\begin{disp}\verb>\def\othercs>\lb{\italic \cs{somecs}的展开}\rb\end{disp}
 它看起来无可挑剔。
 
 %However, writes \ldash and the expansion of their argument \rdash 
@@ -1512,13 +1534,13 @@ macro: \def \thing {text}
 而实际写入的序列是
 \begin{disp}\verb>\def\othercs>\lb
      {\italic \cs{somecs}的当前值}\rb\end{disp}
-以上的机制即为一些宏集交叉索引宏的底层原理。
+以上描述的机制即为一些宏集对宏进行交叉索引的底层原理。
 
 
 %%\spoint Controlled expansion inside an \cs{edef}
 %\subsection{Controlled expansion inside an \cs{edef}}
 %\spoint Controlled expansion inside an \cs{edef}
-\subsection{Controlled expansion inside an \cs{edef}}
+\subsection{在\cs{edef}中受控制的展开}
 
 %Sometimes you may need an \cs{edef} to evaluate current
 %\howto Control expansion inside an \cs{edef}\par
@@ -1536,22 +1558,22 @@ macro: \def \thing {text}
 %Explanation: the \cs{expandafter} reaches over the \cs{noexpand}
 %to expand \cs{a} one step, after which the 
 %sequence \verb-\noexpand\b- is left.
-Sometimes you may need an \cs{edef} to evaluate current
+有时你需要使用\cs{edef}去取得当前的状态，
 \howto Control expansion inside an \cs{edef}\par
-conditions, but you want to expand something in the replacement
-text only to a certain level. Suppose that
+你也许还会希望能仅将宏替换文本展开到某个特定的程度。
+假设已有
 \begin{verbatim}
 \def\a{\b} \def\b{c} \def\d{\e} \def\e{f}
 \end{verbatim}
-is given, and you want to define \cs{g} as \cs{a} expanded
-one step, followed by \cs{d} fully expanded. The following
-works:
+而你希望定义使\cs{a}只展开一步、
+而使\cs{d}完全展开的宏\cs{g}。
+随后的代码可以实现之：
 \begin{verbatim}
 \edef\g{\expandafter\noexpand\a \d}
 \end{verbatim}
-Explanation: the \cs{expandafter} reaches over the \cs{noexpand}
-to expand \cs{a} one step, after which the 
-sequence \verb-\noexpand\b- is left.
+因为\cs{expandafter}越过其后的\cs{noexpand}
+将\cs{a}展开了一步、于是便留下了
+\verb-\noexpand\b-序列。
 
 %This trick comes in handy when you need to
 %construct a control sequence with \cs{csname} inside 
@@ -1570,39 +1592,39 @@ sequence \verb-\noexpand\b- is left.
 %           \csname mytest\condition\endcsname}
 %\end{verbatim}
 %will let \cs{setmycondition} expand to \cs{mytesttrue}.
-This trick comes in handy when you need to
-construct a control sequence with \cs{csname} inside 
-an \cs{edef}. The following sequence inside an \cs{edef}
+在你需要在\cs{edef}中使用\cs{csname}构建一个控制序列时，
+这个技巧非常有用。
+如在\cs{edef}中，以下序列
 \begin{verbatim}
 \expandafter\noexpand\csname name\endcsname
 \end{verbatim}
-will expand exactly to \cs{name}, but not further.
-As an example, suppose
+会恰好展开为\cs{name}，不多也不少。
+再举一个例子
 \begin{verbatim}
 \def\condition{true}
 \end{verbatim}
-has been given, then
+首先有以上的定义，而后的
 \begin{verbatim}
 \edef\setmycondition{\expandafter\noexpand
            \csname mytest\condition\endcsname}
 \end{verbatim}
-will let \cs{setmycondition} expand to \cs{mytesttrue}.
+就会将\cs{setmycondition}展开为\cs{mytesttrue}。
 
 %%\spoint Multiple prevention of expansion
 %\subsection{Multiple prevention of expansion}
 %\spoint Multiple prevention of expansion
-\subsection{Multiple prevention of expansion}
+\subsection{对展开的多重抑制}
 
 %As   was pointed out above, prefixing  a command with
 %\cs{noexpand} prevents its expansion in commands
 %such as \cs{edef} and~\cs{write}. However, if a sequence of tokens
 %passes through more than one expanding command
 %stronger measures are needed.
-As   was pointed out above, prefixing  a command with
-\cs{noexpand} prevents its expansion in commands
-such as \cs{edef} and~\cs{write}. However, if a sequence of tokens
-passes through more than one expanding command
-stronger measures are needed.
+上节中介绍，
+在一个命令前使用\cs{noexpand}能够在
+如\cs{edef}和\cs{write}的展开中防止该命令的展开。
+但是如果一些记号将会被不止一个展开命令处理，
+就需要更强力的手段。
 
 %The following trick can be used:
 %in order to protect a command against expansion
@@ -1617,16 +1639,15 @@ stronger measures are needed.
 %\begin{verbatim}
 %\def\protect{}
 %\end{verbatim}
-The following trick can be used:
-in order to protect a command against expansion
-it can be prefixed with \csidx{protect}.
-During the stages of processing where expansion is
-not desired the definition of \cs{protect} is
+下面是一个可以在此时被使用的技巧：
+在需要被扩展保护的命令前使用\csidx{protect}。
+在不需要扩展的阶段，
+\cs{protect}的定义如下：
 \begin{verbatim}
 \def\protect{\noexpand\protect\noexpand}
 \end{verbatim}
-Later on, when the command is actually needed,
-\cs{protect} is defined as 
+当随后这个命令需要被使用（展开）时，
+\cs{protect}是这样定义的：
 \begin{verbatim}
 \def\protect{}
 \end{verbatim}
@@ -1645,35 +1666,34 @@ Later on, when the command is actually needed,
 %\protect\somecs
 %\end{verbatim}
 %That is, the expansion is equal to the original sequence.
-Why does this work? The expansion of
+这为什么可以达到所需效果呢？以下
 \begin{verbatim}
 \protect\somecs
 \end{verbatim}
-is at first
+一开始的展开结果是
 \begin{verbatim}
 \noexpand\protect\noexpand\somecs
 \end{verbatim}
-Inside an \cs{edef} this sequence is expanded further,
-and the subsequent expansion is
+在\cs{edef}中该段序列则会更彻底地被展开，
+即为
 \begin{verbatim}
 \protect\somecs
 \end{verbatim}
-That is, the expansion is equal to the original sequence.
+所以，展开的结果等同于原序列。
 
 
 %%\spoint More examples with \cs{relax}
 %\subsection{More examples with \cs{relax}}
 %\spoint More examples with \cs{relax}
-\subsection{More examples with \cs{relax}}
+\subsection{\cs{relax}的更多式例}
 
 %Above, a first example was given in which \cs{relax} served
 %to prevent \TeX\ from scanning too far.
 %Here are some more examples, using \cs{relax} to bound
 %numbers.
-Above, a first example was given in which \cs{relax} served
-to prevent \TeX\ from scanning too far.
-Here are some more examples, using \cs{relax} to bound
-numbers.
+在第一个例子中，
+\cs{relax}被用来阻止{\TeX}读入多余的记号。
+以下就是一些使用其来界定数字的示例。
 
 %After
 %\begin{verbatim}
@@ -1693,24 +1713,24 @@ numbers.
 %\def\Par{\par\penalty200 }
 %\end{verbatim}
 %as an \gr{optional space} is allowed to follow a number.
-After
+以下赋值及定义
 \begin{verbatim}
 \countdef\pageno=0 \pageno=1
 \def\Par{\par\penalty200}
 \end{verbatim}
-the sequence
+后，用以下的方式使用时
 \begin{verbatim}
 \Par\number\pageno
 \end{verbatim}
-is misunderstood as
+会让{\TeX}错认为是
 \begin{verbatim}
 \par\penalty2001
 \end{verbatim}
-In this case it is sufficient to define
+此时简单地修改定义即可
 \begin{verbatim}
 \def\Par{\par\penalty200 }
 \end{verbatim}
-as an \gr{optional space} is allowed to follow a number.
+（因为\gr{optional space}被允许在数字后出现）。
 
 %Sometimes, however, such a simple escape is not possible.
 %Consider the definition
@@ -1722,16 +1742,15 @@ as an \gr{optional space} is allowed to follow a number.
 %Calls such as \verb-\ifequal{27}{28}- that compare two
 %numbers (denotations) will correctly give \n1 or~\n0,
 %and the space is necessary to prevent misinterpretation.
-Sometimes, however, such a simple escape is not possible.
-Consider the definition
+但并非所有情况下都有简单的处理方法。
+如下的序列中
 \begin{verbatim}
 \def\ifequal#1#2{\ifnum#1=#2 1\else 0\fi}
 \end{verbatim}
-The question is whether the space after \verb-#2-
-is necessary, superfluous, or simply wrong.
-Calls such as \verb-\ifequal{27}{28}- that compare two
-numbers (denotations) will correctly give \n1 or~\n0,
-and the space is necessary to prevent misinterpretation.
+此处的问题在于\verb-#2-后的空格是必要的、多余的、亦或就是错的
+类似\verb-\ifequal{27}{28}-的比较两个数字（的大小）
+的调用会给出正确的\n1或\n0。
+此时空格对于防止{\TeX}误解是必要的。
 
 %However, \verb-\ifequal\somecounter\othercounter- will
 %give \n{\char 32 1} if the counters are equal; in this
@@ -1745,22 +1764,22 @@ and the space is necessary to prevent misinterpretation.
 %\edef\foo{1\ifequal\counta\countb}
 %\end{verbatim}
 %will define \cs{foo} as either \verb-1\relax1- or~\n{10}.
-However, \verb-\ifequal\somecounter\othercounter- will
-give \n{\char 32 1} if the counters are equal; in this
-case the space could have been dispensed with.
-The solution that works in both cases is
+但是，\verb-\ifequal\somecounter\othercounter-的调用则会
+在两个计数器相等时给出给出\verb*- 1-。
+这时该空格则是多余的。
+能兼顾两种情况的解决方法是
 \begin{verbatim}
 \def\ifequal#1#2{\ifnum#1=#2\relax 1\else 0\fi}
 \end{verbatim}
-Note that \cs{relax} is not expanded, so
+由于\cs{relax}不会被展开，所以注意
 \begin{verbatim}
 \edef\foo{1\ifequal\counta\countb}
 \end{verbatim}
-will define \cs{foo} as either \verb-1\relax1- or~\n{10}.
+会将宏\cs{foo}定义为\verb-1\relax1-或\n{10}。
 
 %\subsection{Example: category code saving and restoring}
 %\label{store:cat}
-\subsection{Example: category code saving and restoring}
+\subsection{实例：存储及恢复类别码}
 \label{store:cat}
 
 %In many applications it is necessary to change
@@ -1772,15 +1791,14 @@ will define \cs{foo} as either \verb-1\relax1- or~\n{10}.
 %However, if the surrounding code is by another author,
 %the value of the category code will have to be stored
 %and restored.
-In many applications it is necessary to change
+在很多应用情形中，
+有必要在某段代码执行时
 \howto Save and restore category codes\par
-the category code of a certain character during the
-execution of some piece of code. If the writer of
-that code is also the writer of the surrounding code,
-s/he can simply change the category code back and forth.
-However, if the surrounding code is by another author,
-the value of the category code will have to be stored
-and restored.
+改变某个字符的类别码。
+如果该段代码的作者正好也是该段代码前后代码的作者，
+那么他（她）只需简单地把它改回去即可。
+但，如果前后代码是另一位作者写的，
+那么就需要存贮该类别码的值并最后恢复它。
 
 %Thus one would like to write
 %\begin{verbatim}
@@ -1813,37 +1831,35 @@ and restored.
 %    \csname restorecat#1\endcsname}
 %\end{verbatim}
 %Unfortunately, things are not so simple.
-Thus one would like to write
+如果能够这么写
 \begin{verbatim}
 \storecat@
 ... some code ...
 \restorecat@
 \end{verbatim}
-or maybe
+来处理\texttt{\@}字符的类别码改变；以及这样写
 \begin{verbatim}
 \storecat\%
 \end{verbatim}
-for characters that
-are possibly a comment character (or ignored or invalid).
+来处理注释字符（或忽略、不合法字符）的类别码改变。
 \alt
-The basic idea is to define
+基本原理是定义
 \begin{verbatim}
 \def\storecat#1{%
     \expandafter\edef\csname restorecat#1\endcsname
         {\catcode`#1=\the\catcode`#1}}
 \end{verbatim}
-so that, for instance, \verb>\storecat$> will define
-the single control sequence `\verb>\restorecat$>'
-(one control sequence) as
+所以，如\verb>\storecat$>的语句会如此
 \begin{verbatim}
 \catcode`$=3
 \end{verbatim}
-The macro \cs{restorecat} can then be implemented as
+定义\verb-\restorecat$-单一控制序列
+而宏\cs{restorecat}可以被如此实现：
 \begin{verbatim}
 \def\restorecat#1{%
     \csname restorecat#1\endcsname}
 \end{verbatim}
-Unfortunately, things are not so simple.
+很可惜，事情没这么简单。
 
 %The problems occur with active characters, because these
 %are expanded inside the \cs{csname} \verb>...> \cs{endcsname} pairs.
@@ -1873,19 +1889,19 @@ Unfortunately, things are not so simple.
 %    \csname restorecat\string#1\endcsname
 %    \escapechar\tempcounta}
 %\end{verbatim}
-The problems occur with active characters, because these
-are expanded inside the \cs{csname} \verb>...> \cs{endcsname} pairs.
-One might be tempted to write \verb>\noexpand#1> everywhere,
-but this is wrong. As was explained above, this is essentially
-equal to \cs{relax}, which is unexpandable, and will therefore
-lead to an error message when it appears between
-\cs{csname} and \cs{endcsname}. The proper solution is then
-to use \verb>\string#1>. For the case where the argument
-was given as a control symbol (for example~\verb>\%>),
-the escape character has to be switched off for a while.
+问题出在了活动字符身上，
+因为它们会在\cs{csname} \verb>...> \cs{endcsname}内被展开。
+我们可能会尝试在每个地方加上\cs{noexpand}，
+但这仍然是错误的。
+正如之前介绍的那样，
+这样只会使（暂时）序列等同于不可展开的\cs{relax}，
+而\cs{csname}和\cs{endcsname}中不允许出现不可展开的序列。
+正确的方法便是使用\verb>\string#1>。
+当参数是形如\verb>\%>的控制符号时，
+转义字符需要暂时被无效化。
  
-Here are the complete macros. The \cs{storecat} macro
-gives its argument a default category code of~12.
+完整（自然也是正确的）宏在此被给出。
+宏\cs{storecat}默认会让作为其参数的字符的类别码为12。
 \begin{verbatim}
 \newcount\tempcounta % just a temporary
 \def\csarg#1#2{\expandafter#1\csname#2\endcsname}
@@ -1905,18 +1921,16 @@ gives its argument a default category code of~12.
 %%\spoint Combining \cs{aftergroup} and boxes
 %\subsection{Combining \cs{aftergroup} and boxes}
 %\spoint Combining \cs{aftergroup} and boxes
-\subsection{Combining \cs{aftergroup} and boxes}
+\subsection{\cs{aftergroup}与盒子的结合}
 
 %At times, one wants to construct a box and immediately
 %after it has been constructed to
 %do something with it. The \cs{aftergroup} command
 %can be used to put both the commands creating the box,
 %and the ones handling it, in one macro.
-At times, one wants to construct a box and immediately
-after it has been constructed to
-do something with it. The \cs{aftergroup} command
-can be used to put both the commands creating the box,
-and the ones handling it, in one macro.
+有时，我们可能希望在构造完盒子后立即对它做些什么。
+\cs{aftergroup}命令可被用来将用来创建盒子的命令
+及处理盒子的命令融合到一个宏中。
 
 %As an example, here is a macro 
 %\cs{textvcenter}\label{text:vcenter}\
@@ -1934,22 +1948,21 @@ and the ones handling it, in one macro.
 %by the \cs{aftergroup} commands. In order to get the 
 %\cs{aftergroup} commands inside the box, an
 %\cs{everyvbox} command is  used.
-As an example, here is a macro 
-\cs{textvcenter}\label{text:vcenter}\
-which defines a variant of the \cs{vcenter} box
+比如，此处有一个名为
+\cs{textvcenter}\label{text:vcenter}
+的宏。其可以用来构造能在数学模式
 \howto \cs{vcenter} outside math mode\par
-(see page~\pageref{vcenter}\label{tvcenter})
-that can be used outside math mode.
+之外使用的\cs{vcenter}盒子。
+（见\pageref{vcenter}\label{tvcenter}）。
 \begin{verbatim}
 \def\textvcenter
    {\hbox \bgroup$\everyvbox{\everyvbox{}%
     \aftergroup$\aftergroup\egroup}\vcenter}
 \end{verbatim}
-The idea is that the macro inserts \verb>\hbox {$>,
-and that the matching \verb>$}> gets inserted
-by the \cs{aftergroup} commands. In order to get the 
-\cs{aftergroup} commands inside the box, an
-\cs{everyvbox} command is  used.
+原理是该宏会插入\verb>\hbox {$>，
+而与其配对的\verb>$}>会被使用\cs{aftergroup}命令插入。
+为了使\cs{aftergroup}命令出现在盒子中，
+我们使用了\cs{everyvbox}命令。
 
 %This macro can even be used with a \gr{box specification}
 %(see page~\pageref{box:spec}), for example
@@ -1958,23 +1971,23 @@ by the \cs{aftergroup} commands. In order to get the
 %\end{verbatim}
 %and because it  is really just an \cs{hbox}, it can also
 %be used in a \cs{setbox} assignment.
-This macro can even be used with a \gr{box specification}
-(see page~\pageref{box:spec}), for example
+这个宏甚至能与\gr{box specification}
+（见第\pageref{box:spec}页）一起使用。
+比如说
 \begin{verbatim}
 \textvcenter spread 8pt{\hbox{a}\vfil\hbox{b}}
 \end{verbatim}
-and because it  is really just an \cs{hbox}, it can also
-be used in a \cs{setbox} assignment.
+同时也因为构造的结果单纯就是一个\cs{hbox}，
+它也能在\cs{setbox}复制中使用。
 
 %\subsection{More expansion}
-\subsection{More expansion}
+\subsection{更进阶的展开应用}
 
 %There is a particular charm to macros that work
 %purely by expansion. See the articles by
 %\cite{E2}, \cite{Jeffrey:lists}, and~\cite{Maus2}.
-There is a particular charm to macros that work
-purely by expansion. See the articles by
-\cite{E2}, \cite{Jeffrey:lists}, and~\cite{Maus2}.
+有一些神奇的纯粹依靠展开完成目的的宏。
+可参考文献\cite{E2}、\cite{Jeffrey:lists}、以及\cite{Maus2}。
 
 %\endofchapter
 %%%%% end of input file [expand]
