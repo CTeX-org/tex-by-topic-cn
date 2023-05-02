@@ -7,92 +7,91 @@
 \begin{document}
 
 %\chapter{Insertions}\label{insert}
-\chapter{Insertions}\label{insert}
+\chapter{插入}\label{insert}
 
 %Insertions are \TeX's way of handling floating information.
 %\TeX's page builder calculates what insertions and how many
 %of them will fit on the page; these insertion items are then
 %placed in insertion boxes which are to be handled by the
 %output routine.
-Insertions are \TeX's way of handling floating information.
-\TeX's page builder calculates what insertions and how many
-of them will fit on the page; these insertion items are then
-placed in insertion boxes which are to be handled by the
-output routine.
+
+插入是 \TeX 处理浮动信息的方法。 \TeX 的页面构建器首先需要计算插入什么内容、计算插入后占据页面的大小，然后把这些插入项放入插入盒子中，这些插入盒子将由输出例程(output routine)进一步处理。
 
 
 %\label{cschap:insert}\label{cschap:newinsert}\label{cschap:insertpenalties}\label{cschap:floatingpenalty}\label{cschap:holdinginserts}\label{cschap:footins}\label{cschap:topins}\label{cschap:topinsert}\label{cschap:pageinsert}\label{cschap:midinsert}\label{cschap:endinsert}
 %\begin{inventory}
-%\item [\cs{insert}] 
+%\item [\cs{insert}]
 %      Start an insertion item.
 \label{cschap:insert}\label{cschap:newinsert}\label{cschap:insertpenalties}\label{cschap:floatingpenalty}\label{cschap:holdinginserts}\label{cschap:footins}\label{cschap:topins}\label{cschap:topinsert}\label{cschap:pageinsert}\label{cschap:midinsert}\label{cschap:endinsert}
 \begin{inventory}
-\item [\cs{insert}] 
-      Start an insertion item.
+\item [\cs{insert}]
+      开始一个插入项。
 
-%\item [\cs{newinsert}] 
-%      Allocate a new insertion class. 
-\item [\cs{newinsert}] 
-      Allocate a new insertion class. 
+%\item [\cs{newinsert}]
+%      Allocate a new insertion class.
+\item [\cs{newinsert}]
+      分配一个新的插入类。
 
-%\item [\cs{insertpenalties}] 
+%\item [\cs{insertpenalties}]
 %      Total of penalties for split insertions.
 %      Inside the output routine, the number of held-over insertions.
-\item [\cs{insertpenalties}] 
-      Total of penalties for split insertions.
-      Inside the output routine, the number of held-over insertions.
+\item [\cs{insertpenalties}]
+      分割的插入项的总惩罚值。在输出例程内，则是延搁的插入项的数量。
 
-%\item [\cs{floatingpenalty}] 
+%\item [\cs{floatingpenalty}]
 %      Penalty added when an insertion is split.
-\item [\cs{floatingpenalty}] 
-      Penalty added when an insertion is split.
+\item [\cs{floatingpenalty}]
+      当一个插入项被分割出来时加入的惩罚值。
 
 %\item [\cs{holdinginserts}]
 %      (\TeX3 only)
-%      If this is positive, insertions are not placed in their boxes 
+%      If this is positive, insertions are not placed in their boxes
 %      at output time.
 \item [\cs{holdinginserts}]
-      (\TeX3 only)
-      If this is positive, insertions are not placed in their boxes 
-      at output time.
+      (仅 \TeX3 )如果是正值，在输出时，插入项将不会放入插入盒子中。
 
 %\item [\cs{footins}]
 %      Number of the footnote insertion class in plain \TeX.
 \item [\cs{footins}]
-      Number of the footnote insertion class in plain \TeX.
+      plain \TeX 中脚注插入类的数量。
+
 
 %\item [\cs{topins}]
 %      Number of the top insertion class.
 \item [\cs{topins}]
-      Number of the top insertion class.
+      顶部插入类的数量。
+
 
 %\item [\cs{topinsert}]
 %      Plain \TeX\ macro to start a top insert.
 \item [\cs{topinsert}]
-      Plain \TeX\ macro to start a top insert.
+      开始一个顶部插入的 Plain \TeX\ 宏。
+
 
 %\item [\cs{pageinsert}]
 %      Plain \TeX\ macro to start an insert that will take
 %      up a whole page.
 \item [\cs{pageinsert}]
-      Plain \TeX\ macro to start an insert that will take
-      up a whole page.
+      开始一个占据整个页面的插入的宏
+
+
 
 %\item [\cs{midinsert}]
 %      Plain \TeX\ macro that places its argument if there is space,
 %      and converts it into a top insert otherwise.
 \item [\cs{midinsert}]
-      Plain \TeX\ macro that places its argument if there is space,
-      and converts it into a top insert otherwise.
+      Plain \TeX\ 宏，当存在足够的空间时，用于在当前位置插入，否则将转换为顶部插入。
+
+
 
 %\item [\cs{endinsert}]
 %      Plain \TeX\ macro to wind up an insertion item
 %      that started with \cs{topinsert}, \cs{midinsert},
 %      or \cs{pageinsert}.
 \item [\cs{endinsert}]
-      Plain \TeX\ macro to wind up an insertion item
-      that started with \cs{topinsert}, \cs{midinsert},
-      or \cs{pageinsert}.
+      Plain \TeX\ 宏，结束以\cs{topinsert}, \cs{midinsert},
+      或 \cs{pageinsert} 开始的插入项。
+
 
 %\end{inventory}
 \end{inventory}
@@ -101,7 +100,7 @@ output routine.
 %%\point Insertion items
 %\section{Insertion items}
 %\point Insertion items
-\section{Insertion items}
+\section{插入项}
 
 %Floating information, items that are not bound to a fixed
 %place in the vertical list, such as figures or footnotes,
@@ -109,20 +108,13 @@ output routine.
 %The treatment of insertions is a strange interplay between the
 %user, \TeX's internal workings, and the output routine.
 %First the user specifies an insertion, which is
-%a certain amount of vertical material; 
+%a certain amount of vertical material;
 %then \TeX's page builder decides what insertions should go
 %on the current page and puts these insertions in insertion boxes;
 %finally, the output routine has to do something with these boxes.
-Floating information, items that are not bound to a fixed
-place in the vertical list, such as figures or footnotes,
-are handled by \indexterm{insertions}.
-The treatment of insertions is a strange interplay between the
-user, \TeX's internal workings, and the output routine.
-First the user specifies an insertion, which is
-a certain amount of vertical material; 
-then \TeX's page builder decides what insertions should go
-on the current page and puts these insertions in insertion boxes;
-finally, the output routine has to do something with these boxes.
+
+浮动信息，是在竖直列中没有固定位置约束的项，由\indexterm{insertions} 处理，比如图片或者脚注。插入的处理受用户、 \TeX 内部规则、 输出例程的影响。首先，由用于引发一个插入，插入的内容是一定量的竖直内容。然后， \TeX 的页面构建器确定哪些插入项可以放入当前页面，然后将它们放到插入盒子中，最后输出例程来处理这些插入盒子。
+
 
 %An insertion item looks like
 %\cstoidx insert\par
@@ -130,30 +122,28 @@ finally, the output routine has to do something with these boxes.
 %\end{disp} where the 8-bit number should not be~255,
 %because \cs{box255} is used by \TeX\ for passing the page to the output
 %routine.
-An insertion item looks like
-\cstoidx insert\par
+
+一个插入项类似于:\cstoidx insert\par
+
 \begin{disp}\cs{insert}\gr{8-bit number}\lb\gr{vertical mode material}\rb
-\end{disp} where the 8-bit number should not be~255,
-because \cs{box255} is used by \TeX\ for passing the page to the output
-routine.
+\end{disp}
+
+其中，八比特数不能是255，因为\cs{box255}已经被\TeX\ 用来给输出传递页面内容。
 
 %The braces around the vertical mode material in an insertion
 %item can be implicit; they imply a new level of grouping.
 %The vertical mode material is processed in internal
 %vertical mode.
-The braces around the vertical mode material in an insertion
-item can be implicit; they imply a new level of grouping.
-The vertical mode material is processed in internal
-vertical mode.
 
-%Values of \cs{splittopskip}, \cs{splitmaxdepth}, 
+插入项中竖直模式内容外的花括号可以省略，它们表示新的一层编组。竖直模式内容在内部竖直模式中处理。
+
+
+%Values of \cs{splittopskip}, \cs{splitmaxdepth},
 %and \cs{floatingpenalty} are relevant for split insertions
 %(see below); the values that are current just before
 %the end of the group are used.
-Values of \cs{splittopskip}, \cs{splitmaxdepth}, 
-and \cs{floatingpenalty} are relevant for split insertions
-(see below); the values that are current just before
-the end of the group are used.
+\cs{splittopskip}, \cs{splitmaxdepth}, \cs{floatingpenalty}的值与插入项分割有关(见下面); 这些值仅在编组结束前使用。
+
 
 %Insertion items can appear in vertical mode, horizontal
 %mode, and math mode. For the latter two modes they have to
@@ -161,20 +151,16 @@ the end of the group are used.
 %(see page~\pageref{migrate}).
 %After an insertion item is put on  the vertical list the
 %page builder is exercised.
-Insertion items can appear in vertical mode, horizontal
-mode, and math mode. For the latter two modes they have to
-migrate to the surrounding vertical list
-(see page~\pageref{migrate}).
-After an insertion item is put on  the vertical list the
-page builder is exercised.
+
+插入项可以出现在竖直模式，水平模式，和数学模式中。对于后两者，插入项必须移入竖直列内(见~\pageref{migrate}页)。当插入项放入竖直列后，那么页面生成结束。
 
 
 %%\point Insertion class declaration
 %\section{Insertion class declaration}
 %\point Insertion class declaration
-\section{Insertion class declaration}
+\section{插入类声明}
 
-%In the plain format 
+%In the plain format
 %the  number for a new insertion class
 %is allocated by \csidx{newinsert}:
 %\begin{verbatim}
@@ -182,28 +168,27 @@ page builder is exercised.
 %\end{verbatim}
 %which uses \cs{chardef} to assign a number to the control
 %sequence.
-In the plain format 
-the  number for a new insertion class
-is allocated by \csidx{newinsert}:
+
+在 plain tex 中，一个插入类的号由 \csidx{newinsert} 分配:
+
 \begin{verbatim}
 \newinsert\myinsert % new insertion class
 \end{verbatim}
-which uses \cs{chardef} to assign a number to the control
-sequence.
+
+使用 \cs{chardef} 给控制序列赋一个号(数值)。
+
 
 %Insertion classes are allocated numbering from 254 downward.
 %As box~255 is used for output, this allocation scheme leaves
 %\cs{skip255}, \cs{dimen255}, and \cs{count255}
 %free for scratch use.
-Insertion classes are allocated numbering from 254 downward.
-As box~255 is used for output, this allocation scheme leaves
-\cs{skip255}, \cs{dimen255}, and \cs{count255}
-free for scratch use.
+插入类的号从254开始向下取值进行分配。因为 box~255 用于输出，这种方式也使得可以保留\cs{skip255}, \cs{dimen255}, \cs{count255} 待用。
+
 
 %%\point Insertion parameters
 %\section{Insertion parameters}
 %\point Insertion parameters
-\section{Insertion parameters}
+\section{插入参数}
 
 %For each insertion class~$n$ four registers are allocated:
 %\begin{itemize}
@@ -224,72 +209,62 @@ free for scratch use.
 % The value of \cs{count}$\,n$
 % is then 1000 times the factor by which the height should
 % be multiplied to obtain the effective height.
-% 
+%
 % Consider the following examples:
-% 
+%
 %\begin{itemize}\item Marginal notes do not affect
 % the text height, so the factor should be~0. \item Footnotes
 % set in double column mode affect the page by half of their height:
 % the count value should by~500. \item Conversely, footnotes
 % set at page width underneath a page in double column mode
 % affect both columns, so \ldash provided that the double column mode
-% is implemented by applying \cs{vsplit} to a double-height column \rdash 
+% is implemented by applying \cs{vsplit} to a double-height column \rdash
 % the count value should be~2000.\end{itemize}
 %\end{itemize}
-For each insertion class~$n$ four registers are allocated:
+
+对于每个插入类$n$，分配了四个寄存器:
+
 \begin{itemize}
-\item \cs{box}$\,n$ When the output routine is active this
- box contains the insertion items of class~$n$ that should
- be placed on the current page.
-\item \cs{dimen}$\,n$ This is the maximum space allotted for
- insertions of class~$n$ per page. If this amount would
- be exceeded \TeX\ will split insertions.
-\item \cs{skip}$\,n$ Glue of this size is added the first
- time an insertion item of class~$n$ is added to the
- current page. This is useful for such phenomena as a rule
- separating the footnotes from the text of the page.
-\item \cs{count}$\,n$ Each insertion item is a vertical list,
- so it has a certain height. However, the effective height,
- the amount of influence it has on the text height of the
- page, may differ from this real height.
- The value of \cs{count}$\,n$
- is then 1000 times the factor by which the height should
- be multiplied to obtain the effective height.
- 
- Consider the following examples:
- 
-\begin{itemize}\item Marginal notes do not affect
- the text height, so the factor should be~0. \item Footnotes
- set in double column mode affect the page by half of their height:
- the count value should by~500. \item Conversely, footnotes
- set at page width underneath a page in double column mode
- affect both columns, so \ldash provided that the double column mode
- is implemented by applying \cs{vsplit} to a double-height column \rdash 
- the count value should be~2000.\end{itemize}
+\item \cs{box}$\,n$ 当输出例程激活时，该box内包含有要插入当前页面的插入类$n$的内容。
+
+\item \cs{dimen}$\,n$ 这是每页能分配给插入类$n$的最大空间。当超越该值时，\TeX\ 将会分割插入内容。
+
+\item \cs{skip}$\,n$ 这一大小的粘连会在插入类~$n$的第一个项加入页面时被加入。它在一些情况下很有用，比如实现页面中脚注与正文见的分隔线。
+
+\item \cs{count}$\,n$ 每个插入项都是竖直列，所以它具有一定的高度。然而有效高度，即它对页面正文高度影响的量，可能不同于实际高度。\cs{count}$\,n$的值为
+    要获得有效高度，实际高度应乘上的因子再乘以1000的值。
+
+ 考虑如下例子:
+
+\begin{itemize}
+ \item 当边注不影响正文的高度，所以该因子为0。
+
+ \item 当脚注设置在双栏模式中，那么它仅影响页面的一半高度，那么计数器的值为500。
+
+ \item 相反的，当在双栏模式中设置单栏脚注，它将影响两栏的高度。假设两栏模式由\cs{vsplit} 分解为两倍高度的栏，那么计数器的值为2000。
+ \end{itemize}
 \end{itemize}
 
 %%\point Moving insertion items from the contributions list
 %\section{Moving insertion items from the contributions list}
 %\point Moving insertion items from the contributions list
-\section{Moving insertion items from the contributions list}
+\section{将插入项从备选竖直列中移出到当前页面}
 
 %The most complicated issue with insertions is the algorithm
 %that adds insertion items to the main vertical list,
 %and calculates breakpoints if necessary.
-The most complicated issue with insertions is the algorithm
-that adds insertion items to the main vertical list,
-and calculates breakpoints if necessary.
+插入中的最复杂的问题是将插入项加入主竖直列的算法以及必要时的分页计算。
+
 
 %\TeX\ never changes the \cs{vsize}, but it diminishes the
 %\csidx{pagegoal} by the (effective) heights of the insertion
 %items that will appear before a page break. Thus the output
 %routine will receive a \cs{box255} that has height \cs{pagegoal},
 %not necessarily \cs{vsize}.
-\TeX\ never changes the \cs{vsize}, but it diminishes the
-\csidx{pagegoal} by the (effective) heights of the insertion
-items that will appear before a page break. Thus the output
-routine will receive a \cs{box255} that has height \cs{pagegoal},
-not necessarily \cs{vsize}.
+\TeX\ 不改变 \cs{vsize}，
+但它会因为出现在分页前的插入项的(有效)高度而减小 \csidx{pagegoal}。
+因此输出例程接收的 \cs{box255} 的高度可能是\cs{pagegoal}，而不一定是\cs{vsize}。
+
 
 %\begin{enumerate}
 %\item When the first insertion of a certain class $n$ occurs
@@ -298,7 +273,7 @@ not necessarily \cs{vsize}.
 %  insertion item of this class occurs on the vertical list
 %  \ldash this includes insertions that were split \rdash  but \cs{box}$\,n$
 %  need not be empty at this time.
-%  
+%
 %  If \cs{box}$\,n$ is not empty, its height plus depth is multiplied
 %  by \cs{count}$\,n/1000$ and the result is subtracted
 %  from \cs{pagegoal}. Then the \cs{pagegoal} is diminished
@@ -311,13 +286,13 @@ not necessarily \cs{vsize}.
 %  \csidx{insertpenalties}. A~split insertion is an insertion item
 %  for which a breakpoint has been calculated as it will not
 %  fit on the current page in its entirety. Thus the insertion
-%  currently under consideration will certainly not wind up 
+%  currently under consideration will certainly not wind up
 %  on the current page.
 %\item After the preliminary action of the two previous points
 %  \TeX\ will place the actual insertion item on the main vertical
 %  list, at the end of the current contributions.
 %  First it will check whether the item will fit without being split.
-%  
+%
 %  There are two conditions to be checked:
 %\begin{itemize}\item
 %  adding the insertion item (plus all previous insertions of that class)
@@ -331,50 +306,36 @@ not necessarily \cs{vsize}.
 %  by the effective size of the insertion item, that is,
 %  by the height plus depth, multiplied by \cs{count}$n/1000$.
 \begin{enumerate}
-\item When the first insertion of a certain class $n$ occurs
-  on the current page \TeX\ has to account for the quantity
-  \cs{skip}$\,n$. This step is executed only if no earlier
-  insertion item of this class occurs on the vertical list
-  \ldash this includes insertions that were split \rdash  but \cs{box}$\,n$
-  need not be empty at this time.
-  
-  If \cs{box}$\,n$ is not empty, its height plus depth is multiplied
-  by \cs{count}$\,n/1000$ and the result is subtracted
-  from \cs{pagegoal}. Then the \cs{pagegoal} is diminished
-  by the natural component of \cs{skip}$\,n$. Any stretch and
-  shrink of \cs{skip}$\,n$ are incorporated in \cs{pagestretch}
-  and \cs{pageshrink} respectively.
-\item If there is a split insertion of class $n$ on the page
-  \ldash this case and the previous step in the algorithm are
-  mutually exclusive \rdash  the \csidx{floatingpenalty} is added to
-  \csidx{insertpenalties}. A~split insertion is an insertion item
-  for which a breakpoint has been calculated as it will not
-  fit on the current page in its entirety. Thus the insertion
-  currently under consideration will certainly not wind up 
-  on the current page.
-\item After the preliminary action of the two previous points
-  \TeX\ will place the actual insertion item on the main vertical
-  list, at the end of the current contributions.
-  First it will check whether the item will fit without being split.
-  
-  There are two conditions to be checked:
-\begin{itemize}\item
-  adding the insertion item (plus all previous insertions of that class)
-  to \cs{box}$\,n$ should not let
-  the height plus depth of that box exceed \cs{dimen}$\,n$, and
-  \item either the effective height of the insertion is negative, or
-  \cs{pagetotal} plus \cs{pagedepth} minus \cs{pageshrink}
-  plus the effective size of the insertion should be less than
-  \cs{pagegoal}.\end{itemize}
-  If these conditions are satisfied, \cs{pagegoal} is diminished
-  by the effective size of the insertion item, that is,
-  by the height plus depth, multiplied by \cs{count}$n/1000$.
+\item 当一个插入类$n$的第一个插入项插入当前页面时， \TeX\  必须考虑 \cs{skip}$\,n$ 的量。这一步骤仅在该插入类没有更早的插入项插入主竖直列时执行，包括哪些分割出来的插入项，此时 \cs{box}$\,n$ 不一定是空的。
+
+    如果 \cs{box}$\,n$ 不为空，它的高度加深度乘以\cs{count}$\,n/1000$得到一个结果，
+    \cs{pagegoal} 减去该结果。接着 \cs{pagegoal} 再减去\cs{skip}$\,n$的自然高度。任何伸长和收缩都各自合并在\cs{pagestretch}和\cs{pageshrink}中。
+
+\item 如果当前页面存在插入类$n$中分割出的插入项，这一情况与上一步的情况正好相反，则将
+ \csidx{floatingpenalty}加入 \csidx{insertpenalties}。一个分割出的插入项指的是当完整的插入无法在当前页面实现时计算出断点后分割的项。因此，剩下的插入项必然不会在当前页面考虑插入。
+
+
+\item 在上面两步的操作后，\TeX\  将把实际插入项放入主竖直列，在当前页面的末尾。首先它将检查插入项是否不经分割就能放入。
+
+需要检测两种情况:
+\begin{itemize}
+
+\item 把当前插入项加上所有前面同一插入类的插入项放入 \cs{box}$\,n$ 后，其高度加深度不应超过\cs{dimen}$\,n$。
+
+
+  \item 插入项的有效高度为负或者\cs{pagetotal} 加上 \cs{pagedepth} 减去
+  \cs{pageshrink} 加上插入项的有效高度应小于 \cs{pagegoal}
+
+\end{itemize}
+  如果这些条件满足，那么\cs{pagegoal}减去插入项的有效尺寸，即高度加深度乘以
+  \cs{count}$n/1000$。
+
 
 %\item Insertions that fail on one of the two conditions in the
 %  previous step of the algorithm will be considered for splitting.
-%  \TeX\ will calculate the size of the maximal portion to 
+%  \TeX\ will calculate the size of the maximal portion to
 %  be split off the insertion item, such that
-%  
+%
 %\begin{enumerate}\item adding this portion
 %  together with earlier insertions of this class to \cs{box}$\,n$
 %  will not let the size of the box exceed \cs{dimen}$\,n$,
@@ -383,35 +344,27 @@ not necessarily \cs{vsize}.
 %  exceed \cs{pagegoal}. Note that \cs{pageshrink} is not taken
 %  into account this time, as it was in the previous step.
 %  \end{enumerate}
-%  
+%
 %  Once this maximal size to be split off has been determined,
-%  \TeX\ locates the least-cost breakpoint in the current 
+%  \TeX\ locates the least-cost breakpoint in the current
 %  insertion item that will result in a box with a  height
 %  that is equal to this maximal size. The penalty associated
 %  with this breakpoint is added to \cs{insertpenalties},
 %  and \cs{pagegoal} is diminished by the effective height plus
 %  depth of the box to be split off the insertion item.
-\item Insertions that fail on one of the two conditions in the
-  previous step of the algorithm will be considered for splitting.
-  \TeX\ will calculate the size of the maximal portion to 
-  be split off the insertion item, such that
-  
-\begin{enumerate}\item adding this portion
-  together with earlier insertions of this class to \cs{box}$\,n$
-  will not let the size of the box exceed \cs{dimen}$\,n$,
-  and \item the effective size of this portion,
-  added to \cs{pagetotal} plus \cs{pagedepth}, will not
-  exceed \cs{pagegoal}. Note that \cs{pageshrink} is not taken
-  into account this time, as it was in the previous step.
+\item 当算法前一步两个条件不满足时，插入项需要考虑分割。 \TeX\ 将计算分割出的最大部分的尺寸，使得:
+
+
+\begin{enumerate}
+\item 将这一分割部分加上之前的同一插入类的插入项放入 \cs{box}$\,n$ 后，盒子的尺寸不会超过\cs{dimen}$\,n$。
+
+
+  \item 这一部分的有效尺寸加上\cs{pagetotal}和\cs{pagedepth}，不会超过\cs{pagegoal}。注意此时不考虑 \cs{pageshrink} 因为它已在前面的步骤中处理。
+
   \end{enumerate}
-  
-  Once this maximal size to be split off has been determined,
-  \TeX\ locates the least-cost breakpoint in the current 
-  insertion item that will result in a box with a  height
-  that is equal to this maximal size. The penalty associated
-  with this breakpoint is added to \cs{insertpenalties},
-  and \cs{pagegoal} is diminished by the effective height plus
-  depth of the box to be split off the insertion item.
+
+  一旦确定了最大的分割尺寸， \TeX\  将在当前插入项中定位一个最低开销的断点，使得盒子中的高度等于最大的尺寸。与该断点相关的惩罚将加入\cs{insertpenalties}，\cs{pagegoal} 将减去分割出来的插入项的盒子的有效尺寸即高度加深度。
+
 
 %\end{enumerate}
 \end{enumerate}
@@ -421,7 +374,7 @@ not necessarily \cs{vsize}.
 %%\point Insertions in the output routine
 %\section{Insertions in the output routine}
 %\point Insertions in the output routine
-\section{Insertions in the output routine}
+\section{在输出例程中插入}
 
 %When the output routine comes into action \ldash more precisely:
 %when \TeX\ starts processing the tokens in the \cs{output}
@@ -429,12 +382,9 @@ not necessarily \cs{vsize}.
 %current page have been put in their boxes, and
 %it is the responsibility of the output routine
 %to put them somewhere in the box that is going to be shipped out.
-When the output routine comes into action \ldash more precisely:
-when \TeX\ starts processing the tokens in the \cs{output}
-token list \rdash  all insertions that should be placed on the
-current page have been put in their boxes, and
-it is the responsibility of the output routine
-to put them somewhere in the box that is going to be shipped out.
+
+当输出例程开始工作 \ldash 更准确的说，当 \TeX\ 开始处理 \cs{output} 中的记号列  \rdash  所有本页的插入项将被放入它们所在盒子，输出列程负责将它们放置在合适的位置，等待进一步输出。
+
 
 %\begin{example} The plain \TeX\ output routine
 %handles top inserts and footnotes by packaging the following
@@ -447,16 +397,17 @@ to put them somewhere in the box that is going to be shipped out.
 %Unboxing the insertion boxes makes the glue on various parts
 %of the page stretch or shrink in a uniform manner.
 %\end{example}
-\begin{example} The plain \TeX\ output routine
-handles top inserts and footnotes by packaging the following
-sequence:
+\begin{example}
+plain \TeX\ 输出例程以如下顺序来打包处理顶部插入和脚注：
+
 \begin{verbatim}
 \ifvoid\topins \else \unvbox\topins \fi
 \pagebody
 \ifvoid\footins \else \unvbox\footins \fi
 \end{verbatim}
-Unboxing the insertion boxes makes the glue on various parts
-of the page stretch or shrink in a uniform manner.
+
+解包插入的盒子是的页面中不同位置的粘连以统一的方式伸长和收缩。
+
 \end{example}
 
 %With \TeX3 the insertion mechanism has been extended slightly:
@@ -468,15 +419,14 @@ of the page stretch or shrink in a uniform manner.
 %recalculate the \cs{vsize}, or if the output routine
 %is called to do other intermediate calculations instead of
 %ejecting a page.
-With \TeX3 the insertion mechanism has been extended slightly:
+
+\TeX3 稍微扩展了插入机制：
 \handbreak \cstoidx holdinginserts\par
 \thecstoidxsub{TeX}{version 3}
-the parameter \cs{holdinginserts} can be used to specify that
-insertions should not yet be placed in their boxes.
-This is very useful if the output routine wants to
-recalculate the \cs{vsize}, or if the output routine
-is called to do other intermediate calculations instead of
-ejecting a page.
+参数 \cs{holdinginserts} 可以用来设置不将插入项放入它们的盒子。
+当输出例程需要重新计算 \cs{vsize} 或者输出例程被调用来做其它中间计算而不是输出一个页面时，这一机制会非常有用。
+
+
 
 %During the output routine the parameter
 %\csidx{insertpenalties} holds the number of insertion items that
@@ -484,17 +434,15 @@ ejecting a page.
 %In the plain \TeX\ output routine this is used after the
 %last page:
 %\begin{verbatim}
-%\def\dosupereject{\ifnum\insertpenalties>0 
+%\def\dosupereject{\ifnum\insertpenalties>0
 %    % something is being held over
 %  \line{}\kern-\topskip\nobreak\vfill\supereject\fi}
 %\end{verbatim}
-During the output routine the parameter
-\csidx{insertpenalties} holds the number of insertion items that
-are being held over for the next page.
-In the plain \TeX\ output routine this is used after the
-last page:
+
+在输出过程中，参数 \csidx{insertpenalties} 保存有将在下一页处理的插入项的数量。在 plain \TeX\ 中它将在前一页处理后用到：
+
 \begin{verbatim}
-\def\dosupereject{\ifnum\insertpenalties>0 
+\def\dosupereject{\ifnum\insertpenalties>0
     % something is being held over
   \line{}\kern-\topskip\nobreak\vfill\supereject\fi}
 \end{verbatim}
@@ -502,7 +450,7 @@ last page:
 %%\point Plain \TeX\ insertions
 %\section{Plain \TeX\ insertions}
 %\point Plain \TeX\ insertions
-\section{Plain \TeX\ insertions}
+\section{Plain \TeX\ 的插入}
 
 %The plain \TeX\ format has only two insertion classes:
 %the footnotes and the top inserts.
@@ -511,36 +459,31 @@ last page:
 %The \csidx{midinsert} macro tests whether the vertical material
 %specified by the user fits on the page; if so, it is placed
 %there; if not, it is converted to a top insert.
-The plain \TeX\ format has only two insertion classes:
-the footnotes and the top inserts.
-The macro \csidx{pageinsert} generates
-top inserts that are stretched to be exactly \cs{vsize} high.
-The \csidx{midinsert} macro tests whether the vertical material
-specified by the user fits on the page; if so, it is placed
-there; if not, it is converted to a top insert.
+
+plain \TeX\ 格式只有两种插入类：脚注和顶部插入。
+\csidx{pageinsert} 宏产生一个精确伸长至\cs{vsize}高度的顶部插入。
+\csidx{midinsert} 宏判断用户设定插入的竖直盒子是否能够插入当前页，如果可以，则放入当前，否则，将其转换为一个顶部插入(top insert)。
+
 
 %Footnotes are allowed to be split, but once one has been
 %split no further footnotes should appear on the current
-%page. This effect is attained by setting 
+%page. This effect is attained by setting
 %\begin{verbatim}
 %\floatingpenalty=20000
-%\end{verbatim} 
+%\end{verbatim}
 %The \cs{floatingpenalty} is added to \cs{insertpenalties}
-%if an insertion follows a split insertion of the same 
+%if an insertion follows a split insertion of the same
 %class. However, \cs{floatingpenalty}${}>10\,000$ has infinite
 %cost, so \TeX\ will take an earlier breakpoint for
 %splitting off the page from the vertical list.
-Footnotes are allowed to be split, but once one has been
-split no further footnotes should appear on the current
-page. This effect is attained by setting 
+脚注允许分割，但一旦分割，后面的的脚注将不会出现在当前页。这样机制由如下设置得到：
+
 \begin{verbatim}
 \floatingpenalty=20000
-\end{verbatim} 
-The \cs{floatingpenalty} is added to \cs{insertpenalties}
-if an insertion follows a split insertion of the same 
-class. However, \cs{floatingpenalty}${}>10\,000$ has infinite
-cost, so \TeX\ will take an earlier breakpoint for
-splitting off the page from the vertical list.
+\end{verbatim}
+
+如果一个插入项紧跟着同类的分割插入项，那么 \cs{floatingpenalty} 将被加入到 \cs{insertpenalties}中。然而 \cs{floatingpenalty}${}>10\,000$ 具有无限的代价，所以 \TeX\ 会从一个更早的分页点将页面从竖直列分割出来。
+
 
 %Top inserts essentially contain only a vertical box
 %which holds whatever the user specified. Thus such an insert
@@ -551,20 +494,13 @@ splitting off the page from the vertical list.
 %the next page. As the \cs{floatingpenalty} for top inserts
 %is zero, arbitrarily many of these inserts can be moved forward
 %until there is a page with sufficient space.
-Top inserts essentially contain only a vertical box
-which holds whatever the user specified. Thus such an insert
-cannot be split. However, the \csidx{endinsert} macro
-puts a \cs{penalty100} on top of the box, so the
-insertion can be split with an empty part before the split.
-The effect is that the whole insertion is carried over to
-the next page. As the \cs{floatingpenalty} for top inserts
-is zero, arbitrarily many of these inserts can be moved forward
-until there is a page with sufficient space.
+
+顶部插入基本上仅包含一个竖直盒子，该盒子中保存用户设定的任何内容。因此，这种插入项不能被分割。然而，\csidx{endinsert} 宏将一个 \cs{penalty100} 放在盒子顶部，所以该插入项可以在分割点前分割出一个空的部分。效果是整个插入项监视移动到下一页。因为顶部插入的 \cs{floatingpenalty} 为0，任意数量的插入项都可以不断向前移动直到找到空间足够的页面。
+
 
 %Further examples of insertion macros can be found
 %in~\cite{Sal3}.
-Further examples of insertion macros can be found
-in~\cite{Sal3}.
+更多插入宏的示例见~\cite{Sal3}。
 
 %%\message{Maybe spaceleft example?}
 %\message{Maybe spaceleft example?}
